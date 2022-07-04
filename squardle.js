@@ -3,11 +3,13 @@
 // date
 let originDate = new Date("Thu Jun 30 2022 08:41:21 GMT+0200 (Central European Summer Time)")
 let date = new Date();
+
 // input data
 let size = 10; // size of board
 let lettersInBoard = []; // letters in board
 let wordsToFind =[];
 let wordsFound = []; // bool array
+
 // variables for finding word
 let mousePressed = false;
 let wordPath = {
@@ -42,16 +44,15 @@ async function loadData()
         }
     }
 
-    
     // words
     wordsToFind = await getJson("./data/WordsToFind" + indexOfSquardle +".json");
 
-    console.log(localStorage.getItem("progress"))
+    console.log(localStorage.getItem("progress" + indexOfSquardle))
     // load progress
-    if(localStorage.getItem("progress") !== null)
+    if(localStorage.getItem("progress" + indexOfSquardle) !== null)
     {
         wordsFound = [];
-        wordsFound = JSON.parse(localStorage.getItem("progress"));
+        wordsFound = JSON.parse(localStorage.getItem("progress" + indexOfSquardle));
     }
     else
     {
