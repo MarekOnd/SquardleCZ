@@ -2,7 +2,8 @@
 
 // date
 let originDate = new Date("Thu Jun 30 2022 08:41:21 GMT+0200 (Central European Summer Time)")
-let date = new Date();
+let indexOfSquardle = 2;
+  //let indexOfSquardle = Math.floor((date.getTime() - originDate.getTime())/(3600*24*1000));
 
 // input data
 let size = 10; // size of board
@@ -30,9 +31,6 @@ async function initialize(){
 // LOAD DATA
 async function loadData()
 {
-    // index
-    let indexOfSquardle = Math.floor((date.getTime() - originDate.getTime())/(3600*24*1000));
-    indexOfSquardle = 3;//----------------------------------------------
     // letters
     let tmpBoard = await getJson("./data/Board" + indexOfSquardle +".json");
     size = tmpBoard.length;
@@ -234,20 +232,25 @@ function updateScore()
         }
         
     }
-        
     let scoreBox = document.getElementById("score");
     scoreBox.textContent = score + " bodů";
 }
 
 function updateFound()
 {
-    
-    let textBox = document.getElementById("found");
+    let headerBox = document.getElementById("found-header");
+    let textBox = document.getElementById("found-words");
+    // deletes subdivisions
     while(textBox.firstChild)
     {
         textBox.removeChild(textBox.firstChild);
+    }
+    while(headerBox.firstChild)
+    {
+        headerBox.removeChild(headerBox.firstChild);
         
     }
+    // creates header
     let numOfFound = 0
     for (let i = 0; i < wordsFound.length; i++) {
         if(wordsFound[i])
@@ -258,12 +261,9 @@ function updateFound()
     let numText = document.createElement("p");
     numText.textContent = "Nalezená slova (" + numOfFound + "/" + wordsFound.length + ")";
     numOfFound.id = "numFound";
-    textBox.appendChild(numText);
+    headerBox.appendChild(numText);
 
-
-
-
-    
+    // appends found words
     for (let i = 0; i < wordsFound.length; i++) {
         if(wordsFound[i])
         {
@@ -273,7 +273,6 @@ function updateFound()
             paragraph.classList.add("foundWord");
             textBox.appendChild(paragraph);
         }
-        
     }
     saveProgress();
     
@@ -281,9 +280,9 @@ function updateFound()
 
 function saveProgress()
 {
-    localStorage.setItem("progress",JSON.stringify(wordsFound));
+    localStorage.setItem("progress" + indexOfSquardle,JSON.stringify(wordsFound));
 }
 
 
 // calls starting program function
-initialize()
+// initialize()

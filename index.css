@@ -6,7 +6,7 @@ body{
     font-family: helvetica;
     text-align: center;
     font-size: 40px;
-    
+    filter: drop-shadow(5px 5px 3px #36364d);
 }
 
 #output{
@@ -58,14 +58,31 @@ button{
 
 #numFound{
     height: 10px;
-    outline: 1px;
-    outline-color: aqua;
+    
 }
+#found-words{
+    overflow: auto;
+    height: 300px;
+    width: 200px;
+    outline: dashed 2px;
+    outline-color: aqua;
+
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    
+}
+#found-words::-webkit-scrollbar {
+    display: none;
+}
+
 .foundWord{
     height: 5px;
+    outline: dashed 2px;
+    outline-color: rgb(255, 0, 0);
 }
+
 #found{
     position: absolute;
-    left: 20px;
+    left: 50px;
     width: 200px;
 }
