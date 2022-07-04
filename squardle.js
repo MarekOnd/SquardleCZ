@@ -101,6 +101,7 @@ function createBoard()
             button.addEventListener("pointerdown",function(){mouseDown(x,y)});
             button.addEventListener("pointerup", function(){mouseUp()});
             button.addEventListener("pointerenter",function(){mouseEnter(x,y)});
+            button.addEventListener("gotpointercapture",(e)=>{e.target.releasePointerCapture(e.pointerId)})
 
 
             button.appendChild(text);
