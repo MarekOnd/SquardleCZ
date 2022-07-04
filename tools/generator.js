@@ -3,7 +3,7 @@ const fs = require('fs');
 
 // sources
 let ABC = "abcdefghijklmnopqrstuvwxyzáéíýóúřčěš"
-let LIBRARY = JSON.parse(fs.readFileSync("./libraryConnected.json"));
+let LIBRARY = JSON.parse(fs.readFileSync("../libraries/libraryConnected.json"));
 
 // parameters
 let size = 5;

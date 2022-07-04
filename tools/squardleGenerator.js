@@ -497,10 +497,10 @@ function save()
     // save letters in board
     let b = toArray(board);
     let jsonLetters = JSON.stringify(b);
-    fs.writeFileSync('./Squardle/data/Board'+fileName  + '.json', jsonLetters);
+    fs.writeFileSync('../Squardle/data/Board'+fileName  + '.json', jsonLetters);
     // save found words
     let jsonWords = JSON.stringify(foundWordPaths);
-    fs.writeFileSync('./Squardle/data/WordsToFind'+fileName+'.json', jsonWords);
+    fs.writeFileSync('../Squardle/data/WordsToFind'+fileName+'.json', jsonWords);
 }
 
 

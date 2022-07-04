@@ -1,8 +1,8 @@
 const fs = require('fs');
 
 // SETTINGS
-let loadFileName = "library";
-let saveFileName = "libraryConnected";
+let loadFileName = "library.txt"; // loads from txt
+let saveFileName = "libraryConnected.json"; // saves to json
 let oneArrLibrary = true;
 // VARIABLES
 let rawtext ="";
@@ -21,13 +21,13 @@ function start()
         connectLibrary();
     }
 
-    fs.writeFileSync("./"+saveFileName+".json",JSON.stringify(library))
+    fs.writeFileSync("../libraries/"+saveFileName,JSON.stringify(library))
 }
 
 
 function loadText()
 {
-    rawtext = fs.readFileSync("./"+ loadFileName + ".txt",'utf8');
+    rawtext = fs.readFileSync("../libraries/"+ loadFileName,'utf8');
 }
 function loadLibrary()
 {
