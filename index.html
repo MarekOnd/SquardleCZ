@@ -12,7 +12,13 @@
     <body onload="initialize()">
         <h1>Český squardle</h1>
         <p id="output">  </p>
-        <div id="score" ></div>
+        <div id="score">
+            <div id="score-points"></div>
+            <div id="score-bar-background">
+                <div id="score-bar"></div>
+            </div>
+            
+        </div>
         <div id="found">
             <div id="found-header" >
 
@@ -21,7 +27,17 @@
 
             </div>
         </div>
+        <div id="line"></div>
         <div id = "board"></div>
+        <div id = "index-selector-box">
+            <select onchange="changeIndex()" id="index-selector">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+        </div>
         <script src="squardle.js"></script>
         
     </body>

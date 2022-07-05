@@ -3,14 +3,14 @@ const fs = require('fs');
 
 // sources
 let ABC = "abcdefghijklmnopqrstuvwxyzáéíýóúřčěš"
-let LIBRARY = JSON.parse(fs.readFileSync("../libraries/libraryConnected.json"));
+let LIBRARY = JSON.parse(fs.readFileSync("libraries/libraryConnected.json"));
 
 // parameters
-let size = 5;
-let fileName = "3"
-let minWordSize = 4;
-let maxWordSize = 6;
-let numWordsToHide = 5;
+let size = 3;
+let fileName = "5"
+let minWordSize = 3;
+let maxWordSize = 5;
+let numWordsToHide = 3;
 
 // output
 let squardle ={
@@ -25,11 +25,14 @@ let wordsInBoard = [];
 let wordLibrary = LIBRARY;
 
 
+
+let progress = 0;
+
 // START
 function initialize()
 {
     LIBRARY = shuffle(LIBRARY)
-    wordLibrary = findSimilarWords(LIBRARY, numWordsToHide + 5, 0.6)
+    wordLibrary = findSimilarWords(LIBRARY, numWordsToHide + 5, 0.3)
     console.log(wordLibrary)
     abc = blend(wordLibrary)
     board = generateRandomBoard();
@@ -39,11 +42,16 @@ function initialize()
         //console.log(board)
         wordsInBoard = findWordsInBoard();
         lockPaths(wordsInBoard)
-        console.log(wordsInBoard.length)
+        if(wordsInBoard.length > progress)
+        {
+            progress = wordsInBoard.length
+            console.log(progress)
+        }
+        //console.log(wordsInBoard.length)
         //printWords();
     }
     wordLibrary = LIBRARY;
-    wordsInBoard = findWordsInBoard()
+    wordsInBoard = findWordsInBoard();
     squardle.letters = board.letters;
     squardle.wordsToFind = wordsInBoard;
     save();
@@ -175,7 +183,7 @@ function constuctWord(wordPath, output)
 {
     let x = wordPath.positions[wordPath.positions.length - 1][0];
     let y = wordPath.positions[wordPath.positions.length - 1][1];
-    if(wordPath.positions.length > maxWordSize)// too long
+    if(wordPath.positions.length > maxWordSize || !canBeInList(createWord(wordPath),wordLibrary))// too long or cant be a word
     {
         return;
     }
@@ -270,7 +278,6 @@ function similarityOfArrayOfWords(words)
     }
     return calculateAverage(currentThresholds);
 }
-
 function findSimilarWords(library, amount, threshold)
 {
     
@@ -348,6 +355,21 @@ function printWords()
         console.log(createWord(element))
     }
 }
+// OPTIMALIZATION
+
+//1) when bžk, then not a word
+function canBeInList(startOfWord, list)
+{
+    for (let i = 0; i < list.length; i++) {
+        const element = list[i];
+        if(element.indexOf(startOfWord) != -1)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 
 //SAVING
@@ -363,10 +385,10 @@ function save()
 {
     // save letters in board
     let jsonLetters = JSON.stringify(toArray(squardle.letters));
-    fs.writeFileSync('./Squardle/data/Board'+fileName  + '.json', jsonLetters);
+    fs.writeFileSync('data/Board'+fileName  + '.json', jsonLetters);
     // save found words
     let jsonWords = JSON.stringify(squardle.wordsToFind);
-    fs.writeFileSync('./Squardle/data/WordsToFind'+fileName+'.json', jsonWords);
+    fs.writeFileSync('data/WordsToFind'+fileName+'.json', jsonWords);
 }
 
 initialize();
