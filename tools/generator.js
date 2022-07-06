@@ -3,17 +3,23 @@ const fs = require('fs');
 
 // sources
 let ABC = "abcdefghijklmnopqrstuvwxyzáéíýóúřčěš"
-let LIBRARY = JSON.parse(fs.readFileSync("libraries/libraryConnected.json"));
+let LIBRARY = JSON.parse(fs.readFileSync("libraries/library_syn2015.json"));
 
 // parameters
-let size = 3;
+let size = 8;
+let squardleName = "Maxi"
 let fileName = "5"
-let minWordSize = 3;
-let maxWordSize = 5;
-let numWordsToHide = 3;
+let minWordSize = 4;
+let maxWordSize = 8;
+let numWordsToHide = 5;
+
+let useInputWords = false
+let inputWords = [
+];
 
 // output
 let squardle ={
+    name:"",
     letters:[],
     wordsToFind:[],
 }
@@ -22,22 +28,31 @@ let squardle ={
 // variables
 let board;
 let wordsInBoard = [];
-let wordLibrary = LIBRARY;
-
-
+let wordLibrary;
 
 let progress = 0;
 
 // START
 function initialize()
 {
-    LIBRARY = shuffle(LIBRARY)
-    wordLibrary = findSimilarWords(LIBRARY, numWordsToHide + 5, 0.3)
-    console.log(wordLibrary)
+    
+    if(!useInputWords)
+    {
+        LIBRARY = shuffle(LIBRARY)
+        wordLibrary = findSimilarWords(LIBRARY, numWordsToHide + 5, 0.6)
+        console.log(wordLibrary)
+    }
+    else
+    {
+        wordLibrary = inputWords;
+    }
+
+
     abc = blend(wordLibrary)
     board = generateRandomBoard();
     while(wordsInBoard.length < numWordsToHide)
     {
+        //board = generateRandomBoard(board)
         board = nextBoardPermutation(board);
         //console.log(board)
         wordsInBoard = findWordsInBoard();
@@ -50,8 +65,10 @@ function initialize()
         //console.log(wordsInBoard.length)
         //printWords();
     }
-    wordLibrary = LIBRARY;
+    wordLibrary = wordLibrary.concat(LIBRARY);
     wordsInBoard = findWordsInBoard();
+
+    squardle.name = squardleName;
     squardle.letters = board.letters;
     squardle.wordsToFind = wordsInBoard;
     save();
@@ -67,7 +84,7 @@ function generateRandomBoard(oldBoard = null, abcLocal = abc)
     {
         newBoard = {
             letters: [],
-            locked: oldBoard,
+            locked: oldBoard.locked,
         }
         for(let i = 0; i < size; i++)
         {
@@ -372,7 +389,9 @@ function canBeInList(startOfWord, list)
 
 
 
-//SAVING
+// SAVING EXPORTING
+
+
 function toArray(b)
 {
     let arr = [];
@@ -384,11 +403,12 @@ function toArray(b)
 function save()
 {
     // save letters in board
-    let jsonLetters = JSON.stringify(toArray(squardle.letters));
-    fs.writeFileSync('data/Board'+fileName  + '.json', jsonLetters);
-    // save found words
-    let jsonWords = JSON.stringify(squardle.wordsToFind);
-    fs.writeFileSync('data/WordsToFind'+fileName+'.json', jsonWords);
+    // let jsonLetters = JSON.stringify(toArray(squardle.letters));
+    // fs.writeFileSync('data/Board'+fileName  + '.json', jsonLetters);
+    // // save found words
+    // let jsonWords = JSON.stringify(squardle.wordsToFind);
+    // fs.writeFileSync('data/WordsToFind'+fileName+'.json', jsonWords);
+    fs.writeFileSync('data/squardle_'+fileName  + '.json', JSON.stringify(squardle));
 }
 
 initialize();

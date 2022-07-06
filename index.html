@@ -10,21 +10,24 @@
     
     
     <body onload="initialize()">
-        <h1>Český squardle</h1>
+        <h1 id="main-header">Český squardle</h1>
         <p id="output">  </p>
-        <div id="score">
+        <div id="score" onclick="toggleFoundWordsPopUp()">
             <div id="score-points"></div>
             <div id="score-bar-background">
                 <div id="score-bar"></div>
             </div>
             
         </div>
-        <div id="found">
+        <div id="found" style="display: none;">
             <div id="found-header" >
 
             </div>
             <div id="found-words">
 
+            </div>
+            <div id="found-exit" onclick="toggleFoundWordsPopUp()">
+                <p>Zpět</p>
             </div>
         </div>
         <div id="line"></div>
@@ -36,8 +39,9 @@
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
-              </select>
+            </select>
         </div>
+        <!--<img src="images/warden.jpg" style="width:100%; filter: brightness(0.1);">-->
         <script src="squardle.js"></script>
         
     </body>

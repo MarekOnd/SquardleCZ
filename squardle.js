@@ -1,12 +1,12 @@
 
 
-
 // date
 let originDate = new Date("Thu Jun 30 2022 08:41:21 GMT+0200 (Central European Summer Time)")
 let indexOfSquardle;
   //let indexOfSquardle = Math.floor((date.getTime() - originDate.getTime())/(3600*24*1000));
 
 // input data
+let squardleName = "";
 let size; // size of board
 let lettersInBoard = []; // letters in board
 let wordsToFind =[];
@@ -23,16 +23,17 @@ let wordPath = {
 
 
 async function initialize(){
+    squardleName = "";
     lettersInBoard = [];
     wordsToFind =[];
     wordsFound = [];
     await loadData();
-    console.log("done")
     window.addEventListener("pointerup",()=>{mouseUp()})
+    
 
     createBoard();
+    initSelector();
     updateScore();
-    console.log("updating")
     updateFound();
 }
 // LOAD DATA
@@ -42,7 +43,7 @@ async function loadData()
     if(localStorage.getItem("index")!==null)
     {
         indexOfSquardle = JSON.parse(localStorage.getItem("index"))
-        document.getElementById("index-selector").selectedIndex = indexOfSquardle
+
     }
     else
     {
@@ -50,9 +51,12 @@ async function loadData()
     }
 
 
+    // loading structure
+    let squardle = await getJson("./data/squardle_" + indexOfSquardle +".json");
+    let tmpBoard = squardle.letters;
+
     // letters
-    let tmpBoard = await getJson("./data/Board" + indexOfSquardle +".json");
-    console.log(tmpBoard)
+        //let tmpBoard = await getJson("./data/Board" + indexOfSquardle +".json");
     size = tmpBoard.length;
     for (let i = 0; i < tmpBoard.length; i++) {
         const element = tmpBoard[i];
@@ -63,16 +67,13 @@ async function loadData()
     }
 
     // words
-    wordsToFind = await getJson("./data/WordsToFind" + indexOfSquardle +".json");
-
-    console.log(wordsToFind)
-    console.log("progress" + indexOfSquardle + " loaded") 
-    console.log(localStorage.getItem("progress" + indexOfSquardle))
+    wordsToFind = squardle.wordsToFind;
+        //wordsToFind = await getJson("./data/WordsToFind" + indexOfSquardle +".json");
     // load progress
-    if(localStorage.getItem("progress" + indexOfSquardle) !== null)
+    if(localStorage.getItem("progress_" + indexOfSquardle) !== null)
     {
         wordsFound = [];
-        wordsFound = JSON.parse(localStorage.getItem("progress" + indexOfSquardle));
+        wordsFound = JSON.parse(localStorage.getItem("progress_" + indexOfSquardle));
     }
     else
     {
@@ -85,11 +86,27 @@ async function loadData()
 
 }
 
-async function getJson(url){
-    const obj = await fetch(url)
-    const jsonObj = await obj.json()
-    return jsonObj
+
+async function getFile(url)
+{
+    try{
+        return await fetch(url);
+    }
+    catch(error){
+        console.log(error);
+    }
+    return false;
 }
+async function getJson(url){
+    const obj = await getFile(url);
+    if(obj == false)
+    {
+        return false;
+    }
+    const jsonObj = await obj.json();
+    return jsonObj;
+}
+
 
 // SAVE SQUARDLE USER IS PLAYING
 function changeIndex()
@@ -99,6 +116,29 @@ function changeIndex()
     let newIndex = document.getElementById("index-selector").selectedIndex;
     localStorage.setItem("index", JSON.stringify(newIndex))
     initialize();
+}
+
+async function initSelector()
+{
+    let selector = document.getElementById("index-selector");
+    while(selector.firstChild)
+    {
+        selector.removeChild(selector.firstChild)
+    }
+    let i = 0;
+    let squardle = await getJson("./data/squardle_" + i +".json");
+    while(squardle != false)
+    {
+        let newItem = document.createElement("option");
+        newItem.textContent = squardle.name;
+        newItem.value = i;
+        selector.appendChild(newItem);
+        i++;
+        document.getElementById("index-selector").selectedIndex = indexOfSquardle
+        squardle = await getJson("./data/squardle_" + i +".json");
+    }
+    
+    console.log("The error above is OK");
 }
 
 // BOARD
@@ -227,6 +267,16 @@ function createWord(path)
     });
     return string;
 }
+
+function createWords(paths)
+{
+    let words = [];
+    for (let i = 0; i < paths.length; i++) {
+        const element = paths[i];
+        words.push(createWord(element));
+    }
+    return words;
+}
 function updateWord(word)
 {
     let wordBox = document.getElementById("output");
@@ -280,6 +330,8 @@ function updateScore()
     scoreBox.textContent = score + " bodů";
 }
 
+// FOUND WORDS LIST
+
 function updateFound()
 {
     let headerBox = document.getElementById("found-header");
@@ -312,6 +364,8 @@ function updateFound()
         if(wordsFound[i])
         {
             let word = createWord(wordsToFind[i]);
+            
+
             let paragraph = document.createElement("p");
             paragraph.textContent = word;
             paragraph.classList.add("foundWord");
@@ -322,14 +376,28 @@ function updateFound()
     
 }
 
+let foundWordsPopUp = false;
+function toggleFoundWordsPopUp()
+{
+    let foundWords = document.getElementById("found");
+    if(foundWordsPopUp)
+    {
+        foundWords.style.display = "none";
+
+    }
+    else
+    {
+        foundWords.style.display = "block";
+    }
+    foundWordsPopUp = !foundWordsPopUp;
+}
+// SAVING
 function saveProgress()
 {
-    console.log("progress" + indexOfSquardle + " saving")
-    console.log(wordsFound)
-    localStorage.setItem("progress" + indexOfSquardle,JSON.stringify(wordsFound));
+    localStorage.setItem("progress_" + indexOfSquardle,JSON.stringify(wordsFound));
 }
 
-
+// CREATING LINE
 function updateLine()
 {
     let line = document.getElementById("line")
@@ -346,7 +414,7 @@ function connectButtons(path)
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
         let button = document.getElementsByClassName("row")[element[0]].childNodes[element[1]].getBoundingClientRect()
-        positions.push([button.left + button.width/2 - 7.5 + window.scrollX,button.top - 7.5 + window.scrollY])
+        positions.push([button.left + button.width/2 - 7.5 + window.scrollX,button.top /*+ button.height/2*/ - 1 + window.scrollY])
     }
     return drawLine(positions)
 }
@@ -398,6 +466,8 @@ function createLine(x1, y1, x2, y2) {
 
     return createLineElement(x, y, c, alpha);
 }
+
+
 
 // calls starting program function
 // initialize()
