@@ -392,6 +392,10 @@ function updateScore()
     let scoreBar = document.getElementById("score-bar");
     scoreBar.style.width = String(score/maxScore*100) + "%"
 
+    if(score == maxScore)
+    {
+        win();
+    }
 
     scoreBox.textContent = score + " bodů";
 }
@@ -536,7 +540,7 @@ function connectButtons(path)
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
         let button = document.getElementsByClassName("row")[element[0]].childNodes[element[1]].getBoundingClientRect()
-        positions.push([button.left + button.width/2 - 7.5 + window.scrollX,button.top /*+ button.height/2*/ -15 + window.scrollY])
+        positions.push([button.left + button.width/2 - 7.5 + window.scrollX,button.top /*+ button.height/2*/ -20 + window.scrollY])
     }
     return drawLine(positions)
 }
@@ -618,6 +622,33 @@ function joinArrays(arrays)
 
 function includedInPositionArray(array, position)
 {
+}
+
+
+function win()
+{
+    let board = document.getElementById("board")
+    const points = [
+        { transform: 'rotate(0) scale(1)' },
+        { transform: 'rotate(360deg) scale(1)' }
+    ];
+      
+    const timing= {
+        duration: 1500,
+        iterations: 1,
+    }
+    for (let i = 0; i < lettersInBoard.length; i++) {
+        
+        for (let y = 0; y < lettersInBoard.length; y++) {
+            let button = getButton(i,y);
+            button.setAttribute('style','animation-delay: -20000;');
+            
+            button.animate(points,timing);
+            
+        }
+    }
+    
+    board.animate(points,timing)
 }
 
 // calls starting program function

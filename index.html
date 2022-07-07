@@ -11,6 +11,13 @@
     
     <body onload="initialize()">
         <h1 id="main-header">Český squardle</h1>
+        <div id="menu">
+            <div id = "index-selector-box">
+                <select onchange="changeIndex()" id="index-selector">
+                    
+                </select>
+            </div>
+        </div>
         <p id="output">  </p>
         <div id="score" onclick="toggleFoundWordsPopUp()">
             <div id="score-points"></div>
@@ -31,15 +38,7 @@
         </div>
         <div id="line"></div>
         <div id = "board"></div>
-        <div id = "index-selector-box">
-            <select onchange="changeIndex()" id="index-selector">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-        </div>
+        
         <!--<img src="images/warden.jpg" style="width:100%; filter: brightness(0.1);">-->
         <script src="squardle.js"></script>
         
