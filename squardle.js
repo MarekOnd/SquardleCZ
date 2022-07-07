@@ -446,9 +446,13 @@ function updateFound()
         {
             fastAppendText(i + " písmenná slova:", "foundWord-letterHeader", paragraph)
             fastAppendText(words.filter(w=>w.length==i).join("  "), "foundWord-words", paragraph)
-            fastAppendText(" + zbývá najít " + (howManyXLongWords(i,wordsToFindStrings)-howManyXLongWords(i,words)),"foundWord-missing",paragraph)
+            let missing = howManyXLongWords(i,wordsToFindStrings)-howManyXLongWords(i,words)
+            if(missing > 0)
+            {
+                fastAppendText(" + zbývá najít " + missing,"foundWord-missing",paragraph)
+            }
+            
         }
-        
     }
     // let currentLength = 4;
     // let stringOfSameLengthWords = ""
