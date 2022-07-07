@@ -233,9 +233,7 @@ function updateActiveLettersInBoard()
         }
         
     }
-    console.log(includedLetterPaths)
     let allIncludedPositions = joinArrays(includedLetterPaths)
-    console.log(allIncludedPositions)
     for (let i = 0; i < lettersInBoard.length; i++) {
         
         for (let y = 0; y < lettersInBoard.length; y++) {
@@ -440,29 +438,40 @@ function updateFound()
     }
 
 
+    words.sort()
+    console.log(words)
     // THE ULTIMATE FUNCTION TO PRINT FOUND WORDS!!!
-    let currentLength = 4;
-    let stringOfSameLengthWords = ""
-    for (let i = 0; i < words.length; i++) {
-        if(words[i].length > currentLength)
+    for (let i = 0; i < 20; i++) {
+        if(howManyXLongWords(i,wordsToFindStrings) > 0)
         {
-            fastAppendText(currentLength + " písmenná slova:", "foundWord-letterHeader", paragraph)
-            fastAppendText(stringOfSameLengthWords, "foundWord-words", paragraph)
-            fastAppendText(" + zbývá najít " + (howManyXLongWords(currentLength,wordsToFindStrings)-howManyXLongWords(currentLength,words)),"foundWord-missing",paragraph)
-            currentLength++;
-            while(words[i].length > currentLength)
-            {
-                fastAppendText(currentLength + " písmenná slova:", "foundWord-letterHeader", paragraph)
-                fastAppendText(" + zbývá najít " + (howManyXLongWords(currentLength,wordsToFindStrings)-howManyXLongWords(currentLength,words)),"foundWord-missing",paragraph)
-                currentLength++;
-            }
-            stringOfSameLengthWords = ""
+            fastAppendText(i + " písmenná slova:", "foundWord-letterHeader", paragraph)
+            fastAppendText(words.filter(w=>w.length==i).join("  "), "foundWord-words", paragraph)
+            fastAppendText(" + zbývá najít " + (howManyXLongWords(i,wordsToFindStrings)-howManyXLongWords(i,words)),"foundWord-missing",paragraph)
         }
-        stringOfSameLengthWords+= words[i] + "  ";
+        
     }
-    fastAppendText(currentLength + " písmenná slova:", "foundWord-letterHeader", paragraph)
-    fastAppendText(stringOfSameLengthWords, "foundWord-words", paragraph)
-    fastAppendText(" + zbývá najít " + howManyXLongWords(currentLength,wordsToFindStrings),"foundWord-missing",paragraph)
+    // let currentLength = 4;
+    // let stringOfSameLengthWords = ""
+    // for (let i = 0; i < words.length; i++) {
+    //     if(words[i].length > currentLength)
+    //     {
+    //         fastAppendText(currentLength + " písmenná slova:", "foundWord-letterHeader", paragraph)
+    //         fastAppendText(stringOfSameLengthWords, "foundWord-words", paragraph)
+    //         fastAppendText(" + zbývá najít " + (howManyXLongWords(currentLength,wordsToFindStrings)-howManyXLongWords(currentLength,words)),"foundWord-missing",paragraph)
+    //         currentLength++;
+    //         while(words[i].length > currentLength)
+    //         {
+    //             fastAppendText(currentLength + " písmenná slova:", "foundWord-letterHeader", paragraph)
+    //             fastAppendText(" + zbývá najít " + (howManyXLongWords(currentLength,wordsToFindStrings)-howManyXLongWords(currentLength,words)),"foundWord-missing",paragraph)
+    //             currentLength++;
+    //         }
+    //         stringOfSameLengthWords = ""
+    //     }
+    //     stringOfSameLengthWords+= words[i] + "  ";
+    // }
+    // fastAppendText(currentLength + " písmenná slova:", "foundWord-letterHeader", paragraph)
+    // fastAppendText(stringOfSameLengthWords, "foundWord-words", paragraph)
+    // fastAppendText(" + zbývá najít " + howManyXLongWords(currentLength,wordsToFindStrings),"foundWord-missing",paragraph)
     
 
     paragraph.classList.add("foundWord");
@@ -473,10 +482,14 @@ function updateFound()
 
 function sortWords(words)
 {
-    let newWords = JSON.parse(JSON.stringify(words));
-    newWords.sort()
-    newWords.sort((word)=>{word.length})
-    return newWords;
+    let alphabeticalWords = JSON.parse(JSON.stringify(words)).sort();
+    let sortedWords = [];
+    for (let i = 0; i < 20; i++) {
+        let element = alphabeticalWords.filter(word=>word.length)
+        
+    }
+    
+    return sortedWords;
 }
 
 
@@ -596,7 +609,6 @@ function joinArrays(arrays)
             megaArray.push(arrays[i].positions[y])
         }
     }
-    console.log(megaArray)
     return megaArray;
 }
 
