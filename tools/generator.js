@@ -6,15 +6,31 @@ let ABC = "abcdefghijklmnopqrstuvwxyzáéíýóúřčěš"
 let LIBRARY = JSON.parse(fs.readFileSync("libraries/library_syn2015.json"));
 
 // parameters
-let size = 8;
-let squardleName = "Maxi"
-let fileName = "5"
+let size = 5;
+let squardleName = "Doprava"
+let fileName = "7"
 let minWordSize = 4;
-let maxWordSize = 8;
-let numWordsToHide = 5;
+let maxWordSize = 9;
+let numWordsToHide = 6;
 
-let useInputWords = false
+let useInputWords = true
 let inputWords = [
+    "auto",
+    "motorka",
+    "formule",
+    "kamion",
+    "traktor",
+    "silnice",
+    "značka",
+    "řidič",
+    "řidička",
+    "řidiči",
+    "autíčko",
+    "letadlo",
+    "koloběžka",
+    "kolo",
+    "pneu",
+    "značka"
 ];
 
 // output
@@ -28,6 +44,7 @@ let squardle ={
 // variables
 let board;
 let wordsInBoard = [];
+let wordsInBoardFromPrevious = [];
 let wordLibrary;
 
 let progress = 0;
@@ -44,28 +61,49 @@ function initialize()
     }
     else
     {
+        LIBRARY = LIBRARY.concat(inputWords);
         wordLibrary = inputWords;
     }
 
 
+    
+    
+
+    let numOfTries = 0
     abc = blend(wordLibrary)
     board = generateRandomBoard();
-    while(wordsInBoard.length < numWordsToHide)
+    while(wordsInBoard.length < numWordsToHide && numOfTries < Math.pow(abc.length,size*size-countTrue(board.locked)))
     {
-        //board = generateRandomBoard(board)
         board = nextBoardPermutation(board);
-        //console.log(board)
         wordsInBoard = findWordsInBoard();
-        lockPaths(wordsInBoard)
+        
+        lockPaths(wordsInBoard);
         if(wordsInBoard.length > progress)
         {
             progress = wordsInBoard.length
-            console.log(progress)
+            console.log("Found words in board: "+progress)
+            console.log(board.letters)
+            console.log(board.locked)
+            numOfTries = 0;
+            for (let i = 0; i < wordsInBoard.length; i++) {
+                const element = wordsInBoard[i];
+                wordLibrary.splice(wordLibrary.indexOf(element));
+            }
+            abc = blend(wordLibrary)
+            board = generateRandomBoard(board);
+
         }
-        //console.log(wordsInBoard.length)
-        //printWords();
+        if(numOfTries++%10000 == 0)
+        {
+            console.log(abc)
+            console.log("Number of tries: "+numOfTries + "/" + Math.pow(abc.length,size*size-countTrue(board.locked)))
+        }
     }
-    wordLibrary = wordLibrary.concat(LIBRARY);
+
+    
+
+    // FINAL CHANGES
+    wordLibrary = LIBRARY
     wordsInBoard = findWordsInBoard();
 
     squardle.name = squardleName;
@@ -77,14 +115,14 @@ function initialize()
 
 // BOARD
 abc = "abcde"
-function generateRandomBoard(oldBoard = null, abcLocal = abc)
+function generateRandomBoard(oldBoard = null, letLockedSame = false,abcLocal = abc)
 {
     let newBoard;
     if(oldBoard) // is already generated
     {
         newBoard = {
             letters: [],
-            locked: oldBoard.locked,
+            locked: JSON.parse(JSON.stringify(oldBoard.locked)),
         }
         for(let i = 0; i < size; i++)
         {
@@ -93,7 +131,7 @@ function generateRandomBoard(oldBoard = null, abcLocal = abc)
             {
                 if(newBoard.locked[i][y])
                 {
-                    rowLetters.push(oldBoard[i][y]);
+                    rowLetters.push(oldBoard.letters[i][y]);
                 }
                 else
                 {
@@ -175,6 +213,21 @@ function lockPaths(paths)
     for (let i = 0; i < paths.length; i++) {
         lockPath(paths[i])
     }
+}
+
+function countTrue(boolArr)
+{
+    let sum = 0;
+    for (let i = 0; i < boolArr.length; i++) {
+        const element = boolArr[i];
+        for (let i = 0; i < element.length; i++) {
+            if(element[i])
+            {
+                sum++;
+            }
+        }
+    }
+    return sum;
 }
 // RECURSIVE SEARCH THROUGH BOARD
 function findWordsInBoard()

@@ -9,7 +9,8 @@ let indexOfSquardle;
 let squardleName = "";
 let size; // size of board
 let lettersInBoard = []; // letters in board
-let wordsToFind =[];
+let wordToFindPaths =[];
+let wordsToFindStrings = []
 let wordsFound = []; // bool array
 
 // variables for finding word
@@ -25,9 +26,11 @@ let wordPath = {
 async function initialize(){
     squardleName = "";
     lettersInBoard = [];
-    wordsToFind =[];
+    wordToFindPaths =[];
+    wordsToFindStrings = []
     wordsFound = [];
     await loadData();
+    wordsToFindStrings = createWords(wordToFindPaths);
     window.addEventListener("pointerup",()=>{mouseUp()})
     
 
@@ -67,7 +70,7 @@ async function loadData()
     }
 
     // words
-    wordsToFind = squardle.wordsToFind;
+    wordToFindPaths = squardle.wordsToFind;
         //wordsToFind = await getJson("./data/WordsToFind" + indexOfSquardle +".json");
     // load progress
     if(localStorage.getItem("progress_" + indexOfSquardle) !== null)
@@ -77,8 +80,8 @@ async function loadData()
     }
     else
     {
-        for (let i = 0; i < wordsToFind.length; i++) {
-            const element = wordsToFind[i];
+        for (let i = 0; i < wordToFindPaths.length; i++) {
+            const element = wordToFindPaths[i];
             wordsFound.push(false);
         }
 
@@ -289,8 +292,8 @@ function updateWord(word)
 function testMainWord() //<= goes here from mouseUp
 {
     let mainWord = createWord(wordPath);
-    for (let i = 0; i < wordsToFind.length; i++) {
-        const element = createWord(wordsToFind[i]);
+    for (let i = 0; i < wordToFindPaths.length; i++) {
+        const element = createWord(wordToFindPaths[i]);
         if(mainWord == element)
         {
             if(wordsFound[i] == true)
@@ -314,7 +317,7 @@ function updateScore()
     let score = 0;
     let maxScore = 0
     for (let i = 0; i < wordsFound.length; i++) {
-        let word = createWord(wordsToFind[i]);
+        let word = createWord(wordToFindPaths[i]);
         maxScore += word.length * word.length;
         if(wordsFound[i])
         {
@@ -363,7 +366,7 @@ function updateFound()
     for (let i = 0; i < wordsFound.length; i++) {
         if(wordsFound[i])
         {
-            let word = createWord(wordsToFind[i]);
+            let word = createWord(wordToFindPaths[i]);
             
 
             let paragraph = document.createElement("p");
