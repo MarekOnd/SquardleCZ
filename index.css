@@ -12,6 +12,13 @@ body{
 
 }
 
+#version{
+    position: absolute;
+    top: -20px;
+    right: 10px;
+    font-size: 20px;
+}
+
 #main-header{
     text-align: center;
     font-size: 60px;
