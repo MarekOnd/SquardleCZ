@@ -432,6 +432,7 @@ function testMainWord() //<= goes here from mouseUp
         if(!bonusWordsFound.includes(mainWord))
         {
             bonusWordsFound.push(mainWord);
+            updateFound();
             updateWord("Bonusové slovo")
             saveProgress()
         }
