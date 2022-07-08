@@ -17,7 +17,7 @@ let wordToFindPaths =[];
 let wordsToFindStrings = [];
 
 
-let libraryName = "library_syn2015.json"
+let libraryName = "huge_library.json"
 let LIBRARY = [];
 // variables for finding word
 let mousePressed = false;
@@ -106,7 +106,6 @@ async function loadData()
     bonusWordsFound = [];
     if(localStorage.getItem("bonus_" + indexOfSquardle) !== null)
     {
-        
         bonusWordsFound = JSON.parse(localStorage.getItem("bonus_" + indexOfSquardle));
     }
 
@@ -156,17 +155,17 @@ async function initSelector()
         selector.removeChild(selector.firstChild)
     }
     let i = 0;
-    let squardle = await getJson("./data/squardle_" + i +".json");
-    while(i < numberOfSquardles)
-    {
+    let squardle
+    do{
+        squardle = await getJson("./data/squardle_" + i +".json");
         let newItem = document.createElement("option");
         newItem.textContent = squardle.name;
-        newItem.value = i;
+        newItem.value = i-1;
         selector.appendChild(newItem);
         i++;
-        document.getElementById("index-selector").selectedIndex = indexOfSquardle
-        squardle = await getJson("./data/squardle_" + i +".json");
-    }
+    }while(i <= numberOfSquardles)
+    document.getElementById("index-selector").selectedIndex = indexOfSquardle
+
     
     console.log("The error above is OK");
 }
@@ -417,14 +416,15 @@ function testMainWord() //<= goes here from mouseUp
                 updateScore();
                 updateFound();
                 updateLettersInBoard()
-                return;
             }
+            return;
         }
     }
-    if(LIBRARY.includes(wordPath))
+    if(mainWord.length >= 4 && LIBRARY.includes(mainWord))
     {
-        bonusWordsFound.push([wordPath]);
+        bonusWordsFound.push(mainWord);
     }
+    
 
 }
 
@@ -510,7 +510,7 @@ function updateFound()
         }
     }
     fastAppendText("Bonusová slova:", paragraph,"foundWord-letterHeader")
-    fastAppendText(sortWords(bonusWordsFound).join("  "), paragraph,"foundWord-words")
+    fastAppendText(bonusWordsFound.join("  "), paragraph,"foundWord-words")// POTREBA SORTNOUT
 
     paragraph.classList.add("foundWord");
     textBox.appendChild(paragraph);
@@ -660,7 +660,7 @@ function win()
     let points = [
         { transform: 'rotate(0) scale(1)' },
         { transform: 'rotate(-90deg) scale(1.2)' },
-        { transform: 'rotate(180) scale(1.5)' },
+        { transform: 'rotate(180deg) scale(1.5)' },
         { transform: 'rotate(360deg) scale(1)' }
     ];
       
