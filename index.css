@@ -36,18 +36,23 @@ body{
     margin-right: auto;
     
 }
-#board td{
+.cell{
+    --font-size: 60px;
+    --small-font-size: 15px;
+    
+    position: relative;
     width: 100px;
     height: 100px;
-    
+    padding: 15px;
 }
 #board tr{
     width: 100px;
     height: 100px;
 }
 .boardButton{
-    height: 80px;
-    width: 80px;
+    position: relative;
+    height: 100%;
+    width:  100%;
     border-radius: 10px;
     background-color: rgb(70, 68, 68);
     color: white;
@@ -55,20 +60,44 @@ body{
     border: 0px;
     text-transform: capitalize;
     text-align: center;
-    
-    text-align: center;
+
     font-size: 50px;
 }
 .allWereFound{
-    background-color: rgba(0, 0, 0, 0.719);
+    background-color: rgba(27, 27, 27, 0.719);
     color: white;
-    filter: blur(1px);
     z-index: 0;
 }
 .selected{
     background-color: gray;
     border-radius: 10px;
     
+}
+
+.button-letter{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 100px;
+    font-size: var(--font-size);   
+    color: rgb(255, 255, 255);
+}
+.button-start{
+    position: absolute;
+    right: 5%;
+    top: 0%;
+    font-size: var(--small-font-size);   
+    color: red;
+}
+.button-use{
+    position: absolute;
+    top: 0%;
+    left: 5%;
+    font-size: var(--small-font-size);
+    color: green;
 }
 
 

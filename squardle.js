@@ -55,7 +55,7 @@ async function initialize(){
     initSelector();
     updateScore();
     updateFound();
-    updateActiveLettersInBoard()
+    updateLettersInBoard()
 }
 // LOAD DATA
 async function loadData()
@@ -142,7 +142,6 @@ async function getJson(url){
 // SAVE SQUARDLE USER IS PLAYING
 function changeIndex()
 {   
-    console.log("changed")
     saveProgress();
     let newIndex = document.getElementById("index-selector").selectedIndex;
     localStorage.setItem("index", JSON.stringify(newIndex))
@@ -190,12 +189,31 @@ function createBoard()
 
         for(var j = 0; j < lettersInBoard[0].length; j++)
         {
+            // celle and button
             let cell = document.createElement("td");
             cell.className = "cell";
-            let button = document.createElement("button");
+            let button = document.createElement("div");
             button.className = "boardButton";
-            
+
+            // how many words use this letter, how many start with letter
+
+            let letter = document.createElement("div")
+            letter.className = "button-letter";
             let text = document.createTextNode(lettersInBoard[i][j]);
+            letter.appendChild(text);
+            button.appendChild(letter)
+
+            let use = document.createElement("div");
+            use.className = "button-use";
+            let start = document.createElement("div");
+            start.className = "button-start";
+            button.appendChild(use);
+            button.appendChild(start);
+
+            // text
+            
+
+            // events
             let x = i;
             let y = j;
             
@@ -205,7 +223,8 @@ function createBoard()
             button.addEventListener("pointerenter",function(){mouseEnter(x,y)});
             button.addEventListener("gotpointercapture",(e)=>{e.target.releasePointerCapture(e.pointerId)})
 
-            button.appendChild(text);
+            // final apendage
+            
             cell.appendChild(button);
             row.appendChild(cell);
 
@@ -223,31 +242,65 @@ function getButton(x,y)
 
 }
 
-function updateActiveLettersInBoard()
+function updateLettersInBoard()
 {
-    let includedLetterPaths = []
+    let includedLetterPaths = [];
+    let startingPositions = [];
     for (let i = 0; i < wordToFindPaths.length; i++) {
         if(!wordsFound[i])
         {
             includedLetterPaths.push(wordToFindPaths[i]);
+            startingPositions.push(wordToFindPaths[i].positions[0])
         }
         
     }
-    let allIncludedPositions = joinArrays(includedLetterPaths)
+    
+
+    let allIncludedPositions = joinArrays(includedLetterPaths);
+    
+
     for (let i = 0; i < lettersInBoard.length; i++) {
         
         for (let y = 0; y < lettersInBoard.length; y++) {
+            let button = getButton(i,y);
+            let timesUsedInWord = allIncludedPositions.filter(el=>(el[0]==i&&el[1]==y)).length
+
+
             
-            if(allIncludedPositions.filter(el=>(el[0]==i&&el[1]==y)) == 0)
+            // update active letters
+            if(!button.classList.contains("allWereFound") && timesUsedInWord == 0)
             {
-                let buttonToDeselect = getButton(i,y);
-                buttonToDeselect.classList.add("allWereFound")
+                button.classList.add("allWereFound")
+                let use = button.getElementsByClassName("button-use")[0]; // button always has one
+                let start = button.getElementsByClassName("button-start")[0]; // button always has one
+                use.textContent = ""
+                start.textContent = ""
+            }
+            else
+            {
+                // update times used in a word
+                let use = button.getElementsByClassName("button-use")[0]; // button always has one
+                use.textContent = timesUsedInWord;
+
+                // update first time in words
+                let start = button.getElementsByClassName("button-start")[0]; // button always has one
+                let timesStartingWithThis = startingPositions.filter(el=>(el[0]==i&&el[1]==y)).length;
+                if(timesStartingWithThis > 0)
+                {
+                    start.textContent = timesStartingWithThis
+                }
+                else
+                {
+                    start.textContent = ""
+                }
 
             }
             
+
         }
-        
     }
+    
+
 }
 
 
@@ -363,7 +416,7 @@ function testMainWord() //<= goes here from mouseUp
                 wordsFound[i] = true;
                 updateScore();
                 updateFound();
-                updateActiveLettersInBoard()
+                updateLettersInBoard()
                 return;
             }
         }
@@ -436,51 +489,28 @@ function updateFound()
     for (let i = 0; i < wordsFound.length; i++) {
         if(wordsFound[i])
         {
-            console.log("push")
             words.push(wordsToFindStrings[i])          
         }
     }
 
 
     words.sort()
-    console.log(words)
     // THE ULTIMATE FUNCTION TO PRINT FOUND WORDS!!!
     for (let i = 0; i < 20; i++) {
         if(howManyXLongWords(i,wordsToFindStrings) > 0)
         {
-            fastAppendText(i + " písmenná slova:", "foundWord-letterHeader", paragraph)
-            fastAppendText(words.filter(w=>w.length==i).join("  "), "foundWord-words", paragraph)
+            fastAppendText(i + " písmenná slova:", paragraph, "foundWord-letterHeader")
+            fastAppendText(words.filter(w=>w.length==i).join("  "), paragraph, "foundWord-words")
             let missing = howManyXLongWords(i,wordsToFindStrings)-howManyXLongWords(i,words)
             if(missing > 0)
             {
-                fastAppendText(" + zbývá najít " + missing,"foundWord-missing",paragraph)
+                fastAppendText(" + zbývá najít " + missing,paragraph,"foundWord-missing")
             }
             
         }
     }
-    // let currentLength = 4;
-    // let stringOfSameLengthWords = ""
-    // for (let i = 0; i < words.length; i++) {
-    //     if(words[i].length > currentLength)
-    //     {
-    //         fastAppendText(currentLength + " písmenná slova:", "foundWord-letterHeader", paragraph)
-    //         fastAppendText(stringOfSameLengthWords, "foundWord-words", paragraph)
-    //         fastAppendText(" + zbývá najít " + (howManyXLongWords(currentLength,wordsToFindStrings)-howManyXLongWords(currentLength,words)),"foundWord-missing",paragraph)
-    //         currentLength++;
-    //         while(words[i].length > currentLength)
-    //         {
-    //             fastAppendText(currentLength + " písmenná slova:", "foundWord-letterHeader", paragraph)
-    //             fastAppendText(" + zbývá najít " + (howManyXLongWords(currentLength,wordsToFindStrings)-howManyXLongWords(currentLength,words)),"foundWord-missing",paragraph)
-    //             currentLength++;
-    //         }
-    //         stringOfSameLengthWords = ""
-    //     }
-    //     stringOfSameLengthWords+= words[i] + "  ";
-    // }
-    // fastAppendText(currentLength + " písmenná slova:", "foundWord-letterHeader", paragraph)
-    // fastAppendText(stringOfSameLengthWords, "foundWord-words", paragraph)
-    // fastAppendText(" + zbývá najít " + howManyXLongWords(currentLength,wordsToFindStrings),"foundWord-missing",paragraph)
-    
+    fastAppendText("Bonusová slova:", paragraph,"foundWord-letterHeader")
+    fastAppendText(sortWords(bonusWordsFound).join("  "), paragraph,"foundWord-words")
 
     paragraph.classList.add("foundWord");
     textBox.appendChild(paragraph);
@@ -496,7 +526,6 @@ function sortWords(words)
         let element = alphabeticalWords.filter(word=>word.length)
         
     }
-    
     return sortedWords;
 }
 
@@ -540,7 +569,7 @@ function connectButtons(path)
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
         let button = document.getElementsByClassName("row")[element[0]].childNodes[element[1]].getBoundingClientRect()
-        positions.push([button.left + button.width/2 - 7.5 + window.scrollX,button.top /*+ button.height/2*/ -20 + window.scrollY])
+        positions.push([button.left + button.width/2 - 20 + window.scrollX,button.top /*+ button.height/2*/ + window.scrollY])
     }
     return drawLine(positions)
 }
@@ -560,9 +589,9 @@ function drawLine(points)
 // DRAW LINE
 function createLineElement(x, y, length, angle) {
     var line = document.createElement("div");
-    var styles = 'border: 2px solid rgb(20, 218, 218,0.1); '
+    var styles = 'border: 10px solid rgb(20, 218, 218,0.1); '
                + 'width: ' + length + 'px; '
-               + 'height: 15px; '
+               + 'height: 0px; '
                + "background-color:rgb(20, 218, 218, 0.5);"
                + '-moz-transform: rotate(' + angle + 'rad); '
                + '-webkit-transform: rotate(' + angle + 'rad); '
@@ -596,12 +625,16 @@ function createLine(x1, y1, x2, y2) {
 
 
 
-function fastAppendText(text,className,where)
+function fastAppendText(text,where,className="")
 {
     let textDiv =document.createElement("div")
     textDiv.textContent = text;
-    textDiv.classList.add(className)
+    if(className!="")
+    {
+        textDiv.classList.add(className)
+    }
     where.appendChild(textDiv);
+    return textDiv;
 }
 
 function howManyXLongWords(x,words)
@@ -620,35 +653,33 @@ function joinArrays(arrays)
     return megaArray;
 }
 
-function includedInPositionArray(array, position)
-{
-}
-
 
 function win()
 {
     let board = document.getElementById("board")
-    const points = [
+    let points = [
         { transform: 'rotate(0) scale(1)' },
+        { transform: 'rotate(-90deg) scale(1.2)' },
+        { transform: 'rotate(180) scale(1.5)' },
         { transform: 'rotate(360deg) scale(1)' }
     ];
       
-    const timing= {
-        duration: 1500,
-        iterations: 1,
-    }
     for (let i = 0; i < lettersInBoard.length; i++) {
         
         for (let y = 0; y < lettersInBoard.length; y++) {
             let button = getButton(i,y);
-            button.setAttribute('style','animation-delay: -20000;');
-            
-            button.animate(points,timing);
+            const timing = {
+                duration: 2000-(y+1)*300 - (i+1)*100,
+                iterations: 1,
+            }
+            // button.setAttribute('style','animation-delay: -20000;');
+            setTimeout(()=>{
+                button.animate(points,timing);
+            },(y+1)*300 + (i+1)*100)
             
         }
     }
     
-    board.animate(points,timing)
 }
 
 // calls starting program function
