@@ -45,7 +45,7 @@ body{
 }
 .cell{
     --font-size: 60px;
-    --small-font-size: 15px;
+    --small-font-size: 30px;
     
     position: relative;
     width: 100px;
@@ -101,7 +101,7 @@ body{
 }
 .button-use{
     position: absolute;
-    top: 0%;
+    bottom: 0%;
     left: 5%;
     font-size: var(--small-font-size);
     color: green;
