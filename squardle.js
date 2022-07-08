@@ -509,7 +509,7 @@ function updateFound()
             
         }
     }
-    fastAppendText("Bonusová slova:", paragraph,"foundWord-letterHeader")
+    fastAppendText("Bonusová slova:" + "(" + bonusWordsFound.length + ")", paragraph,"foundWord-letterHeader")
     fastAppendText(bonusWordsFound.join("  "), paragraph,"foundWord-words")// POTREBA SORTNOUT
 
     paragraph.classList.add("foundWord");
