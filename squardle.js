@@ -6,7 +6,7 @@ let indexOfSquardle;
   //let indexOfSquardle = Math.floor((date.getTime() - originDate.getTime())/(3600*24*1000));
 
 // information
-let numberOfSquardles = 7;
+let numberOfSquardles = 14;
 
 
 // input data
@@ -320,7 +320,7 @@ function mouseDown(x,y)
     // saves position to wordPath
     wordPath.positions.push([x,y]);
 
-    updateWord(createWord(wordPath))
+    updateWord(createWord(wordPath), "white")
     updateLine()
 }
 function mouseUp()
@@ -364,7 +364,7 @@ function mouseEnter(x,y)
         button.classList.add("selected");
         wordPath.positions.push([x,y]);
     }
-    updateWord(createWord(wordPath));
+    updateWord(createWord(wordPath), "white");
 
     updateLine()
 }
@@ -388,10 +388,33 @@ function createWords(paths)
     }
     return words;
 }
-function updateWord(word)
+
+let timeout;
+let secondTimeout;
+function updateWord(word, color = null)
 {
     let wordBox = document.getElementById("output");
     wordBox.textContent = word;
+    if(color)
+    {
+        wordBox.style.cssText += 'color: ' + color;
+    }
+    clearTimeout(timeout);
+    clearTimeout(secondTimeout)
+    timeout = setTimeout(()=>{
+        let points = [
+            { color: 'rgb(0,0,0,0)'},
+        ];
+        let timing ={
+            duration: 1000,
+            iterations: 1,
+        }
+        wordBox.animate(points,timing);
+        secondTimeout = setTimeout(()=>{
+            updateWord("")
+        },900)
+        
+    },2000)
 
 }
 
@@ -408,7 +431,7 @@ function testMainWord() //<= goes here from mouseUp
             if(wordsFound[i] == true)
             {
                 // already found
-                updateWord("Již nalezeno")
+                updateWord("Již nalezeno", "white")
             }
             else
             {
@@ -417,7 +440,7 @@ function testMainWord() //<= goes here from mouseUp
                 updateScore();
                 updateFound();
                 updateLettersInBoard()
-                updateWord("Nalezeno slovo")
+                updateWord("Nalezeno slovo", "green")
             }
             return;
         }
@@ -426,23 +449,23 @@ function testMainWord() //<= goes here from mouseUp
     {
         if(mainWord.length < 4)
         {
-            updateWord("Slovo není dostatečně dlouhé")
+            updateWord("Slovo není dostatečně dlouhé", "red")
             return;
         }
         if(!bonusWordsFound.includes(mainWord))
         {
             bonusWordsFound.push(mainWord);
             updateFound();
-            updateWord("Bonusové slovo")
+            updateWord("Bonusové slovo", "cyan")
             saveProgress()
         }
         else
         {
-            updateWord("Již nalezeno (bonusové)")
+            updateWord("Již nalezeno (bonusové)", "cyan")
         }
         return;
     }
-    updateWord("Není slovo")
+    updateWord("Není slovo","red")
     console.log(bonusWordsFound)
     console.log("jsem tu")
 

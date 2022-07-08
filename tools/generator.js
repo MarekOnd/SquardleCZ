@@ -7,30 +7,24 @@ let LIBRARY = JSON.parse(fs.readFileSync("libraries/library_syn2015.json"));
 
 // parameters
 let size = 5;
-let squardleName = "Doprava"
-let fileName = "7"
+let squardleName = "Omega"
+let fileName = "13"
 let minWordSize = 4;
-let maxWordSize = 9;
-let numWordsToHide = 6;
+let maxWordSize = 14;
+let numWordsToHide = 7;
 
 let useInputWords = true
 let inputWords = [
-    "auto",
-    "motorka",
-    "formule",
-    "kamion",
-    "traktor",
-    "silnice",
-    "značka",
-    "řidič",
-    "řidička",
-    "řidiči",
-    "autíčko",
-    "letadlo",
-    "koloběžka",
-    "kolo",
-    "pneu",
-    "značka"
+    "alfa",
+    "beta",
+    "gama",
+    "delta",
+    "théta",
+    "kapa",
+    "omega",
+    "epsilon",
+
+
 ];
 
 // output
@@ -68,11 +62,10 @@ function initialize()
 
     
     
-
     let numOfTries = 0
     abc = blend(wordLibrary)
     board = generateRandomBoard();
-    while(wordsInBoard.length < numWordsToHide && numOfTries < Math.pow(abc.length,size*size-countTrue(board.locked)))
+    while(wordsInBoard.length < numWordsToHide && numOfTries < Math.pow(abc.length,size*size-countTrue(board.locked)) )
     {
         board = nextBoardPermutation(board);
         wordsInBoard = findWordsInBoard();
@@ -87,7 +80,10 @@ function initialize()
             numOfTries = 0;
             for (let i = 0; i < wordsInBoard.length; i++) {
                 const element = wordsInBoard[i];
+                console.log("Found word: " + element + " Remaining:" + wordLibrary);
                 wordLibrary.splice(wordLibrary.indexOf(element));
+                
+                
             }
             abc = blend(wordLibrary)
             board = generateRandomBoard(board);
@@ -100,7 +96,7 @@ function initialize()
         }
     }
 
-    
+    console.log("All possibilities tried. Searching through library")
 
     // FINAL CHANGES
     wordLibrary = LIBRARY
