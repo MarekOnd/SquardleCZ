@@ -320,8 +320,7 @@ function mouseDown(x,y)
     // saves position to wordPath
     wordPath.positions.push([x,y]);
 
-    updateWord()
-    
+    updateWord(createWord(wordPath))
     updateLine()
 }
 function mouseUp()
@@ -400,6 +399,7 @@ function updateWord(word)
 
 function testMainWord() //<= goes here from mouseUp
 {
+    let output = document.getElementById("output")
     let mainWord = createWord(wordPath);
     for (let i = 0; i < wordToFindPaths.length; i++) {
         const element = createWord(wordToFindPaths[i]);
@@ -408,6 +408,7 @@ function testMainWord() //<= goes here from mouseUp
             if(wordsFound[i] == true)
             {
                 // already found
+                updateWord("Již nalezeno")
             }
             else
             {
@@ -416,15 +417,33 @@ function testMainWord() //<= goes here from mouseUp
                 updateScore();
                 updateFound();
                 updateLettersInBoard()
+                updateWord("Nalezeno slovo")
             }
             return;
         }
     }
-    if(mainWord.length >= 4 && LIBRARY.includes(mainWord))
+    if(LIBRARY.includes(mainWord))
     {
-        bonusWordsFound.push(mainWord);
+        if(mainWord.length < 4)
+        {
+            updateWord("Slovo není dostatečně dlouhé")
+            return;
+        }
+        if(!bonusWordsFound.includes(mainWord))
+        {
+            bonusWordsFound.push(mainWord);
+            updateWord("Bonusové slovo")
+            saveProgress()
+        }
+        else
+        {
+            updateWord("Již nalezeno (bonusové)")
+        }
+        return;
     }
-    
+    updateWord("Není slovo")
+    console.log(bonusWordsFound)
+    console.log("jsem tu")
 
 }
 
@@ -549,6 +568,7 @@ function toggleFoundWordsPopUp()
 function saveProgress()
 {
     localStorage.setItem("progress_" + indexOfSquardle,JSON.stringify(wordsFound));
+    localStorage.setItem("bonus_" + indexOfSquardle, JSON.stringify(""))
     localStorage.setItem("bonus_" + indexOfSquardle, JSON.stringify(bonusWordsFound));
 }
 
