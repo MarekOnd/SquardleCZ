@@ -8,10 +8,10 @@ let LIBRARY = JSON.parse(fs.readFileSync("libraries/library_syn2015.json"));
 // parameters
 let size = 5;
 let squardleName = "Omega"
-let fileName = "13"
+let fileName = "15"
 let minWordSize = 4;
 let maxWordSize = 14;
-let numWordsToHide = 7;
+let numWordsToHide = 5;
 
 let useInputWords = true
 let inputWords = [
@@ -23,8 +23,6 @@ let inputWords = [
     "kapa",
     "omega",
     "epsilon",
-
-
 ];
 
 // output
@@ -79,14 +77,16 @@ function initialize()
             console.log(board.locked)
             numOfTries = 0;
             for (let i = 0; i < wordsInBoard.length; i++) {
-                const element = wordsInBoard[i];
+                const element = wordLibrary[i];
+                wordLibrary.splice(wordLibrary.indexOf(element),1);
+                
                 console.log("Found word: " + element + " Remaining:" + wordLibrary);
-                wordLibrary.splice(wordLibrary.indexOf(element));
+                
                 
                 
             }
             abc = blend(wordLibrary)
-            board = generateRandomBoard(board);
+            board = generateRandomBoard(board, true);
 
         }
         if(numOfTries++%10000 == 0)
@@ -100,13 +100,22 @@ function initialize()
 
     // FINAL CHANGES
     wordLibrary = LIBRARY
-    wordsInBoard = findWordsInBoard();
+    board = generateRandomBoard(board, true, ABC)
+    while(countTrue(board.locked) != size*size)
+    {
+        board = nextBoardPermutation(board, ABC)
+        wordsInBoard = findWordsInBoard();
+        lockPaths(wordsInBoard);
+    }
+    
 
     squardle.name = squardleName;
     squardle.letters = board.letters;
     squardle.wordsToFind = wordsInBoard;
     save();
 }
+
+
 
 
 // BOARD
