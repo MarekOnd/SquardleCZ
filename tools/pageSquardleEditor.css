@@ -1,4 +1,59 @@
 
+body{
+    background-color: black;
+}
+#squardleEditor{
+    position: absolute;
+    left: 5%;
+    width: 40%;
+    top: 5%;
+    height: 90%;
+    background-color: rgba(80, 175, 175, 0.993);
+    border-radius: 10px;
+    border: solid 5px gray;
+}
+
+#squardleGenerator{
+    position: absolute;
+    right: 5%;
+    width: 40%;
+    top: 5%;
+    height: 90%;
+    background-color: rgba(165, 175, 80, 0.993);
+    border-radius: 10px;
+    border: solid 5px gray;
+}
+
+
+
+
+textarea{
+    position: relative;
+    resize: none;
+    outline: none;
+    top: 5px;
+}
+
+
+
+#squardleHeader{
+
+}
+
+#board{
+
+}
+
+#wordsToFind{
+
+}
+#bonusWords{
+
+}
+
+#output{
+
+}
 
 .row{
     width: 500px;
@@ -7,11 +62,14 @@
 }
 
 .letter{
-    width: 50px;
-    height: 50px;
-    font-size: 20px;
-    align-content: center;
-    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+    font-size: 80px;
+    left: auto;
+    right: auto;
+    background-color: black;
+    color: white;
+    text-transform: capitalize;
 }
 
 #board_table{
@@ -24,4 +82,20 @@
 }
 #bonusWords button{
     background-color: yellow;
+}
+
+
+/* EDITOR */
+.boardLetter{
+    width: 60px;
+    height: 60px;
+    max-lines: 1;
+    font-size: 40px;
+    align-content: center;
+    box-sizing: border-box;
+    
+}
+
+.boardRow{
+    height: 40px;
 }

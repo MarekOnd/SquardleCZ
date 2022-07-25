@@ -10,12 +10,44 @@
     
     
     <body>
-        Jaký squardle chceš otevřít: <textarea id = "textarea"></textarea><button onclick="loadData()"></button>
-        <div id="squardleHeader"></div>
-        <div id="board"></div>
-        <div id="wordsToFind"></div>
-        <div id="bonusWords"></div>
+        <div id = "goto-index">
+            <a href="../index.html">Zpátky</a>
+        </div>
+        <div id="squardleEditor">
+            Jaký squardle chceš otevřít: <textarea placeholder = "jmeno souboru" name="" id="textarea" rows="1"></textarea><button onclick="loadData()">OTEVŘI</button>
+            <div id="squardleHeader"></div>
+            <div id="board"></div>
+            <div id="wordsToFind"></div>
+            <div id="bonusWords"></div>
+            <div id="output">
+                <button id="output-button" onclick="exportSquardle()">EXPORTUJ</button>
+                <textarea name="" id="output-text" rows="1"></textarea>
+            </div>
+        </div>
 
+        <div id="squardleGenerator">
+            <div id="parameters">
+                Jméno: <textarea id="name" rows="1"></textarea><br>
+                Velikost: <textarea id="size" rows="1" onchange="updateBoardInputMenu()"></textarea><br>
+                <div id="boardInput">
+
+                </div><br>
+                Minimální délka slova: <textarea id="minWordSize" rows="1"></textarea><br>
+                Maximální délka slova: <textarea id="maxWordSize" rows="1"></textarea><br>
+                Počet slov k umístění (prvnímu): <textarea id="numWordsToHide" rows="1"></textarea><br>
+                Počet slov k výberu (zadáním 0 se vyberou náhodná) <textarea id="numWordsToInput" rows="1" onchange="updateWordInputMenu()"></textarea><br>
+                <div id="wordsToHide">
+
+                </div>
+
+            </div><br>
+            <button id="enter" onclick="createSquardleFromParameters()">VYTVOŘ SQUARDLE</button>
+        </div>
+        
+        
+        <script src="pageFunctions.js"></script>
         <script src="pageSquardleEditor.js"></script>
+        <script src="pageSquardleGenerator.js"></script>
+        
     </body>
 </html>

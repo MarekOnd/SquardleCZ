@@ -7,22 +7,25 @@ let LIBRARY = JSON.parse(fs.readFileSync("libraries/library_syn2015.json"));
 
 // parameters
 let size = 5;
-let squardleName = "Omega"
-let fileName = "15"
+let squardleName = "Seriály"
+let fileName = "16"
 let minWordSize = 4;
 let maxWordSize = 14;
-let numWordsToHide = 5;
+let numWordsToHide = 8;
 
 let useInputWords = true
 let inputWords = [
-    "alfa",
-    "beta",
-    "gama",
-    "delta",
-    "théta",
-    "kapa",
-    "omega",
-    "epsilon",
+    "doktor",
+    "teorie",
+    "velkého",
+    "třesku",
+    "červený",
+    "trpaslík",
+    "přátelé",
+    "poznal",
+    "perník",
+    "ztraceni",
+    "vikingové"
 ];
 
 // output
@@ -61,9 +64,9 @@ function initialize()
     
     
     let numOfTries = 0
-    abc = blend(wordLibrary)
+    abc = blend([wordLibrary[0]])
     board = generateRandomBoard();
-    while(wordsInBoard.length < numWordsToHide && numOfTries < Math.pow(abc.length,size*size-countTrue(board.locked)) )
+    while(wordsInBoard.length < numWordsToHide && numOfTries < Math.pow(abc.length,size*size-countTrue(board.locked)) && numOfTries < 1000000)
     {
         board = nextBoardPermutation(board);
         wordsInBoard = findWordsInBoard();
@@ -78,14 +81,14 @@ function initialize()
             numOfTries = 0;
             for (let i = 0; i < wordsInBoard.length; i++) {
                 const element = wordLibrary[i];
-                wordLibrary.splice(wordLibrary.indexOf(element),1);
+                //console.log(wordLibrary.splice(wordLibrary.indexOf(element),1));
                 
                 console.log("Found word: " + element + " Remaining:" + wordLibrary);
                 
                 
                 
             }
-            abc = blend(wordLibrary)
+            abc = blend([wordLibrary[wordsInBoard.length]])
             board = generateRandomBoard(board, true);
 
         }
@@ -93,6 +96,8 @@ function initialize()
         {
             console.log(abc)
             console.log("Number of tries: "+numOfTries + "/" + Math.pow(abc.length,size*size-countTrue(board.locked)))
+            console.log(board.letters)
+            console.log(board.locked)
         }
     }
 

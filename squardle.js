@@ -6,7 +6,7 @@ let indexOfSquardle;
   //let indexOfSquardle = Math.floor((date.getTime() - originDate.getTime())/(3600*24*1000));
 
 // information
-let numberOfSquardles = 14;
+let numberOfSquardles = 18;
 
 
 // input data
@@ -186,13 +186,19 @@ function createBoard()
         let row = document.createElement("tr");
         row.className = "row";
 
-        for(var j = 0; j < lettersInBoard[0].length; j++)
+        for(var j = 0; j < lettersInBoard[i].length; j++)
         {
+            
             // celle and button
             let cell = document.createElement("td");
             cell.className = "cell";
+            
             let button = document.createElement("div");
             button.className = "boardButton";
+            if(lettersInBoard[i][j] === "0")
+            {
+                button.style.display = "none";
+            }
 
             // how many words use this letter, how many start with letter
 
@@ -236,9 +242,15 @@ function createBoard()
 }
 function getButton(x,y)
 {
-    
-    return document.getElementsByClassName("row")[x].childNodes[y].firstChild;
-
+    let but = document.getElementsByClassName("row")[x].childNodes[y].firstChild;
+    if(but)
+    {
+        return but;
+    }
+    else
+    {
+        return null;
+    }
 }
 
 function updateLettersInBoard()
@@ -262,6 +274,10 @@ function updateLettersInBoard()
         
         for (let y = 0; y < lettersInBoard.length; y++) {
             let button = getButton(i,y);
+            if(!button)
+            {
+                continue;
+            }
             let timesUsedInWord = allIncludedPositions.filter(el=>(el[0]==i&&el[1]==y)).length
 
 
@@ -613,7 +629,7 @@ function connectButtons(path)
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
         let button = document.getElementsByClassName("row")[element[0]].childNodes[element[1]].getBoundingClientRect()
-        positions.push([button.left + button.width/2 - 20 + window.scrollX,button.top /*+ button.height/2*/ + window.scrollY])
+        positions.push([button.left + button.width/2 - 20 + window.scrollX,button.top + button.height*1.0/4 + window.scrollY])
     }
     return drawLine(positions)
 }
