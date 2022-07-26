@@ -2,11 +2,7 @@
 
 
 
-let S ={
-    name:"",
-    letters:[],
-    wordsToFind:[],
-}
+let S = new Squardle()
 
 
 
@@ -107,7 +103,7 @@ function updateWords()
     let legitWords_place = document.getElementById("wordsToFind");
     clearChildren(legitWords_place)
     for (let i = 0; i < legitWords.length; i++) {
-        const text = createWord(S, S.wordsToFind[legitWords[i]]);
+        const text = createWord(S.letters, S.wordsToFind[legitWords[i]]);
         let word = document.createElement("button")
         word.textContent = text
         word.className = "word"
@@ -117,7 +113,7 @@ function updateWords()
     let bonusWords_place = document.getElementById("bonusWords");
     clearChildren(bonusWords_place)
     for (let i = 0; i < bonusWords.length; i++) {
-        const text = createWord(S, S.wordsToFind[bonusWords[i]]);
+        const text = createWord(S.letters, S.wordsToFind[bonusWords[i]]);
         let word = document.createElement("button")
         word.textContent = text
         word.className = "word" 
@@ -177,19 +173,19 @@ let set = new settings();
 
 async function createSquardleFromParameters()
 {
+    S = new Squardle()
     updateSettings();
-
-    if(set.name == "" ||
-    set.size == "" || 
-    set.minWordSize == "" || 
-    set.maxWordSize == "" ||
-    set.numWordsToInput == "" ||
-    set.numWordsToHide == "" ||
-    !set.size  ||
-    !set.minWordSize || 
-    !set.maxWordSize ||
-    !set.numWordsToInput ||
-    !set.numWordsToHide)
+    if(set.name === "" ||
+    set.size === "" || 
+    set.minWordSize === "" || 
+    set.maxWordSize === "" ||
+    set.numWordsToInput === "" ||
+    set.numWordsToHide === "" ||
+    set.size === undefined ||
+    set.minWordSize === undefined|| 
+    set.maxWordSize === undefined||
+    set.numWordsToInput === undefined||
+    set.numWordsToHide=== undefined)
     {
         window.alert("Všechny parametry nebyly zadány")
         return;
@@ -208,7 +204,7 @@ async function createSquardleFromParameters()
     {
         set.useInputWords = false;
     }
-    S = await createSquardle(set)
+    S = await createSquardle(set);
     createBoard()
     setupWords()
     let header = document.getElementById("squardleHeader");
@@ -262,11 +258,9 @@ function updateBoardInputMenu()
             inputBox.className = "boardLetter";
             inputBox.addEventListener('input',boardLetterUpdate);
             inputBox.addEventListener('focus',(event)=>{
-                setSelected(newInst(i),newInst(y))
+                selected.x = newInst(i);
+                selected.y = newInst(y);
             })
-            
-
-
             row.appendChild(inputBox)
         }
         boardInput.appendChild(row)
@@ -287,7 +281,9 @@ function setSelected(x, y)
     }
     selected.x = x;
     selected.y = y;
-    getLetterOnPosition(selected.x,selected.y).focus()
+    let currentSquare = getLetterOnPosition(selected.x,selected.y)
+    currentSquare.focus()
+    currentSquare.selectionEnd = 1
 }
 
 function getLetterOnPosition(x, y)
@@ -345,7 +341,7 @@ function getInputBoard()
         }
         
     }
-    console.log(tmp_inputBoard)
+    //console.log(tmp_inputBoard)
     return tmp_inputBoard;
 }
 
@@ -362,23 +358,27 @@ function initialize()
     updateWordInputMenu();
     updateBoardInputMenu();
 
-    document.addEventListener("keydown",(event)=>{
-        console.log(event.key)
+    document.getElementById("boardInput").addEventListener("keydown",(event)=>{
         switch(event.key)
         {
             case 'ArrowUp':
+                event.preventDefault()
                 setSelected(selected.x - 1, selected.y);
                 break;
             case 'ArrowDown':
+                event.preventDefault()
                 setSelected(selected.x + 1, selected.y);
                 break;  
             case 'ArrowLeft':
+                event.preventDefault()
                 setSelected(selected.x, selected.y - 1);
                 break;
             case 'ArrowRight':
+                event.preventDefault()
                 setSelected(selected.x, selected.y + 1);
                 break;
         }
+        
     })
 }
 

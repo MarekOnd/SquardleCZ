@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="icon" type="image/x-icon" href="./images/mondrian.jpg">
+        <link rel="icon" type="image/x-icon" href="../images/mondrian.jpg">
         <meta charset="UTF-8">
         <meta author="Trollak">
         <link rel="stylesheet" href="pageSquardleEditor.css" />
         <title>Český squardle</title>
+        <!--FONTS-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     </head>
     
     
     <body>
+        <div id="header">
+            Editor Squardlů
+        </div>
         <div id = "goto-index">
             <a href="../index.html">Zpátky</a>
         </div>
+        
         <div id="squardleEditor">
             Jaký squardle chceš otevřít: <textarea placeholder = "jmeno souboru" name="" id="textarea" rows="1"></textarea><button onclick="loadData()">OTEVŘI</button>
             <div id="squardleHeader"></div>
@@ -41,7 +49,8 @@
                 </div>
 
             </div><br>
-            <button id="enter" onclick="createSquardleFromParameters()">VYTVOŘ SQUARDLE</button>
+            <button id="enter" onclick="createSquardleFromParameters()">VYTVOŘ SQUARDLE</button><br>
+            <textarea id="log"></textarea>
         </div>
         
         

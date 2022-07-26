@@ -6,7 +6,7 @@ let indexOfSquardle;
   //let indexOfSquardle = Math.floor((date.getTime() - originDate.getTime())/(3600*24*1000));
 
 // information
-let numberOfSquardles = 18;
+let numberOfSquardles = 20;
 
 
 // input data
@@ -29,10 +29,10 @@ let wordPath = {
 let wordsFound = []; // bool array
 let bonusWordsFound = [];
 
-//design
 
 
 
+let isNewSave;
 
 
 async function initialize(){
@@ -43,6 +43,30 @@ async function initialize(){
     wordsFound = [];
     bonusWordsFound = [];
     await loadData();
+
+    if(wordToFindPaths[0].positions[0].x === undefined)// this means its in old style
+    {
+        isNewSave = false;
+        let newWordsToFindPaths = []
+        for (let i = 0; i < wordToFindPaths.length; i++) {
+            const element = wordToFindPaths[i];
+            let tmpPath = [];
+            for (let y = 0; y < element.positions.length; y++) {
+                const oldPos = element.positions[y];
+                element.positions[y] = new Position(oldPos[0], oldPos[1])
+                //tmpPath.push(new Position(oldPos[0],oldPos[1]));
+                
+            }
+            newWordsToFindPaths.push(tmpPath);
+        }
+        
+    }
+    else
+    {
+        newSave = true;
+    }
+    
+    // different version of squardle files
 
 
 
@@ -278,7 +302,7 @@ function updateLettersInBoard()
             {
                 continue;
             }
-            let timesUsedInWord = allIncludedPositions.filter(el=>(el[0]==i&&el[1]==y)).length
+            let timesUsedInWord = allIncludedPositions.filter(el=>(el.x==i&&el.y==y)).length
 
 
             
@@ -299,7 +323,7 @@ function updateLettersInBoard()
 
                 // update first time in words
                 let start = button.getElementsByClassName("button-start")[0]; // button always has one
-                let timesStartingWithThis = startingPositions.filter(el=>(el[0]==i&&el[1]==y)).length;
+                let timesStartingWithThis = startingPositions.filter(el=>(el.x==i&&el.y==y)).length;
                 if(timesStartingWithThis > 0)
                 {
                     start.textContent = timesStartingWithThis
@@ -334,7 +358,7 @@ function mouseDown(x,y)
 
     button.classList.add("selected");
     // saves position to wordPath
-    wordPath.positions.push([x,y]);
+    wordPath.positions.push(new Position(x,y));
 
     updateWord(createWord(wordPath), "white")
     updateLine()
@@ -348,7 +372,7 @@ function mouseUp()
     }
     // unselects button
     wordPath.positions.forEach(element => {
-        let button = getButton(element[0],element[1]);
+        let button = getButton(element.x,element.y);
         button.classList.remove("selected");
     });
     testMainWord();
@@ -365,9 +389,9 @@ function mouseEnter(x,y)
         return;
     }
     let button = getButton(x,y);
-    if(wordPath.positions.length > 0 && wordPath.positions.filter(element => element[0] == x && element[1] == y).length > 0)// if position was already visited
+    if(wordPath.positions.length > 0 && wordPath.positions.filter(element => element.x === x && element.y === y).length > 0)// if position was already visited
     {
-        if(wordPath.positions.length > 0 && wordPath.positions[wordPath.positions.length-2][0] == x && wordPath.positions[wordPath.positions.length-2][1] == y)// if user is going back
+        if(wordPath.positions.length > 0 && wordPath.positions[wordPath.positions.length-2].x === x && wordPath.positions[wordPath.positions.length-2].y === y)// if user is going back
         {
             // deletes last position
             let top = wordPath.positions.pop();
@@ -375,10 +399,10 @@ function mouseEnter(x,y)
             getButton(top[0],top[1]).classList.remove("selected");
         }
     }
-    else if(wordPath.positions.length > 0 && Math.abs(wordPath.positions[wordPath.positions.length-1][0] - x) <=1  && Math.abs(wordPath.positions[wordPath.positions.length-1][1] - y) <=1 )
+    else if(wordPath.positions.length > 0 && Math.abs(wordPath.positions[wordPath.positions.length-1].x - x) <=1  && Math.abs(wordPath.positions[wordPath.positions.length-1].y - y) <=1 )
     {
         button.classList.add("selected");
-        wordPath.positions.push([x,y]);
+        wordPath.positions.push(new Position(x,y));
     }
     updateWord(createWord(wordPath), "white");
 
@@ -390,7 +414,7 @@ function createWord(path)
 {
     let string = "";
     path.positions.forEach(element => {
-        string += lettersInBoard[element[0]][element[1]];
+        string += lettersInBoard[element.x][element.y];
     });
     return string;
 }
@@ -628,7 +652,7 @@ function connectButtons(path)
     let positions = []
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
-        let button = document.getElementsByClassName("row")[element[0]].childNodes[element[1]].getBoundingClientRect()
+        let button = document.getElementsByClassName("row")[element.x].childNodes[element.y].getBoundingClientRect()
         positions.push([button.left + button.width/2 - 20 + window.scrollX,button.top + button.height*1.0/4 + window.scrollY])
     }
     return drawLine(positions)
@@ -741,6 +765,7 @@ function win()
     }
     
 }
+
 
 // calls starting program function
 // initialize()
