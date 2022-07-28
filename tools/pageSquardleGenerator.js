@@ -372,7 +372,7 @@ async function createSquardle(sqSettings)
 
 
     for (let i = 0; i < inputWords.length; i++) {
-        let numOfTries = 0
+        let numOfTries = 0;
         const element = inputWords[i];
         logPost("Hledám " + element);//§§§
 
@@ -385,7 +385,7 @@ async function createSquardle(sqSettings)
             wordsInBoard = board.findWordsInBoard();
             if(numOfTries%10000 == 0)//§§§
             {
-                console.log(numOfTries)
+                logPost(numOfTries);
             }
         }
         if(createWords(board.letters, wordsInBoard).includes(element))
@@ -400,7 +400,7 @@ async function createSquardle(sqSettings)
     }
     
 
-    logPost("Všechny variace vyzkoušeny")
+    logPost("Všechny variace vyzkoušeny. Hledám slova z velké knihovny.")
 
     // FINAL CHANGES
 
@@ -409,6 +409,7 @@ async function createSquardle(sqSettings)
     board.lockPaths(wordsInBoard)
     if(!board.fullyLocked())
     {
+        logPost("Jsou písmena bez slov, zkouším ještě jednou najít slova.")
         board.alphabet = ABC;
         board.generateRandomBoard(true)
         wordsInBoard = board.findWordsInBoard();
@@ -602,10 +603,9 @@ onmessage = async (e)=>{
         close();
         return;
     }
-    console.log("Generátor pracuje")
     logPost("Generátor pracuje")
     let result = await createSquardle(e.data);
-    console.log(result)
+    logPost("Práce dokončena")
     postMessage({
         title:"result",
         mess:JSON.stringify(result)
