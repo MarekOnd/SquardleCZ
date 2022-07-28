@@ -3,12 +3,9 @@
 
 
 let S = new Squardle()
-
-
-
-
 let legitWords = [];
 let bonusWords = [];
+
 
 //________________________________________________________PART I
 // LOADING SQUARDLES
@@ -92,6 +89,8 @@ function deleteBoard()
 // WORDS IN FORM
 function setupWords()
 {
+    legitWords = []
+    bonusWords = []
     for (let i = 0; i < S.wordsToFind.length; i++) {
         legitWords.push(i);
     }
@@ -168,13 +167,29 @@ function exportSquardle()
 
 
 //________________________________________________________PART II CREATION
-let set = new settings();
 
 
+let Generator = new Worker("./pageSquardleGenerator.js");
+let generatorWorking = false;
 async function createSquardleFromParameters()
 {
-    S = new Squardle()
-    updateSettings();
+    if(generatorWorking == true)
+    {
+        if(confirm("Generátor již pracuje. Pokud ho chcete zastavit, stiskněte znovu načtěte stránku."))
+        {
+            generatorWorking = false;
+            Generator.postMessage("close")
+
+        }
+        else
+        {
+            return;
+        }
+        
+    }
+    
+    S = new Squardle();
+    let set = getSettings();
     if(set.name === "" ||
     set.size === "" || 
     set.minWordSize === "" || 
@@ -190,70 +205,64 @@ async function createSquardleFromParameters()
         window.alert("Všechny parametry nebyly zadány")
         return;
     }
-    if(parseInt(set.numWordsToInput) > 0)
-    {
-        set.useInputWords = true;
-        
-        let words = document.getElementById("wordsToHide").childNodes;
-        for (let i = 0; i < words.length; i++) {
-            set.inputWords.push(words[i].value)
-            console.log(words[i].value)
-        }
-    }
-    else
-    {
-        set.useInputWords = false;
-    }
-    S = await createSquardle(set);
-    createBoard()
-    setupWords()
-    let header = document.getElementById("squardleHeader");
-    header.textContent = S.name
+    
+    Generator.postMessage(set)
+    generatorWorking = true;
 }
 
-function updateSettings()
-{
-    set.name = document.getElementById("name").value;
-    set.size = parseInt(document.getElementById("size").value);
-    set.minWordSize  = parseInt(document.getElementById("minWordSize").value);
-    set.maxWordSize  = parseInt(document.getElementById("maxWordSize").value);
-    set.numWordsToInput = parseInt(document.getElementById("numWordsToInput").value);
-    set.numWordsToHide = parseInt(document.getElementById("numWordsToHide").value);
-    set.useInputWords;
-    set.inputWords = [];
-    set.inputBoard = getInputBoard();
-
+Generator.onmessage = (e) => {
+    switch(e.data.title)
+    {
+        case "log":
+            let lg = document.getElementById("log");
+            lg.textContent += e.data.mess + '\n';
+        break;
+        case "result":
+            generatorWorking = false;
+            S = new Squardle();
+            S = JSON.parse(e.data.mess);
+            createBoard();
+            setupWords();
+            let header = document.getElementById("squardleHeader");
+            header.textContent = S.name;
+        break;
+    }
+    
     
 }
 
-function updateWordInputMenu()
+
+
+function updateWordInputMenu(_settings)
 {
-    let input = document.getElementById("numWordsToInput");
-    if(isNaN(input.value))
-    {
-        clearChildren(input)
-        input.value = "";
+    let place = document.getElementById("wordsToHide");
+    let wordsToHideArray = place.childNodes;
+    let last = 0;
+    for (let i = 0; i <= _settings.numWordsToInput; i++) {
+        if(wordsToHideArray[i] !== undefined)
+        {
+            wordsToHideArray[i].value = _settings.inputWords[i];
+        }
+        else
+        {
+            let newArea = createChild(wordsToHide,_settings.inputWords[i],"textarea","wordToHideInput");
+        }
+        last = i;
     }
-    else
-    {
-        let wordsToHide = document.getElementById("wordsToHide");
-        createNewChildren(wordsToHide,parseInt(input.value),"textarea","wordToHideInput")
+    while (last + 1 < wordsToHideArray.length) {
+        place.removeChild(place.childNodes[last])
     }
 }
 
-function updateBoardInputMenu()
+function updateBoardInputMenu(_settings)
 {
-    updateSettings();
-    if(!set.size)// if the board size wasnt entered
-    {
-        return;
-    }
+    
     let boardInput = document.getElementById("boardInput");
     clearChildren(boardInput);
-    for (let i = 0; i < set.size; i++) {
+    for (let i = 0; i < _settings.size; i++) {
         let row = document.createElement("div")
         row.className = "boardRow"
-        for (let y = 0; y < set.size; y++) {
+        for (let y = 0; y < _settings.size; y++) {
             let inputBox = document.createElement("textarea");
             inputBox.className = "boardLetter";
             inputBox.addEventListener('input',boardLetterUpdate);
@@ -261,6 +270,10 @@ function updateBoardInputMenu()
                 selected.x = newInst(i);
                 selected.y = newInst(y);
             })
+            if(_settings.inputBoard !== null)
+            {
+                inputBox.value = _settings.inputBoard[i][y];
+            }
             row.appendChild(inputBox)
         }
         boardInput.appendChild(row)
@@ -275,23 +288,23 @@ let selected = {
 
 function setSelected(x, y)
 {
-    if(x < 0 || x >= set.size || y < 0 || y > set.size)
+    let futureSquare = getLetterOnPosition(x,y)
+    if(futureSquare)
+    {
+        selected.x = x;
+        selected.y = y;
+        futureSquare.focus()
+        futureSquare.selectionEnd = 1
+    }
+    else
     {
         return;
     }
-    selected.x = x;
-    selected.y = y;
-    let currentSquare = getLetterOnPosition(selected.x,selected.y)
-    currentSquare.focus()
-    currentSquare.selectionEnd = 1
+    
 }
 
 function getLetterOnPosition(x, y)
 {
-    if(x < 0 || x >= set.size || y < 0 || y > set.size)
-    {
-        return null;
-    }
     let rowsWithBr = document.getElementById("boardInput").childNodes;
     let index = 0;
     for (let i = 0; i < rowsWithBr.length; i++) {
@@ -345,19 +358,76 @@ function getInputBoard()
     return tmp_inputBoard;
 }
 
+//  LOAD SETTING FROM FORM
+
+
+function getSettings()
+{
+    let _settings = new settings()
+    _settings.name = document.getElementById("name").value;
+    _settings.size = parseInt(document.getElementById("size").value);
+    _settings.minWordSize  = parseInt(document.getElementById("minWordSize").value);
+    _settings.maxWordSize  = parseInt(document.getElementById("maxWordSize").value);
+    _settings.numWordsToInput = parseInt(document.getElementById("numWordsToInput").value);
+    _settings.numWordsToHide = parseInt(document.getElementById("numWordsToHide").value);
+    getInputWords(_settings);
+    _settings.inputBoard = getInputBoard();
+    return _settings;
+}
+function getInputWords(_settings)
+{
+    _settings.inputWords = []
+    if(_settings.numWordsToInput > 0)
+    {
+        _settings.useInputWords = true;
+        let words = document.getElementById("wordsToHide").childNodes;
+        for (let i = 0; i < words.length; i++) {
+            _settings.inputWords.push(words[i].value)
+        }
+    }
+    else
+    {
+        _settings.useInputWords = false;
+    }
+}
+
+function loadSettings(_settings)
+{
+    document.getElementById("name").value = _settings.name;
+    document.getElementById("size").value = _settings.size;
+    document.getElementById("minWordSize").value = _settings.minWordSize;
+    document.getElementById("maxWordSize").value = _settings.maxWordSize;
+    document.getElementById("numWordsToInput").value =_settings.numWordsToInput;
+    document.getElementById("numWordsToHide").value = _settings.numWordsToHide;
+    updateWordInputMenu(_settings);
+    updateBoardInputMenu(_settings);
+}
+
+function saveSettings()
+{
+    localStorage.setItem("settings", JSON.stringify(getSettings()));
+}
+
+function resetDefaultSettings()
+{
+    localStorage.removeItem("settings");
+    loadSettings(new settings());
+
+}
 // DEFAULT VALUES
+
+
 
 function initialize()
 {
-    document.getElementById("name").value = "default"
-    document.getElementById("size").value = "5"
-    document.getElementById("minWordSize").value = "4"
-    document.getElementById("maxWordSize").value = "8"
-    document.getElementById("numWordsToInput").value ="1"
-    document.getElementById("numWordsToHide").value = "1"
-    updateWordInputMenu();
-    updateBoardInputMenu();
-
+    if(localStorage.getItem("settings"))
+    {
+        loadSettings(JSON.parse(localStorage.getItem("settings")));
+    }
+    else
+    {
+        resetDefaultSettings();
+    }
     document.getElementById("boardInput").addEventListener("keydown",(event)=>{
         switch(event.key)
         {
@@ -380,6 +450,7 @@ function initialize()
         }
         
     })
+
 }
 
 

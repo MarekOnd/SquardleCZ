@@ -104,3 +104,9 @@ textarea{
 .boardRow{
     height: 40px;
 }
+
+/* LOG */
+#log{
+    width: 80%;
+    height: 30%;
+}

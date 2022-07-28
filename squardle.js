@@ -6,7 +6,7 @@ let indexOfSquardle;
   //let indexOfSquardle = Math.floor((date.getTime() - originDate.getTime())/(3600*24*1000));
 
 // information
-let numberOfSquardles = 20;
+let numberOfSquardles = 21;
 
 
 // input data
@@ -28,9 +28,6 @@ let wordPath = {
 // progress
 let wordsFound = []; // bool array
 let bonusWordsFound = [];
-
-
-
 
 let isNewSave;
 
@@ -319,7 +316,15 @@ function updateLettersInBoard()
             {
                 // update times used in a word
                 let use = button.getElementsByClassName("button-use")[0]; // button always has one
-                use.textContent = timesUsedInWord;
+                if(timesUsedInWord > 0)
+                {
+                    use.textContent = timesUsedInWord;
+                }
+                else
+                {
+                    use.textContent = ""
+                }
+                
 
                 // update first time in words
                 let start = button.getElementsByClassName("button-start")[0]; // button always has one
@@ -341,8 +346,6 @@ function updateLettersInBoard()
     
 
 }
-
-
 
 // SELECTING WORD
 function mouseClick()
@@ -396,7 +399,7 @@ function mouseEnter(x,y)
             // deletes last position
             let top = wordPath.positions.pop();
             // unselects last button
-            getButton(top[0],top[1]).classList.remove("selected");
+            getButton(top.x,top.y).classList.remove("selected");
         }
     }
     else if(wordPath.positions.length > 0 && Math.abs(wordPath.positions[wordPath.positions.length-1].x - x) <=1  && Math.abs(wordPath.positions[wordPath.positions.length-1].y - y) <=1 )
@@ -506,9 +509,6 @@ function testMainWord() //<= goes here from mouseUp
         return;
     }
     updateWord("Není slovo","red")
-    console.log(bonusWordsFound)
-    console.log("jsem tu")
-
 }
 
 function updateScore()
