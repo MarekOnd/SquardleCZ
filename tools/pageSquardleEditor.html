@@ -14,28 +14,38 @@
     
     
     <body>
+        
         <div id="header">
             Editor Squardlů
         </div>
         <div id = "goto-index">
             <a href="../index.html">Zpátky</a>
         </div>
-        
+        <div id="squardleLoader">
+            Jaký squardle chceš otevřít: <textarea placeholder = "jméno souboru" name="" id="textarea" rows="1"></textarea><button onclick="loadData()">Otevři</button><br>
+        </div>
         <div id="squardleEditor">
-            Jaký squardle chceš otevřít: <textarea placeholder = "jmeno souboru" name="" id="textarea" rows="1"></textarea><button onclick="loadData()">OTEVŘI</button>
-            <div id="squardleHeader"></div>
+            Jméno: <textarea id="name" rows="1"></textarea><br>
+            Autor: <textarea id="author" rows="1"></textarea><br>
+            Obtížnost:   <select id="difficulty">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
             <div id="board"></div>
             <div id="wordsToFind"></div>
             <div id="bonusWords"></div>
             <div id="output">
                 <button id="output-button" onclick="exportSquardle()">EXPORTUJ</button>
-                <textarea name="" id="output-text" rows="1"></textarea>
+                <textarea name="" id="output-text"></textarea>
             </div>
         </div>
 
         <div id="squardleGenerator">
             <div id="parameters">
-                Jméno: <textarea id="name" rows="1"></textarea><br>
+
                 Velikost: <textarea id="size" rows="1" onchange="updateBoardInputMenu(getSettings())"></textarea><br>
                 <div id="boardInput">
 
@@ -49,7 +59,7 @@
                 </div>
 
             </div><br>
-            <button id="enter" onclick="createSquardleFromParameters()">VYTVOŘ SQUARDLE</button><br>
+            <button id="enter" onclick="createSquardleFromParameters()">Vytvoř squardle</button><br>
             <textarea id="log" readonly></textarea>
             <button onclick="saveSettings()" id="saveButton">
                 Uložit aktuální nastavení
@@ -58,6 +68,8 @@
                 Resetovat do původního nastavení
             </button>
         </div>
+
+        
         
         
         <script src="pageFunctions.js"></script>

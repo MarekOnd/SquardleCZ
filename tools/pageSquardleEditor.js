@@ -55,7 +55,6 @@ async function getJson(url){
     return jsonObj;
 }
 
-
 // BOARD PREVIEW
 function createBoard()
 {
@@ -149,18 +148,29 @@ function exportSquardle()
 {
     let output = document.getElementById("output-text")
 
+    // name
+    S.name = "";
+    S.name = document.getElementById("name").value;
+    // author
+    S.author = "";
+    S.author = document.getElementById("author").value;
+    // difficulty
+    S.difficulty = document.getElementById("difficulty").value;
+    // words
     let newWordsToFind = [];
     for (let i = 0; i < legitWords.length; i++) {
         const index = legitWords[i];
         newWordsToFind.push(S.wordsToFind[index]);
     }
-    let oldWordsBackup = S.wordsToFind;
-
+    let oldWordsBackup = S.wordsToFind;// creates backup
     S.wordsToFind = newWordsToFind;
-    output.value = JSON.stringify(S);
+    
 
-    S.wordsToFind = oldWordsBackup;
 
+
+
+    output.value = JSON.stringify(S);// outputs squardle
+    S.wordsToFind = oldWordsBackup;// load backup
 }
 
 
@@ -177,7 +187,7 @@ async function createSquardleFromParameters()
         if(confirm("Generátor již pracuje. Pokud ho chcete zastavit, stiskněte znovu načtěte stránku."))
         {
             generatorWorking = false;
-            Generator.postMessage("close")
+            Generator.postMessage("close");
 
         }
         else
@@ -189,13 +199,12 @@ async function createSquardleFromParameters()
     
     S = new Squardle();
     let set = getSettings();
-    if(set.name === "" ||
+    if(
     set.size === "" || 
     set.minWordSize === "" || 
     set.maxWordSize === "" ||
     set.numWordsToInput === "" ||
     set.numWordsToHide === "" ||
-    set.size === undefined ||
     set.minWordSize === undefined|| 
     set.maxWordSize === undefined||
     set.numWordsToInput === undefined||
@@ -222,8 +231,7 @@ Generator.onmessage = (e) => {
             S = JSON.parse(e.data.mess);
             createBoard();
             setupWords();
-            let header = document.getElementById("squardleHeader");
-            header.textContent = S.name;
+            
         break;
     }
     
@@ -392,7 +400,6 @@ function getInputWords(_settings)
 
 function loadSettings(_settings)
 {
-    document.getElementById("name").value = _settings.name;
     document.getElementById("size").value = _settings.size;
     document.getElementById("minWordSize").value = _settings.minWordSize;
     document.getElementById("maxWordSize").value = _settings.maxWordSize;

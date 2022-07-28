@@ -2,7 +2,6 @@
 
 class settings{
     size;
-    name;
     minWordSize;
     maxWordSize;
     numWordsToHide;
@@ -10,10 +9,9 @@ class settings{
     useInputWords;
     inputWords;
     inputBoard;
-    constructor(_size = 5, _name = "jméno", _minWordSize = 4, _maxWordSize = 8, _numWordsToHide = 1, _numWordsToInput = 1, _useInputWords = true, _inputWords = [""], _inputBoard = null)
+    constructor(_size = 5, _minWordSize = 4, _maxWordSize = 8, _numWordsToHide = 1, _numWordsToInput = 1, _useInputWords = true, _inputWords = [""], _inputBoard = null)
     {
         this.size = _size;
-        this.name = _name;
         this.minWordSize = _minWordSize;
         this.maxWordSize = _maxWordSize;
         this.numWordsToHide = _numWordsToHide;

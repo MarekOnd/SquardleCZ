@@ -308,7 +308,6 @@ async function createSquardle(sqSettings)
 
     // parameters
     let size;
-    let squardleName;
     let fileName;
     let minWordSize;
     let maxWordSize;
@@ -342,7 +341,6 @@ async function createSquardle(sqSettings)
 
     // loading parameters
     size = sqSettings.size
-    squardleName = sqSettings.name
     minWordSize = sqSettings.minWordSize
     maxWordSize =  sqSettings.maxWordSize
     numWordsToHide = sqSettings.numWordsToHide
@@ -423,8 +421,6 @@ async function createSquardle(sqSettings)
     //     console.log("currently locked: " + countLocked(board.locked))
     // }
     
-
-    squardle.name = squardleName;
     squardle.letters = board.letters;
     squardle.wordsToFind = wordsInBoard;
     return squardle;
