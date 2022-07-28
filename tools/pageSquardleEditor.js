@@ -124,7 +124,6 @@ function updateWords()
 
 function moveWord(index)
 {
-    console.log(index);
     if(legitWords.includes(index))
     {
         legitWords.splice(legitWords.indexOf(index),1)

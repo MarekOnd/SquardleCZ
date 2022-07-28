@@ -67,26 +67,32 @@ textarea{
 }
 
 .letter{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     font-size: 80px;
     left: auto;
     right: auto;
-    background-color: black;
-    color: white;
+    background-color: rgb(36, 23, 28);
+    color: rgb(255, 255, 255);
     text-transform: capitalize;
+    border-radius: 10px;
 }
 
 #board_table{
     align-content: center;
+    vertical-align: middle;
 }
 
 
 #wordsToFind button{
-    background-color: green;
+    background-color: rgb(11, 212, 11);
+    border-radius: 10px;
+    border: 2px black solid;
 }
 #bonusWords button{
-    background-color: yellow;
+    background-color: rgb(235, 235, 35);
+    border-radius: 10px;
+    border: 2px black solid;
 }
 
 
