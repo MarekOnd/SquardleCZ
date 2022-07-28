@@ -93,11 +93,11 @@ function clearChildren(object)
 function createChildren(where, howMany, objectTypeName, className)
 {
     for (let i = 0; i < howMany; i++) {
-        createChild(where, howMany, objectTypeName, className)
+        createChild(where, objectTypeName, className)
     }
 }
 
-function createChild(where, howMany, objectTypeName, className)
+function createChild(where, objectTypeName, className)
 {
     let object = document.createElement(objectTypeName)
     object.className = className

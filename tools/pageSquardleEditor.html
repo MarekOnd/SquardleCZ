@@ -22,7 +22,7 @@
             <a href="../index.html">Zpátky</a>
         </div>
         <div id="squardleLoader">
-            Jaký squardle chceš otevřít: <textarea placeholder = "jméno souboru" name="" id="textarea" rows="1"></textarea><button onclick="loadData()">Otevři</button><br>
+            Jaký squardle chceš otevřít: <textarea placeholder = "jméno souboru" name="" id="textarea" rows="1"></textarea><button onclick="loadData()" class="button-1">Otevři</button><br>
         </div>
         <div id="squardleEditor">
             Jméno: <textarea id="name" rows="1"></textarea><br>
@@ -38,7 +38,7 @@
             <div id="wordsToFind"></div>
             <div id="bonusWords"></div>
             <div id="output">
-                <button id="output-button" onclick="exportSquardle()">EXPORTUJ</button>
+                <button id="output-button" onclick="exportSquardle()" class="button-1">EXPORTUJ</button>
                 <textarea name="" id="output-text"></textarea>
             </div>
         </div>
@@ -59,12 +59,12 @@
                 </div>
 
             </div><br>
-            <button id="enter" onclick="createSquardleFromParameters()">Vytvoř squardle</button><br>
+            <button id="enter" onclick="createSquardleFromParameters()" class="button-1">Vytvoř squardle</button><br>
             <textarea id="log" readonly></textarea>
-            <button onclick="saveSettings()" id="saveButton">
+            <button onclick="saveSettings()" id="saveButton" class="button-1">
                 Uložit aktuální nastavení
             </button>
-            <button onclick="resetDefaultSettings()" id="resetButton">
+            <button onclick="resetDefaultSettings()" id="resetButton" class="button-1">
                 Resetovat do původního nastavení
             </button>
         </div>

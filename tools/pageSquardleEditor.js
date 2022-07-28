@@ -149,10 +149,10 @@ function exportSquardle()
     let output = document.getElementById("output-text")
 
     // name
-    S.name = "";
+    S.name = null;
     S.name = document.getElementById("name").value;
     // author
-    S.author = "";
+    S.author = null;
     S.author = document.getElementById("author").value;
     // difficulty
     S.difficulty = document.getElementById("difficulty").value;
@@ -224,6 +224,7 @@ Generator.onmessage = (e) => {
         case "log":
             let lg = document.getElementById("log");
             lg.textContent += e.data.mess + '\n';
+            lg.scrollTop = lg.scrollHeight;
         break;
         case "result":
             generatorWorking = false;
@@ -243,21 +244,10 @@ Generator.onmessage = (e) => {
 function updateWordInputMenu(_settings)
 {
     let place = document.getElementById("wordsToHide");
-    let wordsToHideArray = place.childNodes;
-    let last = 0;
-    for (let i = 0; i <= _settings.numWordsToInput; i++) {
-        if(wordsToHideArray[i] !== undefined)
-        {
-            wordsToHideArray[i].value = _settings.inputWords[i];
-        }
-        else
-        {
-            let newArea = createChild(wordsToHide,_settings.inputWords[i],"textarea","wordToHideInput");
-        }
-        last = i;
-    }
-    while (last + 1 < wordsToHideArray.length) {
-        place.removeChild(place.childNodes[last])
+    clearChildren(place);
+    for (let i = 0; i < _settings.numWordsToInput; i++) {
+        let newArea = createChild(place,"textarea","wordToHideInput");
+        newArea.value = _settings.inputWords[i]
     }
 }
 
@@ -370,7 +360,7 @@ function getInputBoard()
 
 function getSettings()
 {
-    let _settings = new settings()
+    let _settings = new settings();
     _settings.name = document.getElementById("name").value;
     _settings.size = parseInt(document.getElementById("size").value);
     _settings.minWordSize  = parseInt(document.getElementById("minWordSize").value);
@@ -391,6 +381,7 @@ function getInputWords(_settings)
         for (let i = 0; i < words.length; i++) {
             _settings.inputWords.push(words[i].value)
         }
+        console.log(words)
     }
     else
     {
