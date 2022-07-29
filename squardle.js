@@ -186,20 +186,17 @@ async function initSelector()
         i++;
     }while(i <= numberOfSquardles)
     document.getElementById("index-selector").selectedIndex = indexOfSquardle
-
-    
-    console.log("The error above is OK");
 }
 
 // BOARD
 function createBoard()
 {
     let board = document.getElementById("board");
-    let table = document.createElement("table");
+    let table = document.getElementById("table");
     // deletes existing children
-    while(board.firstChild)
+    while(table.firstChild)
     {
-        board.removeChild(board.firstChild)
+        table.removeChild(table.firstChild)
     }
     // creates new board
     for(var i = 0; i < lettersInBoard.length; i++)
@@ -257,9 +254,6 @@ function createBoard()
         }
         table.appendChild(row);
     }
-
-
-    board.appendChild(table);
 }
 function getButton(x,y)
 {
@@ -394,7 +388,7 @@ function mouseEnter(x,y)
     let button = getButton(x,y);
     if(wordPath.positions.length > 0 && wordPath.positions.filter(element => element.x === x && element.y === y).length > 0)// if position was already visited
     {
-        if(wordPath.positions.length > 0 && wordPath.positions[wordPath.positions.length-2].x === x && wordPath.positions[wordPath.positions.length-2].y === y)// if user is going back
+        if(wordPath.positions.length > 1 && wordPath.positions[wordPath.positions.length-2].x === x && wordPath.positions[wordPath.positions.length-2].y === y)// if user is going back
         {
             // deletes last position
             let top = wordPath.positions.pop();
@@ -560,10 +554,10 @@ function updateFound()
             numOfFound++;
         }
     }
-    let numText = document.createElement("p");
-    numText.textContent = "Nalezená slova (" + numOfFound + "/" + wordsFound.length + ")";
+    //let numText = document.createElement("p");
+    headerBox.textContent = "Nalezená slova (" + numOfFound + "/" + wordsFound.length + ")";
     numOfFound.id = "numFound";
-    headerBox.appendChild(numText);
+    //headerBox.appendChild(numText);
 
     // appends found words
     let paragraph = document.createElement("div");
@@ -653,7 +647,7 @@ function connectButtons(path)
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
         let button = document.getElementsByClassName("row")[element.x].childNodes[element.y].getBoundingClientRect()
-        positions.push([button.left + button.width/2 - 20 + window.scrollX,button.top + button.height*1.0/4 + window.scrollY])
+        positions.push([button.left + button.width/2 - 20 +  window.scrollX,button.top - 255 + window.scrollY])
     }
     return drawLine(positions)
 }

@@ -97,16 +97,27 @@ textarea{
     position: absolute;
     top: 0px;
     left: 0px;
-    background-color: rgb(245, 187, 221);
+    background-color: rgb(27, 6, 18);
     font-size: 28px;
     margin: 5px;
     border: 1px solid black;
     padding: 5px;
     border-radius: 5px;
     z-index: 20;
+    text-decoration: none;
     
 
 }
+
+a:visited{
+    color: white;
+    text-decoration: none;
+    
+}
+a:hover{
+    color: #37AEE2;
+}
+
 
 
 #board{

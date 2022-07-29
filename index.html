@@ -10,40 +10,75 @@
     
     
     <body onload="initialize()">
-        <div id="version">v0.4</div>
-        <h1 id="main-header">Český squardle</h1>
+        <div id="title">
+            <h1 id="main-header">Český squardle</h1>
+            <div id="version">v0.4</div>
+        </div>
+        
         <div id="menu">
             <div id="menu-line">
                 
             </div>
+            <a  class="menu-button" title="Týdenní nebo odpočinkový?">
+                Seznam
+            </a>
+            <a  class="menu-button" title="Co mám dělat?!">
+                Návod
+            </a>
+            <a  class="menu-button" title="Jak si vedu?">
+                Výsledky
+            </a>
+            <a class="menu-button" title="Kde to jsem?">
+                O stránce
+            </a>
+            <a class="menu-button" title="Co se změnilo?">
+                Novinky
+            </a>
+            <a href="./tools/pageSquardleEditor.html" id = "goto-editor-link"  class="menu-button" title="Vytvoř si vlastní squardle">
+                Editor
+            </a>
+            
+        </div>
+        <br>
+
+
+
+
+        <div id="game">
             <div id = "index-selector-box">
+                Výběr:
                 <select onchange="changeIndex()" id="index-selector">
                 </select>
             </div>
-            <div id = "goto-editor">
-                <a href="./tools/pageSquardleEditor.html" id = "goto-editor-link" title="Vytvoř si vlastní squardle">Editor</a>
-            </div>
-        </div>
-        <p id="output">  </p>
-        <div id="score" onclick="toggleFoundWordsPopUp()">
-            <div id="score-points"></div>
-            <div id="score-bar-background">
-                <div id="score-bar"></div>
-            </div>
-        </div>
-        <div id="found" style="display: none;">
-            <div id="found-header" >
+            <div id="output">
 
             </div>
-            <div id="found-words">
-
+            <div id="score" onclick="toggleFoundWordsPopUp()">
+                <div id="score-points"></div>
+                <div id="score-bar-background">
+                    <div id="score-bar"></div>
+                </div>
             </div>
-            <div id="found-exit" onclick="toggleFoundWordsPopUp()">
-                <p>Zpět</p>
+            <div id="found" style="display: none;">
+                <div id="found-header" >
+    
+                </div>
+                <div id="found-words">
+    
+                </div>
+                <div id="found-exit" onclick="toggleFoundWordsPopUp()">
+                    Zpět
+                </div>
+            </div>
+            
+            <div id = "board">
+                <div id="line"></div>
+                <div id="table">
+
+                </div>
             </div>
         </div>
-        <div id="line"></div>
-        <div id = "board"></div>
+        
         
         <!--<img src="images/warden.jpg" style="width:100%; filter: brightness(0.1);">-->
         <script src="functions.js"></script>
