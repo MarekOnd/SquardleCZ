@@ -204,11 +204,9 @@ async function createSquardleFromParameters()
     set.minWordSize === "" || 
     set.maxWordSize === "" ||
     set.numWordsToInput === "" ||
-    set.numWordsToHide === "" ||
     set.minWordSize === undefined|| 
     set.maxWordSize === undefined||
-    set.numWordsToInput === undefined||
-    set.numWordsToHide=== undefined)
+    set.numWordsToInput === undefined)
     {
         window.alert("Všechny parametry nebyly zadány")
         return;
@@ -268,7 +266,7 @@ function updateBoardInputMenu(_settings)
                 selected.x = newInst(i);
                 selected.y = newInst(y);
             })
-            if(i < _settings.inputBoard.length && y < _settings.inputBoard[i].length)
+            if(_settings.inputBoard !== null && i < _settings.inputBoard.length && y < _settings.inputBoard[i].length)
             {
                 inputBox.value = _settings.inputBoard[i][y];
             }
@@ -364,12 +362,12 @@ function getSettings()
     let _settings = new settings();
     _settings.name = document.getElementById("name").value;
     _settings.size = document.getElementById("size").value;
-    _settings.minWordSize  = parseInt(document.getElementById("minWordSize").value);
-    _settings.maxWordSize  = parseInt(document.getElementById("maxWordSize").value);
-    _settings.numWordsToInput = parseInt(document.getElementById("numWordsToInput").value);
-    _settings.numWordsToHide = parseInt(document.getElementById("numWordsToHide").value);
+    _settings.minWordSize  = document.getElementById("minWordSize").value;
+    _settings.maxWordSize  = document.getElementById("maxWordSize").value;
+    _settings.numWordsToInput = document.getElementById("numWordsToInput").value;
     getInputWords(_settings);
     _settings.inputBoard = getInputBoard();
+    _settings.library = document.getElementById("libraryInput").value;
     return _settings;
 }
 function getInputWords(_settings)
@@ -377,15 +375,10 @@ function getInputWords(_settings)
     _settings.inputWords = []
     if(_settings.numWordsToInput > 0)
     {
-        _settings.useInputWords = true;
         let words = document.getElementById("wordsToHide").childNodes;
         for (let i = 0; i < words.length; i++) {
             _settings.inputWords.push(words[i].value)
         }
-    }
-    else
-    {
-        _settings.useInputWords = false;
     }
 }
 
@@ -395,9 +388,9 @@ function loadSettings(_settings)
     document.getElementById("minWordSize").value = _settings.minWordSize;
     document.getElementById("maxWordSize").value = _settings.maxWordSize;
     document.getElementById("numWordsToInput").value =_settings.numWordsToInput;
-    document.getElementById("numWordsToHide").value = _settings.numWordsToHide;
     updateWordInputMenu(_settings);
     updateBoardInputMenu(_settings);
+    document.getElementById("libraryInput").value = _settings.library;
 }
 
 function saveSettings()

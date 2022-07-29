@@ -304,69 +304,31 @@ async function createSquardle(sqSettings)
     // parameters in function try
     // sources
     let ABC = "abcdefghijklmnopqrstuvwxyzáéíýóúřčěš"
-    let LIBRARY;
-
-    // parameters
-    let size;
-    let fileName;
-    let minWordSize;
-    let maxWordSize;
-    let numWordsToHide;
-
-    let useInputWords = false
-    let inputWords = [
-    ];
-
-    // output
-    let squardle;
-
-    // variables
-    let board;
-
-    let wordsInBoard = [];
-    let wordLibrary;
-
-
-
-
-
-
     
 
+    // parameters
+    let size = sqSettings.size;
+    let minWordSize = sqSettings.minWordSize;
+    let maxWordSize =  sqSettings.maxWordSize;
+    let inputWords = sqSettings.inputWords;
+        // loads starting board
+    let board = new Board(size, "", minWordSize, maxWordSize);
+    board.loadBoard(sqSettings.inputBoard);
+    let LIBRARY = await getJson("../libraries/" + sqSettings.library +".json");
+    LIBRARY.filter((el)=>{(el.length >= minWordSize && el.length<=maxWordSize) })
+    // output
+    let squardle = new Squardle();
+
+    // variables
+    let wordsInBoard = [];
+
     // resetting old parameters
-    squardle = new Squardle();
     wordsInBoard = [];
-    wordLibrary = [];
 
-
-    // loading parameters
-    size = sqSettings.size
-    minWordSize = sqSettings.minWordSize
-    maxWordSize =  sqSettings.maxWordSize
-    numWordsToHide = sqSettings.numWordsToHide
-    if(sqSettings.useInputWords)
-    {
-        useInputWords = true
-        inputWords = sqSettings.inputWords;
-    }
-
-    // loads starting board
-    board = new Board(size, "", minWordSize, maxWordSize)
-    board.loadBoard(sqSettings.inputBoard)
 
     // getting library
-    LIBRARY = await getJson("../libraries/huge_library.json")
-    if(!useInputWords)
-    {
-        LIBRARY = shuffle(LIBRARY)
-        wordLibrary = findSimilarWords(LIBRARY, numWordsToHide + 5, 0.6)
-        
-    }
-    else
-    {
-        LIBRARY = LIBRARY.concat(inputWords);
-        board.library = inputWords;
-    }
+    LIBRARY = LIBRARY.concat(inputWords);
+    board.library = inputWords;
 
 
     for (let i = 0; i < inputWords.length; i++) {

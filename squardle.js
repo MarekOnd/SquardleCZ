@@ -6,7 +6,7 @@ let indexOfSquardle;
   //let indexOfSquardle = Math.floor((date.getTime() - originDate.getTime())/(3600*24*1000));
 
 // information
-let numberOfSquardles = 21;
+let numberOfSquardles = 22;
 
 
 // input data
@@ -17,7 +17,7 @@ let wordToFindPaths =[];
 let wordsToFindStrings = [];
 
 
-let libraryName = "huge_library.json"
+let libraryName = "czech.json"
 let LIBRARY = [];
 // variables for finding word
 let mousePressed = false;

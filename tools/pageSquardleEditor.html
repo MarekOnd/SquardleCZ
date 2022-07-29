@@ -51,20 +51,35 @@
 
                 <label>
                     Velikost:
-                    <input id="size" type="number" min="1" max="6" onchange="updateBoardInputMenu(getSettings())">
-                </label>
-                <br>
+                    <input id="size" type="range" min="1" max="6" onchange="updateBoardInputMenu(getSettings())">
+                </label><br>
+                
                 <!-- Velikost: <textarea  rows="1"></textarea><br> -->
                 <div id="boardInput">
 
                 </div><br>
-                Minimální délka slova: <textarea id="minWordSize" rows="1"></textarea><br>
-                Maximální délka slova: <textarea id="maxWordSize" rows="1"></textarea><br>
-                Počet slov k umístění (prvnímu): <textarea id="numWordsToHide" rows="1"></textarea><br>
-                Počet slov k výberu (zadáním 0 se vyberou náhodná) <textarea id="numWordsToInput" rows="1" onchange="updateWordInputMenu(getSettings())"></textarea><br>
+                <label>
+                    Minimální délka slova:
+                    <input id="minWordSize" type="number" min="1" max="6">
+                </label><br>
+                <label>
+                    Maximální délka slova:
+                    <input id="maxWordSize" type="number" min="1" max="6">
+                </label><br>
+                <label>
+                    Počet slov k výberu (zadáním 0 se vyberou náhodná)
+                    <input id="numWordsToInput" type="number" rows="1" onchange="updateWordInputMenu(getSettings())">
+                </label><br>
                 <div id="wordsToHide">
 
-                </div>
+                </div><br>
+                <label>
+                    Výběr knihovny slov:
+                    <select id="libraryInput">
+                        <option value="czech">Česká</option>
+                        <option value="english">Anglická</option>
+                    </select>
+                </label>
 
             </div><br>
             <button id="enter" onclick="createSquardleFromParameters()" class="button-1">Vytvoř squardle</button><br>

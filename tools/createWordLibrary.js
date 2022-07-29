@@ -1,8 +1,8 @@
 const fs = require('fs');
 
 // SETTINGS
-let loadFileName = "syn2015.tsv"; // loads from txt
-let saveFileName = "library_syn2015.json"; // saves to json
+let loadFileName = "slova.txt"; // loads from txt
+let saveFileName = "english.json"; // saves to json
 let oneArrLibrary = true;
 // VARIABLES
 let rawtext ="";
@@ -46,6 +46,7 @@ function processRawText()
         const element = unwantedSymbols[i];
         rawtext.replaceAll(element," ");
     }
+    rawtext.replaceAll("\r"," ");
     rawtext = rawtext.split("\t").map(function(w){return w.split("\n");});   
     rawtext.map(function(W){W.map(function(w){if(w.length > 0 && !constainsASymbol(w,ABC)){addToLibrary(w)}})})
 }

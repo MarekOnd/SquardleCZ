@@ -9,16 +9,16 @@ class settings{
     useInputWords;
     inputWords;
     inputBoard;
-    constructor(_size = 5, _minWordSize = 4, _maxWordSize = 8, _numWordsToHide = 1, _numWordsToInput = 1, _useInputWords = true, _inputWords = [""], _inputBoard = null)
+    library;
+    constructor(_size = 5, _minWordSize = 4, _maxWordSize = 8, _numWordsToInput = 1, _inputWords = [""], _inputBoard = null, _library = "czech")
     {
         this.size = _size;
         this.minWordSize = _minWordSize;
         this.maxWordSize = _maxWordSize;
-        this.numWordsToHide = _numWordsToHide;
         this.numWordsToInput = _numWordsToInput;
-        this.useInputWords = _useInputWords;
         this.inputWords = _inputWords;
         this.inputBoard = _inputBoard;
+        this.library = _library;
     }
 }
 
