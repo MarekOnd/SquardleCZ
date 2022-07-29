@@ -9,7 +9,6 @@ body{
 }
 
 #squardleLoader{
-    
     position: absolute;
     left: 5%;
     width: 43%;
@@ -18,6 +17,10 @@ body{
     background-color: rgba(80, 175, 175, 0.3);
     border-radius: 10px;
     border: solid 5px gray;
+
+    overflow: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 #squardleEditor{
     position: absolute;
@@ -29,6 +32,10 @@ body{
     border-radius: 10px;
     border: solid 5px gray;
     z-index: 0;
+
+    overflow: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 #squardleGenerator{
@@ -41,6 +48,10 @@ body{
     border-radius: 10px;
     border: solid 5px gray;
     z-index: 0;
+
+    overflow: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 
@@ -52,12 +63,13 @@ textarea{
     outline: none;
     top: 5px;
     z-index: 0;
+    background-image: linear-gradient(-180deg, #ffffff 0%, #d8d8d8 100%);
 }
 
 
 
 .button-1{
-    background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
+    background-image: linear-gradient(-180deg, #e25937 0%, #c81e1e 100%);
     border-radius: .3rem;
     box-sizing: border-box;
     color: #FFFFFF;
@@ -69,24 +81,22 @@ textarea{
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
+    border: none;
+    display: inline-block;
   }
   
 
 .button-1:hover {
-  background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
+  background-image: linear-gradient(-180deg, #c9311d 0%, #9c3617 100%);
 }
 
-@media (min-width: 100px) {
-    .button-1{
-    padding: 0.2rem 0.5rem;
-  }
-}
+
 
 
 #header{
     position: relative;
     top: -5px;
-    font-size: 50px;
+    font-size: 40px;
     z-index: 10;
     text-align: center;
 

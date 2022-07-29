@@ -25,7 +25,10 @@
             Jaký squardle chceš otevřít: <textarea placeholder = "jméno souboru" name="" id="textarea" rows="1"></textarea><button onclick="loadData()" class="button-1">Otevři</button><br>
         </div>
         <div id="squardleEditor">
-            Jméno: <textarea id="name" rows="1"></textarea><br>
+            <label>
+                Jméno:
+                <input type="text" id="name">
+            </label>
             Autor: <textarea id="author" rows="1"></textarea><br>
             Obtížnost:   <select id="difficulty">
                             <option value="1">1</option>
@@ -38,7 +41,7 @@
             <div id="wordsToFind"></div>
             <div id="bonusWords"></div>
             <div id="output">
-                <button id="output-button" onclick="exportSquardle()" class="button-1">EXPORTUJ</button>
+                <button id="output-button" onclick="exportSquardle()" class="button-1">Exportuj</button><br>
                 <textarea name="" id="output-text"></textarea>
             </div>
         </div>
@@ -46,7 +49,12 @@
         <div id="squardleGenerator">
             <div id="parameters">
 
-                Velikost: <textarea id="size" rows="1" onchange="updateBoardInputMenu(getSettings())"></textarea><br>
+                <label>
+                    Velikost:
+                    <input id="size" type="number" min="1" max="6" onchange="updateBoardInputMenu(getSettings())">
+                </label>
+                <br>
+                <!-- Velikost: <textarea  rows="1"></textarea><br> -->
                 <div id="boardInput">
 
                 </div><br>

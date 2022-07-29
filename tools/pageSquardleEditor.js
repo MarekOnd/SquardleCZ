@@ -256,6 +256,7 @@ function updateBoardInputMenu(_settings)
     
     let boardInput = document.getElementById("boardInput");
     clearChildren(boardInput);
+    
     for (let i = 0; i < _settings.size; i++) {
         let row = document.createElement("div")
         row.className = "boardRow"
@@ -267,7 +268,7 @@ function updateBoardInputMenu(_settings)
                 selected.x = newInst(i);
                 selected.y = newInst(y);
             })
-            if(_settings.inputBoard !== null)
+            if(i < _settings.inputBoard.length && y < _settings.inputBoard[i].length)
             {
                 inputBox.value = _settings.inputBoard[i][y];
             }
@@ -362,7 +363,7 @@ function getSettings()
 {
     let _settings = new settings();
     _settings.name = document.getElementById("name").value;
-    _settings.size = parseInt(document.getElementById("size").value);
+    _settings.size = document.getElementById("size").value;
     _settings.minWordSize  = parseInt(document.getElementById("minWordSize").value);
     _settings.maxWordSize  = parseInt(document.getElementById("maxWordSize").value);
     _settings.numWordsToInput = parseInt(document.getElementById("numWordsToInput").value);
@@ -381,7 +382,6 @@ function getInputWords(_settings)
         for (let i = 0; i < words.length; i++) {
             _settings.inputWords.push(words[i].value)
         }
-        console.log(words)
     }
     else
     {
