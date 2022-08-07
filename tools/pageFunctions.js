@@ -10,6 +10,7 @@ class settings{
     inputWords;
     inputBoard;
     library;
+
     constructor(_size = 5, _minWordSize = 4, _maxWordSize = 8, _numWordsToInput = 1, _inputWords = [""], _inputBoard = null, _library = "czech")
     {
         this.size = _size;
@@ -29,6 +30,10 @@ class Squardle{
     wordsToFind = []; // contains structure
 
     difficulty; // 1 to 5 stars
+
+    limitedTime;
+    startDate;
+    endDate;
 }
 
 class Word{

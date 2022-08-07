@@ -28,15 +28,39 @@
             <label>
                 Jméno:
                 <input type="text" id="name">
-            </label>
-            Autor: <textarea id="author" rows="1"></textarea><br>
-            Obtížnost:   <select id="difficulty">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+            </label><br>
+            <label>
+                Autor:
+                <textarea id="author" rows="1"></textarea>
+            </label><br>
+            <label>
+                Obtížnost:
+                <select id="difficulty">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>   
+            </label><br>
+            
+            <label>
+                Omezený čas:
+                <input type="checkbox" id="limitedTime">
+            </label><br>
+            <label>
+                Od
+                <input type="date" id="startDate">
+                do
+                <input type="date" id="endDate">
+            </label><br>
+            <label>
+
+            </label><br>
+            <label>
+                Minimální délka slova:
+                <input id="minWordSize" type="number" min="1" max="12">
+            </label><br>
             <div id="board"></div>
             <div id="wordsToFind"></div>
             <div id="bonusWords"></div>
@@ -60,11 +84,11 @@
                 </div><br>
                 <label>
                     Minimální délka slova:
-                    <input id="minWordSize" type="number" min="1" max="6">
+                    <input id="minWordSize" type="number" min="1" max="12">
                 </label><br>
                 <label>
                     Maximální délka slova:
-                    <input id="maxWordSize" type="number" min="1" max="6">
+                    <input id="maxWordSize" type="number" min="1" max="12">
                 </label><br>
                 <label>
                     Počet slov k výberu (zadáním 0 se vyberou náhodná)

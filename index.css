@@ -10,6 +10,20 @@ body{
     font-size: 40px;
     
 
+    /*COLOR PALLETE*/
+    --color1: #03045E;
+    --color2: #023E8A;
+    --color3: #0077B6;
+    --color4: #0096C7;
+    --color5: #00B4D8;
+    --color6: #48CAE4;
+    --color7: #90E0EF;
+    --color8: #ADE8F4;
+    --color9: #CAF0F8;
+    --font-color-ondark:white;
+    --font-color-onlight:black;
+
+
 }
 
 /* TITLE */
@@ -72,7 +86,7 @@ body{
     font-size: 30px;
     line-height: calc(var(--menu-height) - 30px);
     color: aliceblue;
-    background-color: rgb(24, 4, 114);
+    background-color: var(--color2);
     text-decoration: none;
     text-align: center;
     display: inline-block;
@@ -82,6 +96,11 @@ body{
 .menu-button:hover{
     background-color: rgb(49, 33, 105);
 }
+
+.selectedTab-button{
+    background-color: var(--color3);
+}
+
 a:visited{
     text-decoration: none;
 }
@@ -117,9 +136,9 @@ a{
     display: block;
 }
 .cell{
-    --cellSize: 80px;
-    --font-size: 50px;
-    --small-font-size: 20px;
+    --cellSize: 110px;
+    --font-size: 70px;
+    --small-font-size: 40px;
     
     position: relative;
     width: var(--cellSize);
@@ -308,5 +327,180 @@ a{
     border-radius: 10px;
     z-index: 0;
 }
+
+
+/* BROWSER */
+#browser{
+    position: relative;
+    user-select: none;
+}
+#browser-tiles{
+    position: relative;
+    width: 80%;
+}
+
+.browserTile{
+    --tileHeight: 100px;
+    --tileWidth: 400px;
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    display: inline-block;
+    margin: 10px;
+}
+.browserTile:hover{
+    filter: brightness(1.1) drop-shadow(0px 0px 5px var(--color2));
+}
+
+.browserTile #content{
+
+    position: relative;
+    width: var(--tileWidth);
+    height: var(--tileHeight);
+
+    border: dashed darkgoldenrod 5px;
+    padding: 5px;
+    border-radius: 20px;
+
+    overflow: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+}
+
+.browserTile #content::-webkit-scrollbar {
+    display: none;
+}
+
+.browserTile #name{
+    position: relative;
+
+    font-size: 20px;
+}
+
+.browserTile #type{
+    position: relative;
+    
+    font-size: 30px;
+}
+.browserTile #difficulty{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    font-size: 20px;
+}
+
+.browserTile #size{
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    
+}
+
+
+.previewTile{
+    background-color: var(--color1);
+    color: var(--font-color-ondark);
+    font-size: 10px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    display: inline-block;
+    border-radius: 5px;
+    margin: 2px;
+}
+.previewTileRow{
+    height: 22px
+}
+
+#browser-tiles .weekly #content{
+    border: var(--color2) solid 5px;
+    background-color: var(--color8);
+    color: black;
+}
+
+#browser-tiles .casual #content{
+    border: var(--color3) dotted 5px;
+    background-color: var(--color6);
+    color: black;
+}
+
+#browser-tiles .shared #content{
+    border: var(--color2) dashed 3px;
+    background-color: var(--color9);
+    color: black;
+}
+
+
+/*date and locks*/
+.browserTile #date{
+    position: absolute;
+    font-size: 20px;
+    z-index: 10;
+    color: var(--font-color-ondark);
+}
+
+#browser-tiles .notStarted #content{
+    filter: brightness(0.5);
+}
+
+.notStarted #date{
+    top: 10px;
+    line-height: var(--tileHeight);
+    width: var(--tileWidth);
+    background-image: url("./images/hourglass.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: var(--tileHeight);
+    text-align: center;
+    font-size: calc(var(--tileHeight)/3);
+
+}
+
+#browser-tiles .ended #content{
+    filter: brightness(0.5);
+}
+.ended #date{
+    top: 10px;
+    line-height: var(--tileHeight);
+    width: var(--tileWidth);
+    background-image: url("./images/lock.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: var(--tileHeight);
+    text-align: center;
+    font-size: calc(var(--tileHeight)/3);
+
+}
+#browser-tiles .active{
+
+}
+.active #date{
+    top: 0px;
+    right: 0px;
+    margin-top: 3px;
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: var(--color1);
+}
+
+
+.seeResultButton{
+    position: absolute;
+    left: 5px;
+    bottom: 0px;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    z-index: 50;
+}
+
+
+.disabled{
+    filter: invert(1);
+    
+}
+
 
 

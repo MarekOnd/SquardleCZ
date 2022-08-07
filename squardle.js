@@ -10,15 +10,12 @@ let numberOfSquardles = 22;
 
 
 // input data
-let squardleName = "";
-let size; // size of board
-let lettersInBoard = []; // letters in board
-let wordToFindPaths =[];
-let wordsToFindStrings = [];
+let S;
 
 
 let libraryName = "czech.json"
 let LIBRARY = [];
+
 // variables for finding word
 let mousePressed = false;
 let wordPath = {
@@ -31,22 +28,24 @@ let bonusWordsFound = [];
 
 let isNewSave;
 
+// board
+let board = document.getElementById("board");
+
 
 async function initialize(){
-    squardleName = "";
-    lettersInBoard = [];
-    wordToFindPaths =[];
-    wordsToFindStrings = [];
-    wordsFound = [];
-    bonusWordsFound = [];
-    await loadData();
+    LIBRARY = await getJson("./libraries/" + libraryName)
+}
+// LOAD DATA
+async function loadSquardle(squardleToLoad)
+{
+    S = squardleToLoad;
 
-    if(wordToFindPaths[0].positions[0].x === undefined)// this means its in old style
+    if(S.wordsToFind[0].positions[0].x === undefined)// this means its in old style
     {
         isNewSave = false;
         let newWordsToFindPaths = []
-        for (let i = 0; i < wordToFindPaths.length; i++) {
-            const element = wordToFindPaths[i];
+        for (let i = 0; i < S.wordsToFind.length; i++) {
+            const element = S.wordsToFind[i];
             let tmpPath = [];
             for (let y = 0; y < element.positions.length; y++) {
                 const oldPos = element.positions[y];
@@ -56,137 +55,111 @@ async function initialize(){
             }
             newWordsToFindPaths.push(tmpPath);
         }
-        
     }
     else
     {
         newSave = true;
     }
-    
-    // different version of squardle files
 
+    // loading progress
+    // wordsFound = [];
+    // bonusWordsFound = [];
+    // let savedProgress = localStorage.getItem(hashSquardle(S));
+    // console.log(savedProgress)
+    // if(savedProgress !== null)
+    // {
+    //     let parseSavedProgress = JSON.parse(savedProgress);
+    //     wordsFound = parseSavedProgress.wordsFound;
+    //     bonusWordsFound = parseSavedProgress.bonusWordsFound;
+    // }
+    // else
+    // {
+    //     wordsFound = [];
+    //     for (let i = 0; i < S.wordsToFind.length; i++) {
+    //         wordsFound.push(false);
+    //     }
+    // }
+    loadProgress(hashSquardle(S));
 
+    // CAN LOOK FOR WORDS
+    document.getElementById("board").classList.remove("disabled")
 
-    wordsToFindStrings = createWords(wordToFindPaths);
 
     window.addEventListener("pointerup",()=>{mouseUp()})
-
-
     createBoard();
-    initSelector();
     updateScore();
     updateFound();
     updateLettersInBoard()
-}
-// LOAD DATA
-async function loadData()
-{
-    // index
-    if(localStorage.getItem("index")!==null)
-    {
-        indexOfSquardle = JSON.parse(localStorage.getItem("index"))
-    }
-    else
-    {
-        indexOfSquardle = 0;
-    }
+    
+    // // index
+    // if(localStorage.getItem("index")!==null)
+    // {
+    //     indexOfSquardle = JSON.parse(localStorage.getItem("index"))
+    // }
+    // else
+    // {
+    //     indexOfSquardle = 0;
+    // }
 
 
-    // loading structure
-    let squardle = await getJson("./data/squardle_" + indexOfSquardle +".json");
-    lettersInBoard = JSON.parse(JSON.stringify(squardle.letters));
+    // // loading structure
+    // let squardle = await getJson("./data/squardle_" + indexOfSquardle +".json");
+    // S.letters = JSON.parse(JSON.stringify(squardle.letters));
 
-    // letters
-        //let tmpBoard = await getJson("./data/Board" + indexOfSquardle +".json");
-    // size = tmpBoard.length;
-    // for (let i = 0; i < tmpBoard.length; i++) {
-    //     const element = tmpBoard[i];
-    //     for (let j = 0; j < element.length; j++) {
-    //         const subElement = element[j];
-    //         lettersInBoard.push(subElement);
+    // // words
+    // S.wordsToFind = squardle.wordsToFind;
+    // // load progress
+    // if(localStorage.getItem("progress_" + indexOfSquardle) !== null)
+    // {
+    //     wordsFound = [];
+    //     wordsFound = JSON.parse(localStorage.getItem("progress_" + indexOfSquardle));
+    // }
+    // else
+    // {
+    //     for (let i = 0; i < S.wordsToFind.length; i++) {
+    //         const element = S.wordsToFind[i];
+    //         wordsFound.push(false);
     //     }
     // }
 
-    // words
-    wordToFindPaths = squardle.wordsToFind;
-        //wordsToFind = await getJson("./data/WordsToFind" + indexOfSquardle +".json");
-    // load progress
-    if(localStorage.getItem("progress_" + indexOfSquardle) !== null)
-    {
-        wordsFound = [];
-        wordsFound = JSON.parse(localStorage.getItem("progress_" + indexOfSquardle));
-    }
-    else
-    {
-        for (let i = 0; i < wordToFindPaths.length; i++) {
-            const element = wordToFindPaths[i];
-            wordsFound.push(false);
-        }
-    }
-
-    bonusWordsFound = [];
-    if(localStorage.getItem("bonus_" + indexOfSquardle) !== null)
-    {
-        bonusWordsFound = JSON.parse(localStorage.getItem("bonus_" + indexOfSquardle));
-    }
+    // bonusWordsFound = [];
+    // if(localStorage.getItem("bonus_" + indexOfSquardle) !== null)
+    // {
+    //     bonusWordsFound = JSON.parse(localStorage.getItem("bonus_" + indexOfSquardle));
+    // }
 
     // LIBRARY
-    LIBRARY = await getJson("./libraries/" + libraryName)
     
-
-
 }
-
-
-async function getFile(url)
-{
-    try{
-        return await fetch(url);
-    }
-    catch(error){
-        console.log(error);
-    }
-    return false;
-}
-async function getJson(url){
-    const obj = await getFile(url);
-    if(obj == false)
-    {
-        return false;
-    }
-    const jsonObj = await obj.json();
-    return jsonObj;
-}
-
 
 // SAVE SQUARDLE USER IS PLAYING
-function changeIndex()
-{   
-    saveProgress();
-    let newIndex = document.getElementById("index-selector").selectedIndex;
-    localStorage.setItem("index", JSON.stringify(newIndex))
-    initialize();
-}
+// function changeIndex()
+// {   
+//     saveProgress();
+//     let newIndex = document.getElementById("index-selector").selectedIndex;
+//     localStorage.setItem("index", JSON.stringify(newIndex))
+//     initialize();
+// }
 
-async function initSelector()
-{
-    let selector = document.getElementById("index-selector");
-    while(selector.firstChild)
-    {
-        selector.removeChild(selector.firstChild)
-    }
-    let i = 0;
-    let squardle
-    do{
-        squardle = await getJson("./data/squardle_" + i +".json");
-        let newItem = document.createElement("option");
-        newItem.textContent = squardle.name;
-        newItem.value = i-1;
-        selector.appendChild(newItem);
-        i++;
-    }while(i <= numberOfSquardles)
-    document.getElementById("index-selector").selectedIndex = indexOfSquardle
-}
+// async function initSelector()
+// {
+//     let selector = document.getElementById("index-selector");
+//     while(selector.firstChild)
+//     {
+//         selector.removeChild(selector.firstChild)
+//     }
+//     let i = 0;
+//     let squardle
+//     do{
+//         squardle = await getJson("./data/squardle_" + i +".json");
+//         let newItem = document.createElement("option");
+//         newItem.textContent = squardle.name;
+//         newItem.value = i-1;
+//         selector.appendChild(newItem);
+//         i++;
+//     }while(i <= numberOfSquardles)
+//     document.getElementById("index-selector").selectedIndex = indexOfSquardle
+// }
 
 // BOARD
 function createBoard()
@@ -199,12 +172,12 @@ function createBoard()
         table.removeChild(table.firstChild)
     }
     // creates new board
-    for(var i = 0; i < lettersInBoard.length; i++)
+    for(var i = 0; i < S.letters.length; i++)
     {
         let row = document.createElement("tr");
         row.className = "row";
 
-        for(var j = 0; j < lettersInBoard[i].length; j++)
+        for(var j = 0; j < S.letters[i].length; j++)
         {
             
             // celle and button
@@ -213,7 +186,7 @@ function createBoard()
             
             let button = document.createElement("div");
             button.className = "boardButton";
-            if(lettersInBoard[i][j] === "0")
+            if(S.letters[i][j] === "0")
             {
                 button.style.display = "none";
             }
@@ -222,7 +195,7 @@ function createBoard()
 
             let letter = document.createElement("div")
             letter.className = "button-letter";
-            let text = document.createTextNode(lettersInBoard[i][j]);
+            let text = document.createTextNode(S.letters[i][j]);
             letter.appendChild(text);
             button.appendChild(letter)
 
@@ -270,24 +243,24 @@ function getButton(x,y)
 
 function updateLettersInBoard()
 {
-    let includedLetterPaths = [];
+    let allIncludedPositions = [];
     let startingPositions = [];
-    for (let i = 0; i < wordToFindPaths.length; i++) {
+    for (let i = 0; i < S.wordsToFind.length; i++) {
         if(!wordsFound[i])
         {
-            includedLetterPaths.push(wordToFindPaths[i]);
-            startingPositions.push(wordToFindPaths[i].positions[0])
+            for (let y = 0; y < S.wordsToFind[i].positions.length; y++) {
+                allIncludedPositions.push(S.wordsToFind[i].positions[y]);
+            }
+            
+            startingPositions.push(S.wordsToFind[i].positions[0])
         }
         
     }
     
 
-    let allIncludedPositions = joinArrays(includedLetterPaths);
-    
-
-    for (let i = 0; i < lettersInBoard.length; i++) {
+    for (let i = 0; i < S.letters.length; i++) {
         
-        for (let y = 0; y < lettersInBoard.length; y++) {
+        for (let y = 0; y < S.letters.length; y++) {
             let button = getButton(i,y);
             if(!button)
             {
@@ -297,19 +270,19 @@ function updateLettersInBoard()
 
 
             
+            let use = button.getElementsByClassName("button-use")[0]; // button always has one
+            let start = button.getElementsByClassName("button-start")[0]; // button always has one
             // update active letters
-            if(!button.classList.contains("allWereFound") && timesUsedInWord == 0)
+            if(!button.classList.contains("allWereFound") && timesUsedInWord === 0)
             {
-                button.classList.add("allWereFound")
-                let use = button.getElementsByClassName("button-use")[0]; // button always has one
-                let start = button.getElementsByClassName("button-start")[0]; // button always has one
+                button.classList.add("allWereFound");
                 use.textContent = ""
                 start.textContent = ""
             }
             else
             {
                 // update times used in a word
-                let use = button.getElementsByClassName("button-use")[0]; // button always has one
+                //let use = button.getElementsByClassName("button-use")[0]; // button always has one
                 if(timesUsedInWord > 0)
                 {
                     use.textContent = timesUsedInWord;
@@ -321,7 +294,7 @@ function updateLettersInBoard()
                 
 
                 // update first time in words
-                let start = button.getElementsByClassName("button-start")[0]; // button always has one
+                //let start = button.getElementsByClassName("button-start")[0]; // button always has one
                 let timesStartingWithThis = startingPositions.filter(el=>(el.x==i&&el.y==y)).length;
                 if(timesStartingWithThis > 0)
                 {
@@ -348,6 +321,12 @@ function mouseClick()
 }
 function mouseDown(x,y)
 {
+    // disable
+    if(board.classList.contains("disabled"))
+    {
+        return;
+    }
+    //--
     // mouse is pressed now
     mousePressed = true;
     // changes button color etc.
@@ -362,6 +341,12 @@ function mouseDown(x,y)
 }
 function mouseUp()
 {
+    // disable
+    if(board.classList.contains("disabled"))
+    {
+        return;
+    }
+    //--
     mousePressed = false;
     if(wordPath.positions.length == 0)
     {
@@ -381,6 +366,12 @@ function mouseUp()
 }
 function mouseEnter(x,y)
 {
+    // disable
+    if(board.classList.contains("disabled"))
+    {
+        return;
+    }
+    //--
     if(!mousePressed)
     {
         return;
@@ -411,7 +402,7 @@ function createWord(path)
 {
     let string = "";
     path.positions.forEach(element => {
-        string += lettersInBoard[element.x][element.y];
+        string += S.letters[element.x][element.y];
     });
     return string;
 }
@@ -461,8 +452,8 @@ function testMainWord() //<= goes here from mouseUp
 {
     let output = document.getElementById("output")
     let mainWord = createWord(wordPath);
-    for (let i = 0; i < wordToFindPaths.length; i++) {
-        const element = createWord(wordToFindPaths[i]);
+    for (let i = 0; i < S.wordsToFind.length; i++) {
+        const element = createWord(S.wordsToFind[i]);
         if(mainWord == element)
         {
             if(wordsFound[i] == true)
@@ -510,7 +501,7 @@ function updateScore()
     let score = 0;
     let maxScore = 0
     for (let i = 0; i < wordsFound.length; i++) {
-        let word = createWord(wordToFindPaths[i]);
+        let word = createWord(S.wordsToFind[i]);
         maxScore += word.length * word.length;
         if(wordsFound[i])
         {
@@ -522,7 +513,7 @@ function updateScore()
     let scoreBar = document.getElementById("score-bar");
     scoreBar.style.width = String(score/maxScore*100) + "%"
 
-    if(score == maxScore)
+    if(score === maxScore)
     {
         win();
     }
@@ -562,6 +553,8 @@ function updateFound()
     // appends found words
     let paragraph = document.createElement("div");
 
+
+    let wordsToFindStrings = createWords(S.wordsToFind);
     let words = []
     for (let i = 0; i < wordsFound.length; i++) {
         if(wordsFound[i])
@@ -622,12 +615,69 @@ function toggleFoundWordsPopUp()
     }
     foundWordsPopUp = !foundWordsPopUp;
 }
-// SAVING
+// SAVING AND LOADING
 function saveProgress()
 {
-    localStorage.setItem("progress_" + indexOfSquardle,JSON.stringify(wordsFound));
-    localStorage.setItem("bonus_" + indexOfSquardle, JSON.stringify(""))
-    localStorage.setItem("bonus_" + indexOfSquardle, JSON.stringify(bonusWordsFound));
+    // localStorage.setItem("progress_" + indexOfSquardle,JSON.stringify(wordsFound));
+    // localStorage.setItem("bonus_" + indexOfSquardle, JSON.stringify(""))
+    // localStorage.setItem("bonus_" + indexOfSquardle, JSON.stringify(bonusWordsFound));
+    let save = {
+        hash:hashSquardle(S),
+        wordsFound:wordsFound,
+        bonusWordsFound:bonusWordsFound
+    }
+    let allSaves = JSON.parse(localStorage.getItem("allSaves"));
+    let indexToSave = null;
+    // tries to find save to overwrite
+    for (let i = 0; i < allSaves.length; i++) {
+        const element = allSaves[i];
+        if(element.hash === save.hash)
+        {
+            indexToSave = i;
+            break;
+        }
+    }
+    if(indexToSave === null)
+    {
+        allSaves.push(save);
+    }
+    else
+    {
+        allSaves[indexToSave] = save;
+    }
+    localStorage.setItem("allSaves",JSON.stringify(allSaves));
+}
+
+function loadProgress(hash)
+{
+    let allSaves = JSON.parse(localStorage.getItem("allSaves"));
+    if(allSaves === null)
+    {
+        allSaves = [];
+        localStorage.setItem("allSaves",JSON.stringify(allSaves))
+    }
+    let loadingSquardleProgress = null;
+    allSaves.map((save)=>{
+        if(save.hash === hash)
+        {
+            loadingSquardleProgress = save;
+        }
+    })
+    wordsFound = [];
+    bonusWordsFound = [];
+    if(loadingSquardleProgress !== null)// is already saved
+    {
+        wordsFound = loadingSquardleProgress.wordsFound;
+        bonusWordsFound = loadingSquardleProgress.bonusWordsFound;
+    }
+    else// isn't saved yet -> creates empty array with progress
+    {
+        wordsFound = [];
+        for (let i = 0; i < S.wordsToFind.length; i++) {
+            wordsFound.push(false);
+        }
+    }
+
 }
 
 // CREATING LINE
@@ -647,7 +697,7 @@ function connectButtons(path)
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
         let button = document.getElementsByClassName("row")[element.x].childNodes[element.y].getBoundingClientRect()
-        positions.push([button.left + button.width/2 - 20 +  window.scrollX,button.top - 255 + window.scrollY])
+        positions.push([button.left + button.width/2 - 20 +  window.scrollX, button.top - 235 + window.scrollY])
     }
     return drawLine(positions)
 }
@@ -742,9 +792,9 @@ function win()
         { transform: 'rotate(360deg) scale(1)' }
     ];
       
-    for (let i = 0; i < lettersInBoard.length; i++) {
+    for (let i = 0; i < S.letters.length; i++) {
         
-        for (let y = 0; y < lettersInBoard.length; y++) {
+        for (let y = 0; y < S.letters.length; y++) {
             let button = getButton(i,y);
             const timing = {
                 duration: 2000-(y+1)*300 - (i+1)*100,

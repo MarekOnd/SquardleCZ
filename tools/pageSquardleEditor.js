@@ -156,6 +156,17 @@ function exportSquardle()
     S.author = document.getElementById("author").value;
     // difficulty
     S.difficulty = document.getElementById("difficulty").value;
+    // limited time
+    if(document.getElementById("limitedTime").value)
+    {
+        S.limitedTime = true;
+        S.startDate = document.getElementById("startDate").value;
+        S.endDate = document.getElementById("endDate").value;
+    }
+    else
+    {
+        S.limitedTime = false;
+    }
     // words
     let newWordsToFind = [];
     for (let i = 0; i < legitWords.length; i++) {
@@ -266,6 +277,7 @@ function updateBoardInputMenu(_settings)
                 selected.x = newInst(i);
                 selected.y = newInst(y);
             })
+            inputBox.spellcheck = false;
             if(_settings.inputBoard !== null && i < _settings.inputBoard.length && y < _settings.inputBoard[i].length)
             {
                 inputBox.value = _settings.inputBoard[i][y];

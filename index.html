@@ -9,29 +9,32 @@
     </head>
     
     
-    <body onload="initialize()">
+    <body onload="pageStart()">
         <div id="title">
             <h1 id="main-header">Český squardle</h1>
-            <div id="version">v0.4</div>
+            <div id="version">v0.5</div>
         </div>
         
         <div id="menu">
             <div id="menu-line">
                 
             </div>
-            <a  class="menu-button" title="Týdenní nebo odpočinkový?">
+            <a  class="menu-button" id="goto-game" title="Týdenní nebo odpočinkový?" onclick="openTab('game')" style="display: none;">
+                Hra
+            </a>
+            <a  class="menu-button" id="goto-browser" title="Týdenní nebo odpočinkový?" onclick="openTab('browser')">
                 Seznam
             </a>
-            <a  class="menu-button" title="Co mám dělat?!">
+            <a  class="menu-button" id="goto-guide" title="Co mám dělat?!" onclick="openTab('guide')">
                 Návod
             </a>
-            <a  class="menu-button" title="Jak si vedu?">
+            <a  class="menu-button" id="goto-results" title="Jak si vedu?" onclick="openTab('results')">
                 Výsledky
             </a>
-            <a class="menu-button" title="Kde to jsem?">
+            <a class="menu-button" id="goto-about" title="Kde to jsem?" onclick="openTab('about')">
                 O stránce
             </a>
-            <a class="menu-button" title="Co se změnilo?">
+            <a class="menu-button" id="goto-news" title="Co se změnilo?" onclick="openTab('news')">
                 Novinky
             </a>
             <a href="./tools/pageSquardleEditor.html" id = "goto-editor-link"  class="menu-button" title="Vytvoř si vlastní squardle">
@@ -44,12 +47,12 @@
 
 
 
-        <div id="game">
-            <div id = "index-selector-box">
+        <div id="game" style="display: none;">
+            <!-- <div id = "index-selector-box">
                 Výběr:
                 <select onchange="changeIndex()" id="index-selector">
                 </select>
-            </div>
+            </div> -->
             <div id="output">
 
             </div>
@@ -79,10 +82,37 @@
             </div>
         </div>
         
+        <div id="browser">
+            <div id="browser-tiles">
+
+            </div>
+        </div>
+
+        <div id="news" style="display: none;">
+            Verze 0.5
+            &#x2022; změna celého systému hry
+            &#x2022; týdenní a odpočinkový typ
+            &#x2022; tlačítka fungují
+        </div>
+
+        <div id="results" style="display: none;">
+            Zatím nic
+        </div>
+
+        <div id="about" style="display: none;">
+            Zatím nic
+        </div>
+        <div id="guide" style="display: none;">
+            Zatím nic
+        </div>
         
         <!--<img src="images/warden.jpg" style="width:100%; filter: brightness(0.1);">-->
         <script src="functions.js"></script>
+        <script src="siteController.js"></script>
         <script src="squardle.js"></script>
+        <script src="buttons.js"></script>
+        <script src="browser.js"></script>
+        <script src="pageSwitches.js"></script>
         
     </body>
 </html>
