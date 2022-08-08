@@ -24,6 +24,7 @@
         <div id="squardleLoader">
             Jaký squardle chceš otevřít: <textarea placeholder = "jméno souboru" name="" id="textarea" rows="1"></textarea><button onclick="loadData()" class="button-1">Otevři</button><br>
         </div>
+        <!---------------------------------------------EDITOR------------------------------------------------------>
         <div id="squardleEditor">
             <label>
                 Jméno:
@@ -43,23 +44,25 @@
                     <option value="5">5</option>
                 </select>   
             </label><br>
-            
             <label>
                 Omezený čas:
-                <input type="checkbox" id="limitedTime">
+                <input type="checkbox" id="limitedTime" >
             </label><br>
             <label>
-                Od
-                <input type="date" id="startDate">
-                do
-                <input type="date" id="endDate">
+                Kdy se odemkne
+                    <input type="datetime-local" id="startDate">
             </label><br>
+            <label>
+                <input type="number" id="howManyDays">
+                <input type="time" id="howManyHours">
+                
+            </label><br>
+            
+                
+                
+
             <label>
 
-            </label><br>
-            <label>
-                Minimální délka slova:
-                <input id="minWordSize" type="number" min="1" max="12">
             </label><br>
             <div id="board"></div>
             <div id="wordsToFind"></div>
@@ -69,7 +72,7 @@
                 <textarea name="" id="output-text"></textarea>
             </div>
         </div>
-
+        <!---------------------------------------------GENERATOR------------------------------------------------------>
         <div id="squardleGenerator">
             <div id="parameters">
 
@@ -113,6 +116,9 @@
             </button>
             <button onclick="resetDefaultSettings()" id="resetButton" class="button-1">
                 Resetovat do původního nastavení
+            </button>
+            <button onclick="loadSettingsFromStorage()" id="resetButton" class="button-1">
+                Načíst uložené nastavení
             </button>
         </div>
 

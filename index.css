@@ -136,14 +136,16 @@ a{
     display: block;
 }
 .cell{
-    --cellSize: 110px;
-    --font-size: 70px;
-    --small-font-size: 40px;
+    --cellSize: 90px;
+    --font-size: 60px;
+    --small-font-size: 30px;
     
     position: relative;
     width: var(--cellSize);
     height: var(--cellSize);
     padding: 15px;
+
+    
 }
 #board tr{
     position: relative;
@@ -333,9 +335,11 @@ a{
 #browser{
     position: relative;
     user-select: none;
+    text-align: center;
 }
 #browser-tiles{
     position: relative;
+    left: 10%;
     width: 80%;
 }
 
@@ -362,6 +366,8 @@ a{
     padding: 5px;
     border-radius: 20px;
 
+    text-align: left;
+
     overflow: auto;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -372,22 +378,35 @@ a{
     display: none;
 }
 
-.browserTile #name{
-    position: relative;
 
-    font-size: 20px;
-}
 
 .browserTile #type{
     position: relative;
     
     font-size: 30px;
 }
-.browserTile #difficulty{
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
+
+.browserTile #name{
+    position: relative;
+
     font-size: 20px;
+    line-height: 20px;
+}
+.browserTile #author{
+    position: relative;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 20px;
+    color: #000000;
+}
+.browserTile .difficultyStar{
+    position: relative;
+    top: -10px;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    display: inline-block;
+
 }
 
 .browserTile #size{
@@ -414,6 +433,7 @@ a{
     height: 22px
 }
 
+
 #browser-tiles .weekly #content{
     border: var(--color2) solid 5px;
     background-color: var(--color8);
@@ -424,6 +444,12 @@ a{
     border: var(--color3) dotted 5px;
     background-color: var(--color6);
     color: black;
+}
+
+#browser-tiles .special #content{
+    border: var(--color8) dashed 3px;
+    background-color: purple;
+    color: var(--font-color-ondark);
 }
 
 #browser-tiles .shared #content{

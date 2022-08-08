@@ -23,7 +23,9 @@ async function pageStart()
 // LOADING AND SAVING WHICH SQUARDLE IS OPEN
 let squardlesCasual;
 let squardlesWeekly;
+let squardlesSpecial;
 let squardlesShared;
+
 class searchParameters{
     type;
     index;
@@ -44,6 +46,8 @@ function getSquardle(params)
             return squardlesWeekly[params.index];
         case "shared":
             return squardlesShared[params.index];
+        case "special":
+            return squardlesSpecial[params.index];
         default:
             console.log("ERROR, INVALID TYPE")
             break;
@@ -59,15 +63,22 @@ async function loadSquardlesData()
     }
 
     squardlesWeekly = [];
-    weeklyNameList = await getJson("./data/squardlesWeekly.json");
+    let weeklyNameList = await getJson("./data/squardlesWeekly.json");
     for (let y = 0; y < weeklyNameList.length; y++) {
         squardlesWeekly.push(await getJson("./data/" + weeklyNameList[y] +".json"))
+    }
+
+    squardlesSpecial = []
+    let specialNameList = await getJson("./data/squardlesSpecial.json");
+    for (let y = 0; y < specialNameList.length; y++) {
+        squardlesSpecial.push(await getJson("./data/" + specialNameList[y] +".json"))
     }
 
     squardlesShared = [];
     squardlesShared = localStorage.getItem("squardlesShared") | "";
 }
 
+// for moderat loading from console: loadSquardle(getSquardle(new searchParameters("weekly",1)))
 function loadCurrentSquardle()
 {
     let tmpSqr = localStorage.getItem("currentSquardle")

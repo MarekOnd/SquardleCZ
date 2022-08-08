@@ -157,11 +157,16 @@ function exportSquardle()
     // difficulty
     S.difficulty = document.getElementById("difficulty").value;
     // limited time
-    if(document.getElementById("limitedTime").value)
+    if(document.getElementById("limitedTime").checked === true)
     {
         S.limitedTime = true;
         S.startDate = document.getElementById("startDate").value;
-        S.endDate = document.getElementById("endDate").value;
+        S.endDate = new Date(
+                        new Date(document.getElementById("startDate").value).getTime() + 
+                        document.getElementById("howManyDays").value*1000*24*60*60 +
+                        parseFloat(document.getElementById("howManyHours").value.split(':')[0])*3600*1000 +
+                        parseFloat(document.getElementById("howManyHours").value.split(':')[1])*1000*60
+                    )            
     }
     else
     {
@@ -256,7 +261,12 @@ function updateWordInputMenu(_settings)
     clearChildren(place);
     for (let i = 0; i < _settings.numWordsToInput; i++) {
         let newArea = createChild(place,"textarea","wordToHideInput");
-        newArea.value = _settings.inputWords[i]
+        if(_settings.inputWords[i] === undefined)
+        {
+            _settings.inputWords[i] = "";
+        } 
+        newArea.value = _settings.inputWords[i];
+        
     }
 }
 
@@ -418,9 +428,7 @@ function resetDefaultSettings()
 }
 // DEFAULT VALUES
 
-
-
-function initialize()
+function loadSettingsFromStorage()
 {
     if(localStorage.getItem("settings"))
     {
@@ -430,6 +438,11 @@ function initialize()
     {
         resetDefaultSettings();
     }
+}
+
+function initialize()
+{
+    loadSettingsFromStorage();
     document.getElementById("boardInput").addEventListener("keydown",(event)=>{
         switch(event.key)
         {

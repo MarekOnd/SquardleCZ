@@ -18,11 +18,17 @@ function updateBrowserContent()
         let browserTile = createSquardleTile(element,"weekly",i);
         allTiles.push(browserTile);
     }
+    for (let i = 0; i < squardlesSpecial.length; i++) {
+        const element = squardlesSpecial[i];
+        let browserTile = createSquardleTile(element,"special",i);
+        allTiles.push(browserTile);
+    }
     for (let i = 0; i < squardlesShared.length; i++) {
         const element = squardlesShared[i];
         let browserTile = createSquardleTile(element,"shared",i);
         allTiles.push(browserTile);
     }
+
     for (let i = 0; i < allTiles.length; i++) {
         const element = allTiles[i];
         browser.appendChild(element)
@@ -56,7 +62,28 @@ function createSquardleTile(sq, classToAdd, index)
         previewBoard = false; 
         // shows clock with remaining days
         browserTile.classList.add("notStarted");
-        date.textContent = "Začíná "  + (new Date(sq.startDate)).getDate() + ". " + ((new Date(sq.startDate)).getMonth()+1) + ". "
+
+        let howManyDays = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/24/3600/1000);
+        let howManyHours = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/3600/1000)%24;
+        let howManyMinutes = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/1000)%60;
+        console.log(howManyDays)
+        if(howManyDays === 0)
+        {
+            if(howManyHours===0)
+            {
+                date.textContent = "Začíná za " + howManyMinutes + " min";
+            }
+            else
+            {
+                date.textContent = "Začíná za " + howManyHours  + " h " + howManyMinutes + " min";
+            }
+            
+        }
+        else
+        {
+            date.textContent = "Začíná "  + (new Date(sq.startDate)).getDate() + ". " + ((new Date(sq.startDate)).getMonth()+1) + ". "
+        }
+        
     }
     else if(new Date(sq.endDate) < Date.now())// already ended
     {
@@ -79,7 +106,30 @@ function createSquardleTile(sq, classToAdd, index)
     {
         // shows how much time remains
         browserTile.classList.add("active");
-        date.textContent = "Zbývá " + Math.round(1.0*(new Date(sq.endDate).getTime() - Date.now())/24/3600/1000) + " dnů"
+        let howManyDays = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/24/3600/1000)
+        let howManyHours = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/3600/1000)%24
+        let howManyMinutes = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/1000)%60
+        if(howManyDays === 0)
+        {
+            if(howManyHours===0)
+            {
+                date.style.color = "orange"
+                date.textContent = "Zbývá " + howManyMinutes + " minut";
+            }
+            else
+            {
+                date.style.color = "red"
+                date.textContent = "Zbývá " + howManyHours  + " hodin " + howManyMinutes + " minut";
+            }
+            
+        }
+        else
+        {
+            
+            date.textContent = "Zbývá " + howManyDays + " dnů " + howManyHours  + " h " + howManyMinutes + " min";
+        }
+        
+
         browserTile.addEventListener("click",(e)=>{squardleBrowserTileClick(classToAdd,index)})
     }
     browserTile.appendChild(date);
@@ -99,8 +149,11 @@ function createSquardleTile(sq, classToAdd, index)
         case "shared":
             type.textContent = "Sdílený #" + (index+1);
             break;
+        case "special":
+
+            break;
         default:
-            console.log("ERROR, INVALID TYPE")
+            console.log("ERROR, UNKNOWN TYPE")
             break;
     }
     type.id = "type";
@@ -111,32 +164,59 @@ function createSquardleTile(sq, classToAdd, index)
     name.id = "name";
     name.textContent = sq.name;
     content.appendChild(name);
-
-    //DIFFICULTY
-    let difficulty = document.createElement("div");
-    difficulty.id = "difficulty";
-    switch(sq.difficulty)
+    switch(classToAdd)
     {
-        case 1:
-            difficulty.textContent = "*";
+        case "casual":
+
             break;
-        case 2:
-            difficulty.textContent = "**";
+        case "weekly":
+
             break;
-        case 3:
-            difficulty.textContent = "***";
+        case "shared":
+
             break;
-        case 4:
-            difficulty.textContent = "****";
-            break;
-        case 5:
-            difficulty.textContent = "*****";
+        case "special":
+            name.style.fontSize = "30px"
+            name.style.lineHeight = "30px"
             break;
         default:
-            difficulty.textContent = "";
+            console.log("ERROR, INVALID TYPE")
+            break;
     }
+
+    // AUTHOR
+    let author = document.createElement("div");
+    author.id = "author";
+    author.textContent = sq.author;
+    content.appendChild(author)
+    //DIFFICULTY
     
-    content.appendChild(difficulty);
+    for (let i = 0; i < parseFloat(sq.difficulty); i++) {
+        let difficultyStar = document.createElement("img");
+        difficultyStar.classList.add("difficultyStar");
+        difficultyStar.src = "./images/star.svg";
+        content.appendChild(difficultyStar);
+    }
+    // switch(parseFloat(sq.difficulty))
+    // {
+    //     case 1:
+    //         difficulty.textContent = "*";
+    //         break;
+    //     case 2:
+    //         difficulty.textContent = "**";
+    //         break;
+    //     case 3:
+    //         difficulty.textContent = "***";
+    //         break;
+    //     case 4:
+    //         difficulty.textContent = "****";
+    //         break;
+    //     case 5:
+    //         difficulty.textContent = "*****";
+    //         break;
+    //     default:
+    //         difficulty.textContent = "";
+    // }
 
     if(previewBoard)
     {
