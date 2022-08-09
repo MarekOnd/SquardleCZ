@@ -10,6 +10,10 @@ class Position{
 
 }
 
+class Save{
+
+}
+
 function newInst(obj)
 {
     return JSON.parse(JSON.stringify(obj))
@@ -38,7 +42,7 @@ async function getJson(url){
 function hashSquardle(sq)
 {
     //let str = toStr(sq.letters);
-    let str = JSON.stringify(sq)// maybe to calculative :)
+    let str = JSON.stringify(sq.letters) + JSON.stringify(sq.wordsToFind)// maybe to calculative :)
     return hashCode(str);
 }
 
@@ -70,4 +74,34 @@ function clearChildren(object)
 function newInst(obj)
 {
     return JSON.parse(JSON.stringify(obj))
+}
+
+
+// squardle counting functions
+function getMaxSquardleScore(sq)
+{
+    let max = 0;
+    for (let i = 0; i < sq.wordsToFind.length; i++) {
+        const element = sq.wordsToFind[i];
+        max += element.positions.length*element.positions.length;
+    }
+    return max;
+}
+
+function getCurrentSquardleScore(sq)
+{
+    let s = getSquardleSave(sq)
+    if(s.wordsFound === [])
+    {
+        return 0;
+    }
+    let score = 0;
+    for (let i = 0; i < sq.wordsToFind.length; i++) {
+        const element = sq.wordsToFind[i];
+        if(s.wordsFound[i] === true)
+        {
+            score += element.positions.length*element.positions.length;
+        }
+    }
+    return score;
 }

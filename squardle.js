@@ -40,26 +40,26 @@ async function loadSquardle(squardleToLoad)
 {
     S = squardleToLoad;
 
-    if(S.wordsToFind[0].positions[0].x === undefined)// this means its in old style
-    {
-        isNewSave = false;
-        let newWordsToFindPaths = []
-        for (let i = 0; i < S.wordsToFind.length; i++) {
-            const element = S.wordsToFind[i];
-            let tmpPath = [];
-            for (let y = 0; y < element.positions.length; y++) {
-                const oldPos = element.positions[y];
-                element.positions[y] = new Position(oldPos[0], oldPos[1])
-                //tmpPath.push(new Position(oldPos[0],oldPos[1]));
+    // if(S.wordsToFind[0].positions[0].x === undefined)// this means its in old style
+    // {
+    //     isNewSave = false;
+    //     let newWordsToFindPaths = []
+    //     for (let i = 0; i < S.wordsToFind.length; i++) {
+    //         const element = S.wordsToFind[i];
+    //         let tmpPath = [];
+    //         for (let y = 0; y < element.positions.length; y++) {
+    //             const oldPos = element.positions[y];
+    //             element.positions[y] = new Position(oldPos[0], oldPos[1])
+    //             //tmpPath.push(new Position(oldPos[0],oldPos[1]));
                 
-            }
-            newWordsToFindPaths.push(tmpPath);
-        }
-    }
-    else
-    {
-        newSave = true;
-    }
+    //         }
+    //         newWordsToFindPaths.push(tmpPath);
+    //     }
+    // }
+    // else
+    // {
+    //     newSave = true;
+    // }
 
     // loading progress
     // wordsFound = [];
@@ -79,7 +79,7 @@ async function loadSquardle(squardleToLoad)
     //         wordsFound.push(false);
     //     }
     // }
-    loadProgress(hashSquardle(S));
+    squardleLoadProgress();
 
     // CAN LOOK FOR WORDS
     document.getElementById("board").classList.remove("disabled")
@@ -454,9 +454,9 @@ function testMainWord() //<= goes here from mouseUp
     let mainWord = createWord(wordPath);
     for (let i = 0; i < S.wordsToFind.length; i++) {
         const element = createWord(S.wordsToFind[i]);
-        if(mainWord == element)
+        if(mainWord === element)
         {
-            if(wordsFound[i] == true)
+            if(wordsFound[i] === true)
             {
                 // already found
                 updateWord("Již nalezeno", "white")
@@ -485,7 +485,6 @@ function testMainWord() //<= goes here from mouseUp
             bonusWordsFound.push(mainWord);
             updateFound();
             updateWord("Bonusové slovo", "cyan")
-            saveProgress()
         }
         else
         {
@@ -584,7 +583,7 @@ function updateFound()
 
     paragraph.classList.add("foundWord");
     textBox.appendChild(paragraph);
-    saveProgress();
+    squardleSaveProgress();
     
 }
 
@@ -616,68 +615,42 @@ function toggleFoundWordsPopUp()
     foundWordsPopUp = !foundWordsPopUp;
 }
 // SAVING AND LOADING
-function saveProgress()
+function getCurrentSquardleSave()
+{
+    let save = {
+        hash:hashSquardle(S),
+        wordsFound:wordsFound,
+        bonusWordsFound:bonusWordsFound,
+        existed:true
+    }
+    return save;
+}
+function squardleSaveProgress()
 {
     // localStorage.setItem("progress_" + indexOfSquardle,JSON.stringify(wordsFound));
     // localStorage.setItem("bonus_" + indexOfSquardle, JSON.stringify(""))
     // localStorage.setItem("bonus_" + indexOfSquardle, JSON.stringify(bonusWordsFound));
-    let save = {
-        hash:hashSquardle(S),
-        wordsFound:wordsFound,
-        bonusWordsFound:bonusWordsFound
-    }
-    let allSaves = JSON.parse(localStorage.getItem("allSaves"));
-    let indexToSave = null;
-    // tries to find save to overwrite
-    for (let i = 0; i < allSaves.length; i++) {
-        const element = allSaves[i];
-        if(element.hash === save.hash)
-        {
-            indexToSave = i;
-            break;
-        }
-    }
-    if(indexToSave === null)
-    {
-        allSaves.push(save);
-    }
-    else
-    {
-        allSaves[indexToSave] = save;
-    }
-    localStorage.setItem("allSaves",JSON.stringify(allSaves));
+    console.log(getCurrentSquardleSave())
+    setSave(getCurrentSquardleSave())
 }
 
-function loadProgress(hash)
+function squardleLoadProgress()
 {
-    let allSaves = JSON.parse(localStorage.getItem("allSaves"));
-    if(allSaves === null)
+    let save = getSquardleSave(S);
+    console.log(save)
+    if(save.existed === false)
     {
-        allSaves = [];
-        localStorage.setItem("allSaves",JSON.stringify(allSaves))
-    }
-    let loadingSquardleProgress = null;
-    allSaves.map((save)=>{
-        if(save.hash === hash)
-        {
-            loadingSquardleProgress = save;
-        }
-    })
-    wordsFound = [];
-    bonusWordsFound = [];
-    if(loadingSquardleProgress !== null)// is already saved
-    {
-        wordsFound = loadingSquardleProgress.wordsFound;
-        bonusWordsFound = loadingSquardleProgress.bonusWordsFound;
-    }
-    else// isn't saved yet -> creates empty array with progress
-    {
-        wordsFound = [];
         for (let i = 0; i < S.wordsToFind.length; i++) {
-            wordsFound.push(false);
+            save.wordsFound.push(false);
         }
     }
+    applySave(save)
+}
 
+function applySave(save)
+{
+    wordsFound = save.wordsFound;
+    bonusWordsFound = save.bonusWordsFound;
 }
 
 // CREATING LINE
@@ -812,4 +785,3 @@ function win()
 
 
 // calls starting program function
-// initialize()

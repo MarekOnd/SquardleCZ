@@ -66,7 +66,6 @@ function createSquardleTile(sq, classToAdd, index)
         let howManyDays = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/24/3600/1000);
         let howManyHours = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/3600/1000)%24;
         let howManyMinutes = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/1000)%60;
-        console.log(howManyDays)
         if(howManyDays === 0)
         {
             if(howManyHours===0)
@@ -242,7 +241,58 @@ function createSquardleTile(sq, classToAdd, index)
         content.appendChild(size);
     }
 
+    // SQUARDLE PROGRESS
+    // variables
+    let maxScore = getMaxSquardleScore(sq)
+    let score = getCurrentSquardleScore(sq);
+    let progress = 1.0*score/maxScore;
+    // divs
+    content.appendChild(document.createElement("br"));
+    let scoreTitle = document.createElement("div")
+    scoreTitle.id = "scoreTitle";
+    scoreTitle.textContent = "Postup: ";
+    content.appendChild(scoreTitle)
     
+
+    let scoreDiv = document.createElement("div");
+    scoreDiv.id = "score";
+    //scoreDiv.style.width = maxScore/5 + "px"
+    
+   
+    
+    // let scorePercent = document.createElement("div");
+    // scorePercent.id = "percent";
+    // if(progress===1 || progress === 0)
+    // {
+    //     scorePercent.textContent = "Nové";
+    //     scorePercent.style.textAlign = "center"
+    // }
+    // else
+    // {
+    //     scorePercent.textContent = Math.floor(progress*100) + "%";
+    //     scorePercent.style.textAlign = "right"
+    // }
+    
+    let scoreBarEmpty = document.createElement("div");
+    scoreBarEmpty.id = "barEmpty";
+    
+    scoreBarEmpty.style.backgroundSize = (200.0/maxScore)*100 + "px"
+    scoreBarEmpty.style.backgroundPositionX = ((-200.0/maxScore)*50-5) + "px"
+
+    let scoreBarFull = document.createElement("div");
+    scoreBarFull.id = "barFull";
+    scoreBarFull.style.width = progress*100 + "%";
+
+    if(progress > 0)
+    {
+        scoreDiv.appendChild(scoreBarFull);
+        
+    }
+    //scoreDiv.appendChild(scorePercent);
+    scoreDiv.appendChild(scoreBarEmpty);
+    content.appendChild(scoreDiv);
+
+
     browserTile.appendChild(content)
 
     return browserTile;

@@ -5,6 +5,7 @@ async function pageStart()
     // loads libraries and squardles
     initialize();
     await loadSquardlesData();
+    loadAllSaves();
     // loads selected tab and squardle from localStorage
     loadCurrentSquardle();
     let lastTab = localStorage.getItem("currentTab");
@@ -97,6 +98,66 @@ function saveCurrentSquardle()
     localStorage.setItem("currentSquardle", JSON.stringify(currentSquardle))
 }
 //-------------------------------------------------
+// SAVE FILE
+let allSaves;
+
+function loadAllSaves()
+{
+    allSaves = JSON.parse(localStorage.getItem("allSaves"));
+    if(allSaves === null)
+    {
+        allSaves = [];
+        localStorage.setItem("allSaves",JSON.stringify(allSaves));
+    }
+}
+
+function setSave(s)
+{
+    // tries to find save to overwrite
+    let indexToSave = null;
+    for (let i = 0; i < allSaves.length; i++) {
+        const element = allSaves[i];
+        if(element.hash === s.hash)
+        {
+            indexToSave = i;
+            break;
+        }
+    }
+    // if none then add, else overwrite
+    if(indexToSave === null)
+    {
+        allSaves.push(s);
+    }
+    else
+    {
+        allSaves[indexToSave] = s;
+    }
+    localStorage.setItem("allSaves",JSON.stringify(allSaves));// saves to storage
+}
+
+function getSave(hash)
+{
+    for (let i = 0; i < allSaves.length; i++) {
+        if(allSaves[i].hash === hash)
+        {
+            return allSaves[i];// is already saved
+        }
+    }
+    let defaultSave = {// isn't saved yet, creates new save
+        hash:hash,
+        wordsFound:[],
+        bonusWordsFound:[],
+        existed:false
+    }
+    return defaultSave;
+
+}
+
+function getSquardleSave(sq)
+{
+
+    return getSave(hashSquardle(sq));
+}
 
 
 
