@@ -40,45 +40,6 @@ async function loadSquardle(squardleToLoad)
 {
     S = squardleToLoad;
 
-    // if(S.wordsToFind[0].positions[0].x === undefined)// this means its in old style
-    // {
-    //     isNewSave = false;
-    //     let newWordsToFindPaths = []
-    //     for (let i = 0; i < S.wordsToFind.length; i++) {
-    //         const element = S.wordsToFind[i];
-    //         let tmpPath = [];
-    //         for (let y = 0; y < element.positions.length; y++) {
-    //             const oldPos = element.positions[y];
-    //             element.positions[y] = new Position(oldPos[0], oldPos[1])
-    //             //tmpPath.push(new Position(oldPos[0],oldPos[1]));
-                
-    //         }
-    //         newWordsToFindPaths.push(tmpPath);
-    //     }
-    // }
-    // else
-    // {
-    //     newSave = true;
-    // }
-
-    // loading progress
-    // wordsFound = [];
-    // bonusWordsFound = [];
-    // let savedProgress = localStorage.getItem(hashSquardle(S));
-    // console.log(savedProgress)
-    // if(savedProgress !== null)
-    // {
-    //     let parseSavedProgress = JSON.parse(savedProgress);
-    //     wordsFound = parseSavedProgress.wordsFound;
-    //     bonusWordsFound = parseSavedProgress.bonusWordsFound;
-    // }
-    // else
-    // {
-    //     wordsFound = [];
-    //     for (let i = 0; i < S.wordsToFind.length; i++) {
-    //         wordsFound.push(false);
-    //     }
-    // }
     squardleLoadProgress();
 
     // CAN LOOK FOR WORDS
@@ -90,76 +51,11 @@ async function loadSquardle(squardleToLoad)
     updateScore();
     updateFound();
     updateLettersInBoard()
-    
-    // // index
-    // if(localStorage.getItem("index")!==null)
-    // {
-    //     indexOfSquardle = JSON.parse(localStorage.getItem("index"))
-    // }
-    // else
-    // {
-    //     indexOfSquardle = 0;
-    // }
 
-
-    // // loading structure
-    // let squardle = await getJson("./data/squardle_" + indexOfSquardle +".json");
-    // S.letters = JSON.parse(JSON.stringify(squardle.letters));
-
-    // // words
-    // S.wordsToFind = squardle.wordsToFind;
-    // // load progress
-    // if(localStorage.getItem("progress_" + indexOfSquardle) !== null)
-    // {
-    //     wordsFound = [];
-    //     wordsFound = JSON.parse(localStorage.getItem("progress_" + indexOfSquardle));
-    // }
-    // else
-    // {
-    //     for (let i = 0; i < S.wordsToFind.length; i++) {
-    //         const element = S.wordsToFind[i];
-    //         wordsFound.push(false);
-    //     }
-    // }
-
-    // bonusWordsFound = [];
-    // if(localStorage.getItem("bonus_" + indexOfSquardle) !== null)
-    // {
-    //     bonusWordsFound = JSON.parse(localStorage.getItem("bonus_" + indexOfSquardle));
-    // }
-
-    // LIBRARY
     
 }
 
-// SAVE SQUARDLE USER IS PLAYING
-// function changeIndex()
-// {   
-//     saveProgress();
-//     let newIndex = document.getElementById("index-selector").selectedIndex;
-//     localStorage.setItem("index", JSON.stringify(newIndex))
-//     initialize();
-// }
 
-// async function initSelector()
-// {
-//     let selector = document.getElementById("index-selector");
-//     while(selector.firstChild)
-//     {
-//         selector.removeChild(selector.firstChild)
-//     }
-//     let i = 0;
-//     let squardle
-//     do{
-//         squardle = await getJson("./data/squardle_" + i +".json");
-//         let newItem = document.createElement("option");
-//         newItem.textContent = squardle.name;
-//         newItem.value = i-1;
-//         selector.appendChild(newItem);
-//         i++;
-//     }while(i <= numberOfSquardles)
-//     document.getElementById("index-selector").selectedIndex = indexOfSquardle
-// }
 
 // BOARD
 function createBoard()
@@ -327,6 +223,10 @@ function mouseDown(x,y)
         return;
     }
     //--
+    if(mousePressed)// mouse already pressed somewhere else
+    {
+        return;
+    }
     // mouse is pressed now
     mousePressed = true;
     // changes button color etc.
@@ -627,9 +527,6 @@ function getCurrentSquardleSave()
 }
 function squardleSaveProgress()
 {
-    // localStorage.setItem("progress_" + indexOfSquardle,JSON.stringify(wordsFound));
-    // localStorage.setItem("bonus_" + indexOfSquardle, JSON.stringify(""))
-    // localStorage.setItem("bonus_" + indexOfSquardle, JSON.stringify(bonusWordsFound));
     console.log(getCurrentSquardleSave())
     setSave(getCurrentSquardleSave())
 }
