@@ -708,13 +708,13 @@ function updateHints()
     hintTimesStarting = false;
     hintTimesIncluded = false;
     hintRandomLetters = false;
-    if(progress > 0.30)
+    if(progress > 0.20)
     {
         hintTimesIncluded = true;
-        if(progress > 0.60)
+        if(progress > 0.40)
         {
             hintTimesStarting = true;
-            if(progress > 0.8)
+            if(progress > 0.7)
             {
                 hintRandomLetters = true;
             }
