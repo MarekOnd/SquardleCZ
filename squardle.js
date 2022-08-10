@@ -320,8 +320,7 @@ function createWords(paths)
     return words;
 }
 
-let timeout;
-let secondTimeout;
+
 function updateWord(word, color = null)
 {
     let wordBox = document.getElementById("output");
@@ -330,27 +329,9 @@ function updateWord(word, color = null)
     {
         wordBox.style.cssText += 'color: ' + color;
     }
-    clearTimeout(timeout);
-    clearTimeout(secondTimeout)
-    timeout = setTimeout(()=>{
-        let points = [
-            { color: 'rgb(0,0,0,0)'},
-        ];
-        let timing ={
-            duration: 2000,
-            iterations: 1,
-        }
-        wordBox.animate(points,timing);
-        secondTimeout = setTimeout(()=>{
-            updateWord("")
-        },1900)
-        
-    },2000)
-
 }
 
 // FINDING WORDS
-
 function testMainWord() //<= goes here from mouseUp
 {
     let output = document.getElementById("output")
@@ -363,6 +344,7 @@ function testMainWord() //<= goes here from mouseUp
             {
                 // already found
                 updateWord("Již nalezeno", "white")
+                
             }
             else
             {
@@ -393,7 +375,28 @@ function testMainWord() //<= goes here from mouseUp
         }
         return;
     }
-    updateWord("Není slovo","red")
+    updateWord("Není slovo","red");
+
+    let wordBox = document.getElementById("output");
+    let timeout;
+    let secondTimeout;
+    clearTimeout(timeout);
+    clearTimeout(secondTimeout);
+
+    timeout = setTimeout(()=>{
+        let points = [
+            { color: 'rgb(0,0,0,0)'},
+        ];
+        let timing ={
+            duration: 2000,
+            iterations: 1,
+        }
+        wordBox.animate(points,timing);
+        secondTimeout = setTimeout(()=>{
+            updateWord(mainWord)
+        },1900)
+        
+    },2000)
 }
 
 function updateScore()
