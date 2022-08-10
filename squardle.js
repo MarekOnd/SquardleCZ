@@ -48,14 +48,18 @@ async function loadSquardle(squardleToLoad)
 
     window.addEventListener("pointerup",()=>{mouseUp()})
     createBoard();
-    updateScore();
-    updateFound();
-    updateLettersInBoard()
 
+    updateAll();
     
 }
 
-
+function updateAll()
+{
+    updateHints();
+    updateScore();
+    updateFound();
+    updateLettersInBoard();
+}
 
 // BOARD
 function createBoard()
@@ -178,8 +182,8 @@ function updateLettersInBoard()
             else
             {
                 // update times used in a word
-                //let use = button.getElementsByClassName("button-use")[0]; // button always has one
-                if(timesUsedInWord > 0)
+
+                if(hintTimesIncluded && timesUsedInWord > 0)
                 {
                     use.textContent = timesUsedInWord;
                 }
@@ -190,9 +194,9 @@ function updateLettersInBoard()
                 
 
                 // update first time in words
-                //let start = button.getElementsByClassName("button-start")[0]; // button always has one
+
                 let timesStartingWithThis = startingPositions.filter(el=>(el.x==i&&el.y==y)).length;
-                if(timesStartingWithThis > 0)
+                if(hintTimesStarting && timesStartingWithThis > 0)
                 {
                     start.textContent = timesStartingWithThis
                 }
@@ -227,11 +231,11 @@ function mouseDown(x,y)
     {
         return;
     }
+
     // mouse is pressed now
     mousePressed = true;
     // changes button color etc.
     let button = getButton(x,y);
-
     button.classList.add("selected");
     // saves position to wordPath
     wordPath.positions.push(new Position(x,y));
@@ -293,7 +297,6 @@ function mouseEnter(x,y)
         wordPath.positions.push(new Position(x,y));
     }
     updateWord(createWord(wordPath), "white");
-
     updateLine()
 }
 
@@ -334,13 +337,13 @@ function updateWord(word, color = null)
             { color: 'rgb(0,0,0,0)'},
         ];
         let timing ={
-            duration: 1000,
+            duration: 2000,
             iterations: 1,
         }
         wordBox.animate(points,timing);
         secondTimeout = setTimeout(()=>{
             updateWord("")
-        },900)
+        },1900)
         
     },2000)
 
@@ -365,9 +368,7 @@ function testMainWord() //<= goes here from mouseUp
             {
                 // new
                 wordsFound[i] = true;
-                updateScore();
-                updateFound();
-                updateLettersInBoard()
+                updateAll();
                 updateWord("Nalezeno slovo", "green")
             }
             return;
@@ -417,7 +418,8 @@ function updateScore()
         win();
     }
 
-    scoreBox.textContent = score + " bodů";
+
+    scoreBox.textContent = score + " bodů (" + countTrue(wordsFound) + "/" + wordsFound.length + ")";
 }
 
 // FOUND WORDS LIST
@@ -427,59 +429,103 @@ function updateFound()
     let headerBox = document.getElementById("found-header");
     let textBox = document.getElementById("found-words");
     // deletes subdivisions
-    while(textBox.firstChild)
-    {
-        textBox.removeChild(textBox.firstChild);
-    }
-    while(headerBox.firstChild)
-    {
-        headerBox.removeChild(headerBox.firstChild);
-        
-    }
+    clearChildren(textBox);
+    clearChildren(headerBox)
+
     // creates header
-    let numOfFound = 0
-    for (let i = 0; i < wordsFound.length; i++) {
-        if(wordsFound[i])
-        {
-            numOfFound++;
-        }
-    }
-    //let numText = document.createElement("p");
+    let numOfFound = countTrue(wordsFound);
+
     headerBox.textContent = "Nalezená slova (" + numOfFound + "/" + wordsFound.length + ")";
     numOfFound.id = "numFound";
-    //headerBox.appendChild(numText);
+
 
     // appends found words
     let paragraph = document.createElement("div");
 
 
-    let wordsToFindStrings = createWords(S.wordsToFind);
-    let words = []
-    for (let i = 0; i < wordsFound.length; i++) {
-        if(wordsFound[i])
-        {
-            words.push(wordsToFindStrings[i])          
-        }
-    }
+    
 
-
-    words.sort()
     // THE ULTIMATE FUNCTION TO PRINT FOUND WORDS!!!
+    let wordsToFindStrings = createWords(S.wordsToFind);
+    let wordsStruct = [] // structured array with connected word and found
+    for (let i = 0; i < S.wordsToFind.length; i++) {
+        wordsStruct.push({
+            str:wordsToFindStrings[i],
+            found:wordsFound[i]
+        })
+    }
     for (let i = 0; i < 20; i++) {
-        if(howManyXLongWords(i,wordsToFindStrings) > 0)
+        let iLongWords = wordsStruct.filter((el)=>{return el.str.length === i})
+        iLongWords.sort();
+        if(iLongWords.length > 0)// has some words of this length
         {
+            // header
             fastAppendText(i + " písmenná slova:", paragraph, "foundWord-letterHeader")
-            fastAppendText(words.filter(w=>w.length==i).join("  "), paragraph, "foundWord-words")
-            let missing = howManyXLongWords(i,wordsToFindStrings)-howManyXLongWords(i,words)
-            if(missing > 0)
+
+            if(hintRandomLetters)
             {
-                fastAppendText(" + zbývá najít " + missing,paragraph,"foundWord-missing")
+                for (let i = 0; i < iLongWords.length; i++) {
+                    const element = iLongWords[i];
+                    if(element.found === true)// found
+                    {
+                        let w = fastAppendText(element.str, paragraph, "foundWord-words")
+                        w.addEventListener("click",(w)=>{
+                            url ='http://www.google.com/search?q=' + element.str;
+                            window.open(url,'_blank');
+                        })
+                        w.title = "Najít význam ve slovníku";
+                    }
+                    else // hint
+                    {
+                        let hiddenWord = "";
+                        let howManyLettersToShow = Math.floor(element.str.length/3)
+                        for (let i = 0; i < element.str.length; i++) {
+                            if(i < howManyLettersToShow)
+                            {
+                                hiddenWord += element.str[i]
+                            }
+                            else
+                            {
+                                hiddenWord += "*"
+                            }
+                            
+                        }
+                        fastAppendText(hiddenWord,paragraph,"foundWord-words")
+                    }
+                }
             }
-            
+            else
+            {
+                let missing = iLongWords.length;
+                for (let i = 0; i < iLongWords.length; i++) {
+                    const element = iLongWords[i];
+                    if(element.found === true)
+                    {
+                        fastAppendText(element.str, paragraph, "foundWord-words")
+                        missing--;
+                    }
+                }
+                if(missing > 0)
+                {
+                    fastAppendText(" + zbývá najít " + missing,paragraph,"foundWord-missing")
+                }
+            }
+            let line = document.createElement("hr");
+            line.classList.add("found-words-line");
+            paragraph.appendChild(line)
         }
     }
     fastAppendText("Bonusová slova:" + "(" + bonusWordsFound.length + ")", paragraph,"foundWord-letterHeader")
-    fastAppendText(bonusWordsFound.join("  "), paragraph,"foundWord-words")// POTREBA SORTNOUT
+    bonusWordsFound.sort();
+    for (let i = 0; i < bonusWordsFound.length; i++) {
+        let w = fastAppendText(bonusWordsFound[i], paragraph,"foundWord-words")
+        w.addEventListener("click",(w)=>{
+            url ='http://www.google.com/search?q=' + bonusWordsFound[i];
+            window.open(url,'_blank');
+        })
+        w.title = "Najít význam ve slovníku";
+    }
+
 
     paragraph.classList.add("foundWord");
     textBox.appendChild(paragraph);
@@ -527,14 +573,11 @@ function getCurrentSquardleSave()
 }
 function squardleSaveProgress()
 {
-    console.log(getCurrentSquardleSave())
     setSave(getCurrentSquardleSave())
 }
-
 function squardleLoadProgress()
 {
     let save = getSquardleSave(S);
-    console.log(save)
     if(save.existed === false)
     {
         for (let i = 0; i < S.wordsToFind.length; i++) {
@@ -543,7 +586,6 @@ function squardleLoadProgress()
     }
     applySave(save)
 }
-
 function applySave(save)
 {
     wordsFound = save.wordsFound;
@@ -567,7 +609,7 @@ function connectButtons(path)
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
         let button = document.getElementsByClassName("row")[element.x].childNodes[element.y].getBoundingClientRect()
-        positions.push([button.left + button.width/2 - 20 +  window.scrollX, button.top - 235 + window.scrollY])
+        positions.push([button.left + button.width/2 - 20 +  window.scrollX, button.top - 250 + window.scrollY])
     }
     return drawLine(positions)
 }
@@ -652,6 +694,33 @@ function joinArrays(arrays)
 }
 
 
+// HINTS
+let hintTimesStarting;
+let hintTimesIncluded;
+let hintRandomLetters;
+
+function updateHints()
+{
+    let progress = 1.0*getCurrentSquardleScore(S)/getMaxSquardleScore(S);
+    hintTimesStarting = false;
+    hintTimesIncluded = false;
+    hintRandomLetters = false;
+    if(progress > 0.30)
+    {
+        hintTimesIncluded = true;
+        if(progress > 0.60)
+        {
+            hintTimesStarting = true;
+            if(progress > 0.8)
+            {
+                hintRandomLetters = true;
+            }
+        }
+    }
+}
+
+
+// WIN
 function win()
 {
     let board = document.getElementById("board")
@@ -674,7 +743,6 @@ function win()
             setTimeout(()=>{
                 button.animate(points,timing);
             },(y+1)*300 + (i+1)*100)
-            
         }
     }
     

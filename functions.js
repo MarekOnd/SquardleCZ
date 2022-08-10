@@ -105,3 +105,19 @@ function getCurrentSquardleScore(sq)
     }
     return score;
 }
+
+function countTrue(arr)
+{
+    let numTrue = 0
+    for (let i = 0; i < arr.length; i++) {
+        if(arr[i])
+        {
+            numTrue++;
+        }
+    }
+    return numTrue;
+}
+
+String.prototype.replaceAt = function(index, replacement) {
+    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+}

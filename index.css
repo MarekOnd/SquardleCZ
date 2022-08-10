@@ -5,7 +5,8 @@ body{
     background-color: black;
     background-image: linear-gradient(to right, rgb(41, 37, 37) , rgb(8, 8, 6));
     color: white;
-    font-family: helvetica;
+    
+    font-family: 'Poppins', sans-serif;
     
     font-size: 40px;
     
@@ -39,7 +40,9 @@ body{
     position: relative;
     text-align: center;
     font-size: 40px;
-    background: -webkit-linear-gradient(#eee, rgb(166, 190, 255));
+    line-height: 50px;
+    margin: 0px;
+    background: -webkit-linear-gradient(var(--color8), var(--color6));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     z-index: 100;
@@ -218,8 +221,8 @@ a{
 #game #score{
     position: relative;
     text-align: center;
-    width: 200px;
-    height: 60px;
+    width: fit-content;
+    height: fit-content;
     margin-left: auto;
     margin-right: auto;
     user-select: none;
@@ -228,8 +231,11 @@ a{
 #score-bar-background{
     position: relative;
     background-color: rgb(204, 218, 218);
+    width: 200px;
     height: 20px;
     border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
     
 }
 #score-bar{
@@ -244,34 +250,39 @@ a{
 #found{
     position: fixed;
     border-radius: 10px;
-    outline: outset 5px white;
-    left: 20%;
-    top: 20%;
-    width: 60%;
-    height: 800px;
+    outline: outset 5px var(--color9);
+    width: 50%;
+    left: 25%;
+    height: 70%;
     z-index: 1;
-    
-    background-color: #36364d;
+    user-select: none;
+    background-image: linear-gradient(to bottom, var(--color2) , var(--color1));
+
 }
 
 
 #found-header{
+    position: relative;
     text-align: center;
-    height: 150px;
-    
+    line-height: 50px;
+    font-size: 50px;
+    padding: 30px;
 }
 
 #found-words{
     margin-left: auto;
     margin-right: auto;
     overflow: auto;
-    height: 500px;
+    height: 70%;
     width: 80%;
     outline: solid 2px;
-    outline-color: rgb(253, 253, 253);
+    outline-color: var(--color9);
+    padding: 10px;
 
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+
+
     
 }
 
@@ -285,15 +296,28 @@ a{
 }
 
 .foundWord-letterHeader{
-    left: 20px;
-    font-size: 30px;
-    text-decoration: underline;
-    
+    position: relative;
+    font-size: 40px;
+    line-height: 40px;
+    width: fit-content;
 }
 
 .foundWord-words{
-    left: 50px;
-    font-size: 20px;
+    position: relative;
+    font-size: 30px;
+    line-height: 30px;
+    padding: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.foundWord-words:hover{
+    background-color: var(--color8);
+    color: var(--font-color-onlight);
+    text-decoration: underline;
+    
 }
 
 .foundWord-missing{
@@ -303,7 +327,30 @@ a{
 }
 
 #found-exit{
+    font-size: 50px;
+    line-height: 50px;
+    position: relative;
+    margin: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
     text-align: center;
+    padding: 10px;
+    background-color: var(--color2);
+    color: var(--font-color-ondark);
+    border: solid var(--color9) 2px;
+    width: fit-content;
+}
+
+#found-exit:hover{
+    filter: brightness(1.1);
+    
+}
+
+.found-words-line{
+    position: relative;
+    margin: 5px;
+    border: dashed var(--color9) 1px;
 }
 
 /* LINE */
@@ -311,24 +358,6 @@ a{
     position: absolute;
 }
 
-/* index-selector */
-#index-selector-box{
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    user-select: none;
-}
-#index-selector{
-    position: relative;
-    top: -3px;
-    font-size: 30px;
-    height: 40px;
-    width: 200px;
-    color: aliceblue;
-    background-color: rgb(24, 4, 114);
-    border-radius: 10px;
-    z-index: 0;
-}
 
 
 /* BROWSER */
