@@ -254,6 +254,7 @@ a{
     width: 50%;
     left: 25%;
     height: 70%;
+    top: 20%;
     z-index: 1;
     user-select: none;
     background-image: linear-gradient(to bottom, var(--color2) , var(--color1));
