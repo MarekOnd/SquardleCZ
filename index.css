@@ -370,18 +370,20 @@ a{
 }
 #browser-tiles{
     position: relative;
-    left: 10%;
-    width: 80%;
+    left: 0%;
+    width: 100%;
 }
 
 .browserTile{
     --tileHeight: 180px;
     --tileWidth: 370px;
+    
     position: relative;
     width: fit-content;
     height: fit-content;
     display: inline-block;
     margin: 10px;
+
 }
 .browserTile:hover{
     filter: brightness(1.1) drop-shadow(0px 0px 5px var(--color2));
