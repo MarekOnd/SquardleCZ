@@ -179,7 +179,7 @@ function formatSquardleResult(sq)
     result += sq.name + "\n";
     let save = getSquardleSave(sq);
     result += countTrue(save.wordsFound) + "/" + save.wordsFound.length + "\n";
-    return result 
+    return result;
 }
 
 

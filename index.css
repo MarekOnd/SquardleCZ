@@ -131,9 +131,10 @@ a{
     width: fit-content;
     position: relative;
     touch-action: none;
+    margin: 5px;
     margin-left: auto;
     margin-right: auto;
-    
+    border: solid var(--color1) 0.5px;
 }
 .row{
     display: block;
@@ -175,8 +176,7 @@ a{
 .selected{
     background-color: gray;
     border-radius: 9px;
-    height: 95%;
-    width: 95%;
+    transform: scale(0.9);
     
 }
 
@@ -189,6 +189,7 @@ a{
     font-size: var(--font-size);   
     color: rgb(255, 255, 255);
     line-height: var(--cellSize);
+   
 }
 .button-start{
     position: absolute;
@@ -440,6 +441,19 @@ a{
 
 }
 
+
+@keyframes star-animation{
+    0% {transform: scale(1) rotate(0deg);}
+    50% {transform: scale(1.5) rotate(180deg);}
+    100%{transform: scale(1) rotate(360deg);}
+}
+.browserTile .difficultyStar:hover{
+    animation-name: star-animation;
+    animation-duration: 0.5s;
+    animation-direction: alternate;
+
+}
+
 .browserTile #size{
     position: absolute;
     top: 20px;
@@ -598,24 +612,53 @@ a{
     height: 50px;
     border-radius: 10px;
     z-index: 50;
+    filter: invert(1);
 }
 
 
-.disabled{
-    filter: invert(1);
+.disabled .boardButton{
+    background-image: url("./images/lock.svg");
+    background-repeat: no-repeat;
+    background-size: 20%;
+
+
     
 }
 
 #share{
     position: absolute;
-    left: 5%;
-    top: 40%;
+    right: 2%;
+    top: 0%;
     width: fit-content;
     height: fit-content;
     padding: 10px;
-    background-color: var(--color8);
-    color: var(--font-color-onlight);
-    font-size: 50px;
+    border-radius: 10px;
+    border: none;
+    width: 50px;
+    height: 50px;
 }
 
+
+.browserTile #tick{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 100px;
+    height: 100px;
+    z-index: 100;
+    background-color: var(--color8);
+    border-radius: 50px;
+}
+
+@keyframes example {
+    0% {opacity: 100%;}
+    10% {opacity: 0%;}
+    90% {opacity: 0%;}
+    100% {opacity: 100%;}
+  }
+
+.browserTile #tick:hover{
+    animation-name: example;
+    animation-duration: 10s;
+}
 

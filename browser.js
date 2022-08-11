@@ -127,7 +127,6 @@ function createSquardleTile(sq, classToAdd, index)
             
             date.textContent = "Zbývá " + howManyDays + " dnů " + howManyHours  + " h " + howManyMinutes + " min";
         }
-        
 
         browserTile.addEventListener("click",(e)=>{squardleBrowserTileClick(classToAdd,index)})
     }
@@ -251,28 +250,13 @@ function createSquardleTile(sq, classToAdd, index)
     let scoreTitle = document.createElement("div")
     scoreTitle.id = "scoreTitle";
     scoreTitle.textContent = "Postup: ";
-    content.appendChild(scoreTitle)
+    
     
 
+    // score bar
     let scoreDiv = document.createElement("div");
     scoreDiv.id = "score";
-    //scoreDiv.style.width = maxScore/5 + "px"
-    
-   
-    
-    // let scorePercent = document.createElement("div");
-    // scorePercent.id = "percent";
-    // if(progress===1 || progress === 0)
-    // {
-    //     scorePercent.textContent = "Nové";
-    //     scorePercent.style.textAlign = "center"
-    // }
-    // else
-    // {
-    //     scorePercent.textContent = Math.floor(progress*100) + "%";
-    //     scorePercent.style.textAlign = "right"
-    // }
-    
+
     let scoreBarEmpty = document.createElement("div");
     scoreBarEmpty.id = "barEmpty";
     
@@ -283,14 +267,26 @@ function createSquardleTile(sq, classToAdd, index)
     scoreBarFull.id = "barFull";
     scoreBarFull.style.width = progress*100 + "%";
 
+
+
     if(progress > 0)
     {
         scoreDiv.appendChild(scoreBarFull);
-        
     }
     //scoreDiv.appendChild(scorePercent);
     scoreDiv.appendChild(scoreBarEmpty);
+    if(progress === 1) // mark completed
+    {
+        browserTile.classList.add("completed");
+        let ticked = document.createElement("img");
+        ticked.id = "tick";
+        ticked.src = "./images/tick.svg"
+        content.appendChild(ticked)
+    }
+    // append score
+    content.appendChild(scoreTitle)
     content.appendChild(scoreDiv);
+    
 
 
     browserTile.appendChild(content)
