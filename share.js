@@ -3,26 +3,20 @@ const shareData = {
     text: 'Learn web development on MDN!'
   }
 
-function openShareWindow()
+async function openShareWindow(sq)
 {
     // console.log("klik")
 
-    try{
-        await navigator.share(shareData)
-    }catch(err){
-        console.log("ERROR: " +err)
+    if (navigator.share) {
+        navigator.share({
+            text: formatSquardleResult(sq)
+        }).then(() => {
+            console.log('Succesful share');
+        })
+        .catch((error) => console.error("Error sharing", error));
+    } else {
+        console.log('Sharing not supported :(');
     }
-    // if (navigator.share) {
-    //     navigator.share({
-    //         text: "emojiBoard"
-    //     }).then(() => {
-    //         console.log('Succesful share');
-    //         alert("aaaaaaaaaaaa")
-    //     })
-    //     .catch((error) => console.error("Error sharing", error));
-    // } else {
-    //     console.log('Sharing not supported :(');
-    // }
-    navigator.clipboard.writeText("")
+    navigator.clipboard.writeText(formatSquardleResult(sq));
     
 }

@@ -49,6 +49,11 @@ async function loadSquardle(squardleToLoad)
     window.addEventListener("pointerup",()=>{mouseUp()})
     createBoard();
 
+    // add share result
+    let share = document.getElementById("share");
+    share.removeEventListener("pointerup", openShareWindow);
+    share.addEventListener("pointerup", (e)=>{openShareWindow(S)});
+
     updateAll();
     
 }
@@ -329,6 +334,8 @@ function updateWord(word, color = null)
     {
         wordBox.style.cssText += 'color: ' + color;
     }
+    clearTimeout(timeout);
+    clearTimeout(secondTimeout);
 }
 
 // FINDING WORDS
@@ -444,10 +451,7 @@ function updateFound()
 
     // appends found words
     let paragraph = document.createElement("div");
-
-
     
-
     // THE ULTIMATE FUNCTION TO PRINT FOUND WORDS!!!
     let wordsToFindStrings = createWords(S.wordsToFind);
     let wordsStruct = [] // structured array with connected word and found

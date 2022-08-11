@@ -159,7 +159,15 @@ function getSquardleSave(sq)
     return getSave(hashSquardle(sq));
 }
 
-
+function formatSquardleResult(sq)
+{
+    let result = "";
+    result += "SquardleCZ\n";
+    result += sq.name + "\n";
+    let save = getSquardleSave(sq);
+    result += countTrue(save.wordsFound) + "/" + save.wordsFound.length + "\n";
+     
+}
 
 
 

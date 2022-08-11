@@ -606,5 +606,16 @@ a{
     
 }
 
+#share{
+    position: absolute;
+    left: 5%;
+    top: 40%;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+    background-color: var(--color8);
+    color: var(--font-color-ondark);
+    font-size: 50px;
+}
 
 
