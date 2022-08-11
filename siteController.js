@@ -167,7 +167,7 @@ function getSquardleSave(sq)
         existed:true
     }
     for (let i = 0; i < sq.wordsToFind.length; i++) {
-        wordsFound.push(false)
+        defaultSave.wordsFound.push(false)
     }
     return defaultSave;
 }
