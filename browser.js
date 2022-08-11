@@ -281,7 +281,7 @@ function createSquardleTile(sq, classToAdd, index)
         let ticked = document.createElement("img");
         ticked.id = "tick";
         ticked.src = "./images/tick.svg"
-        content.appendChild(ticked)
+        browserTile.appendChild(ticked)
     }
     // append score
     content.appendChild(scoreTitle)
