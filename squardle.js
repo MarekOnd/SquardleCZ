@@ -672,7 +672,7 @@ function fastAppendText(text,where,className="")
 {
     let textDiv =document.createElement("div")
     textDiv.textContent = text;
-    if(className!="")
+    if(className!=="")
     {
         textDiv.classList.add(className)
     }
@@ -750,6 +750,8 @@ function win()
     }
     
 }
+
+
 
 
 // calls starting program function
