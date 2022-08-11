@@ -334,8 +334,6 @@ function updateWord(word, color = null)
     {
         wordBox.style.cssText += 'color: ' + color;
     }
-    clearTimeout(timeout);
-    clearTimeout(secondTimeout);
 }
 
 // FINDING WORDS

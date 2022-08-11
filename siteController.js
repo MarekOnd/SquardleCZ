@@ -150,13 +150,26 @@ function getSave(hash)
         existed:false
     }
     return defaultSave;
-
 }
 
 function getSquardleSave(sq)
 {
-
-    return getSave(hashSquardle(sq));
+    for (let i = 0; i < allSaves.length; i++) {
+        if(allSaves[i].hash === hashSquardle(sq))
+        {
+            return allSaves[i];// is already saved
+        }
+    }
+    let defaultSave = {// isn't saved yet, creates new save
+        hash:hash,
+        wordsFound:[],
+        bonusWordsFound:[],
+        existed:true
+    }
+    for (let i = 0; i < sq.wordsToFind.length; i++) {
+        wordsFound.push(false)
+    }
+    return defaultSave;
 }
 
 function formatSquardleResult(sq)
@@ -166,7 +179,7 @@ function formatSquardleResult(sq)
     result += sq.name + "\n";
     let save = getSquardleSave(sq);
     result += countTrue(save.wordsFound) + "/" + save.wordsFound.length + "\n";
-     
+    return result 
 }
 
 

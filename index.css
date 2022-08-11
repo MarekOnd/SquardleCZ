@@ -614,7 +614,7 @@ a{
     height: fit-content;
     padding: 10px;
     background-color: var(--color8);
-    color: var(--font-color-ondark);
+    color: var(--font-color-onlight);
     font-size: 50px;
 }
 
