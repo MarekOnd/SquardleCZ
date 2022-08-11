@@ -161,7 +161,7 @@ function getSquardleSave(sq)
         }
     }
     let defaultSave = {// isn't saved yet, creates new save
-        hash:hash,
+        hash:hashSquardle(sq),
         wordsFound:[],
         bonusWordsFound:[],
         existed:true
