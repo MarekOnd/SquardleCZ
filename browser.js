@@ -1,7 +1,5 @@
 
 
-
-
 function updateBrowserContent()
 {
     
@@ -34,6 +32,27 @@ function updateBrowserContent()
         browser.appendChild(element)
     }
 
+
+    // at the end add import
+    let label = document.createElement("label");
+    label.htmlFor = "import-file";
+
+    let content = document.createElement("div");
+    content.id = "content";
+    let plus = document.createElement("img");
+    plus.id = "plus"
+    plus.src = "./images/plus.svg"
+    content.appendChild(plus)
+    let importButton = document.createElement("div");
+    importButton.classList.add("browserTile");
+    importButton.id ="import-tile";
+    importButton.title = "importovat"
+    label.appendChild(content)
+    importButton.appendChild(label);
+    browser.appendChild(importButton);
+
+    tabBefore = "browser"
+
 }
 
 function createSquardleTile(sq, classToAdd, index)
@@ -50,11 +69,12 @@ function createSquardleTile(sq, classToAdd, index)
     let previewBoard = true; // for not previewing future boards
     let date = document.createElement("div");
     date.id = "date";
+    
     if(sq.limitedTime === null || sq.limitedTime === undefined || !sq.limitedTime)// always active
     {
         browserTile.classList.add("notTimed");
         date.textContent = ""
-        browserTile.addEventListener("click",(e)=>{squardleBrowserTileClick(classToAdd,index)})
+        content.addEventListener("click",(e)=>{squardleBrowserTileClick(classToAdd,index)})
     }
     else if(new Date(sq.startDate) > Date.now())// not yet active
     {
@@ -265,7 +285,18 @@ function createSquardleTile(sq, classToAdd, index)
 
     let scoreBarFull = document.createElement("div");
     scoreBarFull.id = "barFull";
-    scoreBarFull.style.width = progress*100 + "%";
+    
+    if(tabBefore !== "browser")
+    {
+        scoreBarFull.style.width =  "0%";
+        setTimeout(()=>{scoreBarFull.style.width = progress*100 + "%";}, 200 + index*100)
+    }
+    else
+    {
+        scoreBarFull.style.width = progress*100 + "%";
+    }
+    
+    
 
 
 
@@ -287,6 +318,20 @@ function createSquardleTile(sq, classToAdd, index)
     content.appendChild(scoreTitle)
     content.appendChild(scoreDiv);
     
+    // shared can be deleted
+    if(classToAdd === "shared")
+    {
+        let deleteButton = document.createElement("img");
+        deleteButton.id = "delete";
+        deleteButton.src = "./images/delete.svg"
+        deleteButton.title = "Vymazat"
+        deleteButton.addEventListener("click",(e)=>{
+            squardlesShared.splice(index,1);
+            localStorage.setItem("squardlesShared", JSON.stringify(squardlesShared))
+            updateBrowserContent();
+        })
+        browserTile.appendChild(deleteButton)
+    }
 
 
     browserTile.appendChild(content)

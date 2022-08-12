@@ -16,13 +16,11 @@
     <body onload="pageStart()">
         <div id="title">
             <h1 id="main-header">Český squardle</h1>
-            <div id="version">v0.5</div>
+            <div id="version">v0.6</div>
         </div>
         
         <div id="menu">
-            <div id="menu-line">
-                
-            </div>
+
             <a  class="menu-button" id="goto-game" title="Týdenní nebo odpočinkový?" onclick="openTab('game')" style="display: none;">
                 Hra
             </a>
@@ -46,7 +44,6 @@
             </a>
             
         </div>
-        <br>
 
 
 
@@ -88,16 +85,33 @@
         </div>
         
         <div id="browser">
+            
+            
             <div id="browser-tiles">
 
             </div>
+            <div id="browser-tools">
+                <!-- <label id="import">
+                    <div id="import-header">Importování</div>
+                    
+                </label> -->
+            </div>
+            <input type = "file" accept=".json" id="import-file" onchange="importSquardle()"></div>
+            
         </div>
 
         <div id="news" style="display: none;">
             Verze 0.5
             &#x2022; změna celého systému hry
             &#x2022; týdenní a odpočinkový typ
-            &#x2022; tlačítka fungují
+            &#x2022; tlačítka fungují<br>
+            Verze 0.6
+            &#x2022; sdílení squardlů
+            &#x2022; editor exportuje soubory
+            &#x2022; je možné přidat squardly vlastní nebo od přátel
+            &#x2022; animace
+            &#x2022; změna vzhledu stránky
+            &#x2022; stále hrozné novinky, ale aspoň existují<br>
         </div>
 
         <div id="results" style="display: none;">

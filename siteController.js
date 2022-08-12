@@ -8,15 +8,25 @@ async function pageStart()
     loadAllSaves();
     // loads selected tab and squardle from localStorage
     loadCurrentSquardle();
+
     let lastTab = localStorage.getItem("currentTab");
     if(lastTab === null)
     {
-        openTab("game")
+        lastTab = "game";
     }
     else
     {
-        openTab(JSON.parse(lastTab))
+        lastTab = JSON.parse(lastTab)
     }
+    if(lastTab === "game" && !isSquardleActive(getSquardle(currentSquardle)))
+    {
+        lastTab = "browser"
+    }
+    openTab(lastTab);
+
+        
+
+    
     
 }
 
@@ -75,8 +85,14 @@ async function loadSquardlesData()
         squardlesSpecial.push(await getJson("./data/" + specialNameList[y] +".json"))
     }
 
-    squardlesShared = [];
-    squardlesShared = localStorage.getItem("squardlesShared") | "";
+    if(localStorage.getItem("squardlesShared") === undefined || localStorage.getItem("squardlesShared") === null)
+    {
+        squardlesShared = []
+    }
+    else
+    {
+        squardlesShared = JSON.parse(localStorage.getItem("squardlesShared"))
+    }
 }
 
 // for moderat loading from console: loadSquardle(getSquardle(new searchParameters("weekly",1)))
@@ -176,10 +192,38 @@ function formatSquardleResult(sq)
 {
     let result = "";
     result += "SquardleCZ\n";
+    for (let i = 0; i < squardlesWeekly.length; i++) {
+        const element = squardlesWeekly[i];
+        if(hashSquardle(element) === hashSquardle(sq))
+        {
+            result += "Týdenní #" + i;
+        }
+    }
     result += sq.name + "\n";
+    result += sq.author + "\n";
     let save = getSquardleSave(sq);
-    result += countTrue(save.wordsFound) + "/" + save.wordsFound.length + "\n";
+    result += countTrue(save.wordsFound) + "/" + save.wordsFound.length + "\n + " + save.bonusWordsFound.length + " bonusových slov";
+    result += "https://marekond.github.io/SquardleCZ/"
     return result;
+}
+
+
+// IMPORT SQUARDLE
+async function importSquardle()
+{
+    let json = await (document.getElementById("import-file").files[0]).text();
+    if(json === null || json === undefined)
+    {
+        return;
+    }
+    let newSq = JSON.parse(json);
+    if(squardlesShared.find((sq)=>{return hashSquardle(sq)===hashSquardle(newSq)}) === undefined)
+    {
+        squardlesShared.push(newSq);
+    }
+    
+    localStorage.setItem("squardlesShared", JSON.stringify(squardlesShared))
+    updateBrowserContent();
 }
 
 

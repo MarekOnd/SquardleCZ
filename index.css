@@ -57,24 +57,18 @@ body{
 
 #menu{
     position: relative;
-    height: fit-content;
+    
     text-align: center;
     --menu-height: 60px;
     height: var(--menu-height);
+    height: fit-content;
+    left: 0;
     width: 100%;
-    left: 0px;
     z-index: 1;
+    background-color: var(--color1);
 }
 
-#menu-line{
-    position: absolute;
-    background-color: rgb(2, 0, 131);
 
-    bottom: 0px;
-    width: 100%;
-    height: 5px;
-    
-}
 
 
 .menu-button{
@@ -115,6 +109,8 @@ a{
 
 #game{
     position: relative;
+    width: auto;
+    height: fit-content;
 }
 
 
@@ -122,19 +118,17 @@ a{
 /* board */
 #board{
     position: relative;
-    
-    margin-left: auto;
-    margin-right: auto;
     filter: drop-shadow(5px 5px 3px #36364d);
 }
 #board #table{
+    position: relative;
     width: fit-content;
     position: relative;
     touch-action: none;
-    margin: 5px;
+    padding: 5px;
     margin-left: auto;
     margin-right: auto;
-    border: solid var(--color1) 0.5px;
+    
 }
 .row{
     display: block;
@@ -167,6 +161,9 @@ a{
     border: 0px;
     text-transform: capitalize;
     text-align: center;
+    transition: transform 0.1s ease-out;
+    transition: background-color 0.1s ease;
+
 }
 .allWereFound{
     background-color: rgba(27, 27, 27, 0.719);
@@ -215,7 +212,8 @@ a{
     margin-left: auto;
     margin-right: auto;
     height: 40px;
-    line-height: 20px;
+    line-height: 40px;
+    padding: 10px;
 }
 
 /* score */
@@ -228,6 +226,10 @@ a{
     margin-right: auto;
     user-select: none;
     
+    
+}
+#game #score:hover{
+    filter: drop-shadow(0px 0px 1px var(--color8));
 }
 #score-bar-background{
     position: relative;
@@ -252,10 +254,10 @@ a{
     position: fixed;
     border-radius: 10px;
     outline: outset 5px var(--color9);
-    width: 50%;
-    left: 25%;
+    width: 80%;
+    left: 10%;
     height: 70%;
-    top: 20%;
+    top: 15%;
     z-index: 1;
     user-select: none;
     background-image: linear-gradient(to bottom, var(--color2) , var(--color1));
@@ -275,8 +277,8 @@ a{
     margin-left: auto;
     margin-right: auto;
     overflow: auto;
-    height: 70%;
-    width: 80%;
+    height: 60%;
+    width: 70%;
     outline: solid 2px;
     outline-color: var(--color9);
     padding: 10px;
@@ -367,11 +369,14 @@ a{
     position: relative;
     user-select: none;
     text-align: center;
+    width: 100%;
+    height: fit-content;
 }
 #browser-tiles{
     position: relative;
     left: 0%;
     width: 100%;
+    text-align: center;
 }
 
 .browserTile{
@@ -385,8 +390,8 @@ a{
     margin: 10px;
 
 }
-.browserTile:hover{
-    filter: brightness(1.1) drop-shadow(0px 0px 5px var(--color2));
+.browserTile:hover:not(.ended):not(.notStarted){
+    filter: brightness(1.05) drop-shadow(0px 0px 5px var(--color2));
 }
 
 .browserTile #content{
@@ -395,7 +400,6 @@ a{
     width: var(--tileWidth);
     height: var(--tileHeight);
 
-    border: dashed darkgoldenrod 5px;
     padding: 5px;
     border-radius: 20px;
 
@@ -440,20 +444,14 @@ a{
     width: 20px;
     line-height: 20px;
     display: inline-block;
+    transition: transform 0.1s ease-in;
 
 }
 
 
-@keyframes star-animation{
-    0% {transform: scale(1) rotate(0deg);}
-    50% {transform: scale(1.5) rotate(180deg);}
-    100%{transform: scale(1) rotate(360deg);}
-}
+
 .browserTile .difficultyStar:hover{
-    animation-name: star-animation;
-    animation-duration: 0.5s;
-    animation-direction: alternate;
-
+    transform: scaleX(-1);
 }
 
 .browserTile #size{
@@ -508,6 +506,7 @@ a{
     border-radius: 5px;
     border: solid black 1px;
     z-index: 11;
+    transition: width 1s ease;
     
 }
 
@@ -550,6 +549,13 @@ a{
     border: var(--color2) dashed 3px;
     background-color: var(--color9);
     color: black;
+}
+
+#browser-tiles #import-tile #content{
+    border: white dashed 3px;
+    color: black;
+    text-align: center;
+    
 }
 
 
@@ -616,6 +622,9 @@ a{
     z-index: 50;
     filter: invert(1);
 }
+.seeResultButton:hover{
+    filter: drop-shadow(0px 0px 5px var(--color5)) invert(0.5);
+}
 
 
 .disabled .boardButton{
@@ -640,6 +649,10 @@ a{
     height: 50px;
 }
 
+#share:hover{
+    filter: drop-shadow(0px 0px 5px var(--color5));
+}
+
 
 .browserTile #tick{
     position: absolute;
@@ -650,17 +663,64 @@ a{
     z-index: 100;
     background-color: var(--color8);
     border-radius: 50px;
+    transition: ease 1s opacity;
 }
 
-@keyframes example {
-    0% {opacity: 100%;}
-    10% {opacity: 0%;}
-    90% {opacity: 0%;}
-    100% {opacity: 100%;}
-  }
 
 .browserTile #tick:hover{
-    animation-name: example;
-    animation-duration: 10s;
+    opacity: 0;
 }
 
+
+
+#browser-tools{
+    position: relative;
+    height: fit-content;
+    width: 100%;
+    left: 0px;
+    text-align: center;
+    vertical-align: middle;
+}
+/* SHARED SQUARDLES */
+/* import */
+#browser #import{
+    position: relative;
+    display: inline-block;
+}
+
+
+
+#browser #import-header{
+    font-size: 50px;
+    line-height: 50px;
+    width: fit-content;
+    height: fit-content;
+    border: dashed 1px var(--color2);
+    background-color: var(--color1);
+    border-radius: 10px;
+    padding: 10px;
+}
+#browser #import-file{
+    
+}
+input[type="file"] {
+    display: none;
+}
+/* delete */
+.shared #delete{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+    z-index: 100;
+}
+
+#plus{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    top: 37px;
+    
+}

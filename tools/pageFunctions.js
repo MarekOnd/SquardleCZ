@@ -139,5 +139,28 @@ function addToLog(text)
 }
 
 
+async function getFile(url)
+{
+    try{
+        return await fetch(url);
+    }
+    catch(error){
+        console.log("error")
+        console.log(error);
+    }
+    return false;
+}
+async function getJson(url){
+    const obj = await getFile(url);
+    if(obj == false)
+    {
+        return false;
+    }
+    const jsonObj = await obj.json();
+    return jsonObj;
+}
+
+
+
 
 

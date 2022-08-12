@@ -7,9 +7,14 @@ let allTabs = [
     "guide",
 ]
 
-
+let tabBefore;
 function openTab(tabId)
 {
+    // set pervious tab, for loading browser and its updates
+    if(localStorage.getItem("currentTab") !== undefined)
+    {
+        tabBefore = JSON.parse(localStorage.getItem("currentTab"));
+    }
     // hides all
     for (let index = 0; index < allTabs.length; index++) {
         document.getElementById(allTabs[index]).style.display = "none";

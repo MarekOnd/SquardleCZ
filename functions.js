@@ -121,3 +121,12 @@ function countTrue(arr)
 String.prototype.replaceAt = function(index, replacement) {
     return this.substring(0, index) + replacement + this.substring(index + replacement.length);
 }
+
+function isSquardleActive(sq)
+{
+    if((sq.limitedTime === false) ||(new Date(sq.startDate) <= Date.now() && new Date(sq.endDate) >= Date.now()))
+    {
+        return true;
+    }
+    return false;
+}

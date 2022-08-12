@@ -31,7 +31,7 @@ let isNewSave;
 // board
 let board = document.getElementById("board");
 
-
+let winplayed;
 async function initialize(){
     LIBRARY = await getJson("./libraries/" + libraryName)
 }
@@ -42,6 +42,15 @@ async function loadSquardle(squardleToLoad)
 
     squardleLoadProgress();
 
+    
+    if(countTrue(wordsFound) === wordsFound.length)
+    {
+        winplayed = true;
+    }
+    else
+    {
+        winplayed = false;
+    }
     // CAN LOOK FOR WORDS
     document.getElementById("board").classList.remove("disabled")
 
@@ -53,7 +62,7 @@ async function loadSquardle(squardleToLoad)
     let share = document.getElementById("share");
     share.removeEventListener("pointerup", openShareWindow);
     share.addEventListener("pointerup", (e)=>{openShareWindow(S)});
-
+    updateWord("","white")
     updateAll();
     
 }
@@ -614,7 +623,7 @@ function connectButtons(path)
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
         let button = document.getElementsByClassName("row")[element.x].childNodes[element.y].getBoundingClientRect()
-        positions.push([button.left + button.width/2 - 20 +  window.scrollX, button.top - 250 + window.scrollY])
+        positions.push([button.left + button.width/2 - 20 +  window.scrollX, button.top - 200 + window.scrollY])
     }
     return drawLine(positions)
 }
@@ -728,6 +737,10 @@ function updateHints()
 // WIN
 function win()
 {
+    if(winplayed)
+    {
+        return;
+    }
     let board = document.getElementById("board")
     let points = [
         { transform: 'rotate(0) scale(1)' },

@@ -22,7 +22,7 @@
             <a href="../">Zpátky</a>
         </div>
         <div id="squardleLoader">
-            Jaký squardle chceš otevřít: <textarea placeholder = "jméno souboru" name="" id="textarea" rows="1"></textarea><button onclick="loadData()" class="button-1">Otevři</button><br>
+            Jaký squardle chceš otevřít: <input type="file" id="input" accept=".json"><button onclick="loadData()" class="button-1">Otevři</button><br>
         </div>
         <!---------------------------------------------EDITOR------------------------------------------------------>
         <div id="squardleEditor">
@@ -49,13 +49,21 @@
                 <input type="checkbox" id="limitedTime" >
             </label><br>
             <label>
-                Kdy se odemkne
+                Kdy se odemkne:
                     <input type="datetime-local" id="startDate">
             </label><br>
             <label>
+                Na kolik dní:
                 <input type="number" id="howManyDays">
-                <input type="time" id="howManyHours">
-                
+            </label><br>
+            <label>
+                Na kolik hodin:
+                <input type="number" id="howManyHours">
+            </label><br>
+
+            <label>
+                Na kolik minut:
+                <input type="number" id="howManyMinutes">
             </label><br>
             
                 
@@ -68,9 +76,14 @@
             <div id="wordsToFind"></div>
             <div id="bonusWords"></div>
             <div id="output">
-                <button id="output-button" onclick="exportSquardle()" class="button-1">Exportuj</button><br>
+                <button id="output-button" onclick="outputSquardle()" class="button-1">Exportuj</button><br>
                 <textarea name="" id="output-text"></textarea>
             </div>
+            <label>
+                Jméno souboru:
+                <input type="text" id="fileName">.json
+            </label><br>
+            <button onclick="downloadSquardle()" id="download" class="button-1">Exportuj a stáhni</button>
         </div>
         <!---------------------------------------------GENERATOR------------------------------------------------------>
         <div id="squardleGenerator">
@@ -126,6 +139,7 @@
         
         
         <script src="pageFunctions.js"></script>
+        <script src="editorExporter.js"></script>
         <script src="pageSquardleEditor.js" ></script>
         
     </body>
