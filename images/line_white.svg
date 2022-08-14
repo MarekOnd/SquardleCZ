@@ -7,25 +7,27 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16px"
+   height="16px"
+   viewBox="0 0 16 16"
    version="1.1"
-   viewBox="0 0 512 512"
-   enable-background="new 0 0 512 512"
-   id="svg839"
-   sodipodi:docname="eye.svg"
+   id="svg827"
+   sodipodi:docname="line_white.svg"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
   <metadata
-     id="metadata845">
+     id="metadata833">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs843" />
+     id="defs831" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -37,29 +39,18 @@
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
      inkscape:window-height="1137"
-     id="namedview841"
+     id="namedview829"
      showgrid="false"
-     inkscape:zoom="1.890625"
-     inkscape:cx="256"
-     inkscape:cy="256"
+     inkscape:zoom="60.5"
+     inkscape:cx="8"
+     inkscape:cy="8"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg839" />
-  <g
-     id="g837"
-     style="fill:#ffffff">
-    <g
-       id="g835"
-       style="fill:#ffffff">
-      <path
-         d="m251.6,185.7c-36.9,0-67,31.5-67,70.3 0,38.7 30,70.3 67,70.3 36.9,0 67-31.5 67-70.3 0-38.7-30.1-70.3-67-70.3z"
-         id="path831"
-         style="fill:#ffffff" />
-      <path
-         d="m251.6,367.1c-59.4,0-107.8-49.8-107.8-111.1 0-61.3 48.4-111.1 107.8-111.1s107.8,49.8 107.8,111.1c0,61.3-48.4,111.1-107.8,111.1zm246.3-121.9c-63.8-102.4-149.8-158.8-241.9-158.8-92.1,0-178.1,56.4-241.9,158.8-4.1,6.6-4.1,15 0,21.6 63.8,102.4 149.8,158.8 241.9,158.8 92.1,0 178-56.4 241.9-158.8 4.1-6.6 4.1-15 0-21.6z"
-         id="path833"
-         style="fill:#ffffff" />
-    </g>
-  </g>
+     inkscape:current-layer="svg827" />
+  <path
+     fill="#444"
+     d="M8 0h1v16h-1v-16z"
+     id="path825"
+     style="fill:#ffffff" />
 </svg>

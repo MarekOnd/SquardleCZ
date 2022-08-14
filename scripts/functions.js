@@ -88,9 +88,9 @@ function getMaxSquardleScore(sq)
     return max;
 }
 
-function getCurrentSquardleScore(sq)
+function getSquardleScore(sq)
 {
-    let s = getSquardleSave(sq)
+    let s = getSquardleSave(sq);
     if(s.wordsFound === [])
     {
         return 0;
@@ -104,6 +104,11 @@ function getCurrentSquardleScore(sq)
         }
     }
     return score;
+}
+
+function getSquardleProgress(sq)
+{
+    return 1.0*getSquardleScore(sq)/getMaxSquardleScore(sq);
 }
 
 function countTrue(arr)

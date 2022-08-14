@@ -32,8 +32,10 @@ let isNewSave;
 let board = document.getElementById("board");
 
 let winplayed;
+
 async function initialize(){
     LIBRARY = await getJson("./libraries/" + libraryName)
+    window.addEventListener("pointerup",()=>{mouseUp()})
 }
 // LOAD DATA
 async function loadSquardle(squardleToLoad)
@@ -51,11 +53,11 @@ async function loadSquardle(squardleToLoad)
     {
         winplayed = false;
     }
+
     // CAN LOOK FOR WORDS
-    document.getElementById("board").classList.remove("disabled")
+    document.getElementById("board").classList.remove("disabled");
 
-
-    window.addEventListener("pointerup",()=>{mouseUp()})
+    
     createBoard();
 
     // add share result
@@ -79,11 +81,10 @@ function updateAll()
 function createBoard()
 {
     let board = document.getElementById("board");
-    let table = document.getElementById("table");
     // deletes existing children
-    while(table.firstChild)
+    while(board.firstChild)
     {
-        table.removeChild(table.firstChild)
+        board.removeChild(board.firstChild)
     }
     // creates new board
     for(var i = 0; i < S.letters.length; i++)
@@ -94,8 +95,9 @@ function createBoard()
         for(var j = 0; j < S.letters[i].length; j++)
         {
             
-            // celle and button
-            let cell = document.createElement("td");
+
+            // cell and button
+            let cell = document.createElement("div");
             cell.className = "cell";
             
             let button = document.createElement("div");
@@ -103,6 +105,18 @@ function createBoard()
             if(S.letters[i][j] === "0")
             {
                 button.style.display = "none";
+            }
+            else
+            {
+                // hitbox for better selecting
+                let hitbox = document.createElement("div");
+                hitbox.className = "hitbox";
+                hitbox.addEventListener("click",function(){mouseClick(x,y)});
+                hitbox.addEventListener("pointerdown",function(){mouseDown(x,y)});
+                hitbox.addEventListener("pointerup", function(){mouseUp()});
+                hitbox.addEventListener("pointerenter",function(){mouseEnter(x,y)});
+                hitbox.addEventListener("gotpointercapture",(e)=>{e.target.releasePointerCapture(e.pointerId)})
+                cell.appendChild(hitbox);
             }
 
             // how many words use this letter, how many start with letter
@@ -127,24 +141,20 @@ function createBoard()
             let x = i;
             let y = j;
             
-            button.addEventListener("click",function(){mouseClick(x,y)});
-            button.addEventListener("pointerdown",function(){mouseDown(x,y)});
-            button.addEventListener("pointerup", function(){mouseUp()});
-            button.addEventListener("pointerenter",function(){mouseEnter(x,y)});
-            button.addEventListener("gotpointercapture",(e)=>{e.target.releasePointerCapture(e.pointerId)})
-
             // final apendage
             
             cell.appendChild(button);
             row.appendChild(cell);
 
+            
+
         }
-        table.appendChild(row);
+        board.appendChild(row);
     }
 }
 function getButton(x,y)
 {
-    let but = document.getElementsByClassName("row")[x].childNodes[y].firstChild;
+    let but = document.getElementsByClassName("row")[x].childNodes[y].getElementsByClassName("boardButton")[0];
     if(but)
     {
         return but;
@@ -218,10 +228,7 @@ function updateLettersInBoard()
                 {
                     start.textContent = ""
                 }
-
             }
-            
-
         }
     }
     
@@ -285,19 +292,22 @@ function mouseUp()
 function mouseEnter(x,y)
 {
     // disable
-    if(board.classList.contains("disabled"))
+    if(board.classList.contains("disabled") || !mousePressed || wordPath.positions.length === 0)
     {
         return;
     }
-    //--
-    if(!mousePressed)
+    let lastPosition = wordPath.positions[wordPath.positions.length-1];
+    if(lastPosition.x === x && lastPosition.y === y)
     {
         return;
     }
+    let positionBefore = wordPath.positions[wordPath.positions.length-2];
+
     let button = getButton(x,y);
-    if(wordPath.positions.length > 0 && wordPath.positions.filter(element => element.x === x && element.y === y).length > 0)// if position was already visited
+    
+    if(isSelected(x,y))// if position was already visited
     {
-        if(wordPath.positions.length > 1 && wordPath.positions[wordPath.positions.length-2].x === x && wordPath.positions[wordPath.positions.length-2].y === y)// if user is going back
+        if(wordPath.positions.length > 1 && positionBefore.x === x && positionBefore.y === y)// if user is going back
         {
             // deletes last position
             let top = wordPath.positions.pop();
@@ -305,13 +315,143 @@ function mouseEnter(x,y)
             getButton(top.x,top.y).classList.remove("selected");
         }
     }
-    else if(wordPath.positions.length > 0 && Math.abs(wordPath.positions[wordPath.positions.length-1].x - x) <=1  && Math.abs(wordPath.positions[wordPath.positions.length-1].y - y) <=1 )
+    else if(Math.abs(lastPosition.x - x) <=1  && Math.abs(lastPosition.y - y) <=1 )// going forward
     {
         button.classList.add("selected");
         wordPath.positions.push(new Position(x,y));
     }
+    else if(lastPosition.x === x && !isSelectedLineX(x,lastPosition.y,y))// further in x line
+    {
+        if(lastPosition.y < y)
+        {
+            for (let i = lastPosition.y + 1; i <= y; i++) {
+                getButton(x,i).classList.add("selected");
+                wordPath.positions.push(new Position(x,i));
+            }
+        }
+        else
+        {
+            for (let i = lastPosition.y - 1; i >= y; i--) {
+                getButton(x,i).classList.add("selected");
+                wordPath.positions.push(new Position(x,i));
+            }
+        }
+    }
+    else if(lastPosition.y === y && !isSelectedLineY(y,lastPosition.x,x))// further in y line
+    {
+        if(lastPosition.x < x)
+        {
+            for (let i = lastPosition.x + 1; i <= x; i++) {
+                getButton(i,y).classList.add("selected");
+                wordPath.positions.push(new Position(i,y));
+            }
+        }
+        else
+        {
+            for (let i = lastPosition.x - 1; i >= x; i--) {
+                getButton(i,y).classList.add("selected");
+                wordPath.positions.push(new Position(i,y));
+            }
+        }
+    }
+    else if((lastPosition.y-y) === (lastPosition.x-x) && !isSelectedLineDiagonalRight(lastPosition, new Position(x,y)))// further in y line
+    {
+        if(lastPosition.x < x)
+        {
+            for (let i = lastPosition.x + 1; i <= x; i++) {
+                getButton(i,lastPosition.y + i - lastPosition.x).classList.add("selected");
+                wordPath.positions.push(new Position(i,lastPosition.y + i - lastPosition.x));
+            }
+        }
+        else
+        {
+            for (let i = lastPosition.x - 1; i >= x; i--) {
+                getButton(i,lastPosition.y + i - lastPosition.x).classList.add("selected");
+                wordPath.positions.push(new Position(i,lastPosition.y + i - lastPosition.x));
+            }
+        }
+    }
+    else if((lastPosition.y-y) === -(lastPosition.x-x) && !isSelectedLineDiagonalLeft(lastPosition, new Position(x,y)))// further in y line
+    {
+        if(lastPosition.x < x)
+        {
+            for (let i = lastPosition.x + 1; i <= x; i++) {
+                getButton(i,lastPosition.y - i + lastPosition.x).classList.add("selected");
+                wordPath.positions.push(new Position(i,lastPosition.y - i + lastPosition.x));
+            }
+        }
+        else
+        {
+            for (let i = lastPosition.x - 1; i >= x; i--) {
+                getButton(i,lastPosition.y - i + lastPosition.x).classList.add("selected");
+                wordPath.positions.push(new Position(i,lastPosition.y - i + lastPosition.x));
+            }
+        }
+    }
     updateWord(createWord(wordPath), "white");
     updateLine()
+}
+
+function isSelected(x,y)
+{
+    return wordPath.positions.filter(element => element.x === x && element.y === y).length > 0 || S.letters[x][y] === "0";
+}
+
+function isSelectedLineX(x, yStart, yEnd)
+{
+    if(yStart > yEnd)
+    {
+        return isSelectedLineX(x, yEnd, yStart);
+    }
+    for (let i = yStart + 1; i < yEnd; i++) {
+        if(isSelected(x,i))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+function isSelectedLineY(y, xStart, xEnd)
+{
+    if(xStart > xEnd)
+    {
+        return isSelectedLineX(y, xEnd, xStart);
+    }
+    for (let i = xStart + 1; i < xEnd; i++) {
+        if(isSelected(i,y))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+function isSelectedLineDiagonalRight(start, end)// /
+{
+    if(start.x > end.x)
+    {
+        return isSelectedLineDiagonalRight(end, start);
+    }
+    for (let i = start.x + 1; i < end.x; i++) {
+        if(isSelected(i,start.y + i - start.x))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+function isSelectedLineDiagonalLeft(start, end)// \
+{
+    if(start.x > end.x)
+    {
+        return isSelectedLineDiagonalLeft(end, start);
+    }
+    for (let i = start.x + 1; i < end.x; i++) {
+        if(isSelected(i,start.y + start.x - i ))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 // OUTPUT WORD
@@ -345,6 +485,8 @@ function updateWord(word, color = null)
     }
 }
 
+let timeout;
+let secondTimeout;
 // FINDING WORDS
 function testMainWord() //<= goes here from mouseUp
 {
@@ -392,8 +534,7 @@ function testMainWord() //<= goes here from mouseUp
     updateWord("Není slovo","red");
 
     let wordBox = document.getElementById("output");
-    let timeout;
-    let secondTimeout;
+    
     clearTimeout(timeout);
     clearTimeout(secondTimeout);
 
@@ -441,7 +582,7 @@ function updateScore()
 
 // FOUND WORDS LIST
 
-function updateFound()
+function updateFound(previewResult = false)
 {
     let headerBox = document.getElementById("found-header");
     let textBox = document.getElementById("found-words");
@@ -475,8 +616,30 @@ function updateFound()
         {
             // header
             fastAppendText(i + " písmenná slova:", paragraph, "foundWord-letterHeader")
-
-            if(hintRandomLetters)
+            if(document.getElementById("board").classList.contains("disabled"))
+            {
+                console.log("jsem tu")
+                for (let i = 0; i < iLongWords.length; i++) {
+                    const element = iLongWords[i];
+                    let w;
+                    if(element.found === true)// found
+                    {
+                        w = fastAppendText(element.str, paragraph, "foundWord-words")
+                        
+                    }
+                    else // show 
+                    {
+                        w = fastAppendText(element.str, paragraph,"foundWord-words")
+                        w.classList.add("notFound")
+                    }
+                    w.addEventListener("click",(w)=>{
+                        url ='http://www.google.com/search?q=' + element.str;
+                        window.open(url,'_blank');
+                    })
+                    w.title = "Najít význam ve slovníku";
+                }
+            }
+            else if(hintRandomLetters === true)
             {
                 for (let i = 0; i < iLongWords.length; i++) {
                     const element = iLongWords[i];
@@ -566,10 +729,10 @@ function toggleFoundWordsPopUp()
     if(foundWordsPopUp)
     {
         foundWords.style.display = "none";
-
     }
     else
     {
+        updateFound(true);
         foundWords.style.display = "block";
     }
     foundWordsPopUp = !foundWordsPopUp;
@@ -581,7 +744,11 @@ function getCurrentSquardleSave()
         hash:hashSquardle(S),
         wordsFound:wordsFound,
         bonusWordsFound:bonusWordsFound,
-        existed:true
+        existed:false
+    }
+    if(getSquardleProgress(S) > 0)
+    {
+        save.existed = true;
     }
     return save;
 }
@@ -592,12 +759,12 @@ function squardleSaveProgress()
 function squardleLoadProgress()
 {
     let save = getSquardleSave(S);
-    if(save.existed === false)
-    {
-        for (let i = 0; i < S.wordsToFind.length; i++) {
-            save.wordsFound.push(false);
-        }
-    }
+    // if(save.existed === false)
+    // {
+    //     for (let i = 0; i < S.wordsToFind.length; i++) {
+    //         save.wordsFound.push(false);
+    //     }
+    // }
     applySave(save)
 }
 function applySave(save)
@@ -623,7 +790,7 @@ function connectButtons(path)
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
         let button = document.getElementsByClassName("row")[element.x].childNodes[element.y].getBoundingClientRect()
-        positions.push([button.left + button.width/2 - 20 +  window.scrollX, button.top - 200 + window.scrollY])
+        positions.push([button.left + button.width/2 - 10 +  window.scrollX, button.top + button.height/2  - 10 + window.scrollY])
     }
     return drawLine(positions)
 }
@@ -643,19 +810,14 @@ function drawLine(points)
 // DRAW LINE
 function createLineElement(x, y, length, angle) {
     var line = document.createElement("div");
-    var styles = 'border: 10px solid rgb(20, 218, 218,0.1); '
-               + 'width: ' + length + 'px; '
-               + 'height: 0px; '
-               + "background-color:rgb(20, 218, 218, 0.5);"
+    line.classList.add("lineSegment");
+    var styles = 'width: ' + length + 'px; '
                + '-moz-transform: rotate(' + angle + 'rad); '
                + '-webkit-transform: rotate(' + angle + 'rad); '
                + '-o-transform: rotate(' + angle + 'rad); '  
                + '-ms-transform: rotate(' + angle + 'rad); '  
-               + 'position: absolute; '
                + 'top: ' + y + 'px; '
-               + 'left: ' + x + 'px; '
-               + 'border-radius: 10px;'
-               + 'z-index: 2';
+               + 'left: ' + x + 'px; ';
 
     line.setAttribute('style', styles);  
     return line;
@@ -676,8 +838,6 @@ function createLine(x1, y1, x2, y2) {
 
     return createLineElement(x, y, c, alpha);
 }
-
-
 
 function fastAppendText(text,where,className="")
 {
@@ -713,26 +873,37 @@ let hintTimesStarting;
 let hintTimesIncluded;
 let hintRandomLetters;
 
+let hintTimesStartingUnlock = 0.20;
+let hintTimesIncludedUnlock = 0.40;
+let hintRandomLettersUnlock = 0.7;
+
 function updateHints()
 {
-    let progress = 1.0*getCurrentSquardleScore(S)/getMaxSquardleScore(S);
-    hintTimesStarting = false;
-    hintTimesIncluded = false;
-    hintRandomLetters = false;
-    if(progress > 0.20)
-    {
-        hintTimesIncluded = true;
-        if(progress > 0.40)
-        {
-            hintTimesStarting = true;
-            if(progress > 0.7)
-            {
-                hintRandomLetters = true;
-            }
-        }
-    }
+    hintTimesStarting = updateHint("hintTimesStarting", hintTimesStartingUnlock)
+    hintTimesIncluded = updateHint("hintTimesIncluded", hintTimesIncludedUnlock)
+    hintRandomLetters = updateHint("hintRandomLetters", hintRandomLettersUnlock)
+    
+    
+
 }
 
+function updateHint(hintId, unlock)
+{
+    let progress = getSquardleProgress(S);
+    let hintImg = document.getElementById(hintId);
+    if(progress >= unlock)
+    {
+        hintImg.style.opacity = 0;
+        hintImg.style.scale = 1;
+        return true;
+    }
+    else
+    {
+        hintImg.style.opacity = 1;
+        hintImg.style.left = unlock*100 + "%";
+        return false;
+    }
+}
 
 // WIN
 function win()

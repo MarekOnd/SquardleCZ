@@ -208,13 +208,15 @@ function createSquardleTile(sq, classToAdd, index)
     author.textContent = sq.author;
     content.appendChild(author)
     //DIFFICULTY
-    
+    let difficultyDiv = document.createElement("div");
+    difficultyDiv.id = "difficulty";
     for (let i = 0; i < parseFloat(sq.difficulty); i++) {
         let difficultyStar = document.createElement("img");
         difficultyStar.classList.add("difficultyStar");
         difficultyStar.src = "./images/star.svg";
-        content.appendChild(difficultyStar);
+        difficultyDiv.appendChild(difficultyStar);
     }
+    content.appendChild(difficultyDiv)
     // switch(parseFloat(sq.difficulty))
     // {
     //     case 1:
@@ -239,8 +241,8 @@ function createSquardleTile(sq, classToAdd, index)
     if(previewBoard)
     {
         //SIZE CREATED
-        let size = document.createElement("div");
-        size.id = "size";
+        let preview = document.createElement("div");
+        preview.id = "preview";
         let sqSize = sq.letters.length;
         sq.letters.map((row)=>{
             let tileRow = document.createElement("div");
@@ -255,21 +257,21 @@ function createSquardleTile(sq, classToAdd, index)
                 tile.textContent = letter;
                 tileRow.appendChild(tile)
             })
-            size.appendChild(tileRow);
+            preview.appendChild(tileRow);
         })
-        content.appendChild(size);
+        content.appendChild(preview);
     }
 
     // SQUARDLE PROGRESS
     // variables
     let maxScore = getMaxSquardleScore(sq)
-    let score = getCurrentSquardleScore(sq);
+    let score = getSquardleScore(sq);
     let progress = 1.0*score/maxScore;
     // divs
-    content.appendChild(document.createElement("br"));
+
     let scoreTitle = document.createElement("div")
     scoreTitle.id = "scoreTitle";
-    scoreTitle.textContent = "Postup: ";
+    scoreTitle.textContent = "Postup: " + score +"/" + maxScore;
     
     
 
@@ -285,6 +287,9 @@ function createSquardleTile(sq, classToAdd, index)
 
     let scoreBarFull = document.createElement("div");
     scoreBarFull.id = "barFull";
+
+    scoreBarFull.style.backgroundSize = (200.0/maxScore)*100 + "px"
+    scoreBarFull.style.backgroundPositionX = ((-200.0/maxScore)*50-5) + "px"
     
     if(tabBefore !== "browser")
     {

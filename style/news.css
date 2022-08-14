@@ -1,0 +1,134 @@
+
+:root{
+    --news-bigHeaderSize: 40px;
+    --news-smallHeaderSize: 20px;
+    --news-textSize: 20px;
+    --news-bigIconSize: 40px;
+    --news-smallIconSize: 20px;
+}
+
+.message{
+    position: relative;
+    height: fit-content;
+    width: fit-content;
+    padding: 20px;
+    margin: 50px;
+    background-image: linear-gradient(to bottom, var(--color2) , var(--color1));
+}
+
+.message h1{
+    position: relative;
+    height: fit-content;
+    width: fit-content;
+
+    margin: 0px;
+
+    font-size: var(--news-bigHeaderSize);
+    line-height: var(--news-bigHeaderSize);
+}
+
+.message h2{
+    position: relative;
+    height: var(--news-smallHeaderSize);
+    width: fit-content;
+
+    margin: 0px;
+
+    font-size: var(--news-smallHeaderSize);
+    line-height: var(--news-smallHeaderSize);
+}
+
+.message ul{
+    position: relative;
+    height: fit-content;
+    width: fit-content;
+   
+}
+/*
+news types
+    bigChange
+    smallChange
+
+    newFeature
+    bugFix
+    pageLook
+    gameMechanics
+    newContent
+    editorChange
+    menuChange
+    badNews
+
+*/
+
+.message li{
+    list-style: none;
+    font-size: var(--news-textSize);
+    line-height: var(--news-textSize);
+}
+.message .smallChange{
+    font-size: calc(var(--news-textSize));
+    line-height: calc(var(--news-textSize));
+}
+.message .bigChange{
+    font-size: var(--news-textSize);
+    line-height: var(--news-textSize);
+}
+
+.message li::before {
+    position: relative;
+    top: calc(var(--news-bigIconSize)/4);
+    height: var(--news-bigIconSize);
+    width: var(--news-bigIconSize);
+    margin-right: 5px;
+
+    content: '';
+    
+    background-image: url("../images/plus.svg");
+    background-size: calc(var(--news-bigIconSize));
+    background-repeat: no-repeat;
+
+    display: inline-block;
+    z-index: 50;
+}
+
+.message .smallChange::before {
+    background-size: calc(var(--news-smallIconSize));
+    background-position-x: calc((var(--news-bigIconSize) - var(--news-smallIconSize))/2);
+    background-position-y: calc((var(--news-bigIconSize) - var(--news-smallIconSize))/2);
+}
+.message .bigChange::before {
+    background-size: calc(var(--news-bigIconSize));
+}
+
+
+
+
+
+
+.message ul .bugFix::before {
+    background-image: url("../images/tick.svg");
+}
+.message ul .pageLook::before {
+    background-image: url("../images/funny_glasses.svg");
+}
+.message ul .gameMechanics::before {
+    background-image: url("../images/cogs.svg");
+}
+.message ul .newContent::before {
+    background-image: url("../images/folder.svg");
+}
+.message ul .editorChange::before {
+    background-image: url("../images/cogs.svg");
+    filter: invert(1);
+}
+.message ul .menuChange::before {
+    background-image: url("../images/list.svg");
+}
+.message ul .newFeature::before {
+    background-image: url("../images/star.svg");
+}
+
+.message ul .badNews::before {
+    background-image: url("../images/delete.svg");
+}
+  

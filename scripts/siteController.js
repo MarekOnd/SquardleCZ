@@ -2,6 +2,7 @@
 
 async function pageStart()
 {
+
     // loads libraries and squardles
     initialize();
     await loadSquardlesData();
@@ -180,7 +181,7 @@ function getSquardleSave(sq)
         hash:hashSquardle(sq),
         wordsFound:[],
         bonusWordsFound:[],
-        existed:true
+        existed:false
     }
     for (let i = 0; i < sq.wordsToFind.length; i++) {
         defaultSave.wordsFound.push(false)
@@ -196,13 +197,13 @@ function formatSquardleResult(sq)
         const element = squardlesWeekly[i];
         if(hashSquardle(element) === hashSquardle(sq))
         {
-            result += "Týdenní #" + i;
+            result += "Týdenní #" + (i+1) + "\n ";
+            break;
         }
     }
-    result += sq.name + "\n";
-    result += sq.author + "\n";
+    result += sq.name + " - " + sq.author + "\n";
     let save = getSquardleSave(sq);
-    result += countTrue(save.wordsFound) + "/" + save.wordsFound.length + "\n + " + save.bonusWordsFound.length + " bonusových slov";
+    result += countTrue(save.wordsFound) + "/" + save.wordsFound.length + " +" + save.bonusWordsFound.length + " bonusových slov\n";
     result += "https://marekond.github.io/SquardleCZ/"
     return result;
 }

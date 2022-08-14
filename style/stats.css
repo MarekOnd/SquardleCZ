@@ -1,0 +1,81 @@
+:root{
+    --statBoxHeight: 300px;
+    --statBoxWidth: 80%;
+    --stats-titleFontSize: 30px;
+    --stats-fontSize: 20px;
+
+}
+
+#stats h1{
+    width: fit-content;
+    font-size: var(--stats-titleFontSize);
+    line-height: calc(var(--stats-titleFontSize)*2);
+    margin: 5px;
+    padding: 0px;
+    user-select: none;
+}
+#stats{
+
+    width: 90%;
+    height: fit-content;
+
+    margin: 10%;
+    margin-top: 1%;
+}
+
+#stats .statBox{
+    position: relative;
+    height: calc(var(--stats-titleFontSize)*2);
+    width: var(--statBoxWidth);
+
+    margin: 10px;
+    padding: 10px;
+
+    border: solid 5px white;
+    border-radius: 30px;
+    background-image: linear-gradient(to bottom, var(--color2) , var(--color1));
+
+    font-size: var(--stats-fontSize);
+    display: block;
+
+    transition: height 0.5s ease-out;
+
+    overflow: hidden;
+}
+#stats .opened{
+    position: relative;
+    height: var(--statBoxHeight);
+
+    margin: 10px;
+
+    border: solid 5px white;
+
+    font-size: var(--stats-fontSize);
+    display: block;
+    
+}
+
+.statBox .played{
+    width: fit-content;
+}
+
+.statBox .completed{
+    width: fit-content;
+}
+
+.statBox .totalScore{
+    width: fit-content;
+}
+
+.statBox .totalWordsFound{
+    width: fit-content;
+}
+
+.statBox .totalBonusWordsFound{
+    width: fit-content;
+}
+
+.statBox:hover{
+
+}
+

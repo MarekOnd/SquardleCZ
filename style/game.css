@@ -1,0 +1,351 @@
+:root{
+    --game-cellSize: 90px;
+    --game-spacesBetweenCells: 15px;
+    --game-fontSize: 60px;
+    --game-smallFontSize: 30px;
+    --found-headerFontSize: 40px;
+    --found-fontSize: 20px;
+
+
+    --game-scoreBarHeight: 30px;
+    --game-scoreBarWidth: 300px;
+}
+
+/* GAME */
+#game{
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    user-select: none;
+
+}
+
+/* board */
+#board{
+    position: relative;
+    filter: drop-shadow(5px 5px 3px #36364d);
+    width: fit-content;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    max-width: 100%;
+    max-height: 100%;
+    touch-action: none;
+}
+#board .row{
+    position: relative;
+    width: fit-content;
+    height: calc(2*var(--game-spacesBetweenCells)+var(--game-cellSize));
+
+    display: block;
+}
+.cell{
+    position: relative;
+    vertical-align: middle;
+    width: var(--game-cellSize);
+    height: var(--game-cellSize);
+    margin: var(--game-spacesBetweenCells);
+
+    display: inline-block;
+}
+.boardButton{
+    position: relative;
+    height: 100%;
+    width:  100%;
+
+    border-radius: 10px;
+    background-color: rgb(70, 68, 68);
+    color: white;
+    
+    transition: transform 0.1s ease-out;
+    transition: background-color 0.1s ease;
+
+}
+.allWereFound{
+    background-color: rgba(27, 27, 27, 0.3);
+    color: white;
+    z-index: 0;
+}
+.selected{
+    background-color: gray;
+    border-radius: 9px;
+    transform: scale(0.9);
+}
+.button-letter{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    text-transform: capitalize;
+    text-align: center;
+    font-size: var(--game-fontSize);
+    line-height: var(--game-cellSize);  
+
+    color: rgb(255, 255, 255);
+}
+.button-start{
+    position: absolute;
+    right: 5%;
+    top: 0%;
+    font-size: var(--game-smallFontSize);   
+    color: red;
+}
+.button-use{
+    position: absolute;
+    bottom: 0%;
+    left: 5%;
+    font-size: var(--game-smallFontSize);
+    color: green;
+}
+
+.cell .hitbox{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: var(--game-cellSize);
+    width:  var(--game-cellSize);
+    border-radius: calc(var(--game-cellSize)/2);
+    z-index: 1000;
+}
+
+/* output */
+#output{
+    position: relative;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+
+    height: 40px;
+    line-height: 40px;
+    padding: 10px;
+}
+
+/* score */
+#game #score{
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center;
+    user-select: none;
+    
+    
+}
+#game #score:hover{
+    filter: drop-shadow(0px 0px 5px var(--color8));
+}
+#score-bar-background{
+    position: relative;
+    width: var(--game-scoreBarWidth);
+    height: var(--game-scoreBarHeight);
+    margin-left: auto;
+    margin-right: auto;
+
+    border-radius: 5px;
+    background-color: rgb(204, 218, 218);
+
+    
+}
+#score-bar{
+    position: relative;
+    height: var(--game-scoreBarHeight);
+
+    background-color: rgb(26, 88, 223);
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+
+/* found words */
+#found{
+    position: fixed;
+    left: 10%;
+    top: 15%;
+    width: 80%;
+    height: 70%;
+    
+
+    border-radius: 10px;
+    outline: outset 5px var(--color9);
+    background-image: linear-gradient(to bottom, var(--color2) , var(--color1));
+
+    z-index: 5;
+    user-select: none;
+}
+
+
+#found-header{
+    position: relative;
+    text-align: center;
+    line-height: 50px;
+    font-size: 50px;
+    padding: 30px;
+}
+
+#found-words{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    height: 60%;
+    width: 70%;
+
+    padding: 10px;
+    outline: solid 2px;
+    outline-color: var(--color9);
+    
+    overflow: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
+#found-words::-webkit-scrollbar {
+    display: none;
+}
+
+.foundWord{
+
+}
+
+.foundWord-letterHeader{
+    position: relative;
+    font-size: var(--found-headerFontSize);
+    line-height: var(--found-headerFontSize);
+
+    width: fit-content;
+    height: fit-content;
+}
+
+.foundWord-words{
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+
+    font-size: var(--found-fontSize);
+    line-height: var(--found-fontSize);
+
+    padding: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+
+    display: inline-block;
+}
+
+.notFound{
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    color: rgb(255, 138, 138);
+}
+
+.foundWord-words:hover{
+    background-color: var(--color8);
+    color: var(--font-color-onlight);
+    text-decoration: underline;
+    
+}
+
+.foundWord-missing{
+    position: relative;
+
+    font-style: italic;
+    font-size: var(--found-fontSize);
+
+    display: block;
+}
+
+#found-exit{
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    margin: 5px;
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: var(--found-headerFontSize);
+    line-height: var(--found-headerFontSize);
+    text-align: center;
+    
+    padding: 10px;
+    border-radius: 5px;
+    border: solid var(--color9) 2px;
+    
+    background-color: var(--color2);
+    color: var(--font-color-ondark);
+}
+
+#found-exit:hover{
+    filter: brightness(1.1);
+}
+
+.found-words-line{
+    position: relative;
+    margin: 5px;
+    border: dashed var(--color9) 1px;
+}
+
+/* LINE */
+#line{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#line .lineSegment{
+    position: absolute;
+    height: 0px;
+
+
+    
+    background-color:rgb(20, 218, 218, 0.5);
+    border: 10px solid rgb(20, 218, 218,0.1); 
+    border-radius: 10px;
+    z-index: 2;
+}
+
+
+.disabled .boardButton{
+    background-image: url("../images/lock.svg");
+    background-repeat: no-repeat;
+    background-size: 20%;
+}
+
+#share{
+    position: absolute;
+    right: 2%;
+    top: 0%;
+    width: 50px;
+    height: 50px;
+
+    padding: 10px;
+}
+
+#share:hover{
+    filter: drop-shadow(0px 0px 5px var(--color5));
+}
+
+
+
+
+
+/* HINTS */
+
+#game .hint{
+    position: absolute;
+    width: var(--game-scoreBarHeight);
+    height: var(--game-scoreBarHeight);
+    left: 0%;
+    top: 0%;
+    transform: scale(1);
+
+    transition: opacity 1s ease, transform 1s ease;
+
+    z-index: 2;
+}
+
+
+
+

@@ -1,0 +1,124 @@
+
+/* BASIC LOOK */
+
+body{
+    background-color: black;
+    background-image: linear-gradient(to right, rgb(41, 37, 37) , rgb(8, 8, 6));
+    color: white;
+    
+    font-family: 'Poppins', sans-serif;
+    
+    font-size: 40px;
+    
+
+    /*COLOR PALLETE*/
+    --color1: #03045E;
+    --color2: #023E8A;
+    --color3: #0077B6;
+    --color4: #0096C7;
+    --color5: #00B4D8;
+    --color6: #48CAE4;
+    --color7: #90E0EF;
+    --color8: #ADE8F4;
+    --color9: #CAF0F8;
+    --font-color-ondark:white;
+    --font-color-onlight:black;
+
+
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* TITLE */
+#version{
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    font-size: 20px;
+    user-select: none;
+}
+#version:hover{
+    filter: drop-shadow(0px 0px 3px white);
+}
+
+#main-header{
+    position: relative;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center;
+    font-size: 40px;
+    line-height: 50px;
+
+    background: -webkit-linear-gradient(var(--color8), var(--color6));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    z-index: 1;
+    user-select: none;
+
+    filter: drop-shadow(5px 5px 3px #36364d);
+    
+}
+
+
+
+/* MENU */
+
+#menu{
+    position: relative;
+    
+    text-align: center;
+    --menu-height: 60px;
+    height: var(--menu-height);
+    height: fit-content;
+    left: 0;
+    width: 100%;
+    user-select: none;
+    z-index: 1;
+}
+
+
+
+
+.menu-button{
+    position: relative;
+    width: fit-content;
+    height: calc(var(--menu-height) - 30px);
+    padding-left: calc(var(--menu-height)/2);
+    padding-top: calc(var(--menu-height)/20);
+    padding-right: calc(var(--menu-height)/2);
+    padding-bottom: calc(var(--menu-height)/20);
+    border-radius: calc(var(--menu-height)/4);
+    font-size: 30px;
+    line-height: calc(var(--menu-height) - 30px);
+    color: aliceblue;
+    background-color: var(--color2);
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+
+}
+
+.menu-button:hover{
+    background-color: rgb(49, 33, 105);
+}
+
+.selectedTab-button{
+    background-color: var(--color3);
+}
+
+a:visited{
+    text-decoration: none;
+}
+a{
+    text-decoration: none;
+}
+
+

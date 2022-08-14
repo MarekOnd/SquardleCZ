@@ -2,7 +2,7 @@ let allTabs = [
     "game",
     "browser",
     "news",
-    "results",
+    "stats",
     "about",
     "guide",
 ]
@@ -31,11 +31,12 @@ function openTab(tabId)
             loadSquardle(getSquardle(currentSquardle));
             break;
         case "browser":
-            updateBrowserContent()
+            updateBrowserContent();
             break;
         case "news":
             break;
-        case "results":
+        case "stats":
+            updateStats();
             break;
         case "about":
             break;

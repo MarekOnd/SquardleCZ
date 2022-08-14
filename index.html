@@ -16,7 +16,7 @@
     <body onload="pageStart()">
         <div id="title">
             <h1 id="main-header">Český squardle</h1>
-            <div id="version">v0.6</div>
+            <div id="version" onclick="openTab('news')">v0.7</div>
         </div>
         
         <div id="menu">
@@ -30,8 +30,8 @@
             <a  class="menu-button" id="goto-guide" title="Co mám dělat?!" onclick="openTab('guide')">
                 Návod
             </a>
-            <a  class="menu-button" id="goto-results" title="Jak si vedu?" onclick="openTab('results')">
-                Výsledky
+            <a  class="menu-button" id="goto-stats" title="Jak si vedu?" onclick="openTab('stats')">
+                Statistiky
             </a>
             <a class="menu-button" id="goto-about" title="Kde to jsem?" onclick="openTab('about')">
                 O stránce
@@ -61,6 +61,9 @@
                 <div id="score-points"></div>
                 <div id="score-bar-background">
                     <div id="score-bar"></div>
+                    <img class="hint" id="hintTimesStarting" src="./images/race_flag.svg">
+                    <img class="hint" id="hintTimesIncluded" src="./images/hashtag.svg">
+                    <img class="hint" id="hintRandomLetters" src="./images/magnifying_glass.svg">
                 </div>
             </div>
             <div id="found" style="display: none;">
@@ -76,46 +79,114 @@
             </div>
             
             <div id = "board">
-                <div id="line"></div>
+                
                 <div id="table">
 
                 </div>
             </div>
             <img id="share" src="./images/share.svg" title="Sdílej výsledek"></img>
         </div>
+        <div id="line"></div>
         
         <div id="browser">
-            
-            
             <div id="browser-tiles">
 
             </div>
             <div id="browser-tools">
-                <!-- <label id="import">
-                    <div id="import-header">Importování</div>
-                    
-                </label> -->
+
             </div>
             <input type = "file" accept=".json" id="import-file" onchange="importSquardle()"></div>
-            
         </div>
 
         <div id="news" style="display: none;">
-            Verze 0.5
-            &#x2022; změna celého systému hry
-            &#x2022; týdenní a odpočinkový typ
-            &#x2022; tlačítka fungují<br>
-            Verze 0.6
-            &#x2022; sdílení squardlů
-            &#x2022; editor exportuje soubory
-            &#x2022; je možné přidat squardly vlastní nebo od přátel
-            &#x2022; animace
-            &#x2022; změna vzhledu stránky
-            &#x2022; stále hrozné novinky, ale aspoň existují<br>
+            <div class="message">
+                <h1>Verze 0.7</h1>
+                <ul>
+                    <li class="newFeature">novinky</li>
+                    <li class="pageLook">zkouška obrázků v novinkách</li>
+                    <li class="gameMechanics">(snad) lepší výběr políček ve hře - snadnější diagonální výběr a výběr více najednou pokus se vynechá políčko</li>
+                    <li class="smallChange bugFix">čára spojuje políčka správně</li>
+                    <li class="smallChange bugFix">nelze pokračovat v ukončených squardlech</li>
+                    <li class="smallChange bugFix">opraveno formátování sdílení</li>
+                    <li class="newFeature">statistiky</li>
+                    <li class="smallChange pageLook">výsledky nahradily statistiky (výsledky jsou již ve Seznamu)</li>
+                    <li class="gameMechanics">nový hint</li>
+                    <li class="smallChange gameMechanics">hinty zobrazeny ve hře</li>
+                    <li class="smallChange gameMechanics">u ukončených squardlů lze v nalezených slovech vidět i nenalezená slova</li>
+                    <li class="smallChange bugFix">opraveno problikávání slov</li>
+                    
+
+
+                </ul>
+            </div>
+            <div class="message">
+                <h1>Verze 0.6</h1>
+                <ul>
+                    <li class="newFeature">sdílení squardlů</li>
+                    <li class="editorChange">editor exportuje soubory</li>
+                    <li class="gameMechanics">je možné přidat squardly vlastní nebo od přátel</li>
+                    <li class="pageLook">animace</li>
+                    <li class="smallChange pageLook">změna vzhledu stránky</li>
+                    <li class="smallChange badNews">stále hrozné novinky, ale aspoň existují</li>
+
+                </ul>
+            </div>
+            <div class="message">
+                <h1>Verze 0.5</h1>
+                <ul>
+                    <li class="gameMechanics">změna celého systému hry</li>
+                    <li class="newFeature">týdenní a odpočinkový typ</li>
+                    <li class="menuChange">tlačítka fungují</li>
+                </ul>
+            </div>
+            
+            
+            
+            
         </div>
 
-        <div id="results" style="display: none;">
-            Zatím nic
+        <div id="stats" style="display: none;">
+            <div class="statBox" id="stats-all" onclick="toggleStatBox(this)">
+                <h1>Celkové statistiky</h1>
+                <div class="played"></div>
+                <div class="completed"></div>
+                <div class="totalScore"></div>
+                <div class="totalWordsFound"></div>
+                <div class="totalBonusWords"></div>
+            </div>
+            <div class="statBox" id="stats-weekly" onclick="toggleStatBox(this)">
+                <h1>Týdenní</h1>
+                <div class="played"></div>
+                <div class="completed"></div>
+                <div class="totalScore"></div>
+                <div class="totalWordsFound"></div>
+                <div class="totalBonusWords"></div>
+            </div>
+            <div class="statBox" id="stats-casual" onclick="toggleStatBox(this)">
+                <h1>Odpočinkové</h1>
+                <div class="played"></div>
+                <div class="completed"></div>
+                <div class="totalScore"></div>
+                <div class="totalWordsFound"></div>
+                <div class="totalBonusWords"></div>
+            </div>
+            
+            <div class="statBox" id="stats-special" onclick="toggleStatBox(this)">
+                <h1>Speciální</h1>
+                <div class="played"></div>
+                <div class="completed"></div>
+                <div class="totalScore"></div>
+                <div class="totalWordsFound"></div>
+                <div class="totalBonusWords"></div>
+            </div>
+            <div class="statBox" id="stats-shared" onclick="toggleStatBox(this)">
+                <h1>Sdílené</h1>
+                <div class="played"></div>
+                <div class="completed"></div>
+                <div class="totalScore"></div>
+                <div class="totalWordsFound"></div>
+                <div class="totalBonusWords"></div>
+            </div>
         </div>
 
         <div id="about" style="display: none;">
@@ -126,13 +197,14 @@
         </div>
         
         <!--<img src="images/warden.jpg" style="width:100%; filter: brightness(0.1);">-->
-        <script src="functions.js"></script>
-        <script src="siteController.js"></script>
-        <script src="squardle.js"></script>
-        <script src="buttons.js"></script>
-        <script src="browser.js"></script>
-        <script src="pageSwitches.js"></script>
-        <script src="share.js"></script>
+        <script src="./scripts/functions.js"></script>
+        <script src="./scripts/siteController.js"></script>
+        <script src="./scripts/squardle.js"></script>
+        <script src="./scripts/buttons.js"></script>
+        <script src="./scripts/browser.js"></script>
+        <script src="./scripts/pageSwitches.js"></script>
+        <script src="./scripts/share.js"></script>
+        <script src="./scripts/stats.js"></script>
         
     </body>
 </html>
