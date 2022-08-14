@@ -73,7 +73,6 @@ function updateAll()
 {
     updateHints();
     updateScore();
-    updateFound();
     updateLettersInBoard();
 }
 
@@ -582,7 +581,7 @@ function updateScore()
 
 // FOUND WORDS LIST
 
-function updateFound(previewResult = false)
+function updateFound()
 {
     let headerBox = document.getElementById("found-header");
     let textBox = document.getElementById("found-words");
@@ -732,7 +731,7 @@ function toggleFoundWordsPopUp()
     }
     else
     {
-        updateFound(true);
+        updateFound();
         foundWords.style.display = "block";
     }
     foundWordsPopUp = !foundWordsPopUp;
