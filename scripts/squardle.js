@@ -73,6 +73,7 @@ function updateAll()
 {
     updateHints();
     updateScore();
+    updateFound();
     updateLettersInBoard();
 }
 
@@ -731,7 +732,6 @@ function toggleFoundWordsPopUp()
     }
     else
     {
-        updateFound();
         foundWords.style.display = "block";
     }
     foundWordsPopUp = !foundWordsPopUp;

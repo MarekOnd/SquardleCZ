@@ -117,6 +117,7 @@ function createSquardleTile(sq, classToAdd, index)
         seeResultButton.addEventListener("click",(e)=>{
             squardleBrowserTileClick(classToAdd,index);
             board.classList.add("disabled");
+            updateFound();
             })
         seeResultButton.title = "Podívat se na výsledek";
         browserTile.appendChild(seeResultButton)
