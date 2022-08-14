@@ -584,6 +584,10 @@ function updateScore()
 
 function updateFound()
 {
+    //Alternatives: http://www.google.com/search?q=   https://prirucka.ujc.cas.cz/?id=
+    const DICTIONARY_SEARCH_URL = "https://cs.wiktionary.org/wiki/"
+    
+
     let headerBox = document.getElementById("found-header");
     let textBox = document.getElementById("found-words");
     // deletes subdivisions
@@ -624,18 +628,14 @@ function updateFound()
                     let w;
                     if(element.found === true)// found
                     {
-                        w = fastAppendText(element.str, paragraph, "foundWord-words")
+                        w = fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL + element.str,true)
                         
                     }
                     else // show 
                     {
-                        w = fastAppendText(element.str, paragraph,"foundWord-words")
+                        w = fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL + element.str,true)
                         w.classList.add("notFound")
                     }
-                    w.addEventListener("click",(w)=>{
-                        url ='http://www.google.com/search?q=' + element.str;
-                        window.open(url,'_blank');
-                    })
                     w.title = "Najít význam ve slovníku";
                 }
             }
@@ -645,11 +645,7 @@ function updateFound()
                     const element = iLongWords[i];
                     if(element.found === true)// found
                     {
-                        let w = fastAppendText(element.str, paragraph, "foundWord-words")
-                        w.addEventListener("click",(w)=>{
-                            url ='http://www.google.com/search?q=' + element.str;
-                            window.open(url,'_blank');
-                        })
+                        let w = fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL + element.str,true)
                         w.title = "Najít význam ve slovníku";
                     }
                     else // hint
@@ -678,7 +674,7 @@ function updateFound()
                     const element = iLongWords[i];
                     if(element.found === true)
                     {
-                        fastAppendText(element.str, paragraph, "foundWord-words")
+                        fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL + element.str,true)
                         missing--;
                     }
                 }
@@ -695,11 +691,7 @@ function updateFound()
     fastAppendText("Bonusová slova:" + "(" + bonusWordsFound.length + ")", paragraph,"foundWord-letterHeader")
     bonusWordsFound.sort();
     for (let i = 0; i < bonusWordsFound.length; i++) {
-        let w = fastAppendText(bonusWordsFound[i], paragraph,"foundWord-words")
-        w.addEventListener("click",(w)=>{
-            url ='http://www.google.com/search?q=' + bonusWordsFound[i];
-            window.open(url,'_blank');
-        })
+        let w = fastHyperlink(bonusWordsFound[i], paragraph, "foundWord-words",DICTIONARY_SEARCH_URL + element.str,true)
         w.title = "Najít význam ve slovníku";
     }
 
@@ -848,6 +840,20 @@ function fastAppendText(text,where,className="")
     }
     where.appendChild(textDiv);
     return textDiv;
+}
+
+function fastHyperlink(text,where,className="",link,newWindow=true)
+{
+    let linkEl =document.createElement("a")
+    linkEl.textContent = text;
+    if(className!=="")
+    {
+        linkEl.classList.add(className)
+    }
+    linkEl.href = link
+    linkEl.target = newWindow ? "_blank" : "_self"
+    where.appendChild(linkEl);
+    return linkEl;
 }
 
 function howManyXLongWords(x,words)

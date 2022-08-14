@@ -224,6 +224,8 @@
     width: fit-content;
     height: fit-content;
 
+    color: white;
+
     font-size: var(--found-fontSize);
     line-height: var(--found-fontSize);
 
@@ -233,6 +235,9 @@
     border-radius: 5px;
 
     display: inline-block;
+}
+.foundWord-words:visited{
+    color:rgb(202, 202, 202);
 }
 
 .notFound{
