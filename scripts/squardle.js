@@ -690,9 +690,10 @@ function updateFound()
     }
     fastAppendText("Bonusová slova:" + "(" + bonusWordsFound.length + ")", paragraph,"foundWord-letterHeader")
     bonusWordsFound.sort();
+    console.log(bonusWordsFound)
     for (let i = 0; i < bonusWordsFound.length; i++) {
-        const element = bonusWordsFound[0];
-        let w = fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL + element.str,true)
+        const element = bonusWordsFound[i];
+        let w = fastHyperlink(element, paragraph, "foundWord-words", DICTIONARY_SEARCH_URL + element, true)
         w.title = "Najít význam ve slovníku";
     }
 
