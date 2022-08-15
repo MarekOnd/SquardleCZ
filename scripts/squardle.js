@@ -943,8 +943,3 @@ function win()
     }
     
 }
-
-
-
-
-// calls starting program function
