@@ -152,7 +152,7 @@ async function getFile(url)
 }
 async function getJson(url){
     const obj = await getFile(url);
-    if(obj == false)
+    if(obj === false)
     {
         return false;
     }
