@@ -9,7 +9,6 @@ let bonusWords = [];
 async function loadData()
 {
     let fil = document.getElementById("input").files[0];
-    console.log()
     if(fil === null || fil === undefined)
     {
         alert("Nebyl vložen soubor");
@@ -97,8 +96,10 @@ function updateWords()
         const text = createWord(S.letters, S.wordsToFind[legitWords[i]]);
         let word = document.createElement("button")
         word.textContent = text
-        word.className = "word"
-        word.addEventListener("click",()=>(moveWord(JSON.parse(JSON.stringify(legitWords[i])))))
+        word.classList.add("word");
+        word.classList.add("wordToFind");
+        
+        word.addEventListener("click",()=>{moveWord(JSON.parse(JSON.stringify(legitWords[i])));updateWords()})
         legitWords_place.appendChild(word)
     }
     let bonusWords_place = document.getElementById("bonusWords");
@@ -107,8 +108,9 @@ function updateWords()
         const text = createWord(S.letters, S.wordsToFind[bonusWords[i]]);
         let word = document.createElement("button")
         word.textContent = text
-        word.className = "word" 
-        word.addEventListener("click",()=>(moveWord(JSON.parse(JSON.stringify(bonusWords[i])))))
+        word.classList.add("word");
+        word.classList.add("bonusWord");
+        word.addEventListener("click",()=>{moveWord(JSON.parse(JSON.stringify(bonusWords[i])));updateWords()})
         bonusWords_place.appendChild(word)
     }
 
@@ -162,31 +164,29 @@ function downloadSquardle()
 
 function exportSquardle()
 {
-    
+    expSq = new Squardle()
 
     // name
-    S.name = null;
-    S.name = document.getElementById("name").value;
+    expSq.name = document.getElementById("name").value;
     // author
-    S.author = null;
-    S.author = document.getElementById("author").value;
+    expSq.author = document.getElementById("author").value;
     // difficulty
-    S.difficulty = document.getElementById("difficulty").value;
+    expSq.difficulty = document.getElementById("difficulty").value;
     // limited time
     if(document.getElementById("limitedTime").checked)
     {
-        S.limitedTime = true;
-        S.startDate = document.getElementById("startDate").value;
-        S.endDate = new Date(
+        expSq.limitedTime = true;
+        expSq.startDate = document.getElementById("startDate").value;
+        expSq.endDate = new Date(
                         new Date(document.getElementById("startDate").value).getTime() + 
                         document.getElementById("howManyDays").value*1000*24*60*60 +
                         parseFloat(document.getElementById("howManyHours").value.split(':')[0])*3600*1000 +
                         parseFloat(document.getElementById("howManyHours").value.split(':')[1])*1000*60
-                    )            
+                    )       
     }
     else
     {
-        S.limitedTime = false;
+        expSq.limitedTime = false;
     }
     // words
     let newWordsToFind = [];
@@ -194,20 +194,20 @@ function exportSquardle()
         const index = legitWords[i];
         newWordsToFind.push(S.wordsToFind[index]);
     }
-    S.wordsToFind = newWordsToFind;
+    expSq.wordsToFind = newWordsToFind;
+
     if(document.getElementById("useCustomHints").checked === true){
-        S.hints = {
+        expSq.hints = {
             hintTimesStarting:document.getElementById("hintTimesStarting").value/100||0,
             hintTimesIncluded:document.getElementById("hintTimesIncluded").value/100||0,
             hintRandomLetters:document.getElementById("hintRandomLetters").value/100||0,    
         }
     }
-    console.log(S.limitedTime)
-    if(!check(S.name, "Nebylo zadáno jméno") ||
-        !check(S.author, "Nebyl zadán autor") ||
-        !check(S.difficulty, "Nebyla zadána obtížnost") ||
+    if(!check(expSq.name, "Nebylo zadáno jméno") ||
+        !check(expSq.author, "Nebyl zadán autor") ||
+        !check(expSq.difficulty, "Nebyla zadána obtížnost") ||
         (
-            S.limitedTime && (!check(S.startDate, "Nebylo zadáno datum začátku") || !check(S.endDate, "Nebylo zadáno datum konce")) 
+            expSq.limitedTime && (!check(S.startDate, "Nebylo zadáno datum začátku") || !check(S.endDate, "Nebylo zadáno datum konce")) 
         )
         )
     {
@@ -215,7 +215,7 @@ function exportSquardle()
     }
     // outputs formatted squardle
     // the formatting does increase the size of the file a little bit
-    return JSON.stringify(S,null,"\t");
+    return JSON.stringify(expSq);
 }
 
 

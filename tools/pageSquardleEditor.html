@@ -21,12 +21,17 @@
         <div id = "goto-index">
             <a href="../">Zpátky</a>
         </div>
-        <div id="squardleLoader">
-            Jaký squardle chceš otevřít: <input type="file" id="input" accept=".json"><button onclick="loadData()" class="button-1">Otevři</button><br>
+        <div id="menu">
+            <button id="toGenerator" onclick="openTab('squardleGenerator')" class="button-1">Generátor</button>
+            <button id="toEditor" onclick="openTab('squardleEditor')" class="button-1">Editor a export</button>
         </div>
+        
         <!---------------------------------------------EDITOR------------------------------------------------------>
         <div id="squardleEditor">
-            <fieldset>
+            <div id="squardleLoader">
+                Jaký squardle chceš otevřít: <input type="file" id="input" accept=".json"><button onclick="loadData()" class="button-1">Otevři</button><br>
+            </div>
+            <fieldset class="detailsSection">
                 <legend>
                     Základní informace 📋
                 </legend>
@@ -50,7 +55,7 @@
                 </label><br>
             </fieldset>
             <!-- Time stuff -->
-            <fieldset>
+            <fieldset class="detailsSection">
                 <legend>
                     Omezený čas 🕐
                 </legend>
@@ -83,7 +88,7 @@
 
             </fieldset>
             
-            <fieldset>
+            <fieldset class="detailsSection">
                 <legend>
                     Vlastní pozice hintů 💡
                 </legend>
@@ -114,17 +119,18 @@
                     </label><br>
                 </details>
             </fieldset>
-
-            
-                
-                
-
             <label>
 
             </label><br>
             <div id="board"></div>
-            <div id="wordsToFind"></div>
-            <div id="bonusWords"></div>
+            <div id="flipMoveBox">
+
+            </div>
+            <div id="wordsMoveBox">
+                <div id="wordsToFind"></div>
+                <div id="bonusWords"></div>
+            </div>
+            
             <div id="output">
                 <button id="output-button" onclick="outputSquardle()" class="button-1">Exportuj</button><br>
                 <textarea name="" id="output-text" readonly></textarea>
@@ -191,6 +197,7 @@
         <script src="pageFunctions.js"></script>
         <script src="editorExporter.js"></script>
         <script src="pageSquardleEditor.js" ></script>
+        <script src="menu.js"></script>
         
     </body>
 </html>
