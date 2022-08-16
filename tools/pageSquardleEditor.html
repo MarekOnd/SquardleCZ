@@ -22,9 +22,8 @@
             <a href="../">Zpátky</a>
         </div>
         <div id="menu">
-            <button id="toEditor" onclick="openTab('squardleEditor')" class="button-1">Editor a export</button>
-            <button id="toGenerator" onclick="openTab('squardleGenerator')" class="button-1">Generátor</button>
-            
+            <button id="toEditor" onclick="openTab('squardleEditor',this)" class="button-1">Editor a export</button>
+            <button id="toGenerator" onclick="openTab('squardleGenerator',this)" class="button-1">Generátor</button>
         </div>
         <div id="content">
             <!---------------------------------------------EDITOR------------------------------------------------------>
@@ -64,7 +63,7 @@
                         <summary>
                             <label>
                                 Použít omezený čas:
-                                <input type="checkbox" id="limitedTime" checked="false">
+                                <input type="checkbox" id="limitedTime">
                             </label>
                         </summary>
 
@@ -98,7 +97,7 @@
 
                             <label>
                                 Použít vlastní pozici hintů:
-                                <input type="checkbox" id="useCustomHints" checked="false">
+                                <input type="checkbox" id="useCustomHints">
                             </label><br>
                         </summary>
                         <!-- Hint stuff -->
@@ -127,6 +126,8 @@
                 <div id="flipMoveBox">
 
                 </div>
+                <div>Normálních slov:<span id="wordCount"></span></div>
+                <div>Bonusových slov:<span id="bonusWordCount"></span></div>
                 <div id="wordsMoveBox">
                     <div id="wordsToFind"></div>
                     <div id="bonusWords"></div>
@@ -154,7 +155,8 @@
                     <!-- Velikost: <textarea  rows="1"></textarea><br> -->
                     <div id="boardInput">
 
-                    </div><br>
+                    </div>
+                    <br>
                     <label>
                         Minimální délka slova:
                         <input id="minWordSize" type="number" min="1" max="12">
@@ -181,6 +183,7 @@
                 </div><br>
                 <button id="enter" onclick="createSquardleFromParameters()" class="button-1">Vytvoř squardle</button><br>
                 <textarea id="log" readonly></textarea>
+                <br>
                 <button onclick="saveSettings()" id="saveButton" class="button-1">
                     Uložit aktuální nastavení
                 </button>

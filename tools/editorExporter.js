@@ -42,12 +42,27 @@ function applySquardleToExporter()
 
 
 // BOARD PREVIEW_____________________________________________________________________________
+function letterUsed(x,y,sq){
+    let used = false
+    //TODO: make more efficient (you can break the loop)
+    sq.wordsToFind.map((positions)=>{
+        positions.positions.map((pos)=>{
+            if(pos.x === x && pos.y === y){
+                used = true
+            }
+        })
+    })
+    return used
+}
+
 function createBoard()
 {
     deleteBoard();
-    let b = document.getElementById("board");
+    let board = document.getElementById("board");
     let table = document.createElement("table");
     table.className = "board_table"
+
+    let someLetterNotUsed = false
 
     for (let i = 0; i < S.letters.length; i++) {
         const row = S.letters[i];
@@ -61,14 +76,22 @@ function createBoard()
             if(letter === "0")
             {
                 l.style.visibility = "hidden"
+            }else if(!letterUsed(i,y,S)){
+                someLetterNotUsed = true
+                // l.style.filter = "brightness(0.5)"
+                l.style.background = "darkred"
             }
             r.appendChild(l)
             
         }
         table.appendChild(r)
     }
-    b.appendChild(table)
+    board.appendChild(table)
 
+    //TODO: better error message (like in the page not alert)
+    if(someLetterNotUsed){
+        alert("Nějáké písmena nejsou použity (zvýrazněny červeně)")
+    }
 }
 
 function deleteBoard()
@@ -113,6 +136,12 @@ function updateWords()
         word.addEventListener("click",()=>{moveWord(JSON.parse(JSON.stringify(bonusWords[i])));updateWords()})
         bonusWords_place.appendChild(word)
     }
+
+    let wordCount_place = document.getElementById("wordCount")
+    wordCount_place.textContent = legitWords.length
+
+    let bonusWordCount_place = document.getElementById("bonusWordCount")
+    bonusWordCount_place.textContent = bonusWords.length
 
 }
 
@@ -164,7 +193,8 @@ function downloadSquardle()
 
 function exportSquardle()
 {
-    expSq = new Squardle()
+    expSq = newInst(S)
+
 
     // name
     expSq.name = document.getElementById("name").value;
