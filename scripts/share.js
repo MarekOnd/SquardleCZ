@@ -1,8 +1,3 @@
-
-const shareData = {
-    text: 'Learn web development on MDN!'
-  }
-
 async function openShareWindow(sq)
 {
     // console.log("klik")

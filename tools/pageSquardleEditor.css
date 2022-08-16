@@ -83,11 +83,11 @@ textarea{
     -webkit-user-select: none;
     border: none;
     display: inline-block;
-  }
+}
   
 
 .button-1:hover {
-  background-image: linear-gradient(-180deg, #c9311d 0%, #9c3617 100%);
+    background-image: linear-gradient(-180deg, #c9311d 0%, #9c3617 100%);
 }
 
 
@@ -99,9 +99,6 @@ textarea{
     font-size: 40px;
     z-index: 10;
     text-align: center;
-
-    
-
 }
 #goto-index{
     position: absolute;
@@ -115,14 +112,11 @@ textarea{
     border-radius: 5px;
     z-index: 20;
     text-decoration: none;
-    
-
 }
 
 a:visited{
     color: white;
     text-decoration: none;
-    
 }
 a:hover{
     color: #37AEE2;
@@ -145,9 +139,9 @@ a:hover{
     top: 0%;
 }
 #output-text{
-    width: 200px;
-    height: 100px;
-    user-select: all;
+    width: 70%;
+    height: 130px;
+    tab-size: 2;
 }
 
 .row{
@@ -195,7 +189,6 @@ a:hover{
     line-height: 50px;
     align-content: center;
     box-sizing: border-box;
-    
 }
 
 .boardRow{
@@ -205,8 +198,7 @@ a:hover{
 /* LOG */
 #log{
     width: 80%;
-    height: 30%;
-    
+    height: 30%;   
 }
 
 

@@ -173,7 +173,7 @@ function exportSquardle()
     // difficulty
     S.difficulty = document.getElementById("difficulty").value;
     // limited time
-    if(document.getElementById("limitedTime").checked === true)
+    if(document.getElementById("limitedTime").checked)
     {
         S.limitedTime = true;
         S.startDate = document.getElementById("startDate").value;
@@ -194,8 +194,14 @@ function exportSquardle()
         const index = legitWords[i];
         newWordsToFind.push(S.wordsToFind[index]);
     }
-    let oldWordsBackup = S.wordsToFind;// creates backup
     S.wordsToFind = newWordsToFind;
+    if(document.getElementById("useCustomHints").checked === true){
+        S.hints = {
+            hintTimesStarting:document.getElementById("hintTimesStarting").value/100||0,
+            hintTimesIncluded:document.getElementById("hintTimesIncluded").value/100||0,
+            hintRandomLetters:document.getElementById("hintRandomLetters").value/100||0,    
+        }
+    }
     console.log(S.limitedTime)
     if(!check(S.name, "Nebylo zadáno jméno") ||
         !check(S.author, "Nebyl zadán autor") ||
@@ -207,14 +213,16 @@ function exportSquardle()
     {
         return false;
     }
-    return JSON.stringify(S);// outputs squardle
+    // outputs formatted squardle
+    // the formatting does increase the size of the file a little bit
+    return JSON.stringify(S,null,"\t");
 }
 
 
 
 function check(variable, message)
 {
-    if(variable === null || variable === undefined || variable === "")
+    if(!variable)
     {
         alert(message);
         return false;
