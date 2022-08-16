@@ -38,14 +38,21 @@ body{
     margin: 5px;
     border: #fdfdfd solid 1px;
 
+    flex: 1;
+
     
+}
+
+#content{
+    resize: both;
+    display: flex;
 }
 #squardleEditor{
     position: relative;
 
 
     padding: 50px;
-    margin: 50px;
+    margin: 10px;
 
     background-color: rgba(80, 175, 175, 0.3);
     border-radius: 10px;
@@ -55,14 +62,16 @@ body{
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 
-    display: block;
+    flex: 1;
+
+
 }
 
 #squardleGenerator{
     position: relative;
 
     padding: 50px;
-    margin: 50px;
+    margin: 10px;
 
 
     background-color: rgba(165, 175, 80, 0.3);
@@ -74,7 +83,9 @@ body{
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 
-    display: none;
+    flex: 1;
+
+ 
     
 }
 

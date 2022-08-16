@@ -22,174 +22,177 @@
             <a href="../">Zpátky</a>
         </div>
         <div id="menu">
-            <button id="toGenerator" onclick="openTab('squardleGenerator')" class="button-1">Generátor</button>
             <button id="toEditor" onclick="openTab('squardleEditor')" class="button-1">Editor a export</button>
-        </div>
-        
-        <!---------------------------------------------EDITOR------------------------------------------------------>
-        <div id="squardleEditor">
-            <div id="squardleLoader">
-                Jaký squardle chceš otevřít: <input type="file" id="input" accept=".json"><button onclick="loadData()" class="button-1">Otevři</button><br>
-            </div>
-            <fieldset class="detailsSection">
-                <legend>
-                    Základní informace 📋
-                </legend>
-                <label>
-                    Jméno:
-                    <input type="text" id="name">
-                </label><br>
-                <label>
-                    Autor:
-                    <textarea id="author" rows="1"></textarea>
-                </label><br>
-                <label>
-                    Obtížnost:
-                    <select id="difficulty">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>   
-                </label><br>
-            </fieldset>
-            <!-- Time stuff -->
-            <fieldset class="detailsSection">
-                <legend>
-                    Omezený čas 🕐
-                </legend>
-                <details>
-                    <summary>
-                        <label>
-                            Použít omezený čas:
-                            <input type="checkbox" id="limitedTime" checked="false">
-                        </label>
-                    </summary>
-
-                    <label>
-                        Kdy se odemkne:
-                            <input type="datetime-local" id="startDate">
-                    </label><br>
-                    <label>
-                        Na kolik dní:
-                        <input type="number" id="howManyDays">
-                    </label><br>
-                    <label>
-                        Na kolik hodin:
-                        <input type="number" id="howManyHours">
-                    </label><br>
-        
-                    <label>
-                        Na kolik minut:
-                        <input type="number" id="howManyMinutes">
-                    </label><br>
-                </details>
-
-            </fieldset>
+            <button id="toGenerator" onclick="openTab('squardleGenerator')" class="button-1">Generátor</button>
             
-            <fieldset class="detailsSection">
-                <legend>
-                    Vlastní pozice hintů 💡
-                </legend>
-                <details>
-                    <summary>
+        </div>
+        <div id="content">
+            <!---------------------------------------------EDITOR------------------------------------------------------>
+            <div id="squardleEditor">
+                <div id="squardleLoader">
+                    Jaký squardle chceš otevřít: <input type="file" id="input" accept=".json"><button onclick="loadData()" class="button-1">Otevři</button><br>
+                </div>
+                <fieldset class="detailsSection">
+                    <legend>
+                        Základní informace 📋
+                    </legend>
+                    <label>
+                        Jméno:
+                        <input type="text" id="name">
+                    </label><br>
+                    <label>
+                        Autor:
+                        <textarea id="author" rows="1"></textarea>
+                    </label><br>
+                    <label>
+                        Obtížnost:
+                        <select id="difficulty">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>   
+                    </label><br>
+                </fieldset>
+                <!-- Time stuff -->
+                <fieldset class="detailsSection">
+                    <legend>
+                        Omezený čas 🕐
+                    </legend>
+                    <details>
+                        <summary>
+                            <label>
+                                Použít omezený čas:
+                                <input type="checkbox" id="limitedTime" checked="false">
+                            </label>
+                        </summary>
 
                         <label>
-                            Použít vlastní pozici hintů:
-                            <input type="checkbox" id="useCustomHints" checked="false">
+                            Kdy se odemkne:
+                                <input type="datetime-local" id="startDate">
                         </label><br>
-                    </summary>
-                    <!-- Hint stuff -->
-
-                    <label>
-                        <strong>Hint 1</strong><br>
-                        Kolik slov s písmenem začínají:
-                            <input type="number" min="0" max="100" id="hintTimesStarting" value="20">%
-                    </label><br>
-                    <label>
-                        <strong>Hint 2</strong><br>
-                        Kolikrát se písmeno objevuje ve slovech:
-                        <input type="number" min="0" max="100" id="hintTimesIncluded"value="40">%
-                    </label><br>
-                    <label>
-                        <strong>Hint 3</strong><br>
-                        Napovědět prvních pár písmen ve slovech:
-                        <input type="number" min="0" max="100" id="hintRandomLetters"value="70">%
-                    </label><br>
-                </details>
-            </fieldset>
-            <label>
-
-            </label><br>
-            <div id="board"></div>
-            <div id="flipMoveBox">
-
-            </div>
-            <div id="wordsMoveBox">
-                <div id="wordsToFind"></div>
-                <div id="bonusWords"></div>
-            </div>
+                        <label>
+                            Na kolik dní:
+                            <input type="number" id="howManyDays">
+                        </label><br>
+                        <label>
+                            Na kolik hodin:
+                            <input type="number" id="howManyHours">
+                        </label><br>
             
-            <div id="output">
-                <button id="output-button" onclick="outputSquardle()" class="button-1">Exportuj</button><br>
-                <textarea name="" id="output-text" readonly></textarea>
-            </div>
-            <label>
-                Jméno souboru:
-                <input type="text" id="fileName">.json
-            </label><br>
-            <button onclick="downloadSquardle()" id="download" class="button-1">Exportuj a stáhni</button>
-        </div>
-        <!---------------------------------------------GENERATOR------------------------------------------------------>
-        <div id="squardleGenerator">
-            <div id="parameters">
+                        <label>
+                            Na kolik minut:
+                            <input type="number" id="howManyMinutes">
+                        </label><br>
+                    </details>
 
-                <label>
-                    Velikost:
-                    <input id="size" type="range" min="1" max="6" onchange="updateBoardInputMenu(getSettings())">
-                </label><br>
+                </fieldset>
                 
-                <!-- Velikost: <textarea  rows="1"></textarea><br> -->
-                <div id="boardInput">
+                <fieldset class="detailsSection">
+                    <legend>
+                        Vlastní pozice hintů 💡
+                    </legend>
+                    <details>
+                        <summary>
+
+                            <label>
+                                Použít vlastní pozici hintů:
+                                <input type="checkbox" id="useCustomHints" checked="false">
+                            </label><br>
+                        </summary>
+                        <!-- Hint stuff -->
+
+                        <label>
+                            <strong>Hint 1</strong><br>
+                            Kolik slov s písmenem začínají:
+                                <input type="number" min="0" max="100" id="hintTimesStarting" value="20">%
+                        </label><br>
+                        <label>
+                            <strong>Hint 2</strong><br>
+                            Kolikrát se písmeno objevuje ve slovech:
+                            <input type="number" min="0" max="100" id="hintTimesIncluded"value="40">%
+                        </label><br>
+                        <label>
+                            <strong>Hint 3</strong><br>
+                            Napovědět prvních pár písmen ve slovech:
+                            <input type="number" min="0" max="100" id="hintRandomLetters"value="70">%
+                        </label><br>
+                    </details>
+                </fieldset>
+                <label>
+
+                </label><br>
+                <div id="board"></div>
+                <div id="flipMoveBox">
+
+                </div>
+                <div id="wordsMoveBox">
+                    <div id="wordsToFind"></div>
+                    <div id="bonusWords"></div>
+                </div>
+                
+                <div id="output">
+                    <button id="output-button" onclick="outputSquardle()" class="button-1">Exportuj</button><br>
+                    <textarea name="" id="output-text" readonly></textarea>
+                </div>
+                <label>
+                    Jméno souboru:
+                    <input type="text" id="fileName">.json
+                </label><br>
+                <button onclick="downloadSquardle()" id="download" class="button-1">Exportuj a stáhni</button>
+            </div>
+            <!---------------------------------------------GENERATOR------------------------------------------------------>
+            <div id="squardleGenerator">
+                <div id="parameters">
+
+                    <label>
+                        Velikost:
+                        <input id="size" type="range" min="1" max="6" onchange="updateBoardInputMenu(getSettings())">
+                    </label><br>
+                    
+                    <!-- Velikost: <textarea  rows="1"></textarea><br> -->
+                    <div id="boardInput">
+
+                    </div><br>
+                    <label>
+                        Minimální délka slova:
+                        <input id="minWordSize" type="number" min="1" max="12">
+                    </label><br>
+                    <label>
+                        Maximální délka slova:
+                        <input id="maxWordSize" type="number" min="1" max="12">
+                    </label><br>
+                    <label>
+                        Počet slov k výberu (zadáním 0 se vyberou náhodná)
+                        <input id="numWordsToInput" type="number" rows="1" onchange="updateWordInputMenu(getSettings())">
+                    </label><br>
+                    <div id="wordsToHide">
+
+                    </div><br>
+                    <label>
+                        Výběr knihovny slov:
+                        <select id="libraryInput">
+                            <option value="czech">Česká</option>
+                            <option value="english">Anglická</option>
+                        </select>
+                    </label>
 
                 </div><br>
-                <label>
-                    Minimální délka slova:
-                    <input id="minWordSize" type="number" min="1" max="12">
-                </label><br>
-                <label>
-                    Maximální délka slova:
-                    <input id="maxWordSize" type="number" min="1" max="12">
-                </label><br>
-                <label>
-                    Počet slov k výberu (zadáním 0 se vyberou náhodná)
-                    <input id="numWordsToInput" type="number" rows="1" onchange="updateWordInputMenu(getSettings())">
-                </label><br>
-                <div id="wordsToHide">
-
-                </div><br>
-                <label>
-                    Výběr knihovny slov:
-                    <select id="libraryInput">
-                        <option value="czech">Česká</option>
-                        <option value="english">Anglická</option>
-                    </select>
-                </label>
-
-            </div><br>
-            <button id="enter" onclick="createSquardleFromParameters()" class="button-1">Vytvoř squardle</button><br>
-            <textarea id="log" readonly></textarea>
-            <button onclick="saveSettings()" id="saveButton" class="button-1">
-                Uložit aktuální nastavení
-            </button>
-            <button onclick="resetDefaultSettings()" id="resetButton" class="button-1">
-                Resetovat do původního nastavení
-            </button>
-            <button onclick="loadSettingsFromStorage()" id="resetButton" class="button-1">
-                Načíst uložené nastavení
-            </button>
+                <button id="enter" onclick="createSquardleFromParameters()" class="button-1">Vytvoř squardle</button><br>
+                <textarea id="log" readonly></textarea>
+                <button onclick="saveSettings()" id="saveButton" class="button-1">
+                    Uložit aktuální nastavení
+                </button>
+                <button onclick="resetDefaultSettings()" id="resetButton" class="button-1">
+                    Resetovat do původního nastavení
+                </button>
+                <button onclick="loadSettingsFromStorage()" id="resetButton" class="button-1">
+                    Načíst uložené nastavení
+                </button>
+            </div>
         </div>
+        
 
         
         
