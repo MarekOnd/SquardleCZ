@@ -121,7 +121,7 @@ let allSaves;
 function loadAllSaves()
 {
     allSaves = JSON.parse(localStorage.getItem("allSaves"));
-    if(allSaves === null)
+    if(!allSaves)
     {
         allSaves = [];
         localStorage.setItem("allSaves",JSON.stringify(allSaves));

@@ -26,45 +26,95 @@
         </div>
         <!---------------------------------------------EDITOR------------------------------------------------------>
         <div id="squardleEditor">
-            <label>
-                Jméno:
-                <input type="text" id="name">
-            </label><br>
-            <label>
-                Autor:
-                <textarea id="author" rows="1"></textarea>
-            </label><br>
-            <label>
-                Obtížnost:
-                <select id="difficulty">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>   
-            </label><br>
-            <label>
-                Omezený čas:
-                <input type="checkbox" id="limitedTime" >
-            </label><br>
-            <label>
-                Kdy se odemkne:
-                    <input type="datetime-local" id="startDate">
-            </label><br>
-            <label>
-                Na kolik dní:
-                <input type="number" id="howManyDays">
-            </label><br>
-            <label>
-                Na kolik hodin:
-                <input type="number" id="howManyHours">
-            </label><br>
+            <fieldset>
+                <legend>
+                    Základní informace 📋
+                </legend>
+                <label>
+                    Jméno:
+                    <input type="text" id="name">
+                </label><br>
+                <label>
+                    Autor:
+                    <textarea id="author" rows="1"></textarea>
+                </label><br>
+                <label>
+                    Obtížnost:
+                    <select id="difficulty">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>   
+                </label><br>
+            </fieldset>
+            <!-- Time stuff -->
+            <fieldset>
+                <legend>
+                    Omezený čas 🕐
+                </legend>
+                <details>
+                    <summary>
+                        <label>
+                            Použít omezený čas:
+                            <input type="checkbox" id="limitedTime" checked="false">
+                        </label>
+                    </summary>
 
-            <label>
-                Na kolik minut:
-                <input type="number" id="howManyMinutes">
-            </label><br>
+                    <label>
+                        Kdy se odemkne:
+                            <input type="datetime-local" id="startDate">
+                    </label><br>
+                    <label>
+                        Na kolik dní:
+                        <input type="number" id="howManyDays">
+                    </label><br>
+                    <label>
+                        Na kolik hodin:
+                        <input type="number" id="howManyHours">
+                    </label><br>
+        
+                    <label>
+                        Na kolik minut:
+                        <input type="number" id="howManyMinutes">
+                    </label><br>
+                </details>
+
+            </fieldset>
+            
+            <fieldset>
+                <legend>
+                    Vlastní pozice hintů 💡
+                </legend>
+                <details>
+                    <summary>
+
+                        <label>
+                            Použít vlastní pozici hintů:
+                            <input type="checkbox" id="useCustomHints" checked="false">
+                        </label><br>
+                    </summary>
+                    <!-- Hint stuff -->
+
+                    <label>
+                        <strong>Hint 1</strong><br>
+                        Kolik slov s písmenem začínají:
+                            <input type="number" min="0" max="100" id="hintTimesStarting" value="20">%
+                    </label><br>
+                    <label>
+                        <strong>Hint 2</strong><br>
+                        Kolikrát se písmeno objevuje ve slovech:
+                        <input type="number" min="0" max="100" id="hintTimesIncluded"value="40">%
+                    </label><br>
+                    <label>
+                        <strong>Hint 3</strong><br>
+                        Napovědět prvních pár písmen ve slovech:
+                        <input type="number" min="0" max="100" id="hintRandomLetters"value="70">%
+                    </label><br>
+                </details>
+            </fieldset>
+
             
                 
                 
@@ -77,7 +127,7 @@
             <div id="bonusWords"></div>
             <div id="output">
                 <button id="output-button" onclick="outputSquardle()" class="button-1">Exportuj</button><br>
-                <textarea name="" id="output-text"></textarea>
+                <textarea name="" id="output-text" readonly></textarea>
             </div>
             <label>
                 Jméno souboru:
