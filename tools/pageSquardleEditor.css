@@ -1,12 +1,10 @@
 
 body{
-    user-select: none;
     background-image: url(../images/techno.jpg);
     background-size: 100%;
 
     color: white;
     font-family: 'Roboto', sans-serif;
-
     overflow: auto;
 }
 
@@ -37,7 +35,7 @@ body{
 
     padding: 5px;
     margin: 5px;
-    border: #fdfdfd solid 1px;
+    border: 2px solid #fdfdfd ;
 
     flex: 1;  
 }
@@ -51,11 +49,13 @@ body{
     position: relative;
 
     resize: horizontal;
+    min-width: 20%;
+
 
     padding: 5px 15px;
     margin: 10px;
 
-    background-color: rgba(80, 175, 175, 0.3);
+    background-color: rgba(40, 104, 104, 0.5);
     border-radius: 10px;
     border: solid 5px gray;
 
@@ -69,9 +69,10 @@ body{
     overflow: auto;
     padding: 5px 15px;
     margin: 10px;
+    min-width: 20%;
 
 
-    background-color: rgba(165, 175, 80, 0.3);
+    background-color: rgba(96, 102, 38, 0.5);
     border-radius: 10px;
     border: solid 5px gray;
     z-index: 0;
@@ -87,6 +88,8 @@ body{
 
 .detailsSection{
     width: fit-content;
+    min-width: 50%;
+    border: 2px solid white;
 }
 
 
@@ -99,9 +102,33 @@ textarea{
     background-image: linear-gradient(-180deg, #ffffff 0%, #d8d8d8 100%);
 }
 
+input[type="text"],input[type="number"]{
+    margin: 4px 0;
+    padding: 4px 8px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 4px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+input[type="text"]:focus,input[type="number"]:focus{
+    color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
 
+legend{
+    font-weight: bold;
 
-.button-1{
+}
+/* .button-1{
     background-image: linear-gradient(-180deg, #e25937 0%, #c81e1e 100%);
     border-radius: .3rem;
     box-sizing: border-box;
@@ -116,12 +143,58 @@ textarea{
     -webkit-user-select: none;
     border: none;
     display: inline-block;
+} */
+/* COPIED BUTTONS AND STUFF */
+.button-tab{
+    font-size: 1.3rem;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 0 30px;
+    border-radius: 4px;
+    color: #fff;
+    background: #6200ee;
+    line-height: 1.15;
+    height: 36px;
+    word-spacing: 0px;
+    letter-spacing: .0892857143em;
+    min-width: 200px;
+    border: none;
+    text-align: center;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-  
+.button-tab:hover {
+    background: rgb(98, 0, 238);
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+}
 
-.button-1:hover {
-    background-image: linear-gradient(-180deg, #c9311d 0%, #9c3617 100%);
+.button-main{
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 3px;
+    padding: 8px 20px;
+    margin: 2px;
+    border: 0;
+    color: #fff;
+    background: #d64e2b;
+    line-height: 1.15;
+    font-size: 16px;
+
+
+ }   
+.button-main:hover {
+    transition: all .1s ease;
+    box-shadow: 0 0 0 0 #fff, 0 0 0 2.5px #d62b5d;
 }
+
+
+/* .button-1:hover {
+    background-image: linear-gradient(-180deg, #c9311d 0%, #9c3617 100%);
+} */
 
 
 
@@ -129,22 +202,33 @@ textarea{
 #header{
     position: relative;
     top: -5px;
-    font-size: 40px;
+    font-size: 3rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    
     z-index: 10;
     text-align: center;
+    margin: 3px 0;
 }
 #goto-index{
     position: absolute;
     top: 0px;
     left: 0px;
-    background-color: rgb(27, 6, 18);
-    font-size: 28px;
+    /* background-color: rgb(27, 6, 18); */
+    background-color: transparent;
+    font-size: 50px;
     margin: 5px;
-    border: 1px solid black;
-    padding: 5px;
+    /* border: 1px solid black; */
+    padding: 10px;
     border-radius: 5px;
     z-index: 20;
-    text-decoration: none;
+    transition: transform 0.1s ease-out;
+
+}
+#goto-index:hover{
+    transform: scale(1.1);
+}
+#goto-index:active{
+    transform: scale(0.9);
 }
 
 a:visited{
@@ -209,11 +293,13 @@ a:hover{
 }
 
 /* LOG */
-#log{
+.output-log{
     width: 80%;
     height: 30%;
     color: #dcdfe4;
     background: #282c34;
+    border: 2px grey solid ;
+    margin: 10px 0;
 }
 
 .word{
@@ -226,7 +312,6 @@ a:hover{
     font-size: 1rem;
     cursor: ew-resize;
 
-    border-radius: 6px;
     border: 2px black solid;
 
     flex: 1;
@@ -234,20 +319,45 @@ a:hover{
 
 }
 
-#wordsToFind .word{
-    background-color: rgb(11, 212, 11); 
+
+.word {
+    font-size: 20px;
+    color: white;
+    border-radius: 7px;
+    box-shadow: 0 7px 0px #186d29;
+    display: inline-block;
+    transition: all .2s;
+    position: relative;
+    padding: 5px 7px;
+    position: relative;
+    top: 0;
+    margin:5px 2px;
+    transition: all .2s;
 }
-#bonusWords .word{
-    background-color: rgb(235, 235, 35);
+  
+.word:active {
+    top: 3px;
+    box-shadow: 0 2px 0px #387796;
 }
 
-.word:hover{
+#wordsToFind .word{
+    background-color: #2bd64e;
+    box-shadow: 0 7px 0px #157c29;
+}
+
+#bonusWords .word{
+    background-color: #d6a42b;
+    box-shadow: 0 7px 0px #816117;
+}
+
+
+/* .word:hover{
     filter: brightness(0.9);
 }
 .word:active{
     filter: brightness(0.8);
     transform: scale(0.96);
-}
+} */
 
 
 /* NEW WORD SELECT SYSTEM */
@@ -255,9 +365,8 @@ a:hover{
     display: flex;
 }
 
-#wordsToFind{
+.word-box{
     position: relative;
-    flex: 1;
     height: fit-content;
 
     padding: 1%;
@@ -265,32 +374,25 @@ a:hover{
 
     line-height: 10px;
 
-    background-color: #163803;
-    border: white solid 2px;
+    border: grey solid 2px;
     border-radius: 2px;
-    
-    flex-wrap: column;
+
+    filter: saturate(0.7);
+
     flex-flow: wrap;
     display: flex;
 }
 
+#wordsToFind{
+    flex: 1;
+
+    background-color: #282c34;
+}
+
 #bonusWords{
-    position: relative;
     flex: 1 100px;
-    height: fit-content;
 
-    padding: 1%;
-    margin: 1%;
-
-    line-height: 10px;
-
-    background-color: #751b0b;
-    border: white solid 2px;
-    border-radius: 2px;
-    
-    flex-wrap: column;
-    flex-flow: wrap;
-    display: flex;
+    background-color: #282c34;
 }
 
 
