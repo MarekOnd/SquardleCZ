@@ -98,6 +98,7 @@ function updateBoardInputMenu(_settings)
                 selected.y = newInst(y);
             })
             inputBox.spellcheck = false;
+            inputBox.autocapitalize = "none";
             if(_settings.inputBoard !== null && i < _settings.inputBoard.length && y < _settings.inputBoard[i].length)
             {
                 inputBox.value = _settings.inputBoard[i][y];
@@ -252,7 +253,7 @@ function loadSettingsFromStorage()
 
 function initialize()
 {
-    loadSettingsFromStorage();
+    loadSettingsFromStorage();    
     document.getElementById("boardInput").addEventListener("keydown",(event)=>{
         switch(event.key)
         {
@@ -273,8 +274,12 @@ function initialize()
                 setSelected(selected.x, selected.y + 1);
                 break;
         }
-        
     })
+
+    //Select editor on page load (called twice so the button changes lol)
+    openTab("squardleEditor",document.getElementById("toEditor"))
+    openTab("squardleGenerator",document.getElementById("toGenerator"))
+    openTab("squardleEditor",document.getElementById("toEditor"))
 
 }
 

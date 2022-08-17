@@ -15,22 +15,33 @@
     
     <body>
         
-        <div id="header">
+        <h1 id="header">
             Editor Squardlů
-        </div>
+        </h1>
         <div id = "goto-index">
-            <a href="../">Zpátky</a>
+            <a href="../" style="text-decoration: none;">◀️</a>
         </div>
         <div id="menu">
-            <button id="toEditor" onclick="openTab('squardleEditor',this)" class="button-1 selected-tab-button">Editor a export</button>
-            <button id="toGenerator" onclick="openTab('squardleGenerator',this)" class="button-1 selected-tab-button">Generátor</button>
+
+            <button id="toEditor" onclick="openTab('squardleEditor',this)" class="button-tab">Editor</button>
+            <button id="toGenerator" onclick="openTab('squardleGenerator',this)" class="button-tab">Generátor</button>
+
         </div>
         <div id="content">
             <!---------------------------------------------EDITOR------------------------------------------------------>
             <div id="squardleEditor">
-                <div id="squardleLoader">
-                    Jaký squardle chceš otevřít: <input type="file" id="input" accept=".json"><button onclick="loadData()" class="button-1">Otevři</button><br>
-                </div>
+                <!-- <div id="squardleLoader"> -->
+                    <fieldset class="detailsSection">
+                        <legend>
+                            Otevřít vlastní 🌐
+                        </legend>
+                        <label>
+                            Jaký squardle chceš otevřít: 
+                            <input type="file" id="input" accept=".json" >
+                            <button onclick="loadData()" class="button-main">Otevři</button><br>
+                        </label>
+                    </fieldset>
+                <!-- </div> -->
                 <fieldset class="detailsSection">
                     <legend>
                         Základní informace 📋
@@ -41,7 +52,7 @@
                     </label><br>
                     <label>
                         Autor:
-                        <textarea id="author" rows="1"></textarea>
+                        <input type="text" id="author" ></input>
                     </label><br>
                     <label>
                         Obtížnost:
@@ -63,7 +74,7 @@
                         <summary>
                             <label>
                                 Použít omezený čas:
-                                <input type="checkbox" id="limitedTime">
+                                <input type="checkbox" id="limitedTime" >
                             </label>
                         </summary>
 
@@ -126,22 +137,22 @@
                 <div id="flipMoveBox">
 
                 </div>
-                <div>Normálních slov:<span id="wordCount"></span></div>
-                <div>Bonusových slov:<span id="bonusWordCount"></span></div>
+                <div>Normálních slov: <span id="wordCount"></span></div>
+                <div>Bonusových slov: <span id="bonusWordCount"></span></div>
                 <div id="wordsMoveBox">
-                    <div id="wordsToFind"></div>
-                    <div id="bonusWords"></div>
+                    <div id="wordsToFind" class="word-box"></div>
+                    <div id="bonusWords"  class="word-box"></div>
                 </div>
                 
                 <div id="output">
-                    <button id="output-button" onclick="outputSquardle()" class="button-1">Exportuj</button><br>
-                    <textarea name="" id="output-text" readonly></textarea>
+                    <button id="output-button" onclick="outputSquardle()" class="button-main">Exportuj</button><br>
+                    <textarea name="" id="output-text" class="output-log" readonly></textarea>
                 </div>
                 <label>
                     Jméno souboru:
                     <input type="text" id="fileName">.json
                 </label><br>
-                <button onclick="downloadSquardle()" id="download" class="button-1">Exportuj a stáhni</button>
+                <button onclick="downloadSquardle()" id="download" class="button-main">Exportuj a stáhni</button>
             </div>
             <!---------------------------------------------GENERATOR------------------------------------------------------>
             <div id="squardleGenerator">
@@ -181,16 +192,16 @@
                     </label>
 
                 </div><br>
-                <button id="enter" onclick="createSquardleFromParameters()" class="button-1">Vytvoř squardle</button><br>
-                <textarea id="log" readonly></textarea>
+                <button id="enter" onclick="createSquardleFromParameters()" class="button-main">Vytvoř squardle</button><br>
+                <textarea id="log" class="output-log" readonly></textarea>
                 <br>
-                <button onclick="saveSettings()" id="saveButton" class="button-1">
+                <button onclick="saveSettings()" id="saveButton" class="button-main">
                     Uložit aktuální nastavení
                 </button>
-                <button onclick="resetDefaultSettings()" id="resetButton" class="button-1">
+                <button onclick="resetDefaultSettings()" id="resetButton" class="button-main">
                     Resetovat do původního nastavení
                 </button>
-                <button onclick="loadSettingsFromStorage()" id="resetButton" class="button-1">
+                <button onclick="loadSettingsFromStorage()" id="resetButton" class="button-main">
                     Načíst uložené nastavení
                 </button>
             </div>
@@ -200,10 +211,11 @@
         
         
         
+        <script src="menu.js"></script>
+        <script src="randomBackground.js"></script>
         <script src="pageFunctions.js"></script>
         <script src="editorExporter.js"></script>
         <script src="pageSquardleEditor.js" ></script>
-        <script src="menu.js"></script>
         
     </body>
 </html>

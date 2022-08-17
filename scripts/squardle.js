@@ -630,7 +630,8 @@ function updateScore()
 function updateFound()
 {
     //Alternatives: http://www.google.com/search?q=   https://prirucka.ujc.cas.cz/?id=
-    const DICTIONARY_SEARCH_URL = "https://cs.wiktionary.org/wiki/"
+    const DICTIONARY_SEARCH_URL_BEGIN = "https://cs.wiktionary.org/w/index.php?search="
+    const DICTIONARY_SEARCH_URL_END = "&title=Speci%C3%A1ln%C3%AD%3AHled%C3%A1n%C3%AD&go=J%C3%ADt+na&ns0=1"
     
 
     let headerBox = document.getElementById("found-header");
@@ -672,12 +673,12 @@ function updateFound()
                     let w;
                     if(element.found === true)// found
                     {
-                        w = fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL + element.str,true)
+                        w = fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL_BEGIN + element.str + DICTIONARY_SEARCH_URL_END,true)
                         
                     }
                     else // show 
                     {
-                        w = fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL + element.str,true)
+                        w = fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL_BEGIN + element.str + DICTIONARY_SEARCH_URL_END,true)
                         w.classList.add("notFound")
                     }
                     w.title = "Najít význam ve slovníku";
@@ -689,7 +690,7 @@ function updateFound()
                     const element = iLongWords[i];
                     if(element.found === true)// found
                     {
-                        let w = fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL + element.str,true)
+                        let w = fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL_BEGIN + element.str + DICTIONARY_SEARCH_URL_END,true)
                         w.title = "Najít význam ve slovníku";
                     }
                     else // hint
@@ -718,7 +719,7 @@ function updateFound()
                     const element = iLongWords[i];
                     if(element.found === true)
                     {
-                        fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL + element.str,true)
+                        fastHyperlink(element.str, paragraph, "foundWord-words",DICTIONARY_SEARCH_URL_BEGIN + element.str + DICTIONARY_SEARCH_URL_END,true)
                         missing--;
                     }
                 }
@@ -736,7 +737,7 @@ function updateFound()
     bonusWordsFound.sort();
     for (let i = 0; i < bonusWordsFound.length; i++) {
         const element = bonusWordsFound[i];
-        let w = fastHyperlink(element, paragraph, "foundWord-words", DICTIONARY_SEARCH_URL + element, true)
+        let w = fastHyperlink(element, paragraph, "foundWord-words", DICTIONARY_SEARCH_URL_BEGIN + element + DICTIONARY_SEARCH_URL_END, true)
         w.title = "Najít význam ve slovníku";
     }
 
