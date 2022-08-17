@@ -135,3 +135,4 @@ function isSquardleActive(sq)
     }
     return false;
 }
+
