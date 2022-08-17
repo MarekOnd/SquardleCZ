@@ -13,7 +13,7 @@
     </head>
     
     
-    <body onload="pageStart()">
+    <body onload="pageStart()" id="body">
         <div id="title">
             <h1 id="main-header">Český squardle</h1>
             <div id="version" onclick="openTab('news')">v0.7</div>
@@ -49,7 +49,7 @@
 
 
         <div id="game" style="display: none;">
-            <!-- <div id = "index-selector-box">
+            <!-- <div id = "index-selector-box">    
                 Výběr:
                 <select onchange="changeIndex()" id="index-selector">
                 </select>
@@ -58,7 +58,11 @@
 
             </div>
             <div id="score" onclick="toggleFoundWordsPopUp()">
-                <div id="score-points"></div>
+                <div id="score-points">
+                    <div id="current-words"></div>
+                    <div id="current-points"></div>
+                    
+                </div>
                 <div id="score-bar-background">
                     <div id="score-bar"></div>
                     <img class="hint" id="hintTimesStarting" src="./images/race_flag.svg">
@@ -99,6 +103,16 @@
         </div>
 
         <div id="news" style="display: none;">
+            <div class="message">
+                <h1>Verze 0.71</h1>
+                <ul>
+                    <li class="editorChange">nový rozvržení stránky editoru</li>
+                    <li class="editorChange">jednodušší úpravy na mobilu</li>
+                    <li class="editorChange">při tvorbě lze upravit, kdy se odemykají hinty</li>
+                    <li class="smallChange pageLook">ukazování právě dostaných bodů</li>
+                    <li class="badNews">poletující smajlíci 🎪 (jen test, nejspíš bude odstraněno)</li>
+                </ul>
+            </div>
             <div class="message">
                 <h1>Verze 0.7</h1>
                 <ul>
@@ -193,8 +207,11 @@
             Zatím nic
         </div>
         <div id="guide" style="display: none;">
-            Zatím nic
+            Zatím nic😊😊😂🤣
         </div>
+
+
+        <div id="particles"></div>
         
         <!--<img src="images/warden.jpg" style="width:100%; filter: brightness(0.1);">-->
         <script src="./scripts/functions.js"></script>
@@ -205,6 +222,7 @@
         <script src="./scripts/pageSwitches.js"></script>
         <script src="./scripts/share.js"></script>
         <script src="./scripts/stats.js"></script>
+        <script src="./scripts/particles.js"></script>
         
     </body>
 </html>

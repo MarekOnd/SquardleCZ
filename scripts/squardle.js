@@ -33,9 +33,26 @@ let board = document.getElementById("board");
 
 let winplayed;
 
+
+let mouseParticleWait = 15;
+let currentWait = 0;
 async function initialize(){
     LIBRARY = await getJson("./libraries/" + libraryName)
-    window.addEventListener("pointerup",()=>{mouseUp()})
+    window.addEventListener("pointerup",(e)=>{mouseUp()})
+    window.addEventListener("pointermove",(e)=>{
+        
+        if(e.buttons > 0)
+        {
+            currentWait++;
+            if(currentWait > mouseParticleWait)
+            {
+                let mouseParticle = new Particle(["😊✌","😂","🤣","✔","✨","🎶","🎂","🎆"], ["mouseParticle1","mouseParticle2"], new Range2D(new Range(e.pageX - 10, e.pageX), new Range(e.pageY - 10)), 0, new Range(900, 1000), "random", new Range(100,200), true);
+                createParticle(mouseParticle)
+                currentWait = 0
+            }
+            
+        }
+    })
 }
 // LOAD DATA
 async function loadSquardle(squardleToLoad)
@@ -297,6 +314,8 @@ function mouseEnter(x,y)
     {
         return;
     }
+    clearTimeout(timeout);
+    clearTimeout(secondTimeout);
     let lastPosition = wordPath.positions[wordPath.positions.length-1];
     if(lastPosition.x === x && lastPosition.y === y)
     {
@@ -486,13 +505,15 @@ function updateWord(word, color = null)
     }
 }
 
-let timeout;
-let secondTimeout;
+
 // FINDING WORDS
 function testMainWord() //<= goes here from mouseUp
 {
     let output = document.getElementById("output")
     let mainWord = createWord(wordPath);
+    clearTimeout(timeout);
+    clearTimeout(secondTimeout);
+
     for (let i = 0; i < S.wordsToFind.length; i++) {
         const element = createWord(S.wordsToFind[i]);
         if(mainWord === element)
@@ -500,7 +521,8 @@ function testMainWord() //<= goes here from mouseUp
             if(wordsFound[i] === true)
             {
                 // already found
-                updateWord("Již nalezeno", "white")
+                updateWord("Již nalezeno", "white");
+                
                 
             }
             else
@@ -508,37 +530,58 @@ function testMainWord() //<= goes here from mouseUp
                 // new
                 wordsFound[i] = true;
                 updateAll();
-                updateWord("Nalezeno slovo", "green")
+                updateWord("Nalezeno slovo", "green");
+                // SHOWING PLUS POINTS AS PARTICLEs
+                // OPTION 1 - MANY PARTICLES
+                // for (let i = 0; i < element.length*element.length; i++) {
+                //     let left = output.getBoundingClientRect().left + output.getBoundingClientRect().width;
+                //     let top = output.getBoundingClientRect().top + output.getBoundingClientRect().height;
+                //     let plusPointsParticle = new Particle("+1", "particle", new Range2D(new Range(left - 20, left + 100), new Range(top - 100,top + 100)), i*10, 1000, "up", new Range(1000,1000+i*100), false);
+                //     createParticle(plusPointsParticle);
+                // }
+                // OPTION 2 - JUST ONE PARTICLE
+                let left = output.getBoundingClientRect().left + output.getBoundingClientRect().width;
+                let top = output.getBoundingClientRect().top + output.getBoundingClientRect().height;
+                let plusPointsParticle = new Particle(["+" + element.length*element.length + "bodů"], ["plusPoints"], new Range2D(new Range(left + 20), new Range(top)), 1000, new Range(1000), "up", new Range(100), true);
+                
+                createParticle(plusPointsParticle);
             }
+            setOutputAnimation();
+            
             return;
         }
     }
+
     if(LIBRARY.includes(mainWord))
     {
         if(mainWord.length < 4)
         {
-            updateWord("Slovo není dostatečně dlouhé", "red")
+            updateWord("Slovo není dostatečně dlouhé", "red");
             return;
         }
         if(!bonusWordsFound.includes(mainWord))
         {
             bonusWordsFound.push(mainWord);
             updateFound();
-            updateWord("Bonusové slovo", "cyan")
+            updateWord("Bonusové slovo", "cyan");
         }
         else
         {
-            updateWord("Již nalezeno (bonusové)", "cyan")
+            updateWord("Již nalezeno (bonusové)", "cyan");
         }
+        setOutputAnimation();
         return;
     }
     updateWord("Není slovo","red");
+    setOutputAnimation();
+}
 
-    let wordBox = document.getElementById("output");
-    
-    clearTimeout(timeout);
-    clearTimeout(secondTimeout);
-
+// animation is just one at a time so the timeouts are global and rewrite themselves
+let timeout;
+let secondTimeout;
+function setOutputAnimation()
+{
+    let mainWord = createWord(wordPath);
     timeout = setTimeout(()=>{
         let points = [
             { color: 'rgb(0,0,0,0)'},
@@ -546,13 +589,13 @@ function testMainWord() //<= goes here from mouseUp
         let timing ={
             duration: 2000,
             iterations: 1,
+
         }
-        wordBox.animate(points,timing);
+        output.animate(points,timing);
         secondTimeout = setTimeout(()=>{
             updateWord(mainWord)
         },1900)
-        
-    },2000)
+    },2000) 
 }
 
 function updateScore()
@@ -567,7 +610,8 @@ function updateScore()
             score += word.length * word.length;
         }
     }
-    let scoreBox = document.getElementById("score-points");
+    let scoreBox = document.getElementById("current-points");
+    let wordBox = document.getElementById("current-words");
 
     let scoreBar = document.getElementById("score-bar");
     scoreBar.style.width = String(score/maxScore*100) + "%"
@@ -577,8 +621,8 @@ function updateScore()
         win();
     }
 
-
-    scoreBox.textContent = score + " bodů (" + countTrue(wordsFound) + "/" + wordsFound.length + ")";
+    wordBox.textContent = countTrue(wordsFound) + "/" + wordsFound.length 
+    scoreBox.textContent = score + " bodů" ;
 }
 
 // FOUND WORDS LIST
@@ -623,7 +667,6 @@ function updateFound()
             fastAppendText(i + " písmenná slova:", paragraph, "foundWord-letterHeader")
             if(document.getElementById("board").classList.contains("disabled"))
             {
-                console.log("jsem tu")
                 for (let i = 0; i < iLongWords.length; i++) {
                     const element = iLongWords[i];
                     let w;
@@ -691,7 +734,6 @@ function updateFound()
     }
     fastAppendText("Bonusová slova:" + "(" + bonusWordsFound.length + ")", paragraph,"foundWord-letterHeader")
     bonusWordsFound.sort();
-    console.log(bonusWordsFound)
     for (let i = 0; i < bonusWordsFound.length; i++) {
         const element = bonusWordsFound[i];
         let w = fastHyperlink(element, paragraph, "foundWord-words", DICTIONARY_SEARCH_URL + element, true)
@@ -951,7 +993,7 @@ function win()
             let button = getButton(i,y);
             const timing = {
                 duration: 2000-(y+1)*300 - (i+1)*100,
-                iterations: 1,
+                iterations: 1
             }
             // button.setAttribute('style','animation-delay: -20000;');
             setTimeout(()=>{

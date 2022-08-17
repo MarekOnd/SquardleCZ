@@ -43,16 +43,17 @@ function applySquardleToExporter()
 
 // BOARD PREVIEW_____________________________________________________________________________
 function letterUsed(x,y,sq){
-    let used = false
     //TODO: make more efficient (you can break the loop)
-    sq.wordsToFind.map((positions)=>{
-        positions.positions.map((pos)=>{
-            if(pos.x === x && pos.y === y){
-                used = true
+    for (let i = 0; i < sq.wordsToFind.length; i++) {
+        const word = sq.wordsToFind[i];
+        for (let j = 0; j < word.positions.length; j++) {
+            const position = word.positions[j];
+            if(position.x === x && position.y === y){
+                return true;
             }
-        })
-    })
-    return used
+        }
+    }
+    return false;
 }
 
 function createBoard()
@@ -68,15 +69,15 @@ function createBoard()
         const row = S.letters[i];
         let r = document.createElement("tr");
         r.className = "row";
-        for (let y = 0; y < row.length; y++) {
-            const letter = row[y];
+        for (let j = 0; j < row.length; j++) {
+            const letter = row[j];
             let l = document.createElement("td");
             l.className = "letter";
             l.textContent = letter;
             if(letter === "0")
             {
                 l.style.visibility = "hidden"
-            }else if(!letterUsed(i,y,S)){
+            }else if(!letterUsed(i,j,S)){
                 someLetterNotUsed = true
                 // l.style.filter = "brightness(0.5)"
                 l.style.background = "darkred"
@@ -122,7 +123,7 @@ function updateWords()
         word.classList.add("word");
         word.classList.add("wordToFind");
         
-        word.addEventListener("click",()=>{moveWord(JSON.parse(JSON.stringify(legitWords[i])));updateWords()})
+        word.addEventListener("click",()=>{moveWord(legitWords[i])})
         legitWords_place.appendChild(word)
     }
     let bonusWords_place = document.getElementById("bonusWords");
@@ -133,7 +134,7 @@ function updateWords()
         word.textContent = text
         word.classList.add("word");
         word.classList.add("bonusWord");
-        word.addEventListener("click",()=>{moveWord(JSON.parse(JSON.stringify(bonusWords[i])));updateWords()})
+        word.addEventListener("click",()=>{moveWord(bonusWords[i])})
         bonusWords_place.appendChild(word)
     }
 

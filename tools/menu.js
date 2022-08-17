@@ -1,4 +1,4 @@
-function openTab(tabId,button)
+function openTab(tabId, button)
 {
 
     let tab = document.getElementById(tabId);
@@ -7,7 +7,7 @@ function openTab(tabId,button)
     if(tab.style.display === "none")
     {
         button.classList.add("selected-tab-button")
-        tab.style.display = "block"
+        tab.style.display = "block";
     }
     else
     {
