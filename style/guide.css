@@ -1,0 +1,70 @@
+
+:root{
+    --guide-headerFontSize: 50px;
+    --guide-fontSize: 20px;
+
+}
+
+#guide{
+    margin: 50px;
+}
+
+#guide h1{
+
+}
+
+#guide h2{
+    width: fit-content;
+
+    margin: 2px;
+    padding: 2px;
+    font-size: var(--guide-headerFontSize);
+    line-height: var(--guide-headerFontSize);
+
+    border-bottom: solid var(--color3) 3px;
+
+}
+
+#guide{
+    font-size: var(--guide-fontSize);
+    line-height: var(--guide-fontSize);
+}
+
+#guide .image{
+    position: relative;
+    margin: 10px;
+    border: 1px solid var(--color3);
+}
+
+#guide li{
+    list-style: none;
+}
+
+#guide li::before {
+    position: relative;
+    top: calc(var(--news-bigIconSize)/4);
+    height: var(--news-bigIconSize);
+    width: var(--news-bigIconSize);
+    margin-right: 5px;
+
+    content: '';
+    
+    background-image: url("../images/plus.svg");
+    background-size: calc(var(--news-bigIconSize));
+    background-repeat: no-repeat;
+
+    display: inline-block;
+    z-index: 50;
+
+    filter: invert(1);
+}
+
+#guide .hintTimesStarting::before {
+    background-image: url("../images/race_flag.svg");
+}
+#guide .hintTimesIncluded::before {
+    background-image: url("../images/hashtag.svg");
+}
+#guide .hintRandomLetters::before {
+    background-image: url("../images/magnifying_glass.svg");
+}
