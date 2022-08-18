@@ -4,6 +4,8 @@ const allBackgrounds = [
   {name:"swirl_2.png",weight:3},
   {name:"swirl_3.png",weight:2},
   {name:"swirl_4.png",weight:2},
+  {name:"swirl_5.png",weight:2},
+  {name:"swirl_6.png",weight:2},
 ]
 
 function getRandomBackground(arr){
