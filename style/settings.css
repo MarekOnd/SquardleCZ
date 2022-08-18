@@ -1,0 +1,66 @@
+
+:root{
+    --settings-fontSize: 50px;
+}
+
+
+#settings{
+    position: relative;
+
+    user-select: none;
+    
+    z-index: 1;
+}
+
+#settings .checkbox{
+    position: relative;
+    height: fit-content;
+    width: fit-content;
+
+    display: block;
+}
+
+#settings .checkbox input{
+    position: relative;
+    vertical-align: middle;
+    height: calc(var(--settings-fontSize)/1.5);
+    width: calc(var(--settings-fontSize)/1.5);
+
+    display: inline-block;
+}
+
+#settings .text{
+    position: relative;
+    vertical-align: middle;
+    width: fit-content;
+    height: fit-content;
+
+    font-size: var(--settings-fontSize);
+    line-height: var(--settings-fontSize);
+
+    display: inline-block;
+}
+
+
+#settings .colorPicker{
+    position: relative;
+    height: fit-content;
+    width: fit-content;
+
+    display: block;
+}
+
+#settings .colorPicker input{
+    position: relative;
+    vertical-align: middle;
+    height: calc(var(--settings-fontSize)/1.5);
+    width: calc(var(--settings-fontSize)/1.5);
+
+    display: inline-block;
+}
+
+
+
+#settings .slider{
+
+}

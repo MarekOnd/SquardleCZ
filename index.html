@@ -14,14 +14,22 @@
     
     
     <body onload="pageStart()" id="body">
-        <div id="title">
-            <h1 id="main-header">Český squardle</h1>
-            <div id="version" onclick="openTab('news')">v0.71-</div>
-            
-        </div>
-        <img id="share" src="./images/share.svg" title="Sdílej výsledek"></img>
+        <header id="title-header">
+            <img id="openMenu" onclick="toggleMenu()" src="./images/menu.svg"></img>
+            <div class="balancer">sorry</div>
+            <div id="title">
+                <h1 id="main-header">
+                    Český squardle
+                    
+                </h1>
+                
+            </div>
+            <img id="share" src="./images/share.svg" title="Sdílej výsledek"></img>
+            <img id="goto-settings" src="./images/cogs.svg" onclick="openTab('settings')"></img>
+        </header>
         
-        <div id="openMenu" onclick="toggleMenu()"></div>
+        
+        
         <div id="menu" class="menuClosed">
             
             <a  class="menu-button" id="goto-game" title="Týdenní nebo odpočinkový?" onclick="openTab('game')" style="display: none;">
@@ -46,7 +54,7 @@
             <a href="./tools/pageSquardleEditor.html" id = "goto-editor-link"  class="menu-button" title="Vytvoř si vlastní squardle">
                 Editor
             </a>
-            
+            <div id="version" onclick="openTab('news')">v0.71-</div>
         </div>
 
 
@@ -274,6 +282,19 @@
 
         </div>
 
+        <div id="settings" hidden>
+            <label id="test" class="checkbox">
+                <div class="text">Test</div>
+                <input type="checkbox" >
+                
+            </label>
+            <label id="color" class="colorPicker">
+                <div class="text">Test</div>
+                <input type="color" >
+                
+            </label>
+            
+        </div>
 
         <div id="particles"></div>
         <div id="darkenScreen"></div>
@@ -289,6 +310,7 @@
         <script src="./scripts/stats.js"></script>
         <script src="./scripts/particles.js"></script>
         <script src="./scripts/menu.js"></script>
+        <script src="./scripts/settings.js"></script>
         
     </body>
 </html>

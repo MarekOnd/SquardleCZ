@@ -13,8 +13,11 @@
     width: fit-content;
     padding: 20px;
     margin: 50px;
-    background-image: linear-gradient(to bottom, var(--color2) , var(--color1));
+    
     user-select: none;
+
+    border-bottom: 5px var(--color5) solid;
+    border-left: 5px var(--color5) solid;
 }
 
 .message h1{
@@ -22,10 +25,14 @@
     height: fit-content;
     width: fit-content;
 
+    padding: 5px;
     margin: 0px;
 
     font-size: var(--news-bigHeaderSize);
     line-height: var(--news-bigHeaderSize);
+
+    border-bottom: 5px var(--color5) solid;
+    
 }
 
 .message h2{
@@ -33,6 +40,7 @@
     height: var(--news-smallHeaderSize);
     width: fit-content;
 
+    padding: 5px;
     margin: 0px;
 
     font-size: var(--news-smallHeaderSize);

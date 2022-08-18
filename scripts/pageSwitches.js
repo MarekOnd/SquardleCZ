@@ -5,6 +5,7 @@ let allTabs = [
     "stats",
     "about",
     "guide",
+    "settings"
 ]
 
 let tabBefore;
@@ -42,6 +43,8 @@ function openTab(tabId)
         case "about":
             break;
         case "guide":
+            break;
+        case "settings":
             break;
     }
     // save current tab
