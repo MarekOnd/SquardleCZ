@@ -1,8 +1,8 @@
 :root{
     --game-cellSize: 90px;
-    --game-spacesBetweenCells: 15px;
-    --game-fontSize: 60px;
-    --game-smallFontSize: 30px;
+    --game-spacesBetweenCells: 3%;
+    /* --game-fontSize: 60px; */
+    /* --game-smallFontSize: 30px; */
     --found-headerFontSize: 40px;
     --found-fontSize: 20px;
 
@@ -10,46 +10,48 @@
     --game-scoreBarHeight: 30px;
     --game-scoreBarWidth: 300px;
 }
+[hidden] { display: none !important; }
 
 /* GAME */
 #game{
     position: relative;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: fit-content;
-    user-select: none;
-    
+    /* height: fit-content; */
+    /* overflow-x: hidden;
+    overflow-y: hidden; */
 }
 
 /* board */
 #board{
-    position: relative;
+    margin-top: 20px;
     filter: drop-shadow(5px 5px 3px #36364d);
-    width: fit-content;
-    height: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    max-width: 100%;
-    max-height: 100%;
     touch-action: none;
-}
-#board .row{
-    position: relative;
-    width: fit-content;
-    height: calc(2*var(--game-spacesBetweenCells)+var(--game-cellSize));
+    user-select: none;
 
-    display: block;
-}
-.cell{
-    position: relative;
-    vertical-align: middle;
-    width: var(--game-cellSize);
-    height: var(--game-cellSize);
-    margin: var(--game-spacesBetweenCells);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: space-between;
+    gap: var(--game-spacesBetweenCells);
+    --board-dimensions:calc(min(600px,90vw));
+    width: var(--board-dimensions);
+    height: var(--board-dimensions);
 
-    display: inline-block;
 }
-.boardButton{
+#board .cell{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* width: var(--game-cellSize); */
+    /* height: var(--game-cellSize); */
+    /* margin: var(--game-spacesBetweenCells); */
+
+}
+.cell .boardButton{
     position: relative;
     height: 100%;
     width:  100%;
@@ -62,51 +64,49 @@
     transition: background-color 0.1s ease;
 
 }
-.allWereFound{
+.cell .allWereFound{
     background-color: rgba(27, 27, 27, 0.3);
     color: white;
     z-index: 0;
 }
-.selected{
-    background-color: gray;
+.cell .selected{
+    background: gray;
     border-radius: 9px;
     transform: scale(0.9);
 }
-.button-letter{
-    position: absolute;
-    width: 100%;
-    height: 100%;
+.boardButton .button-letter{
 
+    display: flex;
     text-transform: capitalize;
-    text-align: center;
-    font-size: var(--game-fontSize);
-    line-height: var(--game-cellSize);  
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 
     color: rgb(255, 255, 255);
 }
-.button-start{
+.boardButton .button-start{
     position: absolute;
     right: 5%;
     top: 0%;
-    font-size: var(--game-smallFontSize);   
+    font-size: 45%;   
     color: red;
 }
-.button-use{
+.boardButton .button-use{
     position: absolute;
     bottom: 0%;
     left: 5%;
-    font-size: var(--game-smallFontSize);
+    font-size: 45%;
     color: green;
 }
 
 .cell .hitbox{
     position: absolute;
-    left: 0px;
-    top: 0px;
-    height: var(--game-cellSize);
-    width:  var(--game-cellSize);
-    border-radius: calc(var(--game-cellSize)/2);
-    z-index: 1000;
+    /* height: var(--game-cellSize); */
+    /* width:  var(--game-cellSize); */
+    width: 100%;
+    height: 100%;
+    /* border-radius: calc(var(--game-cellSize)/2); */
+    z-index: 100;
 }
 
 /* output */
@@ -124,15 +124,21 @@
 /* score */
 #game #score{
     position: relative;
-    width: fit-content;
-    height: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    text-align: center;
+    /* width: fit-content; */
+    /* height: fit-content; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+
+    /* text-align: center; */
     user-select: none;
     
-    
+    /* width: calc(min(600px,90vw)); */
+    width: 80%;
 }
 #game #score:hover{
     filter: drop-shadow(0px 0px 5px var(--color8));
