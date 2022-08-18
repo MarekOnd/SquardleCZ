@@ -18,11 +18,13 @@ function openTab(tabId)
     }
     // hides all
     for (let index = 0; index < allTabs.length; index++) {
-        document.getElementById(allTabs[index]).style.display = "none";
+        // document.getElementById(allTabs[index]).stylse.display = "none";
+        document.getElementById(allTabs[index]).hidden = true;
         document.getElementById("goto-" + allTabs[index]).classList.remove("selectedTab-button");
     }
     // shows chosen tab
-    document.getElementById(tabId).style.display = "block";
+    // document.getElementById(tabId).style.display = "block";
+    document.getElementById(tabId).hidden = false;
     document.getElementById("goto-" + tabId).classList.add("selectedTab-button");
     // does additional stuff for each tab
     switch(tabId)

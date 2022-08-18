@@ -4,6 +4,8 @@
         <link rel="icon" type="image/x-icon" href="./images/mondrian.jpg">
         <meta charset="UTF-8">
         <meta author="Trollak">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <link rel="stylesheet" href="index.css" />
         <title>Český squardle</title>
         <!--FONTS-->
@@ -24,7 +26,7 @@
         <div id="openMenu" onclick="toggleMenu()"></div>
         <div id="menu" class="menuClosed">
             
-            <a  class="menu-button" id="goto-game" title="Týdenní nebo odpočinkový?" onclick="openTab('game')" style="display: none;">
+            <a  class="menu-button" id="goto-game" title="Týdenní nebo odpočinkový?" onclick="openTab('game')" hidden>
                 Hra
             </a>
             <a  class="menu-button" id="goto-browser" title="Týdenní nebo odpočinkový?" onclick="openTab('browser')">
@@ -52,7 +54,7 @@
 
 
 
-        <div id="game" style="display: none;">
+        <div id="game" hidden>
             <!-- <div id = "index-selector-box">    
                 Výběr:
                 <select onchange="changeIndex()" id="index-selector">
@@ -74,7 +76,7 @@
                     <img class="hint" id="hintRandomLetters" src="./images/magnifying_glass.svg">
                 </div>
             </div>
-            <div id="found" style="display: none;">
+            <div id="found" hidden>
                 <div id="found-header" >
     
                 </div>
@@ -86,12 +88,13 @@
                 </div>
             </div>
             
-            <div id = "board">
-                
-                <div id="table">
+            <!-- Populated by squardle.js/createBoard function -->
+            <div id="board">
+                <div class="letters">
 
                 </div>
             </div>
+
             
             
         </div>
@@ -107,7 +110,7 @@
             <input type = "file" accept=".json" id="import-file" onchange="importSquardle()"></div>
         </div>
 
-        <div id="news" style="display: none;">
+        <div id="news" hidden>
             <div class="message">
                 <h1>Verze 0.71</h1>
                 <ul>
@@ -164,7 +167,7 @@
             
         </div>
 
-        <div id="stats" style="display: none;">
+        <div id="stats" hidden>
             <div class="statBox" id="stats-all" onclick="toggleStatBox(this)">
                 <h1>Celkové statistiky</h1>
                 <div class="played"></div>
@@ -208,10 +211,10 @@
             </div>
         </div>
 
-        <div id="about" style="display: none;">
+        <div id="about" hidden>
             Zatím nic
         </div>
-        <div id="guide" style="display: none;">
+        <div id="guide" hidden>
             Zatím nic😊😊😂🤣
         </div>
 

@@ -29,7 +29,7 @@ let bonusWordsFound = [];
 let isNewSave;
 
 // board
-let board = document.getElementById("board");
+let board = document.querySelector("#board");
 
 let winplayed;
 
@@ -82,7 +82,7 @@ async function loadSquardle(squardleToLoad)
     }
 
     // CAN LOOK FOR WORDS
-    document.getElementById("board").classList.remove("disabled");
+    document.querySelector("#board").classList.remove("disabled");
 
     
     createBoard();
@@ -108,21 +108,22 @@ function updateAll()
 // BOARD
 function createBoard()
 {
-    let board = document.getElementById("board");
+    let board = document.querySelector("#board");
+    board.style.gridTemplateColumns = "1fr ".repeat(S.letters.length)
     // deletes existing children
-    while(board.firstChild)
-    {
-        board.removeChild(board.firstChild)
-    }
+    clearChildren(board)
+
     // creates new board
     for(var i = 0; i < S.letters.length; i++)
     {
-        let row = document.createElement("tr");
-        row.className = "row";
+        // let row = document.createElement("tr");
+        // row.className = "row";
 
         for(var j = 0; j < S.letters[i].length; j++)
         {
             
+            let x = i;
+            let y = j;
 
             // cell and button
             let cell = document.createElement("div");
@@ -148,12 +149,13 @@ function createBoard()
             }
 
             // how many words use this letter, how many start with letter
-
+            let letterWrapper = document.createElement("div")
             let letter = document.createElement("div")
-            letter.className = "button-letter";
+            letterWrapper.className = "button-letter";
             let text = document.createTextNode(S.letters[i][j]);
             letter.appendChild(text);
-            button.appendChild(letter)
+            letterWrapper.appendChild(letter)
+            button.appendChild(letterWrapper)
 
             let use = document.createElement("div");
             use.className = "button-use";
@@ -161,28 +163,20 @@ function createBoard()
             start.className = "button-start";
             button.appendChild(use);
             button.appendChild(start);
-
-            // text
             
-
-            // events
-            let x = i;
-            let y = j;
+            board.style.fontSize = `calc(min(600px,90vw)/${S.letters.length*2})`
             
-            // final apendage
+            // final appendage
             
             cell.appendChild(button);
-            row.appendChild(cell);
-
-            
-
+            // row.appendChild(cell);
+            board.appendChild(cell);
         }
-        board.appendChild(row);
     }
 }
 function getButton(x,y)
 {
-    let but = document.getElementsByClassName("row")[x].childNodes[y].getElementsByClassName("boardButton")[0];
+    let but = document.querySelector("#board").childNodes[x*(S.letters.length)+y].querySelector(".boardButton");
     if(but)
     {
         return but;
@@ -676,7 +670,7 @@ function updateFound()
         {
             // header
             fastAppendText(i + " písmenná slova:", paragraph, "foundWord-letterHeader")
-            if(document.getElementById("board").classList.contains("disabled"))
+            if(document.querySelector("#board").classList.contains("disabled"))
             {
                 for (let i = 0; i < iLongWords.length; i++) {
                     const element = iLongWords[i];
@@ -836,7 +830,7 @@ function connectButtons(path)
     let positions = []
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
-        let button = document.getElementsByClassName("row")[element.x].childNodes[element.y].getBoundingClientRect()
+        let button = getButton(element.x,element.y).getBoundingClientRect()// document.getElementsByClassName("row")[element.x].childNodes[element.y]
         positions.push([button.left + button.width/2 - 10 +  window.scrollX, button.top + button.height/2  - 10 + window.scrollY])
     }
     return drawLine(positions)
@@ -990,7 +984,7 @@ function win()
     {
         return;
     }
-    let board = document.getElementById("board")
+    let board = document.querySelector("#board")
     let points = [
         { transform: 'rotate(0) scale(1)' },
         { transform: 'rotate(-90deg) scale(1.2)' },
