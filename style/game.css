@@ -320,12 +320,12 @@
 
 #share{
     position: absolute;
-    right: 2%;
-    top: 0%;
+    right: 0px;
+    top: 0px;
     width: 50px;
     height: 50px;
 
-    padding: 10px;
+    margin: 10px;
 }
 
 #share:hover{
@@ -372,6 +372,8 @@
     overflow: hidden;
     pointer-events: none;
 
+    opacity: 1;
+
 
 }
 
@@ -380,9 +382,9 @@
 }
 
 .mouseParticle1{
-    font-size: 30px;
+    font-size: 50px;
 
-    filter: saturate(5)
+    filter: drop-shadow(0px 0px 10px white)
 }
 .mouseParticle2{
     font-size: 30px;

@@ -16,11 +16,14 @@
     <body onload="pageStart()" id="body">
         <div id="title">
             <h1 id="main-header">Český squardle</h1>
-            <div id="version" onclick="openTab('news')">v0.7</div>
+            <div id="version" onclick="openTab('news')">v0.71-</div>
+            
         </div>
+        <img id="share" src="./images/share.svg" title="Sdílej výsledek"></img>
         
-        <div id="menu">
-
+        <div id="openMenu" onclick="toggleMenu()"></div>
+        <div id="menu" class="menuClosed">
+            
             <a  class="menu-button" id="goto-game" title="Týdenní nebo odpočinkový?" onclick="openTab('game')" style="display: none;">
                 Hra
             </a>
@@ -30,6 +33,7 @@
             <a  class="menu-button" id="goto-guide" title="Co mám dělat?!" onclick="openTab('guide')">
                 Návod
             </a>
+            
             <a  class="menu-button" id="goto-stats" title="Jak si vedu?" onclick="openTab('stats')">
                 Statistiky
             </a>
@@ -88,7 +92,8 @@
 
                 </div>
             </div>
-            <img id="share" src="./images/share.svg" title="Sdílej výsledek"></img>
+            
+            
         </div>
         <div id="line"></div>
         
@@ -212,6 +217,7 @@
 
 
         <div id="particles"></div>
+        <div id="darkenScreen"></div>
         
         <!--<img src="images/warden.jpg" style="width:100%; filter: brightness(0.1);">-->
         <script src="./scripts/functions.js"></script>
@@ -223,6 +229,7 @@
         <script src="./scripts/share.js"></script>
         <script src="./scripts/stats.js"></script>
         <script src="./scripts/particles.js"></script>
+        <script src="./scripts/menu.js"></script>
         
     </body>
 </html>

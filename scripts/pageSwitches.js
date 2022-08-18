@@ -10,6 +10,7 @@ let allTabs = [
 let tabBefore;
 function openTab(tabId)
 {
+    closeMenu()
     // set pervious tab, for loading browser and its updates
     if(localStorage.getItem("currentTab") !== undefined)
     {

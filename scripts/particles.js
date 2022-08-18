@@ -8,28 +8,76 @@ class Particle{
     direction;
     speed;
     fade;
-    constructor(text_, class_, start_, delay_, lifespan_, direction_, speed_, fade_)
+    twinkle;
+    iterations;
+    acceleration;
+
+    constructor(text_, class_, start_, delay_, lifespan_, direction_, speed_, fade_ = false, twinkle_ = false, iterations_ = 1, acceleration_ = "ease")
     {
         this.text = text_;
         this.class = class_;
         this.startingPosition = start_;
         this.delay = delay_;
         this.lifespan = lifespan_;
-        this.direction = direction_;
+        if(typeof direction_ == 'string')
+        {
+            switch(direction_)
+            {
+                case "left":
+                    this.direction = new Range(180);
+                    break;
+                case "right":
+                    this.direction = new Range(0);
+                    break;
+                case "up":
+                    this.direction = new Range(90);
+                    break;
+                case "down":
+                    this.direction = new Range(270);
+                    break;
+                case "top left":
+                    this.direction = new Range(135);
+                    break;
+                case "top right":
+                    this.direction = new Range(45);
+                    break;
+                case "bottom left":
+                    this.direction = new Range(225);
+                    break;
+                case "bottom right":
+                    this.direction = new Range(315);
+                    break;
+                case "random":
+                    this.direction = new Range(Math.random()*360);
+                    break;
+    
+            }
+        }
+        else
+        {
+            this.direction = direction_;
+        }
+        
         this.speed = speed_;
         this.fade = fade_;
+        this.twinkle = twinkle_;
+        this.iterations = iterations_;
+        this.acceleration = acceleration_;
     }
 
     get copy()
     {
         let copyParticle = new Particle(newInst(this.text), 
                                         newInst(this.class),
-                                        new Range2D(new Range(this.startingPosition.rangeX.start, this.startingPosition.rangeX.end), new Range(this.startingPosition.rangeY.start, this.startingPosition.rangeY.end)),
+                                        this.startingPosition.copy,
                                         newInst(this.delay),
-                                        new Range(newInst(this.lifespan.start),newInst(this.lifespan.end)),
-                                        newInst(this.direction),
-                                        new Range(newInst(this.speed.start),newInst(this.speed.end)),
-                                        newInst(this.fade));
+                                        this.lifespan.copy,
+                                        typeof this.direction === 'string' ? this.direction : this.direction.copy,
+                                        this.speed.copy,
+                                        newInst(this.fade),
+                                        newInst(this.twinkle),
+                                        newInst(this.iterations),
+                                        newInst(this.acceleration));
         return copyParticle;
 
     }
@@ -61,6 +109,17 @@ class Range
         }
         return this.start + Math.random()*(this.end-this.start);
     }
+
+    get copy()
+    {
+        return new Range(newInst(this.start),newInst(this.end))
+    }
+
+    lock()
+    {
+        this.start = this.num;
+        this.end = this.start;
+    }
 }
 
 class Range2D
@@ -69,17 +128,24 @@ class Range2D
     rangeY;
     constructor(start_, end_)
     {
+        //if(typeof start_ == 'nu')
         this.rangeX = start_;
         this.rangeY = end_;
     }
 
     get position()
     {
-        return new Position(this.rangeX.num, this.rangeY.num)
+        return new Position(this.rangeX.num, this.rangeY.num);
+    }
+
+    get copy()
+    {
+        return new Range2D(this.rangeX.copy, this.rangeY.copy);
     }
 }
 
 let testParticle = new Particle("test", "particle", new Range2D(new Range(1000, 1200), new Range(100, 300)), 0, new Range(100, 300), "random", new Range(100,500), true);
+let particleDiv =  document.getElementById("particles");
 function createParticle(part)
 {
     let particlesDiv = document.getElementById("particles");
@@ -97,25 +163,29 @@ function createParticle(part)
     partObject.style.position = "absolute";
 
     let startPositionFromRange = part.startingPosition.position;
+    part.startingPosition = new Range2D(new Range(startPositionFromRange.x),new Range(startPositionFromRange.y))
     partObject.style.left = startPositionFromRange.x + "px";
     partObject.style.top = startPositionFromRange.y + "px";
 
+    part.lifespan.lock();
+    part.speed.lock();
+
 
     let delay = setTimeout(()=>{
-        let points = getPoints(part);
+        let points = convertToAnimation(getPositions(part));
         if(part.fade === true)
         {
             points[points.length-1].opacity = '0';
         }
         let timing ={
-            duration: part.lifespan.num,
+            duration: part.lifespan.num + 200,
             iterations: 1,
-            easing:"ease-in"
+            easing:part.acceleration
         }
         partObject.animate(points,timing);
         let life = setTimeout(()=>{
-            document.getElementById("particles").removeChild(document.getElementById("particles").firstChild)
-        },part.lifespan.num - 100)
+            particleDiv.removeChild(particleDiv.firstChild)
+        },part.lifespan.num)
     },part.delay)
 }
 
@@ -125,6 +195,8 @@ function createParticles(part, amount)
         createParticle(part.copy)
     }
 }
+
+
 
 function getPoints(part, points = [])
 {
@@ -175,6 +247,33 @@ function getPoints(part, points = [])
             break;
     }
     return points;
+}
+
+function getPositions(particle, positions = [])
+{
+    let offset = new Position(0, 0);
+    while(particle.iterations > 0)
+    {
+        let position = new Position(Math.cos(particle.direction.num/180*Math.PI) * particle.speed.num * particle.lifespan.num/particle.iterations/1000, -Math.sin(particle.direction.num/180*Math.PI) * particle.speed.num * particle.lifespan.num/particle.iterations/1000);
+        
+        offset = new Position(offset.x + position.x, offset.y + position.y)
+        //particle.startingPosition = new Range2D(new Range(particle.startingPosition.x + position.x),new Range(particle.startingPosition.y + position.y))
+        particle.iterations--;
+
+        positions.push(new Position(position.x + offset.x, position.y + offset.y));
+    }
+    return positions;
+}
+function convertToAnimation(positions)
+{
+    let animationPoints = [];
+    for (let i = 0; i < positions.length; i++) {
+        const element = positions[i];
+        animationPoints.push({
+            transform: 'translateX(' + (element.x) + 'px) translateY(' + (element.y) + 'px)'
+        })
+    }
+    return animationPoints;
 }
 
 function chooseRandom(arr)
