@@ -34,7 +34,7 @@ let board = document.getElementById("board");
 let winplayed;
 
 
-let mouseParticleWait = 5;
+let mouseParticleWait = 2;
 let currentWait = 0;
 async function initialize(){
     LIBRARY = await getJson("./libraries/" + libraryName)
@@ -48,15 +48,14 @@ async function initialize(){
             {
                 let mouseParticle = new Particle(["*"],
                                                 ["mouseParticle1","mouseParticle2"], 
-                                                new Range2D(new Range(e.pageX - 10, e.pageX), 
-                                                new Range(e.pageY - 10)), 
+                                                new Range2D(new Range(e.pageX), new Range(e.pageY)), 
                                                 0, 
-                                                new Range(500, 800), 
-                                                new Range(250,310), 
-                                                new Range(20,30), 
+                                                new Range(500, 1000), 
+                                                new Range(260,300), 
+                                                new Range(20,200), 
                                                 true,
                                                 false,
-                                                10);
+                                                5);
                 createParticle(mouseParticle)
                 currentWait = 0
             }

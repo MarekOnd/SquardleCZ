@@ -1,0 +1,50 @@
+
+:root{
+
+    --about-headerFontSize: 50px;
+    --about-fontSize: 20px;
+
+}
+
+#about{
+    margin: 50px;
+    user-select: none;
+}
+
+#about h1{
+    width: fit-content;
+
+    margin: 2px;
+    padding: 2px;
+    font-size: var(--about-headerFontSize);
+    line-height: var(--about-headerFontSize);
+
+    border-bottom: solid var(--color3) 5px;
+    border-left: solid var(--color3) 5px;
+}
+
+
+#about{
+    font-size: var(--about-fontSize);
+    line-height: var(--about-fontSize);
+}
+
+#about .image{
+    position: relative;
+    margin: 10px;
+    border: 1px solid var(--color3);
+}
+
+#about a:visited{
+    color: rgb(97, 176, 245);
+}
+
+#about a{
+    text-decoration: underline;
+    color: rgb(97, 176, 245);
+}
+
+#about a:hover{
+    color: rgb(122, 191, 252);
+    filter: drop-shadow(0px 0px .2px rgb(0, 136, 255));
+}

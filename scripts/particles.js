@@ -170,21 +170,25 @@ function createParticle(part)
     part.lifespan.lock();
     part.speed.lock();
 
-
+    partObject.style.scale = "0";
     let delay = setTimeout(()=>{
+        
         let points = convertToAnimation(getPositions(part));
+        points[0].scale = '1';
         if(part.fade === true)
         {
-            points[points.length-1].opacity = '0';
+            points[points.length-1].scale = '0';
         }
         let timing ={
-            duration: part.lifespan.num + 200,
+            duration: part.lifespan.num + 1000,
             iterations: 1,
             easing:part.acceleration
         }
         partObject.animate(points,timing);
         let life = setTimeout(()=>{
-            particleDiv.removeChild(particleDiv.firstChild)
+            let firsChil = particleDiv.firstChild;
+            firsChil.style.display = "none";
+            particleDiv.removeChild(firsChil)
         },part.lifespan.num)
     },part.delay)
 }
@@ -252,6 +256,7 @@ function getPoints(part, points = [])
 function getPositions(particle, positions = [])
 {
     let offset = new Position(0, 0);
+    positions.push(offset)
     while(particle.iterations > 0)
     {
         let position = new Position(Math.cos(particle.direction.num/180*Math.PI) * particle.speed.num * particle.lifespan.num/particle.iterations/1000, -Math.sin(particle.direction.num/180*Math.PI) * particle.speed.num * particle.lifespan.num/particle.iterations/1000);
@@ -274,6 +279,28 @@ function convertToAnimation(positions)
         })
     }
     return animationPoints;
+}
+
+function calculateBezier(positions)
+{
+    if(positions.length <= 2)
+    {
+        return;
+    }
+
+    let first = positions[0];
+    let toSplit = positions[1]
+    for (let i = 3; i < positions.length; i++) {
+        let second = positions[i]
+        let firstSplit = new Position()
+
+        
+    }
+}
+
+function vector(pos1, pos2)
+{
+    return new Position(pos2.x - pos1.x, pos2.y - pos1.y);
 }
 
 function chooseRandom(arr)

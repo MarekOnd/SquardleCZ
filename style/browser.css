@@ -207,25 +207,28 @@
 }
 
 #browser-tiles .weekly #content{
-    border: var(--color2) solid 5px;
-    background-color: var(--color8);
+    border: var(--color2) solid 2px;
+    /* background-color: var(--color8); */
+    background-image: radial-gradient(var(--color8),var(--color6));
     color: black;
 }
 
 #browser-tiles .casual #content{
-    border: var(--color3) dotted 5px;
-    background-color: var(--color6);
+    border: var(--color3) dotted 2px;
+    /* background-color: var(--color6); */
+    background-image: radial-gradient(var(--color6),var(--color4));
     color: black;
 }
 
 #browser-tiles .special #content{
-    border: var(--color8) dashed 3px;
-    background-color: rgb(170, 23, 170);
+    border: var(--color8) dashed 2px;
+    /* background-color: rgb(170, 23, 170); */
+    background-image: radial-gradient( rgb(100, 21, 100), rgb(66, 3, 66));
     color: var(--font-color-ondark);
 }
 
 #browser-tiles .shared #content{
-    border: var(--color2) dashed 3px;
+    border: var(--color2) dashed 2px;
     background-color: var(--color9);
     color: black;
 }

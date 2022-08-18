@@ -1,16 +1,26 @@
 
 :root{
-    --guide-headerFontSize: 50px;
+    --guide-h1FontSize: 70px;
+    --guide-h2FontSize: 50px;
     --guide-fontSize: 20px;
 
 }
 
 #guide{
     margin: 50px;
+    user-select: none;
 }
 
 #guide h1{
+    width: fit-content;
 
+    margin: 2px;
+    padding: 2px;
+    font-size: var(--guide-h1FontSize);
+    line-height: var(--guide-h1FontSize);
+
+    border-bottom: solid var(--color3) 5px;
+    border-left: solid var(--color3) 5px;
 }
 
 #guide h2{
@@ -18,10 +28,11 @@
 
     margin: 2px;
     padding: 2px;
-    font-size: var(--guide-headerFontSize);
-    line-height: var(--guide-headerFontSize);
+    font-size: var(--guide-h2FontSize);
+    line-height: var(--guide-h2FontSize);
 
     border-bottom: solid var(--color3) 3px;
+    border-left: solid var(--color3) 3px;
 
 }
 
