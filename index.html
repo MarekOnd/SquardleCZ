@@ -326,8 +326,8 @@
                 Vysvětlivky k nápovědám jsou zde:
             </p>
             <ul>
-                <li class="hintTimesStarting">kolik slov začíná písmenem</li>
-                <li class="hintTimesIncluded">v kolika slovech je písmeno</li>
+                <li class="hintTimesStarting">kolik slov začíná písmenem - červené číslo políčkách</li>
+                <li class="hintTimesIncluded">v kolika slovech je písmeno - zelené číslo na políčkách</li>
                 <li class="hintRandomLetters">odkrytí počátečních písmen - lze vidět po odemčení v nalezených slovech</li>
             </ul>
 
@@ -346,11 +346,16 @@
                 <div class="checkmark"></div>
                 
             </label>
-            <label id="test" class="checkbox">
+            <label id="particleAmount" class="slider">
                 <div class="text">Test</div>
-                <input type="checkbox">
-                <div class="checkmark"></div>
-                
+                <input type="range" min="1" max="1000">
+                <div class="sliderStyle"></div>
+            </label>
+            <label id="particleLook" class="select">
+                <div class="text">Test</div>
+                <select name="" id="paticleLookSelect">
+                    <option value="0">*</option>
+                </select>
             </label>
             <label id="color" class="colorPicker">
                 <div class="text">Test</div>

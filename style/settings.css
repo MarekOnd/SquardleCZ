@@ -2,7 +2,9 @@
 :root{
     --settings-fontSize: 50px;
 
-    --settings-checkboxSize: 60px;
+    --settings-checkboxSize: 60px;/* width */
+    --settings-sliderSize: 40px;/* height */
+    --settings-selectSize: 40px
 }
 
 
@@ -14,6 +16,20 @@
     z-index: 1;
 }
 
+#settings .text{
+    position: relative;
+    vertical-align: middle;
+    width: fit-content;
+    height: fit-content;
+
+    font-size: var(--settings-fontSize);
+    line-height: var(--settings-fontSize);
+
+    display: inline-block;
+}
+
+
+/* CHECK BOX */
 #settings .checkbox{
     position: relative;
     height: fit-content;
@@ -77,23 +93,121 @@
 }
 /* hover */
 #settings .checkbox:hover .checkmark::after{
-    background-color: rgb(189, 194, 189);
+    filter: drop-shadow(0px 0px 5px white);
 }
 
-
-
-
-#settings .text{
+/* SLIDER (RANGE) */
+#settings .slider input{
+    appearance: none;
     position: relative;
     vertical-align: middle;
-    width: fit-content;
-    height: fit-content;
+    
+    width: 300px;
+    height: var(--settings-sliderSize);
+    border-radius: calc(var(--settings-sliderSize)/2);
 
-    font-size: var(--settings-fontSize);
-    line-height: var(--settings-fontSize);
+    transition: all 0.1s ease;
 
-    display: inline-block;
+    z-index: 10;
 }
+
+#settings .slider input::-webkit-slider-thumb {
+    appearance: none;
+    position: relative;
+    vertical-align: middle;
+    width: var(--settings-sliderSize);
+    height: var(--settings-sliderSize);
+    border-radius: calc(var(--settings-sliderSize)/2);
+
+    background-color: var(--color5);
+
+    z-index: 12;
+
+    
+}
+#settings .slider input::after{
+    content: 'max';
+    position: absolute;
+    right: calc(var(--settings-sliderSize)/50);
+
+
+    font-size: calc(var(--settings-sliderSize)/1.2);
+    line-height: var(--settings-sliderSize);
+
+
+    background: -webkit-linear-gradient(var(--color1), var(--color2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    user-select: none;
+    pointer-events: none;
+    z-index: 13;
+}
+
+#settings .slider input::before{
+    content: 'min';
+    position: absolute;
+    left: calc(var(--settings-sliderSize)/50);
+    
+
+    font-size: calc(var(--settings-sliderSize)/1.2);
+    line-height: var(--settings-sliderSize);
+
+    background: -webkit-linear-gradient(var(--color1), var(--color2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    user-select: none;
+    pointer-events: none;
+    z-index: 13;
+}
+
+/* SELECT FROM OPTIONS */
+
+#settings .select select{
+
+    appearance: none;
+
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+
+    position: relative;
+    vertical-align: middle;
+
+    height: var(--settings-selectSize);
+    min-width: calc(var(--settings-selectSize)*2);
+
+    background-color: var(--color6);
+}
+
+#settings .select select *{
+    appearance: none;
+
+    height: var(--settings-selectSize);
+    min-width: calc(var(--settings-selectSize)*2);
+
+    background-color: var(--color6);
+}
+
+#settings .select select option::after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+
 
 
 #settings .colorPicker{
