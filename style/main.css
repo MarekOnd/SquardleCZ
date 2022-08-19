@@ -70,6 +70,7 @@ svg {
     justify-content: center;
     background: linear-gradient(var(--color6), var(--color8));
     background-clip: text;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 
     text-decoration: none;
