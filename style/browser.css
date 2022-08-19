@@ -22,7 +22,7 @@
     position: relative;
     user-select: none;
     text-align: center;
-    width: 100%;
+    margin: 1vw;
     height: fit-content;
 }
 /* DIV WITH TILES */
@@ -39,7 +39,8 @@
     width: fit-content;
     height: fit-content;
     display: inline-block;
-    margin: var(--browser-tileMargin);
+    margin: calc(min(.5vw,var(--browser-tileMargin)));
+    
     
 }
 
@@ -210,28 +211,43 @@
 #browser-tiles .weekly #content{
     border: var(--color2) solid 2px;
     /* background-color: var(--color8); */
-    background-image: radial-gradient(var(--color8),var(--color6));
+    background-image:
+        radial-gradient(circle at 30%, transparent, transparent, var(--color3) 75%, transparent),
+        radial-gradient(ellipse at top, var(--color7), transparent),
+        radial-gradient(circle at left, var(--color5), transparent),
+        radial-gradient(circle at right, var(--color3), transparent),
+        radial-gradient(ellipse at bottom, var(--color2), transparent);
+        ;
     color: black;
 }
 
 #browser-tiles .casual #content{
     border: var(--color3) dotted 2px;
     /* background-color: var(--color6); */
-    background-image: radial-gradient(var(--color6),var(--color4));
-    color: black;
+    background-image: 
+        radial-gradient(ellipse at top, var(--color3), transparent),
+        linear-gradient(to left, var(--color2), transparent, var(--color2)),
+        radial-gradient(ellipse at bottom, var(--color1), transparent);
+    color: rgb(226, 226, 226);
 }
 
 #browser-tiles .special #content{
-    border: var(--color8) dashed 2px;
+    border: black solid 2px;
     /* background-color: rgb(170, 23, 170); */
-    background-image: radial-gradient( rgb(100, 21, 100), rgb(66, 3, 66));
-    color: var(--font-color-ondark);
+    background-image: 
+        radial-gradient(circle at top right,rgb(100, 21, 100), transparent),
+        radial-gradient(circle at left, rgb(201, 1, 1), transparent),
+        radial-gradient(circle at right, rgb(66, 3, 66), transparent);
+    color: rgb(226, 226, 226);
 }
 
 #browser-tiles .shared #content{
-    border: var(--color2) dashed 2px;
-    background-color: var(--color9);
-    color: black;
+    border: black solid 2px;
+    background-image: 
+        linear-gradient(120deg, rgb(0, 114, 0), transparent),
+        linear-gradient(to bottom, rgb(0, 148, 86) 10%, transparent),
+        radial-gradient(circle at 120%, rgb(255, 230, 0), transparent);
+    color: rgb(226, 226, 226);
 }
 
 #browser-tiles #import-tile #content{
@@ -247,6 +263,7 @@
 /*date and locks*/
 .browserTile #date{
     position: absolute;
+    max-width: 80vw;
     font-size: var(--browser-fontSize);
     z-index: 10;
     color: var(--font-color-ondark);

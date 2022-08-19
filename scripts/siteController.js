@@ -25,6 +25,8 @@ async function pageStart()
     }
     openTab(lastTab);
 
+    initializeSettings();
+
         
 
     

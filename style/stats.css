@@ -37,11 +37,13 @@
 
     border-bottom: solid var(--color3) 5px;
     border-left: solid var(--color3) 5px;
+    border-top: solid transparent 5px;
+    border-right: solid transparent 5px;
 
     font-size: var(--stats-fontSize);
     display: block;
 
-    transition: height 0.4s ease-out, border-width 0.1s ease-in;
+    transition: all 0.1s ease-in, height 0.4s ease-out, border-width 0.1s ease-in;
 
     overflow: hidden;
 }
@@ -53,8 +55,8 @@
 
     border-top: solid var(--color3) 5px;
     border-right: solid var(--color3) 5px;
-    border-bottom: solid var(--color3) 0px;
-    border-left: solid var(--color3) 0px;
+    border-bottom: solid transparent  5px;
+    border-left: solid transparent  5px;
     
 
     font-size: var(--stats-fontSize);

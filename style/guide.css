@@ -1,7 +1,7 @@
 
 :root{
-    --guide-h1FontSize: 70px;
-    --guide-h2FontSize: 50px;
+    --guide-h1FontSize: 50px;
+    --guide-h2FontSize: 30px;
     --guide-fontSize: 20px;
 
 }
@@ -23,6 +23,8 @@
 
     border-bottom: solid var(--color3) 5px;
     border-left: solid var(--color3) 5px;
+    border-top: solid transparent 5px;
+    border-right: solid transparent 5px;
 }
 
 #guide h2{
@@ -35,6 +37,8 @@
 
     border-bottom: solid var(--color3) 3px;
     border-left: solid var(--color3) 3px;
+    border-top: solid transparent 3px;
+    border-right: solid transparent 3px;
 
 }
 

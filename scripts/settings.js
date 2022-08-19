@@ -1,25 +1,13 @@
 
 
-class settings{
-    colorPallete;
 
-    constructor(settings_)
-    {
-        if(settings_)// copy 
-        {
+let mouseParticlesModels = ["*", "🍕","❤","💤"];
+let defaultSettings = {
+    /* mouse particles */
+    showMouseParticles:false,
+    showMouseParticleAmount:500,
+    mouseParticlesModel:"snow",// snow, emojis
 
-        }
-        else// default
-        {
-
-        }
-    }
-}
-
-
-
-
-let sett = {
     colorPallete:[
                     '#000124',
                     '#03045E',
@@ -33,39 +21,113 @@ let sett = {
                     '#CAF0F8'
                 ],// always 10 colors
     
-    showMouseParticles:false,
-    mouseParticles:"snow",// snow, emojis
+
     buttonSize:"normal",// small, normal, big
     gameLayout:"hiddenFound",//hiddenFound, shownFoundOnLeft, shownFoundOnRight (only on monitors)
     animations:true,
     invertAll:true
-    
-
 };
-function initializeSettings()
+
+let currentSettings;
+
+function getSettingsProperty(name)
 {
+    switch(name)
+    {
+        case "showMouseParticles":
+            return currentSettings.showMouseParticles;
+        case "mouseParticleAmount":
+            return currentSettings.mouseParticleAmount;
+        case "mouseParticlesModel":
+            return currentSettings.mouseParticlesModel;
+        default:
+            break;
+    }
 
 }
 
+
+
+
+
+function initializeSettings()
+{
+    loadSettings();
+    document.querySelector("#showMouseParticles").checked = currentSettings.showMouseParticles;
+    document.querySelector("#mouseParticleAmount").value = currentSettings.mouseParticleAmount;
+    initSelectOptions('mouseParticlesModel', mouseParticlesModels);
+    applySettings();
+    console.log(currentSettings)
+}
+
+
+
+
 function applySettings()
 {
-
+    mouseParticleWait = (1000-currentSettings.mouseParticleAmount)/100;
+    mouseParticlesModel = currentSettings.mouseParticlesModel;
 }
 
 function loadSettings()
 {
     if(localStorage.getItem("settings"))
     {
-        sett = localStorage.getItem("settings");
+        currentSettings = JSON.parse(localStorage.getItem("settings"));
+    }
+    else
+    {
+        currentSettings = defaultSettings;
     }
 }
 
 function saveSettings()
 {
-    localStorage.setItem(sett)
+    localStorage.setItem("settings",JSON.stringify(currentSettings));
 }
 
-function setSettingsProperty(propertyName)
+function setSettingsProperty(propertyName, value)
 {
-    
+    switch(propertyName)
+    {
+        case "showMouseParticles":
+            currentSettings.showMouseParticles = value;
+            break;
+        case "mouseParticleAmount":
+            currentSettings.mouseParticleAmount = value;
+            break;
+        case "mouseParticlesModel":
+            currentSettings.mouseParticlesModel = mouseParticlesModels[value];
+            break;
+        default:
+            break;
+    }
+    applySettings();
+    saveSettings();
+}
+
+function initSelectOptions(selectId, options)
+{
+    let select = document.querySelector('#' + selectId);
+    for (let i = 0; i < options.length; i++) {
+        const element = options[i];
+        let option = document.createElement("div");
+        option.textContent = element;
+        option.classList.add("option");
+        option.addEventListener('pointerup', ()=>{selectOption(selectId, i)});
+        select.appendChild(option);
+    }
+}
+
+function selectOption(id, index)
+{
+    let select = document.querySelector('#' + id);
+    let selectChildren = select.querySelectorAll(".option");
+
+    for (let i = 0; i < selectChildren.length; i++) {
+        let option = selectChildren[i];
+        option.classList.remove('selectedOption');
+    }
+    selectChildren[index].classList.add('selectedOption');
+    setSettingsProperty(id, index);
 }

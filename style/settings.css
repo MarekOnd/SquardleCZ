@@ -1,15 +1,21 @@
 
 :root{
-    --settings-fontSize: 50px;
+    --settings-sectionHeaderFontSize: 30px;
+    --settings-fontSize: 30px;
 
-    --settings-checkboxSize: 60px;/* width */
-    --settings-sliderSize: 40px;/* height */
-    --settings-selectSize: 40px
+    --settings-checkboxSize: 40px;/* width */
+    --settings-sliderSize: 30px;/* height */
+    --settings-selectSize: 30px
 }
 
 
 #settings{
     position: relative;
+
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 30px;
+
 
     user-select: none;
     
@@ -27,8 +33,51 @@
 
     display: inline-block;
 }
+/* SECTIONS */
 
+#settings .settingsSection{
+    position: relative;
+    height: calc(var(--settings-sectionHeaderFontSize)*2);
+    width: 50vw;
 
+    margin: 10px;
+    padding: 10px;
+
+    /* border: solid 5px white;
+    border-radius: 30px;
+    background-image: linear-gradient(to bottom, var(--color2) , var(--color1)); */
+
+    border-bottom: solid var(--color3) 5px;
+    border-left: solid var(--color3) 5px;
+    border-top: solid transparent 5px;
+    border-right: solid transparent 5px;
+
+    font-size: var(--settings-sectionHeaderFontSize);
+    display: block;
+
+    transition: all 0.1s ease-in, height 0.4s ease-out, border-width 0.1s ease-in;
+
+    overflow: hidden;
+}
+#settings .settingsSection h1{
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    font-size: var(--settings-sectionHeaderFontSize);
+    line-height: calc(var(--settings-sectionHeaderFontSize)*2.1);
+    vertical-align: middle;
+}
+
+#settings .opened{
+    height: 300px;
+
+    margin: 10px;
+
+    border-top: solid var(--color3) 5px;
+    border-right: solid var(--color3) 5px;
+    border-bottom: solid transparent  5px;
+    border-left: solid transparent  5px;
+}
 /* CHECK BOX */
 #settings .checkbox{
     position: relative;
@@ -106,6 +155,8 @@
     height: var(--settings-sliderSize);
     border-radius: calc(var(--settings-sliderSize)/2);
 
+    background-color: antiquewhite;
+
     transition: all 0.1s ease;
 
     z-index: 10;
@@ -128,7 +179,7 @@
 #settings .slider input::after{
     content: 'max';
     position: absolute;
-    right: calc(var(--settings-sliderSize)/50);
+    right: calc(var(--settings-sliderSize)/10);
 
 
     font-size: calc(var(--settings-sliderSize)/1.2);
@@ -147,7 +198,7 @@
 #settings .slider input::before{
     content: 'min';
     position: absolute;
-    left: calc(var(--settings-sliderSize)/50);
+    left: calc(var(--settings-sliderSize)/10);
     
 
     font-size: calc(var(--settings-sliderSize)/1.2);
@@ -164,19 +215,12 @@
 
 /* SELECT FROM OPTIONS */
 
-#settings .select select{
+/* #settings .select select{
 
     appearance: none;
 
-    background-color: transparent;
-    border: none;
     padding: 0 1em 0 0;
     margin: 0;
-    width: 100%;
-    font-family: inherit;
-    font-size: inherit;
-    cursor: inherit;
-    line-height: inherit;
 
     position: relative;
     vertical-align: middle;
@@ -184,29 +228,81 @@
     height: var(--settings-selectSize);
     min-width: calc(var(--settings-selectSize)*2);
 
-    background-color: var(--color6);
+    font-family: inherit;
+    font-size: var(--settings-selectSize);
+    line-height: var(--settings-selectSize);
+
+    background-color: transparent;
+
+    outline: none;
+
+    
 }
 
-#settings .select select *{
+#settings .select select option{
     appearance: none;
 
     height: var(--settings-selectSize);
-    min-width: calc(var(--settings-selectSize)*2);
 
-    background-color: var(--color6);
+    outline: 1px solid white;
+
+    background-color: transparent;
+
+    display: grid;
+
+    z-index: 10;
 }
 
-#settings .select select option::after {
-  position: absolute;
-  content: "";
-  top: 14px;
-  right: 10px;
-  width: 0;
-  height: 0;
-  border: 6px solid transparent;
-  border-color: #fff transparent transparent transparent;
+select:focus{
+    color: red;
 }
 
+select:hover{
+    color: green;
+}
+select option:hover{
+    color: green;
+    background-color: black;
+}
+#settings .select select option::before{
+    position: relative;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+
+    display: block;
+    background-color: black;
+    z-index: 12;
+} */
+#settings .settingsInput{
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    display: block;
+}
+#settings .select .options{
+    position: relative;
+    padding: 1px;
+    display: inline-block;
+}
+
+#settings .select .options .option{
+    position: relative;
+    padding: 1px;
+    margin-left: 5px;
+    width: var(--settings-selectSize);
+    height: var(--settings-selectSize);
+    font-size: var(--settings-selectSize);
+    line-height: var(--settings-selectSize);
+    vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+}
+#settings .select .options .selectedOption{
+    outline: 1px white solid;
+}
 
 
 

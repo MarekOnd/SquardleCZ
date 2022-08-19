@@ -21,6 +21,8 @@
 
     border-bottom: solid var(--color3) 5px;
     border-left: solid var(--color3) 5px;
+    border-top: solid transparent 5px;
+    border-right: solid transparent 5px;
 }
 
 

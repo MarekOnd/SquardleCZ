@@ -16,6 +16,7 @@
     
     
     <body onload="pageStart()" id="body">
+        
         <header id="title-header">
             <div class="header-content">
                 <div class="header-group">
@@ -241,7 +242,7 @@
                 <div class="totalWordsFound"></div>
                 <div class="totalBonusWords"></div>
             </div>
-            <div class="statBox" id="stats-casual" onclick="toggleStatBox(this)">
+            <div class="statBox" id="stats-casual" onclick="toggleOpened(this)">
                 <h1>Odpočinkové</h1>
                 <div class="played"></div>
                 <div class="completed"></div>
@@ -250,7 +251,7 @@
                 <div class="totalBonusWords"></div>
             </div>
             
-            <div class="statBox" id="stats-special" onclick="toggleStatBox(this)">
+            <div class="statBox" id="stats-special" onclick="toggleOpened(this)">
                 <h1>Speciální</h1>
                 <div class="played"></div>
                 <div class="completed"></div>
@@ -258,7 +259,7 @@
                 <div class="totalWordsFound"></div>
                 <div class="totalBonusWords"></div>
             </div>
-            <div class="statBox" id="stats-shared" onclick="toggleStatBox(this)">
+            <div class="statBox" id="stats-shared" onclick="toggleOpened(this)">
                 <h1>Sdílené</h1>
                 <div class="played"></div>
                 <div class="completed"></div>
@@ -335,28 +336,33 @@
         </div>
 
         <div id="settings" hidden>
-            <label id="mouseParticles" class="checkbox">
-                <div class="text">Test</div>
-                <input type="checkbox" onchange="setSettingsProperty('mouseParticles')">
-                <div class="checkmark"></div>
-                
-            </label>
-            <label id="particleAmount" class="slider">
-                <div class="text">Test</div>
-                <input type="range" min="1" max="1000">
-                <div class="sliderStyle"></div>
-            </label>
-            <label id="particleLook" class="select">
-                <div class="text">Test</div>
-                <select name="" id="paticleLookSelect">
-                    <option value="0">*</option>
-                </select>
-            </label>
+            <div class="settingsSection">
+                <h1  onclick="toggleOpened(this.parentElement)">Smajlíci</h1>
+                <label class="checkbox settingsInput">
+                    <div class="text">Zaplnout poletující smajlíky:</div>
+                    <input id="showMouseParticles" type="checkbox" onchange="setSettingsProperty('showMouseParticles', this.checked)">
+                    <div class="checkmark"></div>
+                    
+                </label>
+                <label  class="slider settingsInput">
+                    <div class="text">Množství vloček:</div>
+                    <input id="mouseParticleAmount" type="range" min="1" max="1000" onchange="setSettingsProperty('mouseParticleAmount', this.value)">
+                    <div class="sliderStyle"></div>
+                </label>
+                <label class="select settingsInput">
+                    <div class="text">Model:</div>
+                    <div id="mouseParticlesModel" class="options">
+                        
+                    </div>
+                </label>
+            </div>
+            
+            <!-- 
             <label id="color" class="colorPicker">
                 <div class="text">Test</div>
                 <input type="color" >
                 
-            </label>
+            </label> -->
             
         </div>
 
@@ -375,6 +381,7 @@
         <script src="./scripts/particles.js"></script>
         <script src="./scripts/menu.js"></script>
         <script src="./scripts/settings.js"></script>
+        <script src="./scripts/global.js"></script>
         
     </body>
 </html>

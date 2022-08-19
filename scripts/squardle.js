@@ -34,35 +34,40 @@ let board = document.querySelector("#board");
 let winplayed;
 
 // part of IMPORTANT
-let mouseParticleWait = 2;
+let mouseParticleWait = 5;
 let currentWait = 0;
+let mouseParticlesModel = "*"
 async function initialize(){
     LIBRARY = await getJson("./libraries/" + libraryName)
     window.addEventListener("pointerup",(e)=>{mouseUp()})
-    // IMPORTANT
-    // window.addEventListener("pointermove",(e)=>{
-        
-    //     if(e.buttons > 0)
-    //     {
-    //         currentWait++;
-    //         if(currentWait > mouseParticleWait)
-    //         {
-    //             let mouseParticle = new Particle(["*"],
-    //                                             ["mouseParticle1","mouseParticle2"], 
-    //                                             new Range2D(new Range(e.pageX), new Range(e.pageY)), 
-    //                                             0, 
-    //                                             new Range(500, 1000), 
-    //                                             new Range(260,300), 
-    //                                             new Range(20,200), 
-    //                                             true,
-    //                                             false,
-    //                                             5);
-    //             createParticle(mouseParticle)
-    //             currentWait = 0
-    //         }
+
+    
+    window.addEventListener("pointermove",(e)=>{
+        if(getSettingsProperty('showMouseParticles') === false)
+        {
+            return;
+        }
+        if(e.buttons > 0)
+        {
+            currentWait++;
+            if(currentWait > mouseParticleWait)
+            {
+                let mouseParticle = new Particle([mouseParticlesModel],
+                                                ["mouseParticle1","mouseParticle2"], 
+                                                new Range2D(new Range(e.pageX), new Range(e.pageY)), 
+                                                0, 
+                                                new Range(500, 1000), 
+                                                new Range(260,300), 
+                                                new Range(20,200), 
+                                                true,
+                                                false,
+                                                5);
+                createParticle(mouseParticle)
+                currentWait = 0
+            }
             
-    //     }
-    // })
+        }
+    })
     
 }
 // LOAD DATA
