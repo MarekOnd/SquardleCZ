@@ -12,6 +12,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Kanit:wght@500&display=swap" rel="stylesheet"> 
     </head>
     
     
@@ -136,9 +138,12 @@
             </div>
             
             <!-- Populated by squardle.js/createBoard function -->
-            <div id="board">
-                <div class="letters">
-
+            <div id="board-box">
+                <button id="rotate" onclick="rotateBoard(90)">
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-cw"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                </button>
+                <div id="board">
+    
                 </div>
             </div>
             
