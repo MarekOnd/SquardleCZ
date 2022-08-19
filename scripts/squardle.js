@@ -30,6 +30,7 @@ let isNewSave;
 
 // board
 let board = document.querySelector("#board");
+let currentBoardRotation = 0
 
 let winplayed;
 
@@ -111,6 +112,7 @@ function createBoard()
 {
     let board = document.querySelector("#board");
     board.style.gridTemplateColumns = "1fr ".repeat(S.letters.length)
+
     // deletes existing children
     clearChildren(board)
 
@@ -174,6 +176,11 @@ function createBoard()
             board.appendChild(cell);
         }
     }
+    // reset board rotation
+    //first set rotation
+    currentBoardRotation = 0
+    //then rotate by 0deg to update 
+    rotateBoard(0)
 }
 function getButton(x,y)
 {
@@ -256,6 +263,14 @@ function updateLettersInBoard()
     }
     
 
+}
+
+function rotateBoard(deg){
+    currentBoardRotation += deg
+    board.style.transform = `rotate(${currentBoardRotation}deg)`
+    board.childNodes.forEach(cell=>{
+        cell.style.transform = `rotate(${-(currentBoardRotation)}deg)`
+    })
 }
 
 // SELECTING WORD
