@@ -9,6 +9,9 @@
 
     --game-scoreBarHeight: 30px;
     --game-scoreBarWidth: 300px;
+
+    --board-dimensions:calc(min(600px,90vw));
+    --boardSize: 5;
 }
 [hidden] { display: none !important; }
 
@@ -37,7 +40,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-content: space-between;
     gap: var(--game-spacesBetweenCells);
-    --board-dimensions:calc(min(600px,90vw));
+    
     width: var(--board-dimensions);
     height: var(--board-dimensions);
 
@@ -56,7 +59,7 @@
     height: 100%;
     width:  100%;
 
-    border-radius: 10px;
+    border-radius: calc(var(--board-dimensions)/(var(--boardSize)*10));
     background-color: rgb(70, 68, 68);
     color: white;
     
@@ -101,24 +104,24 @@
 
 .cell .hitbox{
     position: absolute;
-    /* height: var(--game-cellSize); */
-    /* width:  var(--game-cellSize); */
+
     width: 100%;
     height: 100%;
-    /* border-radius: calc(var(--game-cellSize)/2); */
+
+    border-radius: calc(var(--board-dimensions)/(var(--boardSize)));
     z-index: 100;
 }
 
 /* output */
 #output{
     position: relative;
-    width: fit-content;
     margin-left: auto;
     margin-right: auto;
 
     height: 40px;
     line-height: 40px;
     padding: 10px;
+    font-size: calc(var(--board-dimensions)/10);
 }
 
 /* score */
@@ -129,23 +132,18 @@
     justify-content: center;
     align-items: center;
 
-    /* width: fit-content; */
-    /* height: fit-content; */
-    /* margin-left: auto; */
-    /* margin-right: auto; */
-
-    /* text-align: center; */
+    font-size: calc(var(--board-dimensions)/15);
     user-select: none;
     
     /* width: calc(min(600px,90vw)); */
-    width: 80%;
+    width: (var(--board-dimensions)/2);
 }
 #game #score:hover{
     filter: drop-shadow(0px 0px 5px var(--color8));
 }
 #score-bar-background{
     position: relative;
-    width: var(--game-scoreBarWidth);
+    width: calc(var(--board-dimensions)/2);
     height: var(--game-scoreBarHeight);
     margin-left: auto;
     margin-right: auto;
@@ -168,17 +166,17 @@
 /* found words */
 #found{
     position: fixed;
-    left: 10%;
-    top: 15%;
-    width: 80%;
-    height: 70%;
+    left: 5vw;
+    top: 5vh;
+    width: 90vw;
+    height: 90vh;
     
-
+    border-bottom: solid var(--color3) 3px;
+    border-left: solid var(--color3) 3px;
     border-radius: 10px;
-    outline: outset 5px var(--color9);
-    background-image: linear-gradient(to bottom, var(--color2) , var(--color1));
+    background-image: linear-gradient(to right, black , rgb(4, 0, 41), black);
 
-    z-index: 5;
+    z-index: 50;
     user-select: none;
 }
 
@@ -187,7 +185,7 @@
     position: relative;
     text-align: center;
     line-height: 50px;
-    font-size: 50px;
+    font-size: calc(var(--board-dimensions)/10);
     padding: 30px;
 }
 
@@ -218,8 +216,8 @@
 
 .foundWord-letterHeader{
     position: relative;
-    font-size: var(--found-headerFontSize);
-    line-height: var(--found-headerFontSize);
+    font-size: calc(var(--board-dimensions)/20);
+    line-height: calc(var(--board-dimensions)/20);
 
     width: fit-content;
     height: fit-content;
@@ -232,13 +230,14 @@
 
     color: white;
 
-    font-size: var(--found-fontSize);
-    line-height: var(--found-fontSize);
+    font-size: calc(var(--board-dimensions)/20);
+    line-height: calc(var(--board-dimensions)/20);
 
-    padding: 1px;
+    padding: 5px;
     padding-left: 5px;
     padding-right: 5px;
     border-radius: 5px;
+    font-size: calc(var(--board-dimensions)/20);
 
     display: inline-block;
 }
@@ -263,7 +262,7 @@
     position: relative;
 
     font-style: italic;
-    font-size: var(--found-fontSize);
+    font-size: calc(var(--board-dimensions)/20);
 
     display: block;
 }
@@ -276,8 +275,8 @@
     margin-left: auto;
     margin-right: auto;
 
-    font-size: var(--found-headerFontSize);
-    line-height: var(--found-headerFontSize);
+    font-size: calc(var(--board-dimensions)/20);
+    font-size: calc(var(--board-dimensions)/20);
     text-align: center;
     
     padding: 10px;
@@ -312,8 +311,11 @@
 
     
     background-color:rgb(20, 218, 218, 0.5);
-    border: 10px solid rgb(20, 218, 218,0.1); 
-    border-radius: 10px;
+    --lineSize: calc(var(--board-dimensions)/(var(--boardSize)*10));
+    border: var(--lineSize) solid rgba(8, 56, 56, 0.1);
+    /* outline: 10px white solid; */
+    
+    border-radius: var(--lineSize);
     z-index: 2;
 }
 
@@ -370,7 +372,7 @@
 }
 
 .plusPoints{
-    font-size: var(--found-headerFontSize);
+    font-size: calc(var(--board-dimensions)/15);
 }
 
 .mouseParticle1{

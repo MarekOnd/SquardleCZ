@@ -56,7 +56,7 @@
             <a href="./tools/pageSquardleEditor.html" id = "goto-editor-link"  class="menu-button" title="Vytvoř si vlastní squardle">
                 Editor↗
             </a>
-            <div id="version" onclick="openTab('news')">v0.71-</div>
+            <div id="version" onclick="openTab('news')">v0.8</div>
         </div>
 
 
@@ -84,7 +84,7 @@
                     <img class="hint" id="hintRandomLetters" src="./images/magnifying_glass.svg">
                 </div>
             </div>
-            <div id="found" hidden>
+            <div id="found" style="display:none;">
                 <div id="found-header" >
     
                 </div>
@@ -118,6 +118,18 @@
         </div>
 
         <div id="news" hidden>
+            <div class="message">
+                <h1>Verze 0.8</h1>
+                <ul>
+                    <li class="newFeature">hrací plocha se přizpůsobí velikosti obrazovky</li>
+                    <li class="pageLook" >nový vzhled stránky</li>
+                    <li class="bugFix smallChange">odstraněny poletující smajlící (ale vrátí se!)</li>
+                    <li class="editorChange smallChange">nová náhodná pozadí</li>
+                    <li class="newFeature">první verze návodu</li>
+                    <li class="newFeature smallChange">první kroky k přidání nastavení</li>
+
+                </ul>
+            </div>
             <div class="message">
                 <h1>Verze 0.71</h1>
                 <ul>
@@ -235,7 +247,7 @@
             <p>Najdi všechna slova. </p>
 
             <h2>Popis herní plochy </h2>
-            <img src="./images/screenLayoutWithNotes.jpg" style="width: 900px; height: 500px;" class="image">
+            <img src="./images/screenLayoutWithNotes.jpg" class="guide-image">
 
             <h2>Zadávání slova</h2>
             <p>
@@ -285,9 +297,16 @@
         </div>
 
         <div id="settings" hidden>
+            <label id="mouseParticles" class="checkbox">
+                <div class="text">Test</div>
+                <input type="checkbox" onchange="setSettingsProperty('mouseParticles')">
+                <div class="checkmark"></div>
+                
+            </label>
             <label id="test" class="checkbox">
                 <div class="text">Test</div>
-                <input type="checkbox" >
+                <input type="checkbox">
+                <div class="checkmark"></div>
                 
             </label>
             <label id="color" class="colorPicker">

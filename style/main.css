@@ -71,7 +71,10 @@ body::-webkit-scrollbar {
 
     margin: 0px !important;
     text-align: center;
-    font-size: 40px;
+    font-size: calc(min(7vw,5vh));
+    line-height: calc(min(7.5vw,5.5vh));
+    vertical-align: top;
+    
     height: fit-content;
     width: fit-content;
 
@@ -95,6 +98,9 @@ body::-webkit-scrollbar {
     height: var(--title-height);
     width: var(--title-height);
 
+    max-width: calc(5vw);
+    max-height: calc(5vw);
+
     margin: calc(var(--title-height)/5);
     flex: 1;
 }
@@ -104,6 +110,8 @@ body::-webkit-scrollbar {
     top: 0px; */
     height: var(--title-height);
     width: var(--title-height);
+    max-width: calc(5vw);
+    max-height: calc(5vw);
 
     margin: calc(var(--title-height)/5);
     flex: 1;
@@ -114,6 +122,9 @@ body::-webkit-scrollbar {
 #goto-settings{
     height: var(--title-height);
     width: var(--title-height);
+
+    max-width: calc(5vw);
+    max-height: calc(5vw);
 
     margin: calc(var(--title-height)/5);
     flex: 1;
@@ -126,6 +137,9 @@ body::-webkit-scrollbar {
 
     margin: calc(var(--title-height)/5);
     flex: 1;
+
+    max-width: calc(5vw);
+    max-height: calc(5vw);
 
     user-select: none;
     pointer-events: none;
@@ -140,6 +154,8 @@ body::-webkit-scrollbar {
     overflow-x: auto;
     scrollbar-width: 0px;
 
+    text-align: center;
+
 
     background-image: linear-gradient(to right, rgb(19, 18, 18), rgb(20, 31, 34), rgb(14, 12, 12));
 
@@ -151,6 +167,7 @@ body::-webkit-scrollbar {
 
 .menuOpen{
     width: 350px;
+    max-width: 70vw;
 }
 
 .menuClosed{
@@ -160,12 +177,11 @@ body::-webkit-scrollbar {
 
 .menu-button{
     position: relative;
-    width: 100%;
+    width: 90%;
     
-
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-top: 30px;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    margin-top: 1vh;
 
     font-size: 30px;
     line-height: 30px;
@@ -174,7 +190,7 @@ body::-webkit-scrollbar {
     border-bottom: var(--color3) 2px solid;
     text-align: center;
 
-    display: block;
+    display: inline-block;
 }
 
 .menu-button:hover{

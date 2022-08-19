@@ -1,6 +1,8 @@
 
 :root{
     --settings-fontSize: 50px;
+
+    --settings-checkboxSize: 60px;
 }
 
 
@@ -21,13 +23,65 @@
 }
 
 #settings .checkbox input{
+    position: absolute;
+    height: 0;
+    width: 0;
+    opacity: 0;
+
+   
+}
+
+/* not checked */
+#settings .checkbox .checkmark{
     position: relative;
+    top: 0;
+    left: 0;
     vertical-align: middle;
-    height: calc(var(--settings-fontSize)/1.5);
-    width: calc(var(--settings-fontSize)/1.5);
+
+    height: calc(var(--settings-checkboxSize)/2);
+    width: var(--settings-checkboxSize);
+
+    border-radius: var(--settings-checkboxSize);
+
+    background-color: rgb(190, 190, 190);
 
     display: inline-block;
+    transition: all 0.1s ease;
 }
+
+
+#settings .checkbox .checkmark::after{
+    content: '';
+    position: relative;
+    top: 0;
+    left: 0;
+
+    height: calc(var(--settings-checkboxSize)/2);
+    width: calc(var(--settings-checkboxSize)/2);
+
+    background-color: rgb(252, 252, 252);
+    border-radius: calc(var(--settings-checkboxSize)/3);
+    display: block;
+
+    transition: all 0.1s ease;
+    
+}
+/* checked */
+#settings .checkbox input:checked ~ .checkmark{
+    background-color: var(--color5);
+}
+
+
+#settings .checkbox input:checked ~ .checkmark::after{
+    left: calc(var(--settings-checkboxSize)/2);
+}
+/* hover */
+#settings .checkbox:hover .checkmark::after{
+    background-color: rgb(189, 194, 189);
+}
+
+
+
 
 #settings .text{
     position: relative;

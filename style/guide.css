@@ -7,7 +7,9 @@
 }
 
 #guide{
-    margin: 50px;
+    margin-top: 2vh;
+    margin-left: 2vw;
+    margin-right: 2vw;
     user-select: none;
 }
 
@@ -41,10 +43,13 @@
     line-height: var(--guide-fontSize);
 }
 
-#guide .image{
+#guide .guide-image{
     position: relative;
     margin: 10px;
+
+    width: calc(min(80vw,100%));
     border: 1px solid var(--color3);
+    
 }
 
 #guide li{

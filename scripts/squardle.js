@@ -33,35 +33,37 @@ let board = document.querySelector("#board");
 
 let winplayed;
 
-
+// part of IMPORTANT
 let mouseParticleWait = 2;
 let currentWait = 0;
 async function initialize(){
     LIBRARY = await getJson("./libraries/" + libraryName)
     window.addEventListener("pointerup",(e)=>{mouseUp()})
-    window.addEventListener("pointermove",(e)=>{
+    // IMPORTANT
+    // window.addEventListener("pointermove",(e)=>{
         
-        if(e.buttons > 0)
-        {
-            currentWait++;
-            if(currentWait > mouseParticleWait)
-            {
-                let mouseParticle = new Particle(["*"],
-                                                ["mouseParticle1","mouseParticle2"], 
-                                                new Range2D(new Range(e.pageX), new Range(e.pageY)), 
-                                                0, 
-                                                new Range(500, 1000), 
-                                                new Range(260,300), 
-                                                new Range(20,200), 
-                                                true,
-                                                false,
-                                                5);
-                createParticle(mouseParticle)
-                currentWait = 0
-            }
+    //     if(e.buttons > 0)
+    //     {
+    //         currentWait++;
+    //         if(currentWait > mouseParticleWait)
+    //         {
+    //             let mouseParticle = new Particle(["*"],
+    //                                             ["mouseParticle1","mouseParticle2"], 
+    //                                             new Range2D(new Range(e.pageX), new Range(e.pageY)), 
+    //                                             0, 
+    //                                             new Range(500, 1000), 
+    //                                             new Range(260,300), 
+    //                                             new Range(20,200), 
+    //                                             true,
+    //                                             false,
+    //                                             5);
+    //             createParticle(mouseParticle)
+    //             currentWait = 0
+    //         }
             
-        }
-    })
+    //     }
+    // })
+    
 }
 // LOAD DATA
 async function loadSquardle(squardleToLoad)
@@ -93,7 +95,7 @@ async function loadSquardle(squardleToLoad)
     updateWord("","white")
     updateAll();
  
-    
+    document.querySelector(":root").style.setProperty('--boardSize',S.letters.length);
 }
 
 function updateAll()
@@ -543,9 +545,19 @@ function testMainWord() //<= goes here from mouseUp
                 //     createParticle(plusPointsParticle);
                 // }
                 // OPTION 2 - JUST ONE PARTICLE
-                let left = output.getBoundingClientRect().left + output.getBoundingClientRect().width;
-                let top = output.getBoundingClientRect().top + output.getBoundingClientRect().height;
-                let plusPointsParticle = new Particle(["+" + element.length*element.length + "bodů"], ["plusPoints"], new Range2D(new Range(left + 20), new Range(top)), 1000, new Range(1000), "up", new Range(100), true);
+                let scoreBoundingBox = document.querySelector("#current-points").getBoundingClientRect()
+                let left = scoreBoundingBox.left + scoreBoundingBox.width;
+                let top = scoreBoundingBox.top;
+                let plusPointsParticle = new Particle(
+                    ["+" + element.length*element.length + "bodů"], 
+                    ["plusPoints"], 
+                    new Range2D(new Range(left), new Range(top)), 
+                    2000, 
+                    new Range(1000), 
+                    "up", 
+                    new Range(30), 
+                    true
+                );
                 
                 createParticle(plusPointsParticle);
             }
@@ -559,7 +571,7 @@ function testMainWord() //<= goes here from mouseUp
     {
         if(mainWord.length < 4)
         {
-            updateWord("Slovo není dostatečně dlouhé", "red");
+            updateWord("Krátké!", "red");
             return;
         }
         if(!bonusWordsFound.includes(mainWord))
@@ -570,7 +582,7 @@ function testMainWord() //<= goes here from mouseUp
         }
         else
         {
-            updateWord("Již nalezeno (bonusové)", "cyan");
+            updateWord("Již nalezeno", "cyan");
         }
         setOutputAnimation();
         return;
@@ -821,7 +833,8 @@ function updateLine()
     {
         line.removeChild(line.firstChild);
     }
-    line.appendChild(connectButtons(wordPath))
+    line.appendChild(connectButtons(wordPath));
+    
 }
 
 function connectButtons(path)
@@ -842,6 +855,7 @@ function drawLine(points)
         const prevElement = points[i-1]
         const element = points[i];
         line.appendChild(createLine(prevElement[0],prevElement[1],element[0],element[1]));
+
     }
     return line;
 

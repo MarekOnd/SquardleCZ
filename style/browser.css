@@ -2,7 +2,7 @@
 
 :root{
     --browser-tileHeight: 180px;
-    --browser-tileWidth: 370px;
+    --browser-tileWidth: 340px;
     --browser-titleFontSize: 30px;
     --browser-fontSize: 20px;
     --browser-tilePadding: 10px;
@@ -52,6 +52,7 @@
 .browserTile #content{
     position: relative;
     width: var(--browser-tileWidth);
+    max-width: 80vw;
     height: var(--browser-tileHeight);
     padding: var(--browser-tilePadding);
     border-radius: var(--browser-radius);

@@ -170,9 +170,9 @@ function createParticle(part)
     part.lifespan.lock();
     part.speed.lock();
 
-    partObject.style.scale = "0";
+    
     let delay = setTimeout(()=>{
-        
+        partObject.style.scale = "0";
         let points = convertToAnimation(getPositions(part));
         points[0].scale = '1';
         if(part.fade === true)

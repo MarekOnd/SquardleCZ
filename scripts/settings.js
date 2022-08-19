@@ -65,7 +65,7 @@ function saveSettings()
     localStorage.setItem(sett)
 }
 
-function setSettingsProperty(property)
+function setSettingsProperty(propertyName)
 {
-
+    
 }
