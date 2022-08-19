@@ -48,6 +48,7 @@ svg {
 #title-header{
     display: flex;
     justify-content: center;
+    /* Cool border not cool enough :( */
     /* border-bottom: solid var(--color3) 5px;
     border-left: solid var(--color3) 5px; */
     font-size: 1.3rem;
@@ -67,7 +68,7 @@ svg {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(var(--color3), var(--color5));
+    background: linear-gradient(var(--color6), var(--color8));
     background-clip: text;
     -webkit-text-fill-color: transparent;
 
