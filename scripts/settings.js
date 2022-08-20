@@ -188,13 +188,13 @@ function initSelectOptions(selectId, options)
         {
             option.classList.add("selectedOption");
         }
-        option.addEventListener('pointerup', ()=>{selectOption(selectId, i)});
+        option.addEventListener('pointerup', ()=>{selectOption(selectId, i, options[i])});
         select.appendChild(option);
     }
 
 }
 
-function selectOption(id, index)
+function selectOption(id, index, value)
 {
     let select = document.querySelector('#' + id);
     let selectChildren = select.querySelectorAll(".option");
@@ -204,5 +204,5 @@ function selectOption(id, index)
         option.classList.remove('selectedOption');
     }
     selectChildren[index].classList.add('selectedOption');
-    setSettingsProperty(id, index);
+    setSettingsProperty(id, value);
 }

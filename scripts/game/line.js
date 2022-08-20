@@ -49,7 +49,6 @@ function createLineElement(x, y, length, angle) {
 
     line.setAttribute('style', styles); 
 
-
     return line;
 }
 

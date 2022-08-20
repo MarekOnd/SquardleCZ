@@ -47,15 +47,13 @@ async function initialize(){
     window.addEventListener("pointerup",(e)=>{mouseUp()})
 
     window.addEventListener("pointermove",(e)=>{
-        if(getSettingsProperty('showMouseParticles') === false)
-        {
-            return;
-        }
-        if(e.buttons > 0)
+        
+        if(getSettingsProperty('showMouseParticles') === true && e.buttons > 0)
         {
             currentWait++;
             if(currentWait > mouseParticleWait)
             {
+                
                 let mouseParticle = new Particle(getSettingsProperty('mouseParticlesModel'),
                                                 ["mouseParticle1","mouseParticle2"], 
                                                 new Range2D(new Range(e.pageX), new Range(e.pageY)), 
@@ -65,9 +63,9 @@ async function initialize(){
                                                 new Range(20,200), 
                                                 true,
                                                 false,
-                                                5);
+                                                3);
                 createParticle(mouseParticle)
-                currentWait = 0
+                currentWait = 0;
             }
             
         }

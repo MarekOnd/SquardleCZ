@@ -62,13 +62,14 @@ function mouseEnter(x,y)
     {
         return;
     }
-    clearTimeout(timeout);
-    clearTimeout(secondTimeout);
+
     let lastPosition = wordPath.positions[wordPath.positions.length-1];
     if(lastPosition.x === x && lastPosition.y === y)
     {
         return;
     }
+    clearTimeout(timeout);
+    clearTimeout(secondTimeout);
     let positionBefore = wordPath.positions[wordPath.positions.length-2];
 
     let button = getButton(x,y);
