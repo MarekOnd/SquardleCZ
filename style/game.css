@@ -138,7 +138,7 @@
 .cell .selected{
     background: gray;
     /* border-radius: 9px; */
-    transform: scale(0.95);  /*TODO: FIX!*/
+   /* transform: scale(0.95);  TODO: FIX!*/
 
 }
 .boardButton .button-start{
