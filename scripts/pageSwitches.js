@@ -56,6 +56,8 @@ function openTab(tabId)
         case "game":
             saveCurrentSquardle();
             loadSquardle(getSquardle(currentSquardle));
+            document.querySelector("#share").hidden = false;
+            document.querySelector("#share-spacer").hidden = true;
             break;
         case "browser":
             updateBrowserContent();
