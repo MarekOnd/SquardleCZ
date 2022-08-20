@@ -124,7 +124,6 @@ async function loadSquardle(squardleToLoad)
 
     
 
-    document.querySelector("#share").hidden = false;
 
     
 }
@@ -137,6 +136,7 @@ function leftSquardle()
         clearInterval(interval)
     }
     document.querySelector("#share").hidden = true;
+    document.querySelector("#share-spacer").hidden = false;
     
 }
 
