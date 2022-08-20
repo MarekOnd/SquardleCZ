@@ -211,8 +211,8 @@ function exportSquardle()
         expSq.endDate = new Date(
                         new Date(document.getElementById("startDate").value).getTime() + 
                         document.getElementById("howManyDays").value*1000*24*60*60 +
-                        parseFloat(document.getElementById("howManyHours").value.split(':')[0])*3600*1000 +
-                        parseFloat(document.getElementById("howManyHours").value.split(':')[1])*1000*60
+                        parseFloat(document.getElementById("howManyHours").value)*3600*1000 +
+                        parseFloat(document.getElementById("howManyMinutes").value)*1000*60
                     )       
     }
     else
@@ -238,7 +238,7 @@ function exportSquardle()
         !check(expSq.author, "Nebyl zadán autor") ||
         !check(expSq.difficulty, "Nebyla zadána obtížnost") ||
         (
-            expSq.limitedTime && (!check(S.startDate, "Nebylo zadáno datum začátku") || !check(S.endDate, "Nebylo zadáno datum konce")) 
+            expSq.limitedTime && (!check(expSq.startDate, "Nebylo zadáno datum začátku") || !check(expSq.endDate, "Nebylo zadáno datum konce")) 
         )
         )
     {
