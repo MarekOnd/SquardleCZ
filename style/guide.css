@@ -1,15 +1,15 @@
 
 :root{
-    --guide-h1FontSize: 50px;
-    --guide-h2FontSize: 30px;
-    --guide-fontSize: 20px;
+    --guide-h1FontSize: calc(min(50px,10vw));
+    --guide-h2FontSize: calc(min(30px,5vw));
+    --guide-fontSize: calc(min(20px,4vw));
 
 }
 
 #guide{
+    margin: 2vw;
     margin-top: 2vh;
-    margin-left: 2vw;
-    margin-right: 2vw;
+
     user-select: none;
 }
 

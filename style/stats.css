@@ -1,7 +1,7 @@
 :root{
     --statBoxHeight: 300px;
     --statBoxWidth: 80%;
-    --stats-titleFontSize: 30px;
+    --stats-titleFontSize: calc(min(30px,3vh));
     --stats-fontSize: 20px;
 
 }

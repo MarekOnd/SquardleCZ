@@ -1,23 +1,24 @@
 
 :root{
-    --news-bigHeaderSize: 40px;
-    --news-smallHeaderSize: 20px;
-    --news-textSize: 20px;
-    --news-bigIconSize: 40px;
-    --news-smallIconSize: 20px;
+    --news-bigHeaderSize: calc(min(40px,5vw));
+    --news-smallHeaderSize: calc(min(20px,3vw));
+    --news-textSize: calc(min(20px,3vw));
+    --news-bigIconSize: var(--news-bigHeaderSize);
+    --news-smallIconSize: var(--news-textSize);
+    --news-borderWidth: 0.2vw;
 }
 
 .message{
     position: relative;
     height: fit-content;
     width: fit-content;
-    padding: 20px;
-    margin: 50px;
+    padding: 1vw;
+    margin: 5vw;
     
     user-select: none;
 
-    border-bottom: 5px var(--color5) solid;
-    border-left: 5px var(--color5) solid;
+    border-bottom: var(--news-borderWidth) var(--color5) solid;
+    border-left: var(--news-borderWidth) var(--color5) solid;
 }
 
 .message h1{
@@ -31,7 +32,7 @@
     font-size: var(--news-bigHeaderSize);
     line-height: var(--news-bigHeaderSize);
 
-    border-bottom: 5px var(--color5) solid;
+    border-bottom: var(--news-borderWidth) var(--color5) solid;
     
 }
 
@@ -40,7 +41,7 @@
     height: var(--news-smallHeaderSize);
     width: fit-content;
 
-    padding: 5px;
+    padding: 0.1vw;
     margin: 0px;
 
     font-size: var(--news-smallHeaderSize);
@@ -51,6 +52,8 @@
     position: relative;
     height: fit-content;
     width: fit-content;
+    margin: 1vw;
+    padding: 1vw;
    
 }
 /*

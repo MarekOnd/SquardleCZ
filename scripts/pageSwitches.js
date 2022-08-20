@@ -17,6 +17,27 @@ function openTab(tabId)
     {
         tabBefore = JSON.parse(localStorage.getItem("currentTab"));
     }
+    // tab from which user is going
+    switch(tabBefore)
+    {
+        case "game":
+            leftSquardle()
+            break;
+        case "browser":
+            break;
+        case "news":
+            break;
+        case "stats":
+            break;
+        case "about":
+            break;
+        case "guide":
+            break;
+        case "settings":
+            break;
+    }
+
+   
     // hides all
     for (let index = 0; index < allTabs.length; index++) {
         // document.getElementById(allTabs[index]).stylse.display = "none";
@@ -27,7 +48,9 @@ function openTab(tabId)
     // document.getElementById(tabId).style.display = "block";
     document.getElementById(tabId).hidden = false;
     document.getElementById("goto-" + tabId).classList.add("selectedTab-button");
-    // does additional stuff for each tab
+
+    
+    // does additional stuff for each tab the user is switching to
     switch(tabId)
     {
         case "game":

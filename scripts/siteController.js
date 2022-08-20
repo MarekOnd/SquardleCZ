@@ -5,6 +5,8 @@ async function pageStart()
 
     // loads libraries and squardles
     initialize();
+    initUpdate();
+    initializeSettings();
     await loadSquardlesData();
     loadAllSaves();
     // loads selected tab and squardle from localStorage
@@ -13,7 +15,7 @@ async function pageStart()
     let lastTab = localStorage.getItem("currentTab");
     if(lastTab === null)
     {
-        lastTab = "game";
+        lastTab = "guide";
     }
     else
     {
@@ -25,7 +27,7 @@ async function pageStart()
     }
     openTab(lastTab);
 
-    initializeSettings();
+    
 
         
 
@@ -132,6 +134,7 @@ function loadAllSaves()
 
 function setSave(s)
 {
+    s.existed = true;
     // tries to find save to overwrite
     let indexToSave = null;
     for (let i = 0; i < allSaves.length; i++) {
@@ -166,6 +169,8 @@ function getSave(hash)
         hash:hash,
         wordsFound:[],
         bonusWordsFound:[],
+        numberOfWrongTries:0,
+        timePlayed:0,
         existed:false
     }
     return defaultSave;
@@ -176,6 +181,17 @@ function getSquardleSave(sq)
     for (let i = 0; i < allSaves.length; i++) {
         if(allSaves[i].hash === hashSquardle(sq))
         {
+            //compatibility with old saves
+            if(!allSaves[i].numberOfWrongTries)
+            {
+                allSaves[i].numberOfWrongTries = 0;
+            }
+            if(!allSaves[i].timePlayed)
+            {
+                allSaves[i].timePlayed = 0;
+            }
+
+
             return allSaves[i];// is already saved
         }
     }
@@ -183,6 +199,8 @@ function getSquardleSave(sq)
         hash:hashSquardle(sq),
         wordsFound:[],
         bonusWordsFound:[],
+        numberOfWrongTries:0,
+        timePlayed:0,
         existed:false
     }
     for (let i = 0; i < sq.wordsToFind.length; i++) {

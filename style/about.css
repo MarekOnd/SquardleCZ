@@ -1,14 +1,14 @@
 
 :root{
 
-    --about-headerFontSize: 50px;
-    --about-fontSize: 20px;
+    --about-headerFontSize: calc(min(50px,8vw));
+    --about-fontSize: calc(min(20px,3vw));
 
 }
 
 #about{
-    margin: 50px;
-    user-select: none;
+    margin: 5vw;
+    
 }
 
 #about h1{
@@ -23,6 +23,7 @@
     border-left: solid var(--color3) 5px;
     border-top: solid transparent 5px;
     border-right: solid transparent 5px;
+    user-select: none;
 }
 
 

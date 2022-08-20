@@ -71,8 +71,11 @@
     transition: transform 0.5s cubic-bezier(.52,.27,.17,1.41);
     
 }
+
+
+
 #board .cell{
-    /* filter: drop-shadow(5px 5px 3px #36364d); */
+    filter: drop-shadow(5px 5px 3px #36364d);
     
     transition: inherit;
     position: relative;
@@ -82,14 +85,25 @@
     /* height: var(--game-cellSize); */
     /* margin: var(--game-spacesBetweenCells); */
     /* transition: transform 0.5s; */
+
+
     
+}
+
+@supports (-moz-appearance:none) {
+    #board .cell{
+        filter: none !important;
+    }
+    .cell .boardButton{
+        box-shadow: 5px 5px 3px #36364d;
+    }
 }
 .cell .boardButton{
     position: relative;
     height: 100%;
     width:  100%;
 
-    box-shadow: 5px 5px 3px #36364d;
+    /* box-shadow: 5px 5px 3px #36364d; not working with scale*/
 
 
     border-radius: calc(var(--board-dimensions)/(var(--boardSize)*10));
@@ -125,7 +139,7 @@
     transition: transform 0.1s ease;
     background: gray;
     /* border-radius: 9px; */
-    transform: scale(0.95);
+    transform: scale(0.95); /* TODO: FIX!*/
 
 }
 .boardButton .button-start{
@@ -159,8 +173,8 @@
     margin-left: auto;
     margin-right: auto;
 
-    height: 40px;
-    line-height: 40px;
+    height: calc(var(--board-dimensions)/10);
+    line-height: calc(var(--board-dimensions)/10);
     padding: 10px;
     font-size: calc(var(--board-dimensions)/10);
 }
@@ -212,9 +226,10 @@
     width: 90vw;
     height: 90vh;
     
-    border-bottom: solid var(--color3) 3px;
-    border-left: solid var(--color3) 3px;
-    border-radius: 10px;
+    border-bottom: solid var(--color5) 3px;
+    border-left: solid var(--color5) 3px;
+    border-top: solid transparent 3px;
+    border-right: solid transparent 3px;
     background-image: linear-gradient(to right, black , rgb(4, 0, 41), black);
 
     z-index: 50;
@@ -224,10 +239,14 @@
 
 #found-header{
     position: relative;
+
+    
     text-align: center;
     line-height: 50px;
-    font-size: calc(var(--board-dimensions)/10);
-    padding: 30px;
+    font-size: calc(var(--board-dimensions)/15);
+    margin: 30px;
+
+    
 }
 
 #found-words{
@@ -238,8 +257,6 @@
     width: 70%;
 
     padding: 10px;
-    outline: solid 2px;
-    outline-color: var(--color9);
     
     overflow: auto;
     -ms-overflow-style: none;  /* IE and Edge */
@@ -262,6 +279,13 @@
 
     width: fit-content;
     height: fit-content;
+
+    padding: 0.5vw;
+
+    border-bottom: solid var(--color5) 3px;
+    border-left: solid var(--color5) 3px;
+    border-top: solid transparent 3px;
+    border-right: solid transparent 3px;
 }
 
 .foundWord-words{
@@ -289,11 +313,11 @@
 .notFound{
     text-decoration: underline;
     text-decoration-style: dotted;
-    color: rgb(255, 138, 138);
+    color: rgb(255, 102, 102);
 }
 
 .foundWord-words:hover{
-    background-color: var(--color8);
+    background-color: var(--color5);
     color: var(--font-color-onlight);
     text-decoration: underline;
     
@@ -320,11 +344,16 @@
     font-size: calc(var(--board-dimensions)/20);
     text-align: center;
     
-    padding: 10px;
-    border-radius: 5px;
-    border: solid var(--color9) 2px;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
+
+    border-bottom: solid var(--color5) 3px;
+    border-top: solid var(--color5) 3px;
+    border-left: solid transparent 3px;
+    border-right: solid transparent 3px;
     
-    background-color: var(--color2);
     color: var(--font-color-ondark);
 }
 
@@ -334,8 +363,10 @@
 
 .found-words-line{
     position: relative;
-    margin: 5px;
-    border: dashed var(--color9) 1px;
+    margin: 0;
+    height: 0;
+
+    border: transparent;
 }
 
 /* LINE */
@@ -358,6 +389,7 @@
     
     border-radius: var(--lineSize);
     z-index: 2;
+
 }
 
 

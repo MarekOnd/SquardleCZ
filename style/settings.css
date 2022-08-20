@@ -1,10 +1,10 @@
 
 :root{
     --settings-sectionHeaderFontSize: 30px;
-    --settings-fontSize: 30px;
+    --settings-fontSize: calc(min(30px,8vw));
 
-    --settings-checkboxSize: 40px;/* width */
-    --settings-sliderSize: 30px;/* height */
+    --settings-checkboxSize: calc(min(60px,8vw));/* width */
+    --settings-sliderSize: calc(min(30px,4vw));/* height */
     --settings-selectSize: 30px
 }
 
@@ -12,9 +12,8 @@
 #settings{
     position: relative;
 
-    margin-left: 50px;
-    margin-right: 50px;
-    padding: 30px;
+    margin: 1vw;
+    padding: 1vw;
 
 
     user-select: none;
@@ -38,10 +37,10 @@
 #settings .settingsSection{
     position: relative;
     height: calc(var(--settings-sectionHeaderFontSize)*2);
-    width: 50vw;
+    width: 80vw;
 
-    margin: 10px;
-    padding: 10px;
+    margin: 1vw;
+    padding: 0.1vw;
 
     /* border: solid 5px white;
     border-radius: 30px;
@@ -69,15 +68,24 @@
 }
 
 #settings .opened{
-    height: 300px;
+    height: 50vh;
 
-    margin: 10px;
+
 
     border-top: solid var(--color3) 5px;
     border-right: solid var(--color3) 5px;
     border-bottom: solid transparent  5px;
     border-left: solid transparent  5px;
 }
+
+#settings .settingsInput{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    display: block;
+}
+
 /* CHECK BOX */
 #settings .checkbox{
     position: relative;
@@ -151,7 +159,7 @@
     position: relative;
     vertical-align: middle;
     
-    width: 300px;
+
     height: var(--settings-sliderSize);
     border-radius: calc(var(--settings-sliderSize)/2);
 
@@ -160,14 +168,20 @@
     transition: all 0.1s ease;
 
     z-index: 10;
+
+    display: inline-block;
 }
 
 #settings .slider input::-webkit-slider-thumb {
     appearance: none;
     position: relative;
     vertical-align: middle;
+
+    margin: 0;
+
     width: var(--settings-sliderSize);
     height: var(--settings-sliderSize);
+
     border-radius: calc(var(--settings-sliderSize)/2);
 
     background-color: var(--color5);
@@ -215,84 +229,17 @@
 
 /* SELECT FROM OPTIONS */
 
-/* #settings .select select{
-
-    appearance: none;
-
-    padding: 0 1em 0 0;
-    margin: 0;
-
-    position: relative;
-    vertical-align: middle;
-
-    height: var(--settings-selectSize);
-    min-width: calc(var(--settings-selectSize)*2);
-
-    font-family: inherit;
-    font-size: var(--settings-selectSize);
-    line-height: var(--settings-selectSize);
-
-    background-color: transparent;
-
-    outline: none;
-
-    
-}
-
-#settings .select select option{
-    appearance: none;
-
-    height: var(--settings-selectSize);
-
-    outline: 1px solid white;
-
-    background-color: transparent;
-
-    display: grid;
-
-    z-index: 10;
-}
-
-select:focus{
-    color: red;
-}
-
-select:hover{
-    color: green;
-}
-select option:hover{
-    color: green;
-    background-color: black;
-}
-#settings .select select option::before{
-    position: relative;
-    content: "";
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-
-    display: block;
-    background-color: black;
-    z-index: 12;
-} */
-#settings .settingsInput{
-    height: 40px;
-    line-height: 40px;
-    vertical-align: middle;
-    display: block;
-}
 #settings .select .options{
     position: relative;
     padding: 1px;
-    display: inline-block;
+    display: block;
 }
 
 #settings .select .options .option{
     position: relative;
     padding: 1px;
     margin-left: 5px;
-    width: var(--settings-selectSize);
+    width: fit-content;
     height: var(--settings-selectSize);
     font-size: var(--settings-selectSize);
     line-height: var(--settings-selectSize);

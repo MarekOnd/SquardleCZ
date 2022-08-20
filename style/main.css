@@ -74,6 +74,7 @@ svg {
     -webkit-text-fill-color: transparent;
 
     text-decoration: none;
+    user-select: none;
 }
 
 #title-header .header-group{

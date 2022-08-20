@@ -2,61 +2,122 @@
 
 function updateBrowserContent()
 {
-    
+    // create all tiles that should show according to settings
     let browser = document.getElementById("browser-tiles");
     clearChildren(browser)
     let allTiles = []
-    for (let i = 0; i < squardlesCasual.length; i++) {
-        const element = squardlesCasual[i];
-        let browserTile = createSquardleTile(element,"casual",i);
-        allTiles.push(browserTile);
+    if(getSettingsProperty("showCasual"))
+    {
+        for (let i = 0; i < squardlesCasual.length; i++) {
+            const element = squardlesCasual[i];
+            if(showThisActiveState(getSquardleActiveState(element)))
+            {
+                let browserTile = createSquardleTile(element,"casual",i);
+                allTiles.push(browserTile);
+            }
+            
+        }
     }
-    for (let i = 0; i < squardlesWeekly.length; i++) {
-        const element = squardlesWeekly[i];
-        let browserTile = createSquardleTile(element,"weekly",i);
-        allTiles.push(browserTile);
+    if(getSettingsProperty("showWeekly"))
+    {
+        for (let i = 0; i < squardlesWeekly.length; i++) {
+            const element = squardlesWeekly[i];
+            if(showThisActiveState(getSquardleActiveState(element)))
+            {
+                let browserTile = createSquardleTile(element,"weekly",i);
+                allTiles.push(browserTile);
+            }
+            
+        }
     }
-    for (let i = 0; i < squardlesSpecial.length; i++) {
-        const element = squardlesSpecial[i];
-        let browserTile = createSquardleTile(element,"special",i);
-        allTiles.push(browserTile);
+    if(getSettingsProperty("showSpecial"))
+    {
+        for (let i = 0; i < squardlesSpecial.length; i++) {
+            const element = squardlesSpecial[i];
+            if(showThisActiveState(getSquardleActiveState(element)))
+            {
+                let browserTile = createSquardleTile(element,"special",i);
+                allTiles.push(browserTile);
+            }
+            
+        }
     }
-    for (let i = 0; i < squardlesShared.length; i++) {
-        const element = squardlesShared[i];
-        let browserTile = createSquardleTile(element,"shared",i);
-        allTiles.push(browserTile);
+    if(getSettingsProperty("showShared"))
+    {
+        for (let i = 0; i < squardlesShared.length; i++) {
+            const element = squardlesShared[i];
+            if(showThisActiveState(getSquardleActiveState(element)))
+            {
+                let browserTile = createSquardleTile(element,"shared",i);
+                allTiles.push(browserTile);
+            }
+            
+        }
     }
-
+    if(allTiles.length === 0)
+    {
+        let allHiddenText = document.createElement("div");
+        allHiddenText.textContent = "Všechny squarly jsou schované, aktivujte je v nastavení";
+        browser.appendChild(allHiddenText);
+    }
     for (let i = 0; i < allTiles.length; i++) {
         const element = allTiles[i];
-        browser.appendChild(element)
+        browser.appendChild(element);
     }
 
+    if(getSettingsProperty("showShared"))
+    {
+        // at the end add import
+        let label = document.createElement("label");
+        label.htmlFor = "import-file";
 
-    // at the end add import
-    let label = document.createElement("label");
-    label.htmlFor = "import-file";
-
-    let content = document.createElement("div");
-    content.id = "content";
-    let plus = document.createElement("img");
-    plus.id = "plus"
-    plus.src = "./images/plus.svg"
-    content.appendChild(plus)
-    let importButton = document.createElement("div");
-    importButton.classList.add("browserTile");
-    importButton.id ="import-tile";
-    importButton.title = "importovat"
-    label.appendChild(content)
-    importButton.appendChild(label);
-    browser.appendChild(importButton);
+        let content = document.createElement("div");
+        content.id = "content";
+        let plus = document.createElement("img");
+        plus.id = "plus"
+        plus.src = "./images/plus.svg"
+        content.appendChild(plus)
+        let importButton = document.createElement("div");
+        importButton.classList.add("browserTile");
+        importButton.id ="import-tile";
+        importButton.title = "importovat"
+        label.appendChild(content)
+        importButton.appendChild(label);
+        browser.appendChild(importButton);
+    }
+    
 
     tabBefore = "browser"
 
 }
-
+function showThisActiveState(state)// return whether this state should be shown according to settings
+{
+    if(state === "old")
+    {
+        if(getSettingsProperty("showOld"))
+        {
+            return true;
+        }
+    }
+    else if(state === "active")
+    {
+        if(getSettingsProperty("showActive"))
+        {
+            return true;
+        }
+    }
+    else// upcoming
+    {
+        if(getSettingsProperty("showUpcoming"))
+        {
+            return true;
+        }
+    }
+    return false;
+}
 function createSquardleTile(sq, classToAdd, index)
 {
+    
     //TILE
     let browserTile = document.createElement("div");
     browserTile.classList.add("browserTile");
@@ -115,8 +176,8 @@ function createSquardleTile(sq, classToAdd, index)
         seeResultButton.src = "./images/eye.svg";
         seeResultButton.classList.add("seeResultButton");
         seeResultButton.addEventListener("click",(e)=>{
-            squardleBrowserTileClick(classToAdd,index);
-            board.classList.add("disabled");
+
+            squardleBrowserTileClick(classToAdd,index, true);
             updateFound();
             })
         seeResultButton.title = "Podívat se na výsledek";
@@ -146,7 +207,7 @@ function createSquardleTile(sq, classToAdd, index)
         else
         {
             
-            date.textContent = "Zbývá " + howManyDays + " dnů " + howManyHours  + " h " + howManyMinutes + " min";
+            date.textContent = "Zbývá " + howManyDays + " dnů " + howManyHours  + " h ";
         }
 
         browserTile.addEventListener("click",(e)=>{squardleBrowserTileClick(classToAdd,index)})
@@ -345,8 +406,9 @@ function createSquardleTile(sq, classToAdd, index)
     return browserTile;
 }
 
-function squardleBrowserTileClick(type, index)
+function squardleBrowserTileClick(type, index, prev = false)
 {
+    preview = prev;// declared in squardle
     currentSquardle = new searchParameters(type, index);
     openTab("game");
 }

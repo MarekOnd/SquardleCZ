@@ -29,24 +29,43 @@ function applyStats(where, sqArr, type)
     
 
     let totalScore = where.getElementsByClassName("totalScore")[0];
-    totalScore.textContent = "Celkově " + countTotalPoints(sqArr) + " bodů";
+    totalScore.textContent = "Nasbíráno " + countTotalPoints(sqArr) + " bodů";
 
+
+    let totalBonusWordsNum = countTotalBonusWords(sqArr)
+    let totalWordsFoundNum =  countTotalWordsFound(sqArr)
+    
     let totalWordsFound = where.getElementsByClassName("totalWordsFound")[0];
     switch(type)
     {
         case "shared":
         case "all":
-            totalWordsFound.textContent = "Slov nalezeno " + countTotalWordsFound(sqArr);
+            totalWordsFound.textContent = "Slov nalezeno: " + totalWordsFoundNum;
             break;
         default:
-            totalWordsFound.textContent = "Slov nalezeno " + countTotalWordsFound(sqArr) + "/" + countTotalWords(sqArr);
+            totalWordsFound.textContent = "Slov nalezeno: " + totalWordsFoundNum + "/" + countTotalWords(sqArr);
             break;
     }
 
     let totalBonusWords = where.getElementsByClassName("totalBonusWords")[0];
-    totalBonusWords .textContent = "Celkově " + countTotalBonusWords(sqArr) + " bonusových slov";
+    totalBonusWords.textContent = "Bonusových slov: " + totalBonusWordsNum;
+
+    let totalTimePlayed = where.getElementsByClassName("totalTimePlayed")[0];
+    totalTimePlayed.textContent = "Celkový čas: " + countTotalTime(sqArr) + " sekund";
 
 
+    let totalAccuracy = where.getElementsByClassName("totalAccuracy")[0];
+    let totalWordsFoundAny =  totalBonusWordsNum + totalWordsFoundNum;
+    let accuracyPercent = (totalWordsFoundAny/(countTotalWrongTries(sqArr)+totalWordsFoundAny) * 100)
+    if(accuracyPercent)
+    {
+        totalAccuracy.textContent = "Přesnost: " + (Math.round(accuracyPercent*100)/100) + "%" // round to two decimals
+    }
+    else
+    {
+        totalAccuracy.textContent = "Přesnost: neurčena"
+    }
+    
     
 }
 
@@ -128,6 +147,25 @@ function countTotalPoints(sqArr)
     return totalScore;
 }
 
+function countTotalTime(sqArr)
+{
+    let time = 0;
+    for (let i = 0; i < sqArr.length; i++) {
+        const save = getSave(hashSquardle(sqArr[i]));
+        time += save.timePlayed;
+    }
+    return time;
+}
+function countTotalWrongTries(sqArr)
+{
+    let wrongTries = 0;
+    for (let i = 0; i < sqArr.length; i++) {
+        const save = getSave(hashSquardle(sqArr[i]));
+        wrongTries += save.numberOfWrongTries;
+    }
+    return wrongTries;
+}
+
 function toggleStatBox(box)
 {
     if(box.classList.contains("opened"))
@@ -139,3 +177,4 @@ function toggleStatBox(box)
         box.classList.add("opened");
     }
 }
+

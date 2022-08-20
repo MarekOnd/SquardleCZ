@@ -129,10 +129,35 @@ String.prototype.replaceAt = function(index, replacement) {
 
 function isSquardleActive(sq)
 {
-    if((sq.limitedTime === false) ||(new Date(sq.startDate) <= Date.now() && new Date(sq.endDate) >= Date.now()))
+    if((sq.limitedTime === false) || (new Date(sq.startDate) <= Date.now() && new Date(sq.endDate) >= Date.now()))
     {
         return true;
     }
     return false;
 }
 
+function isSquardleUpcoming(sq)
+{
+    if(sq.limitedTime === true && new Date(sq.startDate) > Date.now())
+    {
+        return true;
+    }
+    return false;
+}
+
+// not used in old functions
+function getSquardleActiveState(sq)// returns old, active, upcoming
+{
+    if(isSquardleUpcoming(sq))
+    {
+        return "upcoming";
+    }
+    else if(isSquardleActive(sq))
+    {
+        return "active";
+    }
+    else
+    {
+        return "old";
+    }
+}

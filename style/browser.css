@@ -212,7 +212,7 @@
     border: var(--color2) solid 2px;
     /* background-color: var(--color8); */
     background-image:
-        radial-gradient(circle at 30%, transparent, transparent, var(--color3) 75%, transparent),
+        radial-gradient(circle at 20%, transparent, transparent, var(--color3) 75%, transparent),
         radial-gradient(ellipse at top, var(--color7), transparent),
         radial-gradient(circle at left, var(--color5), transparent),
         radial-gradient(circle at right, var(--color3), transparent),
@@ -222,7 +222,7 @@
 }
 
 #browser-tiles .casual #content{
-    border: var(--color3) dotted 2px;
+    border: var(--color3) solid 2px;
     /* background-color: var(--color6); */
     background-image: 
         radial-gradient(ellipse at top, var(--color3), transparent),

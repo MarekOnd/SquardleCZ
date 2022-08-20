@@ -45,7 +45,7 @@
                         Český squardle
                 </div>
                 <div class="header-group">
-                    <button id="share" class="icon" title="Sdílej výsledek">
+                    <button id="share" class="icon" title="Sdílej výsledek" hidden> 
                         <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve">
                             <path style="fill:#144f9b" d="m183.257 237.344 159.047-76.871c8.426-3.745 12.22-13.611 8.475-22.037s-13.611-12.22-22.037-8.475l-159.047 76.871c-8.426 3.745-12.22 13.611-8.475 22.037 3.744 8.426 13.61 12.221 22.037 8.475"/>
                             <path style="fill:#003f84" d="m169.695 305.169 159.047 76.871c8.426 3.745 18.293-.05 22.037-8.475 3.745-8.426-.05-18.293-8.475-22.037l-159.047-76.871c-8.426-3.745-18.293.05-22.037 8.475-3.745 8.425.049 18.292 8.475 22.037"/>
@@ -140,7 +140,10 @@
             <!-- Populated by squardle.js/createBoard function -->
             <div id="board-box">
                 <button id="rotate" onclick="rotateBoard(90)">
-                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-cw"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-cw">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                    </svg>
                 </button>
                 <div id="board">
     
@@ -162,6 +165,16 @@
         </div>
 
         <div id="news" hidden>
+            <div class="message">
+                <h1>Verze 0.82</h1>
+                <ul>
+                    <li class="newFeature">nastavení umožňuje filtrovat squardly v seznamu</li>
+                    <li class="smallChange pageLook">upraven vzhled</li>
+                    <li class="bugFix smallChange">tlačítko otáčení hrací plochy je vidět</li>
+                    <li class="bugFix smallChange">písmena hrací plochy neproblikávají</li>
+                    <li class="newFeature">pro každý squardle se zaznamenává čas hraní a přesnost (k nahlédnutí zatím jen celkově ve statistikách)</li>
+                </ul>
+            </div>
             <div class="message">
                 <h1>Verze 0.81 Jsi ztracen?💤 Otoč!🍕 (19. 8. 2022)</h1>
                 <ul>
@@ -249,6 +262,8 @@
                 <div class="totalScore"></div>
                 <div class="totalWordsFound"></div>
                 <div class="totalBonusWords"></div>
+                <div class="totalTimePlayed"></div>
+                <div class="totalAccuracy"></div>
             </div>
             <div class="statBox" id="stats-weekly" onclick="toggleStatBox(this)">
                 <h1>Týdenní</h1>
@@ -257,6 +272,8 @@
                 <div class="totalScore"></div>
                 <div class="totalWordsFound"></div>
                 <div class="totalBonusWords"></div>
+                <div class="totalTimePlayed"></div>
+                <div class="totalAccuracy"></div>
             </div>
             <div class="statBox" id="stats-casual" onclick="toggleOpened(this)">
                 <h1>Odpočinkové</h1>
@@ -265,6 +282,8 @@
                 <div class="totalScore"></div>
                 <div class="totalWordsFound"></div>
                 <div class="totalBonusWords"></div>
+                <div class="totalTimePlayed"></div>
+                <div class="totalAccuracy"></div>
             </div>
             
             <div class="statBox" id="stats-special" onclick="toggleOpened(this)">
@@ -274,6 +293,8 @@
                 <div class="totalScore"></div>
                 <div class="totalWordsFound"></div>
                 <div class="totalBonusWords"></div>
+                <div class="totalTimePlayed"></div>
+                <div class="totalAccuracy"></div>
             </div>
             <div class="statBox" id="stats-shared" onclick="toggleOpened(this)">
                 <h1>Sdílené</h1>
@@ -282,6 +303,8 @@
                 <div class="totalScore"></div>
                 <div class="totalWordsFound"></div>
                 <div class="totalBonusWords"></div>
+                <div class="totalTimePlayed"></div>
+                <div class="totalAccuracy"></div>
             </div>
         </div>
 
@@ -356,24 +379,62 @@
             <div class="settingsSection">
                 <h1  onclick="toggleOpened(this.parentElement)">Smajlíci</h1>
                 <label class="checkbox settingsInput">
-                    <div class="text">Zaplnout poletující smajlíky:</div>
+                    <div class="text">Zapnout:</div>
                     <input id="showMouseParticles" type="checkbox" onchange="setSettingsProperty('showMouseParticles', this.checked)">
                     <div class="checkmark"></div>
                     
                 </label>
                 <label  class="slider settingsInput">
-                    <div class="text">Množství vloček:</div>
+                    <div class="text">Množství:</div>
                     <input id="mouseParticleAmount" type="range" min="1" max="1000" onchange="setSettingsProperty('mouseParticleAmount', this.value)">
                     <div class="sliderStyle"></div>
                 </label>
                 <label class="select settingsInput">
-                    <div class="text">Model:</div>
+                    <div class="text">Vzhled:</div>
                     <div id="mouseParticlesModel" class="options">
                         
                     </div>
                 </label>
             </div>
-            
+            <div class="settingsSection">
+                <h1  onclick="toggleOpened(this.parentElement)">Filtr seznamu</h1>
+
+                <label class="checkbox settingsInput">
+                    <div class="text">Odpočinkové:</div>
+                    <input id="showCasual" type="checkbox" onchange="setSettingsProperty('showCasual', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput">
+                    <div class="text">Týdenní:</div>
+                    <input id="showWeekly" type="checkbox" onchange="setSettingsProperty('showWeekly', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput">
+                    <div class="text">Speciální:</div>
+                    <input id="showSpecial" type="checkbox" onchange="setSettingsProperty('showSpecial', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput">
+                    <div class="text">Sdílené:</div>
+                    <input id="showShared" type="checkbox" onchange="setSettingsProperty('showShared', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput">
+                    <div class="text">Ukončené:</div>
+                    <input id="showOld" type="checkbox" onchange="setSettingsProperty('showOld', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput">
+                    <div class="text">Aktivní:</div>
+                    <input id="showActive" type="checkbox" onchange="setSettingsProperty('showActive', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput">
+                    <div class="text">Budoucí:</div>
+                    <input id="showUpcoming" type="checkbox" onchange="setSettingsProperty('showUpcoming', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+            </div>
             <!-- 
             <label id="color" class="colorPicker">
                 <div class="text">Test</div>
@@ -389,7 +450,19 @@
         <!--<img src="images/warden.jpg" style="width:100%; filter: brightness(0.1);">-->
         <script src="./scripts/functions.js"></script>
         <script src="./scripts/siteController.js"></script>
-        <script src="./scripts/squardle.js"></script>
+
+        <!--GAME-->
+        <script src="./scripts/game/squardle.js"></script>
+        <script src="./scripts/game/board.js"></script>
+        <script src="./scripts/game/foundWords.js"></script>
+        <script src="./scripts/game/hints.js"></script>
+        <script src="./scripts/game/line.js"></script>
+        <script src="./scripts/game/mouseEvents.js"></script>
+        <script src="./scripts/game/output.js"></script>
+        <script src="./scripts/game/progress.js"></script>
+        <script src="./scripts/game/score.js"></script>
+        <script src="./scripts/game/win.js"></script>
+
         <script src="./scripts/buttons.js"></script>
         <script src="./scripts/browser.js"></script>
         <script src="./scripts/pageSwitches.js"></script>
@@ -399,6 +472,7 @@
         <script src="./scripts/menu.js"></script>
         <script src="./scripts/settings.js"></script>
         <script src="./scripts/global.js"></script>
+        <script src="./scripts/updateHandler.js"></script>
         
     </body>
 </html>
