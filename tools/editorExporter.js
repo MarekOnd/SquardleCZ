@@ -37,6 +37,16 @@ function applySquardleToExporter()
         document.getElementById("howManyMinutes").value = Math.floor(1.0*timeDelta/1000/60)%60;
     }
 
+    if(S.hints !== null){
+        document.getElementById("useCustomHints").checked = true
+        
+        document.getElementById("hintTimesStarting").value= S.hints.hintTimesIncluded
+        document.getElementById("hintTimesIncluded").value= S.hints.hintTimesIncluded
+        document.getElementById("hintRandomLetters").value= S.hints.hintRandomLetters
+    }else{
+        document.getElementById("howManyDays").checked = false
+    }
+
 }
 
 
