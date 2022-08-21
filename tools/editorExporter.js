@@ -90,7 +90,7 @@ function createBoard()
             }else if(!letterUsed(i,j,S)){
                 someLetterNotUsed = true
                 // l.style.filter = "brightness(0.5)"
-                l.style.background = "darkred"
+                l.style.backgroundColor = "darkred"
             }
             r.appendChild(l)
             
@@ -99,7 +99,7 @@ function createBoard()
     }
     board.appendChild(table)
 
-    //TODO: better error message (like in the page not alert)
+    // TODO: better error message (like in the page not alert)
     if(someLetterNotUsed){
         alert("Nějáké písmena nejsou použity (zvýrazněny červeně)")
     }
@@ -110,6 +110,32 @@ function deleteBoard()
     clearChildren(document.getElementById("board"));
 }
 
+// updates board: letters not currently used orange 
+function updateBoard(){
+    const board = document.getElementById("board").children[0];
+
+    let testSquardle = newInst(S)
+    testSquardle.wordsToFind = legitWords.map(index=>S.wordsToFind[index])
+    
+    let x=0,y=0;
+    for(const row of board.rows){
+        y=0
+        for(const letter of row.cells){
+            
+            //red has higher priority because it is always active
+            if(!letterUsed(x,y,S)){
+                letter.style.backgroundColor = "darkred"
+            }else if(!letterUsed(x,y,testSquardle)){
+                letter.style.backgroundColor = "darkorange"
+            }else{
+                letter.style.backgroundColor = null
+            }
+                
+            y++
+        }
+        x++
+    }
+}
 
 // WORDS IN FORM_____________________________________________________________________________
 function setupWords()
@@ -133,7 +159,7 @@ function updateWords()
         word.classList.add("word");
         word.classList.add("wordToFind");
         
-        word.addEventListener("click",()=>{moveWord(legitWords[i])})
+        word.addEventListener("click",(e)=>{moveWord(e,legitWords[i])})
         legitWords_place.appendChild(word)
     }
     let bonusWords_place = document.getElementById("bonusWords");
@@ -144,7 +170,7 @@ function updateWords()
         word.textContent = text
         word.classList.add("word");
         word.classList.add("bonusWord");
-        word.addEventListener("click",()=>{moveWord(bonusWords[i])})
+        word.addEventListener("click",(e)=>{moveWord(e,bonusWords[i])})
         bonusWords_place.appendChild(word)
     }
 
@@ -156,20 +182,33 @@ function updateWords()
 
 }
 
-function moveWord(index)
+function moveWord(e,index)
 {
+    //ctrl+click -> find word in dictionary
+    if(e.ctrlKey){
+        console.log("FIND WORD")
+        const DICTIONARY_SEARCH_URL_BEGIN = "https://cs.wiktionary.org/w/index.php?search="
+        const DICTIONARY_SEARCH_URL_END = "&title=Speci%C3%A1ln%C3%AD%3AHled%C3%A1n%C3%AD&go=J%C3%ADt+na&ns0=1"
+        window.open(DICTIONARY_SEARCH_URL_BEGIN+ e.target.textContent +DICTIONARY_SEARCH_URL_END);
+        return
+    }
+
+    //move to from legit to bonus
     if(legitWords.includes(index))
     {
         legitWords.splice(legitWords.indexOf(index),1)
         bonusWords.push(index)
         updateWords()
+        updateBoard()
         return;
     }
+    //move to from bonus to legit
     if(bonusWords.includes(index))
     {
         bonusWords.splice(bonusWords.indexOf(index),1)
         legitWords.push(index)
         updateWords()
+        updateBoard()
         return;
     }
     console.log("OPS a lost word")

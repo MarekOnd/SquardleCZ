@@ -318,10 +318,7 @@ a:hover{
     flex: 1;
     transition: filter 0.1s ease;
 
-}
 
-
-.word {
     font-size: 20px;
     color: white;
     border-radius: 7px;
@@ -335,21 +332,35 @@ a:hover{
     margin:5px 2px;
     transition: all .2s;
 }
+
   
-.word:active {
-    top: 3px;
-    box-shadow: 0 2px 0px #387796;
-}
 
-#wordsToFind .word{
+.wordToFind{
+    --press-amount: 3px;
+    --defualt-size:7px;
     background-color: #2bd64e;
-    box-shadow: 0 7px 0px #157c29;
+    box-shadow: 0 var(--defualt-size) 0px #157c29;
+    transition: all 0.15s cubic-bezier(0.755, 0.05, 0.855, 0.06);
+
+}
+.wordToFind:active{
+    transform: translateY(var(--press-amount));
+    box-shadow: 0 calc(var(--defualt-size) - var(--press-amount)) 0px #157c29;
 }
 
-#bonusWords .word{
+.bonusWord{
+    --press-amount: 3px;
+    --defualt-size:7px;
     background-color: #d6a42b;
-    box-shadow: 0 7px 0px #816117;
+    box-shadow: 0 var(--defualt-size) 0px #816117;
+    transition: all 0.15s cubic-bezier(0.755, 0.05, 0.855, 0.06);
+
 }
+.bonusWord:active{
+    transform: translateY(var(--press-amount));
+    box-shadow: 0 calc(var(--defualt-size) - var(--press-amount)) 0px #816117;
+}
+
 
 
 /* .word:hover{
