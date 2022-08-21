@@ -40,7 +40,7 @@ function applySquardleToExporter()
     if(S.hints !== null){
         document.getElementById("useCustomHints").checked = true
         
-        document.getElementById("hintTimesStarting").value= S.hints.hintTimesIncluded
+        document.getElementById("hintTimesStarting").value= S.hints.hintTimesStarting
         document.getElementById("hintTimesIncluded").value= S.hints.hintTimesIncluded
         document.getElementById("hintRandomLetters").value= S.hints.hintRandomLetters
     }else{
