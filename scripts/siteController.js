@@ -41,6 +41,7 @@ let squardlesCasual;
 let squardlesWeekly;
 let squardlesSpecial;
 let squardlesShared;
+let sharedHistory;
 
 class searchParameters{
     type;
@@ -92,15 +93,39 @@ async function loadSquardlesData()
 
     if(localStorage.getItem("squardlesShared") === undefined || localStorage.getItem("squardlesShared") === null)
     {
-        squardlesShared = []
+        squardlesShared = [];
     }
     else
     {
-        squardlesShared = JSON.parse(localStorage.getItem("squardlesShared"))
+        squardlesShared = JSON.parse(localStorage.getItem("squardlesShared"));
+    }
+    if(localStorage.getItem("sharedHistory"))
+    {
+        sharedHistory = JSON.parse(localStorage.getItem("sharedHistory"));
+    }
+    else
+    {
+        sharedHistory = [];
     }
 }
 
-// for moderat loading from console: loadSquardle(getSquardle(new searchParameters("weekly",1)))
+function addToSharedSquardlesHistory(hash)
+{
+    if(!sharedHistory.includes(hash))
+    {
+        sharedHistory.push(hash);
+    }
+    localStorage.setItem("sharedHistory", JSON.stringify(sharedHistory));
+}
+function getSaves(hashes)
+{
+    let saves = [];
+    for (let i = 0; i < hashes.length; i++) {
+        saves.push(getSave(hashes[i]));
+    }
+    return saves;
+}
+// for moderator loading from console: loadSquardle(getSquardle(new searchParameters("weekly",1)))
 function loadCurrentSquardle()
 {
     let tmpSqr = localStorage.getItem("currentSquardle")
@@ -238,14 +263,27 @@ async function importSquardle()
         return;
     }
     let newSq = JSON.parse(json);
-    if(squardlesShared.find((sq)=>{return hashSquardle(sq)===hashSquardle(newSq)}) === undefined)
+    let allSq = allSquardles()
+    if(allSq.find((sq)=>{return hashSquardle(sq)===hashSquardle(newSq)}) === undefined)
     {
         squardlesShared.push(newSq);
+        addToSharedSquardlesHistory(hashSquardle(newSq))
+        localStorage.setItem("squardlesShared", JSON.stringify(squardlesShared));
+        updateBrowserContent();
+    }
+    else
+    {
+        alert("Tento squardle již existuje (jako oficiální či sdílený)");
     }
     
-    localStorage.setItem("squardlesShared", JSON.stringify(squardlesShared))
-    updateBrowserContent();
+    
 }
 
+
+function allSquardles()
+{
+    
+    return squardlesCasual.concat(squardlesShared.concat(squardlesSpecial.concat(squardlesWeekly)));
+}
 
 

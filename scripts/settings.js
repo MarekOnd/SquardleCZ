@@ -184,7 +184,7 @@ function initSelectOptions(selectId, options)
         let option = document.createElement("div");
         option.textContent = element;
         option.classList.add("option");
-        if(element[0] === getSettingsProperty(selectId)[0])// TODO: make it more versatile
+        if(element[0] === getSettingsProperty(selectId))// TODO: make it more versatile
         {
             option.classList.add("selectedOption");
         }

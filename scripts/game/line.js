@@ -1,38 +1,81 @@
 // CREATING LINE
-function updateLine()
+
+let lineCoords = [];
+
+let boardCoordinates = [];
+let line =  document.querySelector("#line");
+
+function updateBoardCoordinates()
 {
-    let line = document.getElementById("line")
-    while(line.firstChild)
-    {
-        line.removeChild(line.firstChild);
+    boardCoordinates = [];
+    for (let i = 0; i < S.letters.length; i++) {
+        let row = []
+        for (let j = 0; j < S.letters.length; j++) {
+            
+            let button = getButton(i,j).getBoundingClientRect();
+            row.push(new Position(button.left + button.width/2, button.top + button.height/2))
+        }
+        boardCoordinates.push(row);
     }
-    line.appendChild(connectButtons(wordPath));
+}
+
+function getButtonCenter(x, y)
+{
+    let button = getButton(x,y).getBoundingClientRect();
+    return new Position(button.left + button.width/2  + window.scrollX, button.top + button.height/2 + window.scrollY)
+}
+
+function addLineSegment()
+{
+    let length = wordPath.positions.length;
+    if(length > 1)
+    {
+        let startPos = getButtonCenter(wordPath.positions[length-2].x,wordPath.positions[length-2].y);
+        let endPos = getButtonCenter(wordPath.positions[length-1].x,wordPath.positions[length-1].y)
+        let segment = createLine(startPos.x,startPos.y,endPos.x,endPos.y);
+
+        segment.id = "line_"+ length;
+        // segment.style.scale = 0;
+        // segment.style.backgroundColor = chooseRandom(["red","white", "blue"])
+        // setTimeout(()=>{
+        //     segment.style.scale = 1;
+        // })
+        line.appendChild(segment);
+    }
     
 }
 
-function connectButtons(path)
+function deleteLineSegment()
 {
-    let positions = []
-    for (let i = 0; i < path.positions.length; i++) {
-        const element = path.positions[i]
-        let button = getButton(element.x,element.y).getBoundingClientRect()// document.getElementsByClassName("row")[element.x].childNodes[element.y]
-        positions.push([button.left + button.width/2 - 5+  window.scrollX, button.top + button.height/2  - 10 + window.scrollY])
+    let length = wordPath.positions.length;
+    let segment = document.querySelector("#line_"+(length+1))
+    if(segment)
+    {
+        line.removeChild(segment);
     }
-    return drawLine(positions)
+    
+}
+
+function updateLine()
+{
+    // clearChildren(line);
+    // let coordinates = [];
+    // for (let i = 0; i < wordPath.positions.length; i++) {
+    //     coordinates.push(boardCoordinates[wordPath.positions[i].x][wordPath.positions[i].y])
+    // }
+    // console.log(coordinates)
+    // drawLine(line, coordinates);
 }
 
 
-function drawLine(points)
+function drawLine(where, points)
 {
-    let line = document.createElement("div");
     for (let i = 1; i < points.length; i++) {
         const prevElement = points[i-1]
         const element = points[i];
-        line.appendChild(createLine(prevElement[0],prevElement[1],element[0],element[1]));
-
+        console.log(prevElement ,element)
+        where.appendChild(createLine(prevElement.x,prevElement.y,element.x,element.y));
     }
-    return line;
-
 }
 
 // DRAW LINE

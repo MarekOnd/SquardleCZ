@@ -1,3 +1,6 @@
+
+// TODO: OBECNÉ FUNKCE a spousta převáděcích funkcí
+
 function updateStats()
 {
     let allStatsDiv =document.getElementById("stats-all")
@@ -12,8 +15,18 @@ function updateStats()
     let specialStatsDiv = document.getElementById("stats-special");
     applyStats(specialStatsDiv, squardlesSpecial, "special");
     
+    // imported/shared are not compaticle with apply stats as there are only saves
     let importedStatsDiv = document.getElementById("stats-shared");
-    applyStats(importedStatsDiv, squardlesShared, "shared");
+
+    let sharedSaves = getSaves(sharedHistory);
+
+    let completed = importedStatsDiv.getElementsByClassName("completed")[0];
+    completed.textContent = "Dokončeno " + countCompletedSquardlesSaves(sharedSaves);
+
+    let played = importedStatsDiv.getElementsByClassName("played")[0];
+    played.textContent = "Hráno " + countPlayedSquardlesSaves(sharedSaves);
+
+
 
     
 }
@@ -73,8 +86,20 @@ function countCompletedSquardles(sqArr)
 {
     let numCompleted = 0;
     for (let i = 0; i < sqArr.length; i++) {
-        const element = sqArr[i];
-        if(getSquardleProgress(element) === 1)
+        const sq = sqArr[i];
+        if(getSquardleProgress(sq) === 1)
+        {
+            numCompleted++;
+        }
+    }
+    return numCompleted;
+}
+function countCompletedSquardlesSaves(savesArr)
+{
+    let numCompleted = 0;
+    for (let i = 0; i < savesArr.length; i++) {
+        const save = savesArr[i];
+        if(save.totalWords === save.wordsFound)
         {
             numCompleted++;
         }
@@ -86,25 +111,51 @@ function countPlayedSquardles(sqArr)
 {
     let numPlayed= 0;
     for (let i = 0; i < sqArr.length; i++) {
-        const element = sqArr[i];
-        if(getSave(hashSquardle(element)).existed !== false)
+        const sq = sqArr[i];
+        if(getSave(hashSquardle(sq)).existed === true)
         {
             numPlayed++;
         }
     }
     return  numPlayed;
-    
+}
+
+function countPlayedSquardlesSaves(savesArr)
+{
+    let numPlayed= 0;
+    for (let i = 0; i < savesArr.length; i++) {
+        if(savesArr[i].existed === true)
+        {
+            numPlayed++;
+        }
+    }
+    return  numPlayed;
 }
 
 function countTotalWords(sqArr)
 {
+    
     let numWords= 0;
     for (let i = 0; i < sqArr.length; i++) {
-
-        const save = getSave(hashSquardle(sqArr[i]));
+        let save =  getSave(hashSquardle(sqArr[i]));
         if(save.existed === true)
         {
             numWords += sqArr[i].wordsToFind.length;
+        }
+  
+    }
+    return  numWords;
+}
+
+function countTotalWordsSaves(savesArr)
+{
+    let numWords= 0;
+    for (let i = 0; i < savesArr.length; i++) {
+
+        const save = savesArr[i];
+        if(save.existed === true)
+        {
+            numWords += savesArr[i].totalWords;
         }
   
     }
@@ -124,11 +175,37 @@ function countTotalWordsFound(sqArr)
     return  numWordsFound;
 }
 
+function countTotalWordsFoundSaves(saveArr)
+{
+    let numWordsFound= 0;
+    for (let i = 0; i < saveArr.length; i++) {
+        const save = saveArr[i];
+        if(save.existed === true)
+        {
+            numWordsFound += countTrue(save.wordsFound);
+        }
+    }
+    return  numWordsFound;
+}
+
 function countTotalBonusWords(sqArr)
 {
     let numBonusWordsFound= 0;
     for (let i = 0; i < sqArr.length; i++) {
         const save = getSave(hashSquardle(sqArr[i]));
+        if(save.existed === true)
+        {
+            numBonusWordsFound += save.bonusWordsFound.length;
+        }
+    }
+    return  numBonusWordsFound;
+}
+
+function countTotalBonusWordsSaves(saveArr)
+{
+    let numBonusWordsFound= 0;
+    for (let i = 0; i < saveArr.length; i++) {
+        const save = saveArr[i];
         if(save.existed === true)
         {
             numBonusWordsFound += save.bonusWordsFound.length;
@@ -156,11 +233,29 @@ function countTotalTime(sqArr)
     }
     return time;
 }
+function countTotalTimeSaves(savesArr)
+{
+    let time = 0;
+    for (let i = 0; i < savesArr.length; i++) {
+        const save = savesArr[i];
+        time += save.timePlayed;
+    }
+    return time;
+}
 function countTotalWrongTries(sqArr)
 {
     let wrongTries = 0;
     for (let i = 0; i < sqArr.length; i++) {
         const save = getSave(hashSquardle(sqArr[i]));
+        wrongTries += save.numberOfWrongTries;
+    }
+    return wrongTries;
+}
+function countTotalWrongTriesSaves(savesArr)
+{
+    let wrongTries = 0;
+    for (let i = 0; i < savesArr.length; i++) {
+        const save = savesArr[i];
         wrongTries += save.numberOfWrongTries;
     }
     return wrongTries;

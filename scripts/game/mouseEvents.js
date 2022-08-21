@@ -52,7 +52,7 @@ function mouseUp()
     // resets array
     wordPath.positions = [];
 
-    updateLine()
+    clearChildren(line);
     
 }
 function mouseEnter(x,y)
@@ -82,12 +82,14 @@ function mouseEnter(x,y)
             let top = wordPath.positions.pop();
             // unselects last button
             getButton(top.x,top.y).classList.remove("selected");
+            deleteLineSegment();
         }
     }
     else if(Math.abs(lastPosition.x - x) <=1  && Math.abs(lastPosition.y - y) <=1 )// going forward
     {
         button.classList.add("selected");
         wordPath.positions.push(new Position(x,y));
+        addLineSegment();
     }
     else if(lastPosition.x === x && !isSelectedLineX(x,lastPosition.y,y))// further in x line
     {
@@ -96,6 +98,7 @@ function mouseEnter(x,y)
             for (let i = lastPosition.y + 1; i <= y; i++) {
                 getButton(x,i).classList.add("selected");
                 wordPath.positions.push(new Position(x,i));
+                addLineSegment();
             }
         }
         else
@@ -103,6 +106,7 @@ function mouseEnter(x,y)
             for (let i = lastPosition.y - 1; i >= y; i--) {
                 getButton(x,i).classList.add("selected");
                 wordPath.positions.push(new Position(x,i));
+                addLineSegment();
             }
         }
     }
@@ -113,6 +117,7 @@ function mouseEnter(x,y)
             for (let i = lastPosition.x + 1; i <= x; i++) {
                 getButton(i,y).classList.add("selected");
                 wordPath.positions.push(new Position(i,y));
+                addLineSegment();
             }
         }
         else
@@ -120,6 +125,7 @@ function mouseEnter(x,y)
             for (let i = lastPosition.x - 1; i >= x; i--) {
                 getButton(i,y).classList.add("selected");
                 wordPath.positions.push(new Position(i,y));
+                addLineSegment();
             }
         }
     }
@@ -130,6 +136,7 @@ function mouseEnter(x,y)
             for (let i = lastPosition.x + 1; i <= x; i++) {
                 getButton(i,lastPosition.y + i - lastPosition.x).classList.add("selected");
                 wordPath.positions.push(new Position(i,lastPosition.y + i - lastPosition.x));
+                addLineSegment();
             }
         }
         else
@@ -137,6 +144,7 @@ function mouseEnter(x,y)
             for (let i = lastPosition.x - 1; i >= x; i--) {
                 getButton(i,lastPosition.y + i - lastPosition.x).classList.add("selected");
                 wordPath.positions.push(new Position(i,lastPosition.y + i - lastPosition.x));
+                addLineSegment();
             }
         }
     }
@@ -147,6 +155,7 @@ function mouseEnter(x,y)
             for (let i = lastPosition.x + 1; i <= x; i++) {
                 getButton(i,lastPosition.y - i + lastPosition.x).classList.add("selected");
                 wordPath.positions.push(new Position(i,lastPosition.y - i + lastPosition.x));
+                addLineSegment();
             }
         }
         else
@@ -154,6 +163,7 @@ function mouseEnter(x,y)
             for (let i = lastPosition.x - 1; i >= x; i--) {
                 getButton(i,lastPosition.y - i + lastPosition.x).classList.add("selected");
                 wordPath.positions.push(new Position(i,lastPosition.y - i + lastPosition.x));
+                addLineSegment();
             }
         }
     }
