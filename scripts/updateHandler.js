@@ -1,8 +1,12 @@
 function initUpdate()
 {
-    if(localStorage.getItem("version") === null)
+    if(localStorage.getItem("version") !== null)
     {
-        localStorage.setItem("settings",JSON.stringify(defaultSettings));
-        localStorage.setItem("version",JSON.stringify(0.9))
+        if(JSON.parse(localStorage.getItem("version")) !== 1)
+        {
+            localStorage.setItem("settings",JSON.stringify(defaultSettings));
+            localStorage.setItem("version",JSON.stringify(1))
+        }
+        
     }
 }
