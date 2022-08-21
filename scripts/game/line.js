@@ -16,7 +16,7 @@ function connectButtons(path)
     for (let i = 0; i < path.positions.length; i++) {
         const element = path.positions[i]
         let button = getButton(element.x,element.y).getBoundingClientRect()// document.getElementsByClassName("row")[element.x].childNodes[element.y]
-        positions.push([button.left + button.width/2 - 10 +  window.scrollX, button.top + button.height/2  - 10 + window.scrollY])
+        positions.push([button.left + button.width/2 - 5+  window.scrollX, button.top + button.height/2  - 10 + window.scrollY])
     }
     return drawLine(positions)
 }
@@ -48,7 +48,6 @@ function createLineElement(x, y, length, angle) {
                + 'left: ' + x + 'px; ';
 
     line.setAttribute('style', styles); 
-
 
     return line;
 }
