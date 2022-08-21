@@ -106,9 +106,9 @@ function applySettings()
 
 function loadSettings()
 {
-    if(localStorage.getItem("settings") !== null)
+    if(localStorage.getItem("squardleSettings") !== null)
     {
-        currentSettings = JSON.parse(localStorage.getItem("settings"));
+        currentSettings = JSON.parse(localStorage.getItem("squardleSettings"));
     }
     else
     {
@@ -118,7 +118,7 @@ function loadSettings()
 
 function saveSettings()
 {
-    localStorage.setItem("settings",JSON.stringify(currentSettings));
+    localStorage.setItem("squardleSettings",JSON.stringify(currentSettings));
 }
 
 

@@ -4,7 +4,7 @@ function initUpdate()
     {
         if(JSON.parse(localStorage.getItem("version")) !== 1)
         {
-            localStorage.setItem("settings",JSON.stringify(defaultSettings));
+            localStorage.setItem("squardleSettings",JSON.stringify(defaultSettings));
             localStorage.setItem("version",JSON.stringify(1))
         }
         
