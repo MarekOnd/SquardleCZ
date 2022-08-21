@@ -4,60 +4,30 @@ function updateBrowserContent()
 {
     // create all tiles that should show according to settings
     let browser = document.getElementById("browser-tiles");
-    clearChildren(browser)
+    clearChildren(browser);
     let allTiles = []
     if(getSettingsProperty("showCasual"))
     {
-        for (let i = 0; i < squardlesCasual.length; i++) {
-            const element = squardlesCasual[i];
-            if(showThisActiveState(getSquardleActiveState(element)))
-            {
-                let browserTile = createSquardleTile(element,"casual",i);
-                allTiles.push(browserTile);
-            }
-            
-        }
+        allTiles = allTiles.concat(createArrayOfTiles(squardlesCasual, "casual"));
     }
     if(getSettingsProperty("showWeekly"))
     {
-        for (let i = 0; i < squardlesWeekly.length; i++) {
-            const element = squardlesWeekly[i];
-            if(showThisActiveState(getSquardleActiveState(element)))
-            {
-                let browserTile = createSquardleTile(element,"weekly",i);
-                allTiles.push(browserTile);
-            }
-            
-        }
+        allTiles = allTiles.concat(createArrayOfTiles(squardlesWeekly, "weekly"));
     }
     if(getSettingsProperty("showSpecial"))
     {
-        for (let i = 0; i < squardlesSpecial.length; i++) {
-            const element = squardlesSpecial[i];
-            if(showThisActiveState(getSquardleActiveState(element)))
-            {
-                let browserTile = createSquardleTile(element,"special",i);
-                allTiles.push(browserTile);
-            }
-            
-        }
+        allTiles = allTiles.concat(createArrayOfTiles(squardlesSpecial, "special"));
     }
     if(getSettingsProperty("showShared"))
     {
-        for (let i = 0; i < squardlesShared.length; i++) {
-            const element = squardlesShared[i];
-            if(showThisActiveState(getSquardleActiveState(element)))
-            {
-                let browserTile = createSquardleTile(element,"shared",i);
-                allTiles.push(browserTile);
-            }
-            
-        }
+        allTiles = allTiles.concat(createArrayOfTiles(squardlesShared, "shared"));
     }
+
+
     if(allTiles.length === 0)
     {
         let allHiddenText = document.createElement("div");
-        allHiddenText.textContent = "Všechny squarly jsou schované, aktivujte je v nastavení";
+        allHiddenText.textContent = "Všechny squardly jsou schované, aktivujte je v nastavení";
         browser.appendChild(allHiddenText);
     }
     for (let i = 0; i < allTiles.length; i++) {
@@ -87,8 +57,36 @@ function updateBrowserContent()
     }
     
 
-    tabBefore = "browser"
+    tabBefore = "browser";
 
+}
+
+function createArrayOfTiles(sqArr, type)
+{
+    let tiles = []
+    for (let i = 0; i < sqArr.length; i++) {
+        const sq = sqArr[i];
+        if(showThisSquardle(sq))
+        {
+            let browserTile = createSquardleTile(sq,type,i);
+            tiles.push(browserTile);
+        }
+    }
+    return tiles;
+}
+function showThisSquardle(sq)
+{
+    if(getSettingsProperty("showCompleted"))
+    {
+        return showThisActiveState(getSquardleActiveState(sq));
+    }
+    else
+    {
+        if(countTrue(getSave(sq).wordsFound) !== sq.wordsToFind.length)
+        {
+            return showThisActiveState(getSquardleActiveState(sq));
+        }
+    }
 }
 function showThisActiveState(state)// return whether this state should be shown according to settings
 {

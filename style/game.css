@@ -1,6 +1,6 @@
 :root{
     --game-cellSize: 90px;
-    --game-spacesBetweenCells: 3%;
+
     /* --game-fontSize: 60px; */
     /* --game-smallFontSize: 30px; */
     --found-headerFontSize: 40px;
@@ -10,8 +10,9 @@
     --game-scoreBarHeight: 30px;
     --game-scoreBarWidth: 300px;
 
-    --board-dimensions:calc(min(600px,90vw));
+    --board-dimensions:calc(min(65vh,90vw));
     --boardSize: 5;
+    --game-spacesBetweenCells: calc(var(--board-dimensions)/var(--boardSize)/10);
 
 }
 [hidden] { display: none !important; }
@@ -138,7 +139,7 @@
 .cell .selected{
     background: gray;
     /* border-radius: 9px; */
-   /* transform: scale(0.95);  TODO: FIX!*/
+   transform: scale(0.95);  /* TODO: FIX!*/
 
 }
 .boardButton .button-start{

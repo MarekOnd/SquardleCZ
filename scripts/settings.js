@@ -1,12 +1,29 @@
+
+class option{
+    preview;
+    value;
+    constructor(preview_, value_)
+    {
+        this.preview = preview_;
+        this.value = value_;
+    }
+}
+
 // properties to set
-let mouseParticlesModels = ["*", ["🍕"],"❤",["💤"]];
+let mouseParticlesModels = [
+    new option("vločka", "*"),
+    new option("pizzy", ["🍕"]),
+    new option("srdíčka", ["❤","🧡","💛","💚","💙"]),
+    new option("mega", ["༼ つ ◕_◕ ༽つ","ᓚᘏᗢ","╰(*°▽°*)╯"]),
+];
+
 
 
 let defaultSettings = {
     /* mouse particles */
     showMouseParticles:false,
     showMouseParticleAmount:500,
-    mouseParticlesModel:"🍕",
+    mouseParticlesModel:["🍕"],
 
     /* browser filter */
     showOld:false,
@@ -16,6 +33,7 @@ let defaultSettings = {
     showWeekly:true,
     showSpecial:true,
     showShared:true,
+    showCompleted:true
     // orderBy:"date",
 
 
@@ -51,81 +69,12 @@ function getSettingsProperty(name)
     {
         return currentSettings[name];
     }
-    
-
-    switch(name)
-    {
-        case "showMouseParticles":
-            return currentSettings.showMouseParticles;
-        case "mouseParticleAmount":
-            return currentSettings.mouseParticleAmount;
-        case "mouseParticlesModel":
-            return currentSettings.mouseParticlesModel;
-        case "showCasual":
-            return currentSettings.showCasual !== null ? currentSettings.showCasual :  true;
-        case "showWeekly":
-            return currentSettings.showWeekly !== null ? currentSettings.showWeekly :  true;
-        case "showSpecial":
-            return currentSettings.showSpecial !== null ? currentSettings.showSpecial :  true;
-        case "showShared":
-            return currentSettings.showShared !== null ? currentSettings.showShared :  true;
-        case "showOld":
-            return currentSettings.showOld !== null ? currentSettings.showOld :  true;
-        case "showActive":
-            return currentSettings.showActive !== null ? currentSettings.showActive :  true;
-        case "showUpcoming":
-            return currentSettings.showUpcoming !== null ? currentSettings.showUpcoming :  true;
-        
-            
-            default:
-                alert("Nastavení neexistuje")
-                break;
-    }
-
 }
 function setSettingsProperty(propertyName, value)
 {
     currentSettings[propertyName] = value;
     applySettings();
-
     saveSettings();
-    return;
-    switch(propertyName)
-    {
-        case "showMouseParticles":
-            currentSettings.showMouseParticles = value;
-            break;
-        case "mouseParticleAmount":
-            currentSettings.mouseParticleAmount = value;
-            break;
-        case "mouseParticlesModel":
-            currentSettings.mouseParticlesModel = mouseParticlesModels[value];
-            break;
-        case "showCasual":
-            currentSettings.showCasual = value;
-            break;
-        case "showWeekly":
-            currentSettings.showWeekly = value;
-            break;
-        case "showSpecial":
-            currentSettings.showSpecial = value;
-            break;
-        case "showShared":
-            currentSettings.showShared = value;
-            break;
-        case "showOld":
-            currentSettings.showOld = value;
-            break;
-        case "showActive":
-            currentSettings.showActive = value;
-            break;
-        case "showUpcoming":
-            currentSettings.showUpcoming = value;
-            break;
-        default:
-            break;
-    }
-    
 }
 
 
@@ -138,7 +87,7 @@ function initializeSettings()
     initSelectOptions('mouseParticlesModel', mouseParticlesModels);
 
     /* FILTERS */
-    let filterNames = ["showCasual","showWeekly","showSpecial","showShared","showOld","showActive","showUpcoming"]
+    let filterNames = ["showCasual","showWeekly","showSpecial","showShared","showOld","showActive","showUpcoming","showCompleted"]
     for (let i = 0; i < filterNames.length; i++) {
         const name = filterNames[i];
         document.querySelector("#"+name).checked = getSettingsProperty(name);
@@ -151,7 +100,7 @@ function initializeSettings()
 
 function applySettings()
 {
-    mouseParticleWait = (1000-currentSettings.mouseParticleAmount)/100;
+    mouseParticleWait = (5000-currentSettings.mouseParticleAmount)/100;
     mouseParticlesModel = currentSettings.mouseParticlesModel;
 }
 
@@ -180,16 +129,15 @@ function initSelectOptions(selectId, options)
 {
     let select = document.querySelector('#' + selectId);
     for (let i = 0; i < options.length; i++) {
-        const element = options[i];
-        let option = document.createElement("div");
-        option.textContent = element;
-        option.classList.add("option");
-        if(element[0] === getSettingsProperty(selectId))// TODO: make it more versatile
+        let opt = document.createElement("div");
+        opt.textContent = options[i].preview;
+        opt.classList.add("option");
+        if((options[i].value.length && options[i].value[0] === getSettingsProperty(selectId)[0]) || options[i].value === getSettingsProperty(selectId))// TODO: make it more versatile
         {
-            option.classList.add("selectedOption");
+            opt.classList.add("selectedOption");
         }
-        option.addEventListener('pointerup', ()=>{selectOption(selectId, i, options[i])});
-        select.appendChild(option);
+        opt.addEventListener('pointerup', ()=>{selectOption(selectId, i, options[i].value)});
+        select.appendChild(opt);
     }
 
 }
