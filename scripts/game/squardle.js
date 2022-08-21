@@ -122,7 +122,7 @@ async function loadSquardle(squardleToLoad)
 
     
 
-
+    updateBoardCoordinates();
     
 }
 

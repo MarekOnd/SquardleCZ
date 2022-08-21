@@ -162,4 +162,5 @@ function rotateBoard(deg){
     board.childNodes.forEach(cell=>{
         cell.style.transform = `rotate(${-(currentBoardRotation)}deg)`
     })
+    updateBoardCoordinates()
 }

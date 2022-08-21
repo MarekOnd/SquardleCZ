@@ -295,7 +295,7 @@ function exportSquardle()
     }
     // outputs formatted squardle
     // the formatting does increase the size of the file a little bit
-    return JSON.stringify(expSq);
+    return JSON.stringify(expSq, null, "\t");
 }
 
 

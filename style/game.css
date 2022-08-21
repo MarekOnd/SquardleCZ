@@ -373,21 +373,23 @@
     position: absolute;
     top: 0px;
     left: 0px;
+    pointer-events: none;
 }
 
 #line .lineSegment{
     position: absolute;
-    height: 0px;
-
-
-    
     background-color:rgb(20, 218, 218, 0.5);
-    --lineSize: calc(var(--board-dimensions)/(var(--boardSize)*10));
-    border: var(--lineSize) solid rgba(8, 56, 56, 0.1);
+   
+    --lineSize: calc(var(--board-dimensions)/(var(--boardSize)*5));
+    /* border-left: var(--lineSize) solid rgba(56, 10, 8, 0.1);  */
+    /* border-inline: white solid 5px; */
+    height: var(--lineSize);
     /* outline: 10px white solid; */
     
-    border-radius: var(--lineSize);
+    border-radius: calc(var(--lineSize)/2);
     z-index: 2;
+
+    transition: all 0.1s ease;
 
 }
 

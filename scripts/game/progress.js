@@ -7,8 +7,17 @@ function getCurrentSquardleSave()
         bonusWordsFound:bonusWordsFound,
         numberOfWrongTries:numberOfWrongTries,
         timePlayed:timePlayed,
-        existed:false
+        existed:false,
+
+        totalWords:S.wordsToFind.length,
+
+
     }
+    if(wordsFound.length === S.wordsToFind.length)
+    {
+        save.completed = true;
+    }
+
     if(getSquardleProgress(S) > 0)
     {
         save.existed = true;
