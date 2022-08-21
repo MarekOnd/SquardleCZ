@@ -233,9 +233,10 @@ function saveSettings()
 
 function resetDefaultSettings()
 {
-    localStorage.removeItem("settings");
-    loadSettings(new settings());
-
+    // localStorage.removeItem("settings");
+    if(confirm("Toto resetuje aktuální nastavení\nPokud ho nemáš uložené, navždy ho ztratíš.\nChceš pokračovat?")){
+        loadSettings(new settings());
+    }
 }
 // DEFAULT VALUES
 
