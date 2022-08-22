@@ -31,8 +31,8 @@ function updateBrowserContent()
         browser.appendChild(allHiddenText);
     }
     for (let i = 0; i < allTiles.length; i++) {
-        const element = allTiles[i];
-        browser.appendChild(element);
+        const tile = allTiles[i];
+        browser.appendChild(tile);
     }
 
     if(getSettingsProperty("showShared"))
@@ -82,10 +82,11 @@ function showThisSquardle(sq)
     }
     else
     {
-        if(countTrue(getSave(sq).wordsFound) !== sq.wordsToFind.length)
+        if(countTrue(getSquardleSave(sq).wordsFound) === sq.wordsToFind.length)
         {
-            return showThisActiveState(getSquardleActiveState(sq));
+            return false;
         }
+        return showThisActiveState(getSquardleActiveState(sq));
     }
 }
 function showThisActiveState(state)// return whether this state should be shown according to settings
