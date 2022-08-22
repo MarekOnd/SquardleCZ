@@ -60,7 +60,6 @@ class Board{
                     {
                         rowLetters.push(this.alphabet[Math.floor(Math.random() * this.alphabet.length)]);
                     }
-                    
                 }
                 newLetters.push(rowLetters);
             }
@@ -107,7 +106,7 @@ class Board{
                 {
                     this.letters[i][y] = this.alphabet[nextIndex];
                 }
-                if(overflow == false)
+                if(overflow === false)
                 {
                     break;
                 }
@@ -182,16 +181,17 @@ class Board{
         return output;
     }
 
-    constuctWord(wordPath, output)
+    constuctWord(wordPath, output, library = this.library)
     {
+
         let x = wordPath.positions[wordPath.positions.length - 1].x;
         let y = wordPath.positions[wordPath.positions.length - 1].y;
         let activeWord = createWord(this.letters,wordPath);
-        if(wordPath.positions.length > this.range.max || !this.canBeInLibrary(activeWord))// too long or cant be a word
+        let cutLibrary = newInst(library).filter(w=>(w.startsWith(activeWord)));
+        if(wordPath.positions.length > this.range.max || cutLibrary.length === 0/*!this.canBeInLibrary(activeWord)*/ ) // too long or cant be a word----------------------
         {
             return;
         }
-        
         if(wordPath.positions.length >= this.range.min && wordPath.positions.length <= this.range.max)// if not too short, try to find it in library
         {
             // if(this.library.includes(activeWord))
@@ -210,7 +210,7 @@ class Board{
             // {
             //     console.log(createWords(this.letters, output) + " již obsahuje " + activeWord)
             // }
-            if(this.library.includes(activeWord) && !createWords(this.letters, output).includes(activeWord)/*this.hasWordIncluded(activeWord, output)*/)
+            if(cutLibrary.includes(activeWord) && !createWords(this.letters, output).includes(activeWord)/*this.hasWordIncluded(activeWord, output)*/)
             {
                 output.push(JSON.parse(JSON.stringify(wordPath)));
                 //console.log(JSON.stringify(output))
@@ -229,7 +229,7 @@ class Board{
                     if(wordPath.positions.filter(element => element.x == X && element.y == Y).length == 0)
                     {           
                         wordPath.positions.push(new Position(X,Y));
-                        this.constuctWord(wordPath, output);
+                        this.constuctWord(wordPath, output,cutLibrary);
                         wordPath.positions.pop();
                     }
                 }
@@ -241,7 +241,7 @@ class Board{
     {
         for (let i = 0; i < paths.length; i++) {
             const element = createWord(this.letters, paths[i]);
-            if(word == element)
+            if(word === element)
             {
                 return true;
             }
@@ -251,11 +251,12 @@ class Board{
     // OPTIMALIZATION
 
     //1) when bžk, then not a word
-    canBeInLibrary(startOfWord)
+    canBeInLibrary(startOfWord, library = this.library)
     {
-        for (let i = 0; i < this.library.length; i++) {
-            const element = this.library[i];
-            if(element.indexOf(startOfWord) == 0)
+        for (let i = 0; i < library.length; i++) {
+            const element = library[i];
+            
+            if(element.startsWith(startOfWord,0))
             {
                 //console.log(element + " začíná " + startOfWord)
                 return true;
@@ -305,17 +306,19 @@ async function createSquardle(sqSettings)
     // sources
     let ABC = "abcdefghijklmnopqrstuvwxyzáéíýóúřčěš"
     
-
     // parameters
     let size = sqSettings.size;
     let minWordSize = sqSettings.minWordSize;
     let maxWordSize =  sqSettings.maxWordSize;
     let inputWords = sqSettings.inputWords;
-        // loads starting board
+    // loads starting board
     let board = new Board(size, "", minWordSize, maxWordSize);
     board.loadBoard(sqSettings.inputBoard);
+
     let LIBRARY = await getJson("../libraries/" + sqSettings.library +".json");
     LIBRARY.filter((el)=>{(el.length >= minWordSize && el.length<=maxWordSize) })
+
+    
     // output
     let squardle = new Squardle();
 
@@ -339,7 +342,7 @@ async function createSquardle(sqSettings)
         board.alphabet = element
         board.generateRandomBoard(true);
         wordsInBoard = board.findWordsInBoard();
-        while(!createWords(board.letters, wordsInBoard).includes(element) && numOfTries++ <= 100000)
+        while(!createWords(board.letters, wordsInBoard).includes(element) && numOfTries++ <= 100000 && numOfTries++ <= Math.pow(board.alphabet.length, board.countLocked()))
         {
             board.nextBoardPermutation();
             wordsInBoard = board.findWordsInBoard();
@@ -364,24 +367,30 @@ async function createSquardle(sqSettings)
 
     // FINAL CHANGES
 
-    board.library = LIBRARY;
+    board.library = newInst(LIBRARY);
+    if(sqSettings.notWords)
+    {
+        board.library.filter((el)=>{(sqSettings.notWords.includes(el))})
+    }
     wordsInBoard = board.findWordsInBoard();
     board.lockPaths(wordsInBoard)
-    if(!board.fullyLocked())
-    {
-        logPost("Jsou písmena bez slov, zkouším ještě jednou najít slova.")
-        board.alphabet = ABC;
-        board.generateRandomBoard(true)
-        wordsInBoard = board.findWordsInBoard();
+
+    let numberOfTries = sqSettings.numOfTriesToFill;
+    logPost("Jsou písmena bez slov, zkouším doplnit " + numberOfTries + " krát")
+    board.alphabet = ABC;
+    board.generateRandomBoard(true)
+    for (let i = 0; i < numberOfTries; i++) {
+        if(!board.fullyLocked())
+        {
+            board.nextBoardPermutation();
+            wordsInBoard = board.findWordsInBoard();
+            board.lockPaths(wordsInBoard);
+        }
     }
 
-    // while(countLocked(board.locked) != size*size)
-    // {
-    //     board = nextBoardPermutation(board, ABC)
-    //     wordsInBoard = findWordsInBoard();
-    //     lockPaths(wordsInBoard);
-    //     console.log("currently locked: " + countLocked(board.locked))
-    // }
+    logPost("Poslední prohledání s celou knihovnou")
+    board.nextBoardPermutation();
+    wordsInBoard = board.findWordsInBoard();
     
     squardle.letters = board.letters;
     squardle.wordsToFind = wordsInBoard;
@@ -394,7 +403,7 @@ async function getFile(url)
         return await fetch(url);
     }
     catch(error){
-        console.log("error")
+        console.log("error");
         console.log(error);
     }
     return false;
@@ -432,6 +441,42 @@ function createWords(b, paths)
     }
     return words;
 }
+
+function shuffle(array)
+{
+    let newArr = [];
+    let oldArr = JSON.parse(JSON.stringify(array));
+    while (0 < oldArr.length) {
+        const rnd = Math.floor(oldArr.length*Math.random());
+        newArr.push(oldArr[rnd]);
+        oldArr.splice(rnd,1);
+        
+    }
+    return newArr;
+}
+
+// WEBWORKER FUNCTION
+onmessage = async (e)=>{
+    if(e.data === "close")
+    {
+        close();
+        return;
+    }
+    logPost("Generátor pracuje")
+    let result = await createSquardle(e.data);
+    logPost("Práce dokončena")
+    postMessage({
+        title:"result",
+        mess:JSON.stringify(result),
+        settings:e.data
+    })
+}
+
+
+
+
+
+
 
 
 // SIMILAR WORDS
@@ -532,44 +577,6 @@ function createWords(b, paths)
 //     return false;
 
 // }
-function shuffle(array)
-{
-    let newArr = [];
-    let oldArr = JSON.parse(JSON.stringify(array));
-    while (0 < oldArr.length) {
-        const rnd = Math.floor(oldArr.length*Math.random());
-        newArr.push(oldArr[rnd]);
-        oldArr.splice(rnd,1);
-        
-    }
-    return newArr;
-}
-
-// DEBUG FUNCTIONS
-function printWords()
-{
-    for (let i = 0; i < wordsInBoard.length; i++) {
-        const element = wordsInBoard[i];
-        console.log(createWord(board, element))
-    }
-}
-
-
-onmessage = async (e)=>{
-    if(e.data === "close")
-    {
-        close();
-        return;
-    }
-    logPost("Generátor pracuje")
-    let result = await createSquardle(e.data);
-    logPost("Práce dokončena")
-    postMessage({
-        title:"result",
-        mess:JSON.stringify(result)
-    })
-}
-
 
 
 

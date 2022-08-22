@@ -10,8 +10,10 @@ class settings{
     inputWords;
     inputBoard;
     library;
+    numOfTriesToFill;
+    notWords;
 
-    constructor(_size = 5, _minWordSize = 4, _maxWordSize = 8, _numWordsToInput = 1, _inputWords = [""], _inputBoard = null, _library = "czech")
+    constructor(_size = 5, _minWordSize = 4, _maxWordSize = 8, _numWordsToInput = 1, _inputWords = [""], _inputBoard = null, _library = "czech",_numOfTriesToFill = 1, _notWords = [])
     {
         this.size = _size;
         this.minWordSize = _minWordSize;
@@ -20,6 +22,8 @@ class settings{
         this.inputWords = _inputWords;
         this.inputBoard = _inputBoard;
         this.library = _library;
+        this.numOfTriesToFill = _numOfTriesToFill;
+        this.notWords = _notWords;
     }
 }
 

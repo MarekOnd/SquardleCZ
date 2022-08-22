@@ -76,19 +76,19 @@ async function loadSquardlesData()
     squardlesCasual = [];
     let casualNameList = await getJson("./data/squardlesCasual.json");
     for (let i = 0; i < casualNameList.length; i++) {
-        squardlesCasual.push(await getJson("./data/" + casualNameList[i] +".json"))
+        squardlesCasual.push(await getJson("./data/casual/" + casualNameList[i] +".json"))
     }
 
     squardlesWeekly = [];
     let weeklyNameList = await getJson("./data/squardlesWeekly.json");
     for (let y = 0; y < weeklyNameList.length; y++) {
-        squardlesWeekly.push(await getJson("./data/" + weeklyNameList[y] +".json"))
+        squardlesWeekly.push(await getJson("./data/weekly/" + weeklyNameList[y] +".json"))
     }
 
     squardlesSpecial = []
     let specialNameList = await getJson("./data/squardlesSpecial.json");
     for (let y = 0; y < specialNameList.length; y++) {
-        squardlesSpecial.push(await getJson("./data/" + specialNameList[y] +".json"))
+        squardlesSpecial.push(await getJson("./data/special/" + specialNameList[y] +".json"))
     }
 
     if(localStorage.getItem("squardlesShared") === undefined || localStorage.getItem("squardlesShared") === null)

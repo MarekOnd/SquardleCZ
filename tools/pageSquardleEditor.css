@@ -46,7 +46,7 @@ body{
     display: flex;
     height: 87vh;
 }
-#squardleEditor{
+#squardleExporter{
     position: relative;
 
     resize: horizontal;
@@ -407,5 +407,12 @@ a:hover{
     background-color: #282c34;
 }
 
+
+#loadBoardBackToEditor{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+}
 
 

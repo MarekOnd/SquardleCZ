@@ -52,10 +52,11 @@ Generator.onmessage = (e) => {
         break;
         case "result":
             generatorWorking = false;
-            S = new Squardle();
-            S = JSON.parse(e.data.mess);
-            createBoard();
-            setupWords();
+            
+
+            let sq = JSON.parse(e.data.mess);
+            loadSquardleFromEditor(sq, e.data.settings);
+            
             
         break;
     }
@@ -78,6 +79,38 @@ function updateWordInputMenu(_settings)
         newArea.value = _settings.inputWords[i];
         
     }
+}
+
+function setWordsInput(id, words)
+{
+    if(!words)
+    {
+        return;
+    }
+    let place = document.getElementById(id);
+    clearChildren(place);
+    for (let i = 0; i < words.length; i++) {
+        let newArea = createChild(place,"textarea","wordToHideInput");
+        if(words[i] === undefined)
+        {
+            words[i] = "";
+        } 
+        newArea.value = words[i];
+        
+    }
+}
+function getWordsInput(id)
+{
+    let words = []
+    let wordsAreas = document.getElementById(id).childNodes;
+    if(!wordsAreas)
+    {
+        return words;
+    }
+    for (let i = 0; i < wordsAreas.length; i++) {
+        words.push(wordsAreas[i].value)
+    }
+    return words;
 }
 
 function updateBoardInputMenu(_settings)
@@ -198,9 +231,12 @@ function getSettings()
     _settings.minWordSize  = document.getElementById("minWordSize").value;
     _settings.maxWordSize  = document.getElementById("maxWordSize").value;
     _settings.numWordsToInput = document.getElementById("numWordsToInput").value;
-    getInputWords(_settings);
+    _settings.inputWords = getWordsInput("wordsToHide");
+    _settings.notWords = getWordsInput("notWords");
+    // getInputWords(_settings);
     _settings.inputBoard = getInputBoard();
     _settings.library = document.getElementById("libraryInput").value;
+    _settings.numOfTriesToFill = document.getElementById("numOfTriesToFill").value;
     return _settings;
 }
 function getInputWords(_settings)
@@ -221,9 +257,12 @@ function loadSettings(_settings)
     document.getElementById("minWordSize").value = _settings.minWordSize;
     document.getElementById("maxWordSize").value = _settings.maxWordSize;
     document.getElementById("numWordsToInput").value =_settings.numWordsToInput;
-    updateWordInputMenu(_settings);
+    setWordsInput("wordsToHide", _settings.inputWords)
+    //updateWordInputMenu(_settings);
+    setWordsInput("notWords", _settings.notWords)
     updateBoardInputMenu(_settings);
     document.getElementById("libraryInput").value = _settings.library;
+    document.getElementById("numOfTriesToFill").value = _settings.numOfTriesToFill;
 }
 
 function saveSettings()
@@ -278,12 +317,11 @@ function initialize()
     })
 
     //Select editor on page load (called twice so the button changes lol)
-    openTab("squardleEditor",document.getElementById("toEditor"))
+    openTab("squardleExporter",document.getElementById("toExporter"))
     openTab("squardleGenerator",document.getElementById("toGenerator"))
-    openTab("squardleEditor",document.getElementById("toEditor"))
+    openTab("squardleExporter",document.getElementById("toExporter"))
 
 }
-
 
 
 initialize()

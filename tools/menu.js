@@ -3,7 +3,7 @@ function openTab(tabId, button)
 
     let tab = document.getElementById(tabId);
     //left side alwats fits screen
-    document.getElementById("squardleEditor").style.width = "1000vw"
+    document.getElementById("squardleExporter").style.width = "1000vw"
     if(tab.style.display === "none")
     {
         button.classList.add("selected-tab-button")

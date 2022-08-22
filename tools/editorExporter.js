@@ -19,6 +19,29 @@ async function loadData()
     applySquardleToExporter();
 }
 
+function loadSquardleFromEditor(sq, set)
+{
+    S = newInst(sq);
+    console.log(set)
+    createBoard();
+    setupWords();
+    let wordsToUnlegit;
+    if(set.notWords)
+    {
+        wordsToUnlegit = set.notWords
+    }
+    else
+    {
+        wordsToUnlegit = []
+    }
+    console.log(wordsToUnlegit);
+    let Swords = createWords(S.letters, S.wordsToFind);
+    for (let i = 0; i < wordsToUnlegit.length; i++) {
+        const w = wordsToUnlegit[i];
+        moveWord(Swords.indexOf(w));
+    }
+}
+
 function applySquardleToExporter()
 {
     createBoard()
@@ -159,7 +182,7 @@ function updateWords()
         word.classList.add("word");
         word.classList.add("wordToFind");
         
-        word.addEventListener("click",(e)=>{moveWord(e,legitWords[i])})
+        word.addEventListener("click",(e)=>{moveWord(legitWords[i], e)})
         legitWords_place.appendChild(word)
     }
     let bonusWords_place = document.getElementById("bonusWords");
@@ -170,7 +193,7 @@ function updateWords()
         word.textContent = text
         word.classList.add("word");
         word.classList.add("bonusWord");
-        word.addEventListener("click",(e)=>{moveWord(e,bonusWords[i])})
+        word.addEventListener("click",(e)=>{moveWord(bonusWords[i],e)})
         bonusWords_place.appendChild(word)
     }
 
@@ -182,10 +205,10 @@ function updateWords()
 
 }
 
-function moveWord(e,index)
+function moveWord(index, e = null)
 {
     //ctrl+click -> find word in dictionary
-    if(e.ctrlKey){
+    if(e && e.ctrlKey){
         console.log("FIND WORD")
         const DICTIONARY_SEARCH_URL_BEGIN = "https://cs.wiktionary.org/w/index.php?search="
         const DICTIONARY_SEARCH_URL_END = "&title=Speci%C3%A1ln%C3%AD%3AHled%C3%A1n%C3%AD&go=J%C3%ADt+na&ns0=1"
@@ -309,3 +332,29 @@ function check(variable, message)
     }
     return true;
 }
+
+
+
+// SQUARDLE TO SETTINGS IN EDITOR
+
+function squardleToSettings(sq)
+{
+    let set = new settings();
+    set.size = sq.letters.length;
+    set.inputBoard = sq.letters;
+    set.numWordsToInput = legitWords.length;
+    set.inputWords = getIndexesInArray(createWords(sq.letters, sq.wordsToFind), legitWords);
+    set.notWords = getIndexesInArray(createWords(sq.letters, sq.wordsToFind), bonusWords);
+    return set;
+}
+
+function getIndexesInArray(arr, indexes)
+{
+    let newArr = [];
+    for (let i = 0; i < indexes.length; i++) {
+        const index = indexes[i];
+        newArr.push(arr[index]);
+    }
+    return newArr;
+}
+

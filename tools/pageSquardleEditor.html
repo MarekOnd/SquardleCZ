@@ -23,13 +23,13 @@
         </div>
         <div id="menu">
 
-            <button id="toEditor" onclick="openTab('squardleEditor',this)" class="button-tab">Editor</button>
+            <button id="toExporter" onclick="openTab('squardleExporter',this)" class="button-tab">Editor</button>
             <button id="toGenerator" onclick="openTab('squardleGenerator',this)" class="button-tab">Generátor</button>
 
         </div>
         <div id="content">
             <!---------------------------------------------EDITOR------------------------------------------------------>
-            <div id="squardleEditor">
+            <div id="squardleExporter">
                 <!-- <div id="squardleLoader"> -->
                     <fieldset class="detailsSection">
                         <legend>
@@ -153,6 +153,9 @@
                     <input type="text" id="fileName">.json
                 </label><br>
                 <button onclick="downloadSquardle()" id="download" class="button-main">Exportuj a stáhni</button>
+
+
+                <button id="loadBoardBackToEditor" onclick="loadSettings(squardleToSettings(S))">Načíst písmena zpět-></button>
             </div>
             
             <!---------------------------------------------GENERATOR------------------------------------------------------>
@@ -184,12 +187,20 @@
                     <div id="wordsToHide">
 
                     </div><br>
+                    Nejsou slova:<br>
+                    <div id="notWords">
+
+                    </div><br>
                     <label>
                         Výběr knihovny slov:
                         <select id="libraryInput">
                             <option value="czech">Česká</option>
                             <option value="english">Anglická</option>
                         </select>
+                    </label><br>
+                    <label>
+                        Počet pokusů o doplnění nepoužitých písmen na slova
+                        <input id="numOfTriesToFill" type="number" rows="1" onchange="updateWordInputMenu(getSettings())">
                     </label>
 
                 </div><br>
