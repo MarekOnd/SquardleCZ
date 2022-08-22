@@ -143,9 +143,9 @@
     display: inline-block;
 }
 
-.previewTileRow{
-    height: calc(var(--browser-fontSize)/10 + var(--browser-fontSize))
-}
+/* .previewTileRow{
+    height: fit-content
+} */
 
 /* score */
 .browserTile #scoreTitle{

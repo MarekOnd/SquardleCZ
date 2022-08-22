@@ -48,9 +48,9 @@ svg {
 #title-header{
     display: flex;
     justify-content: center;
-    /* Cool border not cool enough :( */
-    /* border-bottom: solid var(--color3) 5px;
-    border-left: solid var(--color3) 5px; */
+
+    border-bottom: solid var(--color6) 3px;
+
     font-size: 1.3rem;
 }
 #title-header .header-content{

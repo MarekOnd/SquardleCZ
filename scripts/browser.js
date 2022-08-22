@@ -304,6 +304,7 @@ function createSquardleTile(sq, classToAdd, index)
         let preview = document.createElement("div");
         preview.id = "preview";
         let sqSize = sq.letters.length;
+        let boardSize = 100;
         sq.letters.map((row)=>{
             let tileRow = document.createElement("div");
             tileRow.classList.add("previewTileRow");
@@ -315,8 +316,14 @@ function createSquardleTile(sq, classToAdd, index)
                     tile.style.visibility = "hidden";
                 }
                 tile.textContent = letter;
+                tile.style.width = boardSize/sqSize + "px";
+                tile.style.height = boardSize/sqSize + "px";
+                tile.style.fontSize = boardSize/sqSize + "px";
+                tile.style.lineHeight= boardSize/sqSize + "px";
+                tile.style.margin = boardSize/sqSize/10 + "px";
                 tileRow.appendChild(tile)
             })
+            tileRow.style.height = (boardSize/sqSize+2*boardSize/sqSize/10) + "px";
             preview.appendChild(tileRow);
         })
         content.appendChild(preview);
