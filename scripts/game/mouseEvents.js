@@ -46,7 +46,11 @@ function mouseUp()
     // unselects button
     wordPath.positions.forEach(element => {
         let button = getButton(element.x,element.y);
-        button.classList.remove("selected");
+        if(button)
+        {
+            button.classList.remove("selected");
+        }
+        
     });
     testMainWord();
     // resets array

@@ -3,7 +3,7 @@ function createBoard()
 {
     let board = document.querySelector("#board");
     board.style.gridTemplateColumns = "1fr ".repeat(S.letters.length)
-
+    board.style.fontSize = `calc(min(600px,90vw)/${S.letters.length*2})`
     // deletes existing children
     clearChildren(board)
 
@@ -36,29 +36,31 @@ function createBoard()
                 hitbox.className = "hitbox";
                 hitbox.addEventListener("click",function(){mouseClick(x,y)});
                 hitbox.addEventListener("pointerdown",function(){mouseDown(x,y)});
-                hitbox.addEventListener("pointerup", function(){mouseUp()});
+                //hitbox.addEventListener("pointerup", function(){mouseUp()});
                 hitbox.addEventListener("pointerenter",function(){mouseEnter(x,y)});
                 hitbox.addEventListener("gotpointercapture",(e)=>{e.target.releasePointerCapture(e.pointerId)})
                 cell.appendChild(hitbox);
+
+                // how many words use this letter, how many start with letter
+                let letterWrapper = document.createElement("div")
+                let letter = document.createElement("div")
+                letterWrapper.className = "button-letter";
+                let text = document.createTextNode(S.letters[i][j]);
+                letter.appendChild(text);
+                letterWrapper.appendChild(letter)
+                button.appendChild(letterWrapper)
+
+                let use = document.createElement("div");
+                use.className = "button-use";
+                let start = document.createElement("div");
+                start.className = "button-start";
+                button.appendChild(use);
+                button.appendChild(start);
             }
 
-            // how many words use this letter, how many start with letter
-            let letterWrapper = document.createElement("div")
-            let letter = document.createElement("div")
-            letterWrapper.className = "button-letter";
-            let text = document.createTextNode(S.letters[i][j]);
-            letter.appendChild(text);
-            letterWrapper.appendChild(letter)
-            button.appendChild(letterWrapper)
-
-            let use = document.createElement("div");
-            use.className = "button-use";
-            let start = document.createElement("div");
-            start.className = "button-start";
-            button.appendChild(use);
-            button.appendChild(start);
             
-            board.style.fontSize = `calc(min(600px,90vw)/${S.letters.length*2})`
+            
+            
             
             // final appendage
             
@@ -73,8 +75,29 @@ function createBoard()
     //then rotate by 0deg to update 
     rotateBoard(0)
 }
-function getButton(x,y)
+
+
+let boardButtons = [];
+
+function initializeBoardButtons()
 {
+    boardButtons = []
+    for(var i = 0; i < S.letters.length; i++)
+    {
+        let row = [];
+        for(var j = 0; j < S.letters[i].length; j++)
+        {
+            row.push(getButtonFromDocument(i,j));
+        }
+        boardButtons.push(row);
+    }
+}
+function getButtonFromDocument(x,y)
+{
+    if(S.letters[x][y]==="0")
+    {
+        return null;
+    }
     let but = document.querySelector("#board").childNodes[x*(S.letters.length)+y].querySelector(".boardButton");
     if(but)
     {
@@ -84,6 +107,10 @@ function getButton(x,y)
     {
         return null;
     }
+}
+function getButton(x,y)
+{
+    return boardButtons[x][y];
 }
 
 function updateLettersInBoard()
@@ -111,7 +138,7 @@ function updateLettersInBoard()
             {
                 continue;
             }
-            let timesUsedInWord = allIncludedPositions.filter(el=>(el.x==i&&el.y==y)).length
+            let timesUsedInWord = allIncludedPositions.filter(el=>(el.x==i&&el.y==y)).length;
 
 
             
@@ -162,5 +189,14 @@ function rotateBoard(deg){
     board.childNodes.forEach(cell=>{
         cell.style.transform = `rotate(${-(currentBoardRotation)}deg)`
     })
+    // boardButtons.map((row)=>{
+    //     row.map(cell=>{
+    //         if(cell)
+    //         {
+    //             cell.style.transform = `rotate(${-(currentBoardRotation)}deg)`
+    //         }
+            
+    //     })
+    // })
     updateBoardCoordinates()
 }

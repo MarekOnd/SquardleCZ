@@ -1,6 +1,6 @@
 // CREATING LINE
 
-let lineCoords = [];
+let lineSegments = []
 
 let boardCoordinates = [];
 let line =  document.querySelector("#line");
@@ -11,7 +11,11 @@ function updateBoardCoordinates()
     for (let i = 0; i < S.letters.length; i++) {
         let row = []
         for (let j = 0; j < S.letters.length; j++) {
-            
+            if(S.letters[i][j])
+            {
+                row.push(new Position(0,0));
+                continue;
+            }
             let button = getButton(i,j).getBoundingClientRect();
             row.push(new Position(button.left + button.width/2, button.top + button.height/2))
         }
@@ -25,14 +29,17 @@ function getButtonCenter(x, y)
     return new Position(button.left + button.width/2  + window.scrollX, button.top + button.height/2 + window.scrollY)
 }
 
+let lineScale = 1.14;
 function addLineSegment()
 {
     let length = wordPath.positions.length;
     if(length > 1)
     {
         let startPos = getButtonCenter(wordPath.positions[length-2].x,wordPath.positions[length-2].y);
-        let endPos = getButtonCenter(wordPath.positions[length-1].x,wordPath.positions[length-1].y)
-        let segment = createLine(startPos.x,startPos.y,endPos.x,endPos.y);
+        let endPos = getButtonCenter(wordPath.positions[length-1].x,wordPath.positions[length-1].y);
+        let vector = new Position((startPos.x - endPos.x)*(lineScale-1),(startPos.y - endPos.y)*(lineScale-1));
+
+        let segment = createLine(startPos.x + vector.x/2,startPos.y + vector.y/2,endPos.x - vector.x/2,endPos.y - vector.y/2);
 
         segment.id = "line_"+ length;
         // segment.style.scale = 0;
@@ -40,15 +47,18 @@ function addLineSegment()
         // setTimeout(()=>{
         //     segment.style.scale = 1;
         // })
+        lineSegments.push(segment);
         line.appendChild(segment);
+        return segment;
     }
+    
     
 }
 
 function deleteLineSegment()
 {
-    let length = wordPath.positions.length;
-    let segment = document.querySelector("#line_"+(length+1))
+
+    let segment = lineSegments.pop();
     if(segment)
     {
         line.removeChild(segment);

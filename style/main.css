@@ -58,7 +58,7 @@ svg {
     justify-content: space-between;
     text-align: center;
     align-items: center;
-    padding: 0.12em clamp(0.1em,5vw,1em) 0.2em;
+    padding: 0.12em clamp(0.4em,4vw,0.1em) 0.1em;
 
     width: 100%;
     margin: 0 auto;
@@ -91,11 +91,13 @@ svg {
 
 }
 .header-group .icon:not(:first-child){
-    margin-left: 1.2em;
-
+    margin-right: 0.3em;
+}
+.header-group .icon:not(:last-child){
+    margin-left: 0.3em;
 }
 .icon svg{
-    font-size: 150%;
+    font-size: calc(min(var(--title-height), 8vw));
 }
 
 #title-header .icon:hover{

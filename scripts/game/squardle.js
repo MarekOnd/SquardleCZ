@@ -110,6 +110,7 @@ async function loadSquardle(squardleToLoad)
     
 
     createBoard();
+    initializeBoardButtons();
 
     // add share result
     let share = document.getElementById("share");
@@ -118,9 +119,9 @@ async function loadSquardle(squardleToLoad)
     updateWord("","white")
     updateAll();
  
-    document.querySelector(":root").style.setProperty('--boardSize',S.letters.length);
+    document.querySelector(":root").style.setProperty('--boardSize', S.letters.length);
 
-    
+    board.addEventListener("pointerup", function(){mouseUp()});
 
     updateBoardCoordinates();
     

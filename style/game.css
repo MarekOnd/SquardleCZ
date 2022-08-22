@@ -12,7 +12,7 @@
 
     --board-dimensions:calc(min(65vh,90vw));
     --boardSize: 5;
-    --game-spacesBetweenCells: calc(var(--board-dimensions)/var(--boardSize)/10);
+    --game-spacesBetweenCells: calc(var(--board-dimensions)/var(--boardSize)/8);
 
 }
 [hidden] { display: none !important; }
@@ -26,8 +26,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    /* height: fit-content; */
-
 }
 
 /* board */
@@ -70,59 +68,41 @@
     height: var(--board-dimensions);
     /* rotate transition */
     transition: transform 0.5s cubic-bezier(.52,.27,.17,1.41);
-    
 }
 
 
 
 #board .cell{
-    filter: drop-shadow(5px 5px 3px #36364d);
-    
-    transition: inherit;
     position: relative;
     width: 100%;
     height: 100%;
-    /* width: var(--game-cellSize); */
-    /* height: var(--game-cellSize); */
-    /* margin: var(--game-spacesBetweenCells); */
-    /* transition: transform 0.5s; */
-
-
-    
+    transition: transform 0.5s cubic-bezier(.52,.27,.17,1.41) ;
 }
 
-@supports (-moz-appearance:none) {
+/* @supports (-moz-appearance:none) {
     #board .cell{
         filter: none !important;
     }
     .cell .boardButton{
         box-shadow: 5px 5px 3px #36364d;
     }
-}
+} */
 .cell .boardButton{
     position: relative;
     height: 100%;
     width:  100%;
 
     /* box-shadow: 5px 5px 3px #36364d; not working with scale*/
-
-
     border-radius: calc(var(--board-dimensions)/(var(--boardSize)*10));
 
     background-color: rgb(70, 68, 68);
     color: white;
-    
-    transition: transform 0.1s ease-out;
-    transition: background-color 0.1s ease;
 
+    transition: all 0.1s ease;
 }
 .cell .allWereFound{
     background: radial-gradient(#2b2b3d 0%,#181926 50%,#12121b );
-    box-shadow: 5px 5px 5px -3px #212130;
-    transform: scale(96%);
-    /* --darker-border:rgb(38, 38, 38);
-    border-top:  var(--darker-border) 6px inset;
-    border-left: var(--darker-border) 6px inset; */
+    /*box-shadow: 5px 5px 5px -3px #212130;*/
     color: white;
     z-index: 0;
 }
@@ -137,9 +117,8 @@
     color: rgb(255, 255, 255);
 }
 .cell .selected{
-    background: gray;
-    /* border-radius: 9px; */
-   transform: scale(0.95);  /* TODO: FIX!*/
+    background-color: gray;
+    transform: scale(0.95);
 
 }
 .boardButton .button-start{
@@ -147,24 +126,22 @@
     right: 5%;
     top: 0%;
     font-size: 45%;   
-    color: red;
+    color: rgb(255, 42, 42);
 }
 .boardButton .button-use{
     position: absolute;
     bottom: 0%;
     left: 5%;
     font-size: 45%;
-    color: green;
+    color: rgb(0, 175, 0);
 }
 
 .cell .hitbox{
     position: absolute;
-
     width: 100%;
     height: 100%;
-
     border-radius: calc(var(--board-dimensions)/(var(--boardSize)));
-    z-index: 100;
+    z-index: 99;
 }
 
 /* output */
@@ -173,10 +150,10 @@
     margin-left: auto;
     margin-right: auto;
 
-    height: calc(var(--board-dimensions)/10);
-    line-height: calc(var(--board-dimensions)/10);
+    height: calc(var(--board-dimensions)/12);
+    line-height: calc(var(--board-dimensions)/12);
     padding: 10px;
-    font-size: calc(var(--board-dimensions)/10);
+    font-size: calc(var(--board-dimensions)/12);
 }
 
 /* score */
@@ -379,13 +356,14 @@
 
 #line .lineSegment{
     position: absolute;
+    
     background-color:rgb(20, 218, 218, 0.5);
    
     --lineSize: calc(var(--board-dimensions)/(var(--boardSize)*5));
+
     /* border-left: var(--lineSize) solid rgba(56, 10, 8, 0.1);  */
     /* border-inline: white solid 5px; */
     height: var(--lineSize);
-    /* outline: 10px white solid; */
     
     border-radius: calc(var(--lineSize)/2);
     z-index: 2;
@@ -415,9 +393,8 @@
     height: var(--game-scoreBarHeight);
     left: 0%;
     top: 0%;
-    transform: scale(1);
 
-    transition: opacity 1s ease, transform 1s ease;
+    transition: all 0.1s ease;
 
     z-index: 2;
 }
@@ -452,10 +429,7 @@
 
 .mouseParticle1{
     font-size: 30px;
-
-    filter: drop-shadow(0px 0px 10px white)
 }
 .mouseParticle2{
     font-size: 20px;
-    transform: rotateZ(50deg);
 }
