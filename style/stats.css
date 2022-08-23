@@ -7,7 +7,7 @@
 }
 
 #stats h1{
-    width: fit-content;
+
     font-size: var(--stats-titleFontSize);
     line-height: calc(var(--stats-titleFontSize)*2);
     margin: 5px;
@@ -15,12 +15,13 @@
     user-select: none;
 }
 #stats{
-
-    width: 90%;
     height: fit-content;
 
-    margin: 10%;
-    margin-top: 1%;
+    margin-top: 2vh;
+    
+    overflow: auto;
+    max-height: 90vh;
+
 }
 
 #stats .statBox{

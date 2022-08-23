@@ -7,10 +7,11 @@
 }
 
 #guide{
-    margin: 2vw;
-    margin-top: 2vh;
-
     user-select: none;
+    padding: 1vw;
+    margin-top: 2vh;
+    overflow: auto;
+    max-height: 90vh;
 }
 
 #guide h1{

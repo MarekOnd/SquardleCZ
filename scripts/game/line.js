@@ -5,6 +5,8 @@ let lineSegments = []
 let boardCoordinates = [];
 let line =  document.querySelector("#line");
 
+let lineColors = null;
+
 function updateBoardCoordinates()
 {
     boardCoordinates = [];
@@ -17,7 +19,7 @@ function updateBoardCoordinates()
                 continue;
             }
             let button = getButton(i,j).getBoundingClientRect();
-            row.push(new Position(button.left + button.width/2, button.top + button.height/2))
+            row.push(new Position(button.left + button.width/2 + window.scrollX, button.top + button.height/2 + window.scrollY))
         }
         boardCoordinates.push(row);
     }
@@ -26,7 +28,7 @@ function updateBoardCoordinates()
 function getButtonCenter(x, y)
 {
     let button = getButton(x,y).getBoundingClientRect();
-    return new Position(button.left + button.width/2  + window.scrollX, button.top + button.height/2 + window.scrollY)
+    return new Position(button.left + button.width/2 - 5  + window.scrollX, button.top + button.height/2 - 10 + window.scrollY);// ONLY ABSOLUTE CORRECTION! (-5 and -10), :-()
 }
 
 let lineScale = 1.14;
@@ -43,7 +45,11 @@ function addLineSegment()
 
         segment.id = "line_"+ length;
         // segment.style.scale = 0;
-        // segment.style.backgroundColor = chooseRandom(["red","white", "blue"])
+        if(lineColors)
+        {
+            segment.style.backgroundColor = chooseRandom(lineColors)
+        }
+        
         // setTimeout(()=>{
         //     segment.style.scale = 1;
         // })

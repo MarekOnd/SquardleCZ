@@ -9,7 +9,6 @@ const allBackgrounds = [
   {name:"background.png",weight:2},
   {name:"void.png",weight:2},
   {name:"hemp.png",weight:2},
-  {name:"haluz.jpg",weight:2},
 ]
 
 function getRandomBackground(arr){

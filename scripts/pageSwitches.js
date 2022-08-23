@@ -12,6 +12,7 @@ let tabBefore;
 function openTab(tabId)
 {
     closeMenu()
+    let tabBeforeBefore = tabBefore;
     // set pervious tab, for loading browser and its updates
     if(localStorage.getItem("currentTab") !== undefined)
     {
@@ -21,7 +22,7 @@ function openTab(tabId)
     switch(tabBefore)
     {
         case "game":
-            leftSquardle()
+            leftSquardle();
             break;
         case "browser":
             break;
@@ -34,6 +35,11 @@ function openTab(tabId)
         case "guide":
             break;
         case "settings":
+            if(!tabBeforeBefore)
+            {
+                openTab("browser");
+                return;
+            }
             break;
     }
 
@@ -49,6 +55,9 @@ function openTab(tabId)
     document.getElementById(tabId).hidden = false;
     document.getElementById("goto-" + tabId).classList.add("selectedTab-button");
 
+
+    // save current tab
+    localStorage.setItem("currentTab", JSON.stringify(tabId))
     
     // does additional stuff for each tab the user is switching to
     switch(tabId)
@@ -72,10 +81,18 @@ function openTab(tabId)
         case "guide":
             break;
         case "settings":
+            if(tabBefore === "settings")
+            {
+                if(tabBeforeBefore)
+                {
+                    openTab(tabBeforeBefore);
+                    tabBefore = tabBeforeBefore;
+                }
+                
+            }
             break;
     }
-    // save current tab
-    localStorage.setItem("currentTab", JSON.stringify(tabId))
+    
 }
 
 

@@ -1,11 +1,11 @@
 
 :root{
     --settings-sectionHeaderFontSize: 30px;
-    --settings-fontSize: calc(min(30px,8vw));
+    --settings-fontSize: calc(min(30px,4vw));
 
-    --settings-checkboxSize: calc(min(60px,8vw));/* width */
+    --settings-checkboxSize: var(--settings-fontSize);/* height */
     --settings-sliderSize: calc(min(30px,4vw));/* height */
-    --settings-selectSize: 30px
+    --settings-selectSize: var(--settings-fontSize);
 }
 
 
@@ -15,6 +15,8 @@
     margin: 1vw;
     padding: 1vw;
 
+    overflow: auto;
+    max-height: 90vh;
 
     user-select: none;
     
@@ -42,10 +44,6 @@
     margin: 1vw;
     padding: 0.1vw;
 
-    /* border: solid 5px white;
-    border-radius: 30px;
-    background-image: linear-gradient(to bottom, var(--color2) , var(--color1)); */
-
     border-bottom: solid var(--color3) 5px;
     border-left: solid var(--color3) 5px;
     border-top: solid transparent 5px;
@@ -68,7 +66,7 @@
 }
 
 #settings .opened{
-    height: 50vh;
+    height: 70vh;
 
 
 
@@ -80,8 +78,8 @@
 
 #settings .settingsInput{
     width: 100%;
-    height: 40px;
-    line-height: 40px;
+    height: calc(var(--settings-fontSize)*1.2);
+    line-height: var(--settings-fontSize);
     vertical-align: middle;
     display: block;
 }
@@ -89,8 +87,10 @@
 /* CHECK BOX */
 #settings .checkbox{
     position: relative;
-    height: fit-content;
-    width: fit-content;
+
+    width: 70vw;
+
+    
 
     display: block;
 }
@@ -106,13 +106,13 @@
 
 /* not checked */
 #settings .checkbox .checkmark{
-    position: relative;
-    top: 0;
-    left: 0;
+    position: absolute;
+    right: 0;
     vertical-align: middle;
 
-    height: calc(var(--settings-checkboxSize)/2);
-    width: var(--settings-checkboxSize);
+
+    height: var(--settings-checkboxSize);
+    width: calc(var(--settings-checkboxSize)*2);
 
     border-radius: var(--settings-checkboxSize);
 
@@ -129,11 +129,11 @@
     top: 0;
     left: 0;
 
-    height: calc(var(--settings-checkboxSize)/2);
-    width: calc(var(--settings-checkboxSize)/2);
+    height: calc(var(--settings-checkboxSize));
+    width: calc(var(--settings-checkboxSize));
 
     background-color: rgb(252, 252, 252);
-    border-radius: calc(var(--settings-checkboxSize)/3);
+    border-radius: calc(var(--settings-checkboxSize));
     display: block;
 
     transition: all 0.1s ease;
@@ -146,7 +146,7 @@
 
 
 #settings .checkbox input:checked ~ .checkmark::after{
-    left: calc(var(--settings-checkboxSize)/2);
+    left: calc(var(--settings-checkboxSize));
 }
 /* hover */
 #settings .checkbox:hover .checkmark::after{
@@ -190,42 +190,6 @@
 
     
 }
-#settings .slider input::after{
-    content: 'max';
-    position: absolute;
-    right: calc(var(--settings-sliderSize)/10);
-
-
-    font-size: calc(var(--settings-sliderSize)/1.2);
-    line-height: var(--settings-sliderSize);
-
-
-    background: -webkit-linear-gradient(var(--color1), var(--color2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    user-select: none;
-    pointer-events: none;
-    z-index: 13;
-}
-
-#settings .slider input::before{
-    content: 'min';
-    position: absolute;
-    left: calc(var(--settings-sliderSize)/10);
-    
-
-    font-size: calc(var(--settings-sliderSize)/1.2);
-    line-height: var(--settings-sliderSize);
-
-    background: -webkit-linear-gradient(var(--color1), var(--color2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    user-select: none;
-    pointer-events: none;
-    z-index: 13;
-}
 
 /* SELECT FROM OPTIONS */
 
@@ -237,7 +201,7 @@
 
 #settings .select .options .option{
     position: relative;
-    padding: 1px;
+    padding: 5px;
     margin-left: 5px;
     width: fit-content;
     height: var(--settings-selectSize);
@@ -246,9 +210,12 @@
     vertical-align: middle;
     text-align: center;
     display: inline-block;
+
+    background-image: radial-gradient(var(--color1), var(--color2));
+    border-radius: 10px;
 }
 #settings .select .options .selectedOption{
-    outline: 1px white solid;
+    background-image: radial-gradient(var(--color2), var(--color3));
 }
 
 
@@ -272,6 +239,14 @@
 
 
 
-#settings .slider{
+p{
+    line-height: var(--settings-fontSize);
+    font-size: var(--settings-fontSize);
+    margin: 0;
+    margin-top: 1vh;
 
+}
+
+.sub{
+    left: 3vw;
 }

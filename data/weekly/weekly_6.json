@@ -1,5 +1,5 @@
 {
-	"name": "Strom",
+	"name": "Míč",
 	"author": "Trollak",
 	"letters": [
 		[
@@ -541,5 +541,7 @@
 		}
 	],
 	"difficulty": "2",
-	"limitedTime": false
+	"limitedTime": true,
+	"startDate": "2022-09-12",
+	"endDate": "2022-09-19"
 }

@@ -1,7 +1,7 @@
 
 body{
     background-image: url(../images/techno.jpg);
-    background-size: 100%;
+    background-size: cover;
 
     color: white;
     font-family: 'Roboto', sans-serif;

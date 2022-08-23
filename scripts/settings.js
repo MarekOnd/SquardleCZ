@@ -11,19 +11,24 @@ class option{
 
 // properties to set
 let mouseParticlesModels = [
-    new option("vločka", "*"),
-    new option("pizzy", ["🍕"]),
-    new option("srdíčka", ["❤","🧡","💛","💚","💙"]),
-    new option("mega", ["༼ つ ◕_◕ ༽つ","ᓚᘏᗢ","╰(*°▽°*)╯"]),
+    new option("🍕", ["🍕"]),
+    new option("🧡", ["❤","🧡","💛","💚","💙"]),
+    new option("🎶", ["🎶","🎵"]),
+    new option("🔴", ["🔴","🟠","🟡","🟢","🔵","🟣","🟤","⚫","⚪"]),
+    new option("（￣︶￣）↗　", ["ψ(｀∇´)ψ","( $ _ $ )","(✿◡‿◡)","ƪ(˘⌣˘)ʃ","(⓿_⓿)","(。_。)","(⊙_⊙)","^_____^","¬_¬"]),
+    new option(" vločka ", "*"),
+];
+let lineColorsOptions = [
+    new option("modrá", ["rgb(20, 218, 218, 0.5)"]),
+    new option("bílá", ["rgb(255, 255, 255, 0.5)"]),
+    new option("duhová", ["rgb(255, 52, 0, 0.5)","rgb(255, 250, 0, 0.5)","rgb(0, 255, 11, 0.5)","rgb(0, 252, 255, 0.5)","rgb(0, 14, 255, 0.5)","rgb(255, 0, 253, 0.5)","rgb(255, 163, 0, 0.5)"]),
+    new option("česká", ["rgb(17, 69, 126, 0.5)","rgb(255, 255, 255, 0.5)","rgb(215, 20, 26, 0.5)"]),
 ];
 
 
 
 let defaultSettings = {
-    /* mouse particles */
-    showMouseParticles:false,
-    showMouseParticleAmount:500,
-    mouseParticlesModel:["🍕"],
+    
 
     /* browser filter */
     showOld:false,
@@ -33,28 +38,22 @@ let defaultSettings = {
     showWeekly:true,
     showSpecial:true,
     showShared:true,
-    showCompleted:true
-    // orderBy:"date",
+    showCompleted:true,
 
+    /* board options */
+    scaleButtons:true,
+    showPreviews:true,
 
-    // colorPallete:[
-    //                 '#000124',
-    //                 '#03045E',
-    //                 '#023E8A',
-    //                 '#0077B6',
-    //                 '#0096C7',
-    //                 '#00B4D8',
-    //                 '#48CAE4',
-    //                 '#90E0EF',
-    //                 '#ADE8F4',
-    //                 '#CAF0F8'
-    //             ],// always 10 colors
-    
+    /* mouse particles */
+    showMouseParticles:false,
+    showMouseParticleAmount:500,
+    mouseParticlesModel:["🍕"],
 
-    // buttonSize:"normal",// small, normal, big
-    // gameLayout:"hiddenFound",//hiddenFound, shownFoundOnLeft, shownFoundOnRight (only on monitors)
-    // animations:true,
-    // invertAll:true
+    /* color theme */
+    lineColors: ["rgb(20, 218, 218, 0.5)"],
+    themeColor:"blue",
+
+    invertAll:false
 };
 
 let currentSettings;
@@ -82,16 +81,19 @@ function initializeSettings()
 {
     loadSettings();
     /* MOUSE PARTICLES */
-    document.querySelector("#showMouseParticles").checked = getSettingsProperty("showMouseParticles");
+    // show check
     document.querySelector("#mouseParticleAmount").value = getSettingsProperty("mouseParticleAmount");
     initSelectOptions('mouseParticlesModel', mouseParticlesModels);
 
-    /* FILTERS */
-    let filterNames = ["showCasual","showWeekly","showSpecial","showShared","showOld","showActive","showUpcoming","showCompleted"]
+    /* CHECK NAMES */
+    let filterNames = ["showMouseParticles","showCasual","showWeekly","showSpecial","showShared","showOld","showActive","showUpcoming","showCompleted","scaleButtons","showPreview","invertAll"]
     for (let i = 0; i < filterNames.length; i++) {
         const name = filterNames[i];
         document.querySelector("#"+name).checked = getSettingsProperty(name);
     }
+
+    initSelectOptions("lineColors",lineColorsOptions);
+    
     applySettings();
 }
 
@@ -100,8 +102,33 @@ function initializeSettings()
 
 function applySettings()
 {
-    mouseParticleWait = (5000-currentSettings.mouseParticleAmount)/100;
-    mouseParticlesModel = currentSettings.mouseParticlesModel;
+    mouseParticleWait = (5000-getSettingsProperty("mouseParticleAmount"))/100;
+    mouseParticlesModel = getSettingsProperty("mouseParticlesModel");
+    
+    if(getSettingsProperty("scaleButtons"))
+    {
+
+        document.querySelector(":root").style.setProperty('--selectScale', 0.95);
+    }
+    else
+    {
+        document.querySelector(":root").style.setProperty('--selectScale', 1);
+    }
+
+
+    lineColors = getSettingsProperty("lineColors");
+
+    // INVERT
+    if(getSettingsProperty("invertAll"))
+    {
+        document.body.style.filter = "invert(1)";
+        document.body.style.backgroundImage = "linear-gradient(to right,rgb(200, 8, 6), rgb(9, 200, 31),rgb(200, 8, 6) )";
+    }
+    else
+    {
+        document.body.style.filter = "invert(0)";
+        document.body.style.backgroundImage = "linear-gradient(to right,rgb(8, 8, 6), rgb(9, 14, 31),rgb(8, 8, 6) )";
+    }
 }
 
 function loadSettings()
@@ -139,7 +166,6 @@ function initSelectOptions(selectId, options)
         opt.addEventListener('pointerup', ()=>{selectOption(selectId, i, options[i].value)});
         select.appendChild(opt);
     }
-
 }
 
 function selectOption(id, index, value)

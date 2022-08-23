@@ -2,13 +2,16 @@ let foundWordsPopUp = false;
 function toggleFoundWordsPopUp()
 {
     let foundWords = document.getElementById("found");
+    let boardAndOutput = document.querySelector("#boardAndOutput");
     if(foundWordsPopUp)
     {
         foundWords.style.display = "none";
+        boardAndOutput.style.display = "inline-block"
     }
     else
     {
-        foundWords.style.display = "block";
+        foundWords.style.display = "inline-block";
+        boardAndOutput.style.display = "none"
     }
     foundWordsPopUp = !foundWordsPopUp;
 }

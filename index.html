@@ -17,7 +17,7 @@
     </head>
     
     
-    <body onload="pageStart()" id="body">
+    <body onload="pageStart()" id="body" onresize="updateLayout()">
         
         <header id="title-header">
             <div class="header-content">
@@ -100,7 +100,7 @@
             <a href="./tools/pageSquardleEditor.html" id = "goto-editor-link"  class="menu-button" title="Vytvoř si vlastní squardle">
                 Editor↗
             </a>
-            <div id="version" onclick="openTab('news')">v0.8</div>
+            <div id="version" onclick="openTab('news')">v0.9</div>
         </div>
 
 
@@ -112,23 +112,7 @@
                 <select onchange="changeIndex()" id="index-selector">
                 </select>
             </div> -->
-            <div id="output">
-
-            </div>
-            <div id="score" onclick="toggleFoundWordsPopUp()">
-                <div id="score-points">
-                    <div id="current-words"></div>
-                    <div id="current-points"></div>
-                    
-                </div>
-                <div id="score-bar-background">
-                    <div id="score-bar"></div>
-                    <img class="hint" id="hintTimesStarting" src="./images/race_flag.svg">
-                    <img class="hint" id="hintTimesIncluded" src="./images/hashtag.svg">
-                    <img class="hint" id="hintRandomLetters" src="./images/magnifying_glass.svg">
-                </div>
-            </div>
-            <div id="found" style="display:none;">
+            <div id="found">
                 <div id="found-header" >
     
                 </div>
@@ -140,24 +124,45 @@
                 </div>
             </div>
             
-            <!-- Populated by squardle.js/createBoard function -->
-            <div id="board-box">
-                <button id="rotate" onclick="rotateBoard(90)">
-                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-cw">
-                        <polyline points="23 4 23 10 17 10"></polyline>
-                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                    </svg>
-                </button>
-                <div id="board">
-    
+            <div id="boardAndOutput">
+                <div id="output">
+
+                </div>
+                <div id="score">
+                    <div id="score-points">
+                        <div id="current-words"></div>
+                        <div id="current-points"></div>
+                        
+                    </div>
+                    <div id="score-bar-background">
+                        <div id="score-bar"></div>
+                        <img class="hint" id="hintTimesStarting" src="./images/race_flag.svg">
+                        <img class="hint" id="hintTimesIncluded" src="./images/hashtag.svg">
+                        <img class="hint" id="hintRandomLetters" src="./images/magnifying_glass.svg">
+                    </div>
+                </div>
+                <!-- Populated by squardle.js/createBoard function -->
+                <div id="board-box">
+                    <button id="rotate" onclick="rotateBoard(90)">
+                        <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-cw">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                    </button>
+                    <div id="board">
+        
+                    </div>
                 </div>
             </div>
+            
+            
+            
             
             
         </div>
         <div id="line"></div>
         
-        <div id="browser">
+        <div id="browser" hidden>
             <div id="browser-tiles">
 
             </div>
@@ -165,9 +170,24 @@
 
             </div>
             <input type = "file" accept=".json" id="import-file" onchange="importSquardle()"></div>
+
         </div>
 
         <div id="news" hidden>
+            <div class="message">
+                <h1>Verze 0.9 - Velké změny (23.8.2022)</h1>
+                <ul>
+                    <li class="newFeature">rozšířené nastavení</li>
+                    <li class="smallChange bugFix">po kliknutí na nastavení podruhé se vrátíte na předchozí místo</li>
+                    <li class="newFeature">rozvržení hrací plochy - na počítači jsou nalezená slova a hrací plocha vedle sebe</li>
+                    <li class="bugFix">stránka se méně seká a nastavení si lze vypnout některé funkce, které by ji mohly zpomalovat</li>
+                    <li class="pageLook">sjednocován vzhled stránky pro všechna okna</li>
+                    <li class="bugFix smallChange">slova dlouhá více než 15 písmen zmenší, aby šla přečíst</li>
+                    <li class="pageLook">nová výherní animace s vybranými smajlíky</li>
+                    <li>nové squardly</li>
+
+                </ul>
+            </div>
             <div class="message">
                 <h1>Verze 0.82</h1>
                 <ul>
@@ -179,7 +199,7 @@
                 </ul>
             </div>
             <div class="message">
-                <h1>Verze 0.81 Jsi ztracen?💤 Otoč!🍕 (19. 8. 2022)</h1>
+                <h1>Verze 0.81 - Jsi ztracen?💤 Otoč!🍕 (19. 8. 2022)</h1>
                 <ul>
                     <li class="newFeature">testovací verze nastavení</li>
                     <li class="newFeature">smajlíci jsou zpátky!(stačí je zapnout v testovací verzi nastavení)</li>
@@ -248,9 +268,11 @@
                 <ul>
                     <li class="gameMechanics">změna celého systému hry</li>
                     <li class="newFeature">týdenní a odpočinkový typ</li>
-                    <li class="menuChange">tlačítka fungují</li>
+                    <li class="bugFix">tlačítka fungují</li>
                 </ul>
             </div>
+
+            <br><br><!--FOR SCROLLING DOWN-->
             
             
             
@@ -258,8 +280,9 @@
         </div>
 
         <div id="stats" hidden>
-            <div class="statBox" id="stats-all" onclick="toggleStatBox(this)">
-                <h1>Celkové statistiky</h1>
+            <div class="statBox" id="stats-all" >
+
+                <h1 onclick="toggleStatBox(this.parentElement)">Celkové statistiky</h1>
                 <div class="played"></div>
                 <div class="completed"></div>
                 <div class="totalScore"></div>
@@ -268,8 +291,8 @@
                 <div class="totalTimePlayed"></div>
                 <div class="totalAccuracy"></div>
             </div>
-            <div class="statBox" id="stats-weekly" onclick="toggleStatBox(this)">
-                <h1>Týdenní</h1>
+            <div class="statBox" id="stats-weekly">
+                <h1 onclick="toggleStatBox(this.parentElement)">Týdenní</h1>
                 <div class="played"></div>
                 <div class="completed"></div>
                 <div class="totalScore"></div>
@@ -278,8 +301,8 @@
                 <div class="totalTimePlayed"></div>
                 <div class="totalAccuracy"></div>
             </div>
-            <div class="statBox" id="stats-casual" onclick="toggleOpened(this)">
-                <h1>Odpočinkové</h1>
+            <div class="statBox" id="stats-casual">
+                <h1 onclick="toggleStatBox(this.parentElement)">Odpočinkové</h1>
                 <div class="played"></div>
                 <div class="completed"></div>
                 <div class="totalScore"></div>
@@ -289,8 +312,8 @@
                 <div class="totalAccuracy"></div>
             </div>
             
-            <div class="statBox" id="stats-special" onclick="toggleOpened(this)">
-                <h1>Speciální</h1>
+            <div class="statBox" id="stats-special">
+                <h1 onclick="toggleStatBox(this.parentElement)">Speciální</h1>
                 <div class="played"></div>
                 <div class="completed"></div>
                 <div class="totalScore"></div>
@@ -299,8 +322,8 @@
                 <div class="totalTimePlayed"></div>
                 <div class="totalAccuracy"></div>
             </div>
-            <div class="statBox" id="stats-shared" onclick="toggleOpened(this)">
-                <h1>Sdílené</h1>
+            <div class="statBox" id="stats-shared">
+                <h1 onclick="toggleStatBox(this.parentElement)">Sdílené</h1>
                 <div class="played"></div>
                 <div class="completed"></div>
                 <div class="totalScore"></div>
@@ -309,6 +332,7 @@
                 <div class="totalTimePlayed"></div>
                 <div class="totalAccuracy"></div>
             </div>
+            <br><br><!--FOR SCROLLING DOWN-->
         </div>
 
         <div id="about" hidden>
@@ -375,10 +399,79 @@
                 Hra končí po nalezení všech potřebných slov. Po ukončení lze stále hledat slova bonusová. 
                 Nemusí tam ale už žádné být a (zatím) není nikde zobrazen počet bonusových slov.
             </p>
-
+            <br><br><!--FOR SCROLLING DOWN-->
         </div>
 
         <div id="settings" hidden>
+            
+            <div class="settingsSection">
+                <h1  onclick="toggleOpened(this.parentElement)">Filtr seznamu</h1>
+                <p>Nastav jaké squardly se ti mají ukazovat.</p>
+
+                <p>Podle typu:</p>
+                <label class="checkbox settingsInput sub">
+                    <div class="text">Odpočinkové</div>
+                    <input id="showCasual" type="checkbox" onchange="setSettingsProperty('showCasual', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput sub">
+                    <div class="text">Týdenní</div>
+                    <input id="showWeekly" type="checkbox" onchange="setSettingsProperty('showWeekly', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput sub">
+                    <div class="text">Speciální</div>
+                    <input id="showSpecial" type="checkbox" onchange="setSettingsProperty('showSpecial', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput sub">
+                    <div class="text">Sdílené</div>
+                    <input id="showShared" type="checkbox" onchange="setSettingsProperty('showShared', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <p>Podle času:</p>
+                <label class="checkbox settingsInput sub">
+                    <div class="text">Ukončené</div>
+                    <input id="showOld" type="checkbox" onchange="setSettingsProperty('showOld', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput sub">
+                    <div class="text">Aktivní</div>
+                    <input id="showActive" type="checkbox" onchange="setSettingsProperty('showActive', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput sub">
+                    <div class="text">Budoucí</div>
+                    <input id="showUpcoming" type="checkbox" onchange="setSettingsProperty('showUpcoming', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <p>Podle stavu:</p>
+                <label class="checkbox settingsInput sub">
+                    <div class="text">Dokončené:</div>
+                    <input id="showCompleted" type="checkbox" onchange="setSettingsProperty('showCompleted', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+            </div>
+            <div class="settingsSection">
+                <h1  onclick="toggleOpened(this.parentElement)">Vzhled hrací plochy</h1>
+
+                <label class="checkbox settingsInput">
+                    <div class="text">Zmenšovat vybraná pole</div>
+                    <input id="scaleButtons" type="checkbox" onchange="setSettingsProperty('scaleButtons', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="checkbox settingsInput">
+                    <div class="text">Náhled plochy</div>
+                    <input id="showPreview" type="checkbox" onchange="setSettingsProperty('showPreview', this.checked)">
+                    <div class="checkmark"></div>
+                </label>
+                <label class="select settingsInput">
+                    <div class="text">Vzhled čáry:</div>
+                    <div id="lineColors" class="options">
+                        
+                    </div>
+                </label>
+            </div>
             <div class="settingsSection">
                 <h1  onclick="toggleOpened(this.parentElement)">Smajlíci</h1>
                 <label class="checkbox settingsInput">
@@ -400,60 +493,27 @@
                 </label>
             </div>
             <div class="settingsSection">
-                <h1  onclick="toggleOpened(this.parentElement)">Filtr seznamu</h1>
-
+                <h1  onclick="toggleOpened(this.parentElement)">Bláznivé</h1>
                 <label class="checkbox settingsInput">
-                    <div class="text">Odpočinkové:</div>
-                    <input id="showCasual" type="checkbox" onchange="setSettingsProperty('showCasual', this.checked)">
+                    <div class="text">Invertovat</div>
+                    <input id="invertAll" type="checkbox" onchange="setSettingsProperty('invertAll', this.checked)">
                     <div class="checkmark"></div>
                 </label>
-                <label class="checkbox settingsInput">
-                    <div class="text">Týdenní:</div>
-                    <input id="showWeekly" type="checkbox" onchange="setSettingsProperty('showWeekly', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput">
-                    <div class="text">Speciální:</div>
-                    <input id="showSpecial" type="checkbox" onchange="setSettingsProperty('showSpecial', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput">
-                    <div class="text">Sdílené:</div>
-                    <input id="showShared" type="checkbox" onchange="setSettingsProperty('showShared', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput">
-                    <div class="text">Ukončené:</div>
-                    <input id="showOld" type="checkbox" onchange="setSettingsProperty('showOld', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput">
-                    <div class="text">Aktivní:</div>
-                    <input id="showActive" type="checkbox" onchange="setSettingsProperty('showActive', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput">
-                    <div class="text">Budoucí:</div>
-                    <input id="showUpcoming" type="checkbox" onchange="setSettingsProperty('showUpcoming', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput">
-                    <div class="text">Dokončené:</div>
-                    <input id="showCompleted" type="checkbox" onchange="setSettingsProperty('showCompleted', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
+                
             </div>
+            
             <!-- 
             <label id="color" class="colorPicker">
                 <div class="text">Test</div>
                 <input type="color" >
                 
             </label> -->
-            
+            <br><br><!--FOR SCROLLING DOWN-->
         </div>
 
         <div id="particles"></div>
         <div id="darkenScreen"></div>
+        <div id="background"></div>
         
         <!--<img src="images/warden.jpg" style="width:100%; filter: brightness(0.1);">-->
         <script src="./scripts/functions.js"></script>

@@ -1,24 +1,34 @@
 
 :root{
-    --news-bigHeaderSize: calc(min(40px,5vw));
-    --news-smallHeaderSize: calc(min(20px,3vw));
-    --news-textSize: calc(min(20px,3vw));
+    --news-bigHeaderSize: calc(min(40px,6vw));
+    --news-smallHeaderSize: calc(min(20px,4vw));
+    --news-textSize: calc(min(20px,4vw));
     --news-bigIconSize: var(--news-bigHeaderSize);
     --news-smallIconSize: var(--news-textSize);
-    --news-borderWidth: 0.2vw;
+    --news-borderWidth: calc(var(--news-textSize)/5);
+}
+
+#news{
+    position: relative;
+    padding: 2vw;
+    margin-top: 2vh;
+    height: 90vh;
+    overflow: auto;
 }
 
 .message{
     position: relative;
     height: fit-content;
     width: fit-content;
+    margin: 2vw;
     padding: 1vw;
-    margin: 5vw;
     
     user-select: none;
 
-    border-bottom: var(--news-borderWidth) var(--color5) solid;
-    border-left: var(--news-borderWidth) var(--color5) solid;
+    border-bottom: var(--news-borderWidth) var(--color3) solid;
+    border-left: var(--news-borderWidth) var(--color3) solid;
+    border-top: var(--news-borderWidth) transparent solid;
+    border-right: var(--news-borderWidth) transparent solid;
 }
 
 .message h1{
@@ -32,7 +42,9 @@
     font-size: var(--news-bigHeaderSize);
     line-height: var(--news-bigHeaderSize);
 
-    border-bottom: var(--news-borderWidth) var(--color5) solid;
+    border-left: var(--news-borderWidth) transparent solid;
+    border-right: var(--news-borderWidth) transparent solid;
+    border-bottom: var(--news-borderWidth) var(--color3) solid;
     
 }
 

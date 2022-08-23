@@ -22,8 +22,12 @@
     position: relative;
     user-select: none;
     text-align: center;
-    margin: 1vw;
-    height: fit-content;
+    
+    padding: 1vw;
+    padding-bottom: 10vh;
+    margin-top: 2vh;
+    overflow: auto;
+    max-height: 90vh;
 }
 /* DIV WITH TILES */
 #browser-tiles{

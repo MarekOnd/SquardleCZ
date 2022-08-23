@@ -1,18 +1,27 @@
 :root{
-    --game-cellSize: 90px;
+    --board-dimensions:calc(min(60vh,90vw));
+    --boardSize: 5;
+    --cellSize: calc(var(--board-dimensions)/(var(--boardSize)));
 
-    /* --game-fontSize: 60px; */
-    /* --game-smallFontSize: 30px; */
+    --board-fontSize: calc(var(--cellSize)/1.8);
+    --board-hintFontSize: calc(var(--cellSize)/3.3);
+
+
+    --game-fontSize: calc(var(--board-dimensions)/10);
+    --game-smallFontSize: calc(var(--board-dimensions)/20);
+
+    
     --found-headerFontSize: 40px;
     --found-fontSize: 20px;
 
+    --game-scoreBarHeight: var(--game-smallFontSize);
 
-    --game-scoreBarHeight: 30px;
-    --game-scoreBarWidth: 300px;
 
-    --board-dimensions:calc(min(65vh,90vw));
-    --boardSize: 5;
-    --game-spacesBetweenCells: calc(var(--board-dimensions)/var(--boardSize)/8);
+    --game-spacesBetweenCells: calc(var(--cellSize)/10);
+
+    
+
+    --selectScale: 1;
 
 }
 [hidden] { display: none !important; }
@@ -22,19 +31,20 @@
     position: relative;
     font-weight: bold;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 100%;
+
 }
 
 /* board */
 #board-box{
     position: relative;
-    margin-top: 40px;
-
+    margin-top: 20px;
+    display: inline-block;
 }
-#board-box #rotate{
+#board-box #rotate{/*BUTTON*/
     display: inline-flex;
     position: absolute;
     right:1%;
@@ -68,6 +78,9 @@
     height: var(--board-dimensions);
     /* rotate transition */
     transition: transform 0.5s cubic-bezier(.52,.27,.17,1.41);
+
+    font-size: var(--game-fontSize);
+    line-height: var(--game-fontSize); 
 }
 
 
@@ -79,30 +92,21 @@
     transition: transform 0.5s cubic-bezier(.52,.27,.17,1.41) ;
 }
 
-/* @supports (-moz-appearance:none) {
-    #board .cell{
-        filter: none !important;
-    }
-    .cell .boardButton{
-        box-shadow: 5px 5px 3px #36364d;
-    }
-} */
 .cell .boardButton{
     position: relative;
     height: 100%;
     width:  100%;
 
-    /* box-shadow: 5px 5px 3px #36364d; not working with scale*/
-    border-radius: calc(var(--board-dimensions)/(var(--boardSize)*10));
+    border-radius: calc(var(--cellSize)/10);
+
+    font-size: var(--board-fontSize);
+    line-height: var(--board-fontSize);
 
     background-color: rgb(70, 68, 68);
     color: white;
-
-    transition: all 0.1s ease;
 }
 .cell .allWereFound{
     background: radial-gradient(#2b2b3d 0%,#181926 50%,#12121b );
-    /*box-shadow: 5px 5px 5px -3px #212130;*/
     color: white;
     z-index: 0;
 }
@@ -118,21 +122,23 @@
 }
 .cell .selected{
     background-color: gray;
-    transform: scale(0.95);
+    transform: scale(var(--selectScale));
 
 }
 .boardButton .button-start{
     position: absolute;
     right: 5%;
-    top: 0%;
-    font-size: 45%;   
+    top: 5%;
+    font-size: var(--board-hintFontSize);
+    line-height: var(--board-hintFontSize);
     color: rgb(255, 42, 42);
 }
 .boardButton .button-use{
     position: absolute;
-    bottom: 0%;
+    bottom: 5%;
     left: 5%;
-    font-size: 45%;
+    font-size: var(--board-hintFontSize);
+    line-height: var(--board-hintFontSize);
     color: rgb(0, 175, 0);
 }
 
@@ -140,7 +146,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    border-radius: calc(var(--board-dimensions)/(var(--boardSize)));
+    border-radius: var(--cellSize);
     z-index: 99;
 }
 
@@ -149,11 +155,20 @@
     position: relative;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
+    vertical-align: bottom;
 
-    height: calc(var(--board-dimensions)/12);
-    line-height: calc(var(--board-dimensions)/12);
-    padding: 10px;
-    font-size: calc(var(--board-dimensions)/12);
+    max-width: calc(var(--board-dimensions)/1.2);
+
+    height: var(--game-fontSize);
+    font-size: var(--game-fontSize);
+    line-height: var(--game-fontSize);
+
+
+
+
+
+
 }
 
 /* score */
@@ -164,11 +179,11 @@
     justify-content: center;
     align-items: center;
 
-    font-size: calc(var(--board-dimensions)/15);
+
+    font-size: var(--game-fontSize);
     user-select: none;
     
-    /* width: calc(min(600px,90vw)); */
-    width: (var(--board-dimensions)/2);
+    width: var(--board-dimensions);
 }
 #game #score:hover{
     filter: drop-shadow(0px 0px 5px var(--color8));
@@ -197,31 +212,31 @@
 
 /* found words */
 #found{
-    position: fixed;
-    left: 5vw;
-    top: 5vh;
-    width: 90vw;
-    height: 90vh;
+    position: relative;
+    width: var(--board-dimensions);
+    height: calc(var(--board-dimensions)*(1.3));
+
+    margin-right: 5vw;
     
     border-bottom: solid var(--color5) 3px;
     border-left: solid var(--color5) 3px;
     border-top: solid transparent 3px;
     border-right: solid transparent 3px;
-    background-image: linear-gradient(to right, black , rgb(4, 0, 41), black);
 
     z-index: 50;
     user-select: none;
+
+    display: inline-block;
 }
 
 
 #found-header{
     position: relative;
-
-    
     text-align: center;
-    line-height: 50px;
-    font-size: calc(var(--board-dimensions)/15);
-    margin: 30px;
+
+    line-height: var(--game-smallFontSize);
+    font-size: var(--game-smallFontSize);
+    margin: var(--game-smallFontSize);
 
     
 }
@@ -230,29 +245,18 @@
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    height: 60%;
-    width: 70%;
+    height: calc(var(--board-dimensions)/1.2);
+    width: 90%;
 
     padding: 10px;
     
     overflow: auto;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
 }
-
-
-#found-words::-webkit-scrollbar {
-    display: none;
-}
-/* 
-.foundWord{
-
-} */
 
 .foundWord-letterHeader{
     position: relative;
-    font-size: calc(var(--board-dimensions)/20);
-    line-height: calc(var(--board-dimensions)/20);
+    font-size: var(--game-smallFontSize);
+    line-height: var(--game-smallFontSize);
 
     width: fit-content;
     height: fit-content;
@@ -272,8 +276,8 @@
 
     color: white;
 
-    font-size: calc(var(--board-dimensions)/20);
-    line-height: calc(var(--board-dimensions)/20);
+    font-size: var(--game-smallFontSize);
+    line-height: var(--game-smallFontSize);
 
     padding: 5px;
     padding-left: 5px;

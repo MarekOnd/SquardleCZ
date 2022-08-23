@@ -1,5 +1,5 @@
 
-
+@import url("./style/global.css");
 @import url("./style/main.css");
 @import url("./style/game.css");
 @import url("./style/browser.css");
@@ -8,3 +8,4 @@
 @import url("./style/about.css");
 @import url("./style/guide.css");
 @import url("./style/settings.css");
+

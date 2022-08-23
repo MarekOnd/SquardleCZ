@@ -28,18 +28,23 @@ function win()
     //         },(y+1)*300 + (i+1)*100)
     //     }
     // }
-    for (let i = 0; i < 10; i++) {
-        let particle = new Particle(getSettingsProperty('mouseParticlesModel'),
+    let particle = new Particle(getSettingsProperty('mouseParticlesModel'),
                                                 ["mouseParticle1","mouseParticle2"], 
-                                                new Range2D(new Range(0, window.innerWidth), new Range(0,window.innerHeight)), 
+                                                new Range2D(new Range(-window.innerWidth/2, window.innerWidth), new Range(0)), 
                                                 0, 
-                                                new Range(5000, 10000), 
-                                                new Range(260,300), 
+                                                new Range(10000, 20000), 
+                                                new Range(280,320), 
                                                 new Range(20,50), 
                                                 true,
                                                 false,
-                                                7);
-        createParticle(particle)
+                                                2);
+    for (let i = 0; i < 10; i++) {
+        setTimeout(()=>{
+            for (let y = 0; y < 10; y++) {
+                createParticle(particle.copy);
+            }
+        }, i*500)
+        
         
     }
 }

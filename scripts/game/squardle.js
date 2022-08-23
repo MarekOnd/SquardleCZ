@@ -58,18 +58,19 @@ async function initialize(){
                                                 ["mouseParticle1","mouseParticle2"], 
                                                 new Range2D(new Range(e.pageX), new Range(e.pageY)), 
                                                 0, 
-                                                new Range(500, 1000), 
-                                                new Range(260,300), 
-                                                new Range(20,200), 
+                                                new Range(500, 2000), 
+                                                new Range(200,360), 
+                                                new Range(20,80), 
                                                 true,
                                                 false,
-                                                3);
+                                                5);
                 createParticle(mouseParticle)
                 currentWait = 0;
             }
             
         }
     })
+    updateLayout()
     
 }
 
@@ -124,6 +125,7 @@ async function loadSquardle(squardleToLoad)
     board.addEventListener("pointerup", function(){mouseUp()});
 
     updateBoardCoordinates();
+    updateLayout();
     
 }
 
@@ -145,6 +147,41 @@ function updateAll()
     updateScore();
     updateFound();
     updateLettersInBoard();
+}
+
+
+
+
+function updateLayout()
+{
+    if(JSON.parse(localStorage.getItem("currentTab")) !== "game")
+    {
+        return;
+    }
+    let foundWords =  document.querySelector("#found");
+    let boardAndOutput = document.querySelector("#boardAndOutput");
+    let score = document.querySelector("#score");
+    score.removeEventListener("pointerup", toggleFoundWordsPopUp);
+    if(window.innerWidth <= window.innerHeight)
+    {
+        let foundWords =  document.querySelector("#found");
+        let boardAndOutput = document.querySelector("#boardAndOutput");
+        foundWords.style.display = "none";
+        foundWordsPopUp = false;
+        foundWords.style.marginRight = "0";
+        boardAndOutput.style.display = "inline-block";
+        document.querySelector("#score").addEventListener("pointerup", toggleFoundWordsPopUp);
+        foundWords.querySelector("#found-exit").style.display = "block";
+        
+    }
+    else
+    {
+        foundWords.style.display = "inline-block";
+        foundWords.style.marginRight = "5vw";
+        foundWords.querySelector("#found-exit").style.display = "none";
+
+        boardAndOutput.style.display = "inline-block";
+    }
 }
 
 

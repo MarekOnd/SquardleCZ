@@ -211,6 +211,30 @@ function createSquardleTile(sq, classToAdd, index)
 
         browserTile.addEventListener("click",(e)=>{squardleBrowserTileClick(classToAdd,index)})
     }
+    // FOR CHECKING DATES ON ADDED SQUARDLES
+    // browserTile.classList.add("active");
+    //     let howManyDays = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/24/3600/1000)
+    //     let howManyHours = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/3600/1000)%24
+    //     let howManyMinutes = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/1000)%60
+    //     if(howManyDays === 0)
+    //     {
+    //         if(howManyHours===0)
+    //         {
+    //             date.style.color = "orange"
+    //             date.textContent = "Zbývá " + howManyMinutes + " minut";
+    //         }
+    //         else
+    //         {
+    //             date.style.color = "red"
+    //             date.textContent = "Zbývá " + howManyHours  + " hodin " + howManyMinutes + " minut";
+    //         }
+            
+    //     }
+    //     else
+    //     {
+            
+    //         date.textContent = "Zbývá " + howManyDays + " dnů " + howManyHours  + " h ";
+    //     }
     browserTile.appendChild(date);
 
     
@@ -299,7 +323,7 @@ function createSquardleTile(sq, classToAdd, index)
     //         difficulty.textContent = "";
     // }
 
-    if(previewBoard)
+    if(getSettingsProperty("showPreview") && previewBoard)
     {
         //SIZE CREATED
         let preview = document.createElement("div");
@@ -327,6 +351,15 @@ function createSquardleTile(sq, classToAdd, index)
             tileRow.style.height = (boardSize/sqSize+2*boardSize/sqSize/10) + "px";
             preview.appendChild(tileRow);
         })
+        content.appendChild(preview);
+    }
+    else
+    {
+        let preview = document.createElement("div");
+        preview.id = "preview";
+        preview.textContent = sq.letters.length + " x " + sq.letters.length;
+        preview.style.top = "100px"
+        preview.style.height = "10px"
         content.appendChild(preview);
     }
 

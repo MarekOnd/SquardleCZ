@@ -7,8 +7,12 @@
 }
 
 #about{
-    margin: 5vw;
-    
+    margin: 0;
+    padding: 1vw;
+    padding-bottom: 10vh;
+    margin-top: 2vh;
+    overflow: auto;
+    height: 90vh;
 }
 
 #about h1{

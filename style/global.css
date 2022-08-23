@@ -2,3 +2,25 @@
 :root{
 
 }
+
+
+::-webkit-scrollbar {
+    width: 0.5vw;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(141, 141, 141); 
+    border-radius: 3px;
+  }
+   
+  /* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 172, 252, 0.541);
+    border-radius: 3px;
+
+}
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00bdf7; 
+  }

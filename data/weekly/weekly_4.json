@@ -777,5 +777,7 @@
 		}
 	],
 	"difficulty": "1",
-	"limitedTime": false
+	"limitedTime": true,
+	"startDate": "2022-08-29T00:00",
+	"endDate": "2022-09-05T00:00:00.000Z"
 }
