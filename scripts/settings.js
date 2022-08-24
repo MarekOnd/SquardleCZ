@@ -122,7 +122,7 @@ function applySettings()
     if(getSettingsProperty("invertAll"))
     {
         document.body.style.filter = "invert(1)";
-        document.body.style.backgroundImage = "linear-gradient(to right,rgb(200, 8, 6), rgb(9, 200, 31),rgb(200, 8, 6) )";
+        document.body.style.backgroundImage = "linear-gradient(to right,rgb(247, 247, 249), rgb(246, 241, 224),rgb(247, 247, 249)  )";
     }
     else
     {

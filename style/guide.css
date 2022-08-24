@@ -1,14 +1,14 @@
 
 :root{
     --guide-h1FontSize: calc(min(50px,10vw));
-    --guide-h2FontSize: calc(min(30px,5vw));
-    --guide-fontSize: calc(min(20px,4vw));
+    --guide-h2FontSize: calc(min(35px,6vw));
+    --guide-fontSize: calc(min(20px,3vw));
 
 }
 
 #guide{
     user-select: none;
-    padding: 1vw;
+    padding: 3vw;
     margin-top: 2vh;
     overflow: auto;
     max-height: 90vh;
@@ -30,8 +30,8 @@
 
 #guide h2{
     width: fit-content;
-
     margin: 2px;
+    margin-top: 2vh;
     padding: 2px;
     font-size: var(--guide-h2FontSize);
     line-height: var(--guide-h2FontSize);
@@ -46,6 +46,11 @@
 #guide{
     font-size: var(--guide-fontSize);
     line-height: var(--guide-fontSize);
+    text-align: justify;
+}
+#guide p{
+    line-height: calc(var(--guide-fontSize)*1.5);
+    text-align: justify;
 }
 
 #guide .guide-image{
@@ -58,15 +63,20 @@
 }
 
 #guide li{
+
+}
+#guide .hint{
     list-style: none;
 }
-
-#guide li::before {
+#guide .hint::before {
     position: relative;
+    left: calc(var(--news-bigIconSize)/(-4));
     top: calc(var(--news-bigIconSize)/4);
     height: var(--news-bigIconSize);
     width: var(--news-bigIconSize);
-    margin-right: 5px;
+    margin: 5px;
+
+
 
     content: '';
     

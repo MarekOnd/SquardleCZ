@@ -338,8 +338,17 @@
         <div id="about" hidden>
             <h1>O Squardlu</h1>
             <p>
-                Squardle (čteno skvardl) je česká adaptace hry Squaredle (čteno skvérdl) dostupné na <a href="https://squaredle.app/">https://squaredle.app</a>.
+                Squardle (čteno skvardl) je česká adaptace hry Squaredle (čteno skvérdl) dostupné na <a href="https://squaredle.app/">squaredle.app</a>.
             </p>
+            <p>
+                Zdrojový kód této stránky je k nahlédnutí na <a href="https://github.com/MarekOnd/SquardleCZ">github.com/MarekOnd/SquardleCZ</a>
+            </p>
+
+
+            <br><br><br><br><br><br>
+            <p style="margin:5px">*A ješte velmi důležitý iframe Droste efekt. K čemu by asi šel využít...</p>
+            <iframe src="https://marekond.github.io/SquardleCZ/" style="height: 50vh; width: 90vw;"></iframe>
+            <br><br>
         </div>
 
         <div id="guide" hidden>
@@ -351,9 +360,6 @@
             
             <h2>Cíl hry</h2>
             <p>Najdi všechna slova. </p>
-
-            <h2>Popis herní plochy </h2>
-            <img src="./images/screenLayoutWithNotes.jpg" class="guide-image">
 
             <h2>Zadávání slova</h2>
             <p>
@@ -380,6 +386,7 @@
             <p>
                 Již nalezená slova lze zobrazit kliknutím nad hrací plochu
                 (resp. ukazatel průběhu nebo právě zadané slovo).
+                Kliknutím na jakékoliv nalezené slovo si můžete vyhledat jeho význam.
             </p>
 
             <h2>Nápovědy</h2>
@@ -389,16 +396,37 @@
                 Vysvětlivky k nápovědám jsou zde:
             </p>
             <ul>
-                <li class="hintTimesStarting">kolik slov začíná písmenem - červené číslo políčkách</li>
-                <li class="hintTimesIncluded">v kolika slovech je písmeno - zelené číslo na políčkách</li>
-                <li class="hintRandomLetters">odkrytí počátečních písmen - lze vidět po odemčení v nalezených slovech</li>
+                <li class="hint hintTimesStarting">kolik slov začíná písmenem - červené číslo políčkách</li>
+                <li class="hint hintTimesIncluded">v kolika slovech je písmeno - zelené číslo na políčkách</li>
+                <li class="hint hintRandomLetters">odkrytí počátečních písmen - lze vidět po odemčení v nalezených slovech</li>
             </ul>
 
             <h2>Konec hry</h2>
             <p>
                 Hra končí po nalezení všech potřebných slov. Po ukončení lze stále hledat slova bonusová. 
-                Nemusí tam ale už žádné být a (zatím) není nikde zobrazen počet bonusových slov.
+                Nemusí tam ale už žádné být a celkový počet bonusových slov se nikde nezobrazuje.
             </p>
+
+            <h2>Druhy squardlů</h2>
+            <p>
+                Squardly jsou rozděleny na
+            </p>
+            <ul>
+                <li>Odpočinkové = neomezený čas, nikdy nebude vidět výsledek</li>
+                <li>Týdenní = časově omezené, každý týden nový</li>
+                <li>Speciální = časově omezené, tématické squardly</li>
+                <li>Sdílené = jakékoliv, <b>jako jediné se nepočítají do celkových statistik!</b></li>
+            </ul>
+            <p>
+                U časové omezených squardlů je možné po ukončení nahlédnout na výsledek. Nenalezená slova budou mít červenou barvu.
+            </p>
+
+            <h2>Seznam</h2>
+            <p>
+                V seznamu se zobrazují všechny squardly. V nastavéní lze upravit jaké squardly se mají zobrazovat v závislosti na druhu, čase a stavu dokončení.
+            </p>
+
+
             <br><br><!--FOR SCROLLING DOWN-->
         </div>
 

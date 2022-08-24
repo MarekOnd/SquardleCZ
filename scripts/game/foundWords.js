@@ -6,11 +6,15 @@ function toggleFoundWordsPopUp()
     if(foundWordsPopUp)
     {
         foundWords.style.display = "none";
+        foundWords.style.pointerEvents = "none";
         boardAndOutput.style.display = "inline-block"
     }
     else
     {
         foundWords.style.display = "inline-block";
+        setTimeout(()=>{
+            foundWords.style.pointerEvents = "all";
+        },100)
         boardAndOutput.style.display = "none"
     }
     foundWordsPopUp = !foundWordsPopUp;

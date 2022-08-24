@@ -166,14 +166,14 @@ function createParticle(part)
     part.startingPosition = new Range2D(new Range(startPositionFromRange.x),new Range(startPositionFromRange.y))
     partObject.style.left = startPositionFromRange.x + "px";
     partObject.style.top = startPositionFromRange.y + "px";
-    partObject.style.scale = 0;
+
 
     part.lifespan.lock();
     part.speed.lock();
 
     
     let delay = setTimeout(()=>{
-
+        partObject.style.scale = 0;
         let points = convertToAnimation(getPositions(part));
         points[0].scale = '1';
         points[points.length-1].scale = '1';

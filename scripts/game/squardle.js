@@ -162,7 +162,7 @@ function updateLayout()
     let boardAndOutput = document.querySelector("#boardAndOutput");
     let score = document.querySelector("#score");
     score.removeEventListener("pointerup", toggleFoundWordsPopUp);
-    if(window.innerWidth <= window.innerHeight)
+    if(window.innerWidth <= window.innerHeight)// 
     {
         let foundWords =  document.querySelector("#found");
         let boardAndOutput = document.querySelector("#boardAndOutput");

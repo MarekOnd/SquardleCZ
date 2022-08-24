@@ -96,11 +96,11 @@ function updateWord(word, color = null)
     {
         wordBox.style.cssText += 'color: ' + color;
     }
-    wordBox.style.setProperty("font-size","var(--game-fontSize)");
 
+    wordBox.style.setProperty("font-size","var(--game-fontSize)");
     if(word.length > 15)
     {
-        wordBox.style.setProperty("font-size","calc(var(--game-fontSize)/2)")
+        wordBox.style.setProperty("font-size","calc(var(--game-fontSize)/1.5)")
     }
 }
 

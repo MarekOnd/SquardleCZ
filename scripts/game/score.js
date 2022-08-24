@@ -48,7 +48,7 @@ function showPlusScore(value)
         new Range(1000), 
         "up", 
         new Range(30), 
-        true
+        false
     );
 
     createParticle(plusPointsParticle);
