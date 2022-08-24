@@ -99,3 +99,11 @@
 #guide .hintRandomLetters::before {
     background-image: url("../images/magnifying_glass.svg");
 }
+
+
+#guide img{
+    border: 3px var(--color5) solid;
+    height: 600px;
+    max-height: 40vh;
+
+}
