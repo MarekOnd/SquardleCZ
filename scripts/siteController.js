@@ -26,13 +26,6 @@ async function pageStart()
         lastTab = "browser"
     }
     openTab(lastTab);
-
-    
-
-        
-
-    
-    
 }
 
 
