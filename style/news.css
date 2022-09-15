@@ -11,7 +11,7 @@
 #news{
     position: relative;
     padding: 2vw;
-    margin-top: 2vh;
+    margin-top: 0vh;
     height: 90vh;
     overflow: auto;
 }

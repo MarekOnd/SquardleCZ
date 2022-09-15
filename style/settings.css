@@ -12,7 +12,8 @@
 #settings{
     position: relative;
 
-    margin: 1vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
     padding: 1vw;
 
     overflow: auto;

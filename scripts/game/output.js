@@ -115,12 +115,12 @@ function setOutputAnimation()
             { color: 'rgb(0,0,0,0)'},
         ];
         let timing ={
-            duration: 2000,
+            duration: 700,
             iterations: 1,
         }
         output.animate(points,timing);
         secondTimeout = setTimeout(()=>{
             updateWord(mainWord)
-        },1900)
-    },2000) 
+        },600)
+    },700) 
 }

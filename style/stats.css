@@ -17,7 +17,7 @@
 #stats{
     height: fit-content;
 
-    margin-top: 2vh;
+    margin-top: 0vh;
     
     overflow: auto;
     max-height: 90vh;
