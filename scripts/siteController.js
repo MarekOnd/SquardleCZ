@@ -2,6 +2,13 @@
 
 async function pageStart()
 {
+    //pwa stuff
+    if ("serviceWorker" in navigator) {
+        // register service worker
+        navigator.serviceWorker.register("service-worker.js");
+        console.log("service worker registered")
+    }
+      
 
     // loads libraries and squardles
     initialize();
