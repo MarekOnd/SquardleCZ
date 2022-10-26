@@ -1,5 +1,3 @@
-
-
 function updateBrowserContent()
 {
     // create all tiles that should show according to settings
@@ -74,6 +72,7 @@ function createArrayOfTiles(sqArr, type)
     }
     return tiles;
 }
+
 function showThisSquardle(sq)
 {
     if(getSettingsProperty("showCompleted"))
@@ -116,7 +115,6 @@ function showThisActiveState(state)// return whether this state should be shown 
 }
 function createSquardleTile(sq, classToAdd, index)
 {
-    
     //TILE
     let browserTile = document.createElement("div");
     browserTile.classList.add("browserTile");
@@ -130,13 +128,13 @@ function createSquardleTile(sq, classToAdd, index)
     let date = document.createElement("div");
     date.id = "date";
     
-    if(sq.limitedTime === null || sq.limitedTime === undefined || !sq.limitedTime)// always active
+    if(!sq.limitedTime)// always unlocked
     {
         browserTile.classList.add("notTimed");
         date.textContent = ""
         content.addEventListener("click",(e)=>{squardleBrowserTileClick(classToAdd,index)})
     }
-    else if(new Date(sq.startDate) > Date.now())// not yet active
+    else if(new Date(sq.startDate) > Date.now())// not yet unlocked
     {
         // does not preview board
         previewBoard = false; 
@@ -145,7 +143,7 @@ function createSquardleTile(sq, classToAdd, index)
 
         let howManyDays = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/24/3600/1000);
         let howManyHours = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/3600/1000)%24;
-        let howManyMinutes = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/1000)%60;
+        let howManyMinutes = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/1000)%60; 
         if(howManyDays === 0)
         {
             if(howManyHours===0)
@@ -182,31 +180,36 @@ function createSquardleTile(sq, classToAdd, index)
         seeResultButton.title = "Podívat se na výsledek";
         browserTile.appendChild(seeResultButton)
     }
-    else// is active
+    else// is unlocked and active
     {
         // shows how much time remains
         browserTile.classList.add("active");
-        let howManyDays = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/24/3600/1000)
-        let howManyHours = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/3600/1000)%24
-        let howManyMinutes = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/1000)%60
-        if(howManyDays === 0)
-        {
-            if(howManyHours===0)
+        console.log(sq)
+        if(sq.neverClose){//if no time limit
+            //do nothing lol
+        }else{
+            let howManyDays = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/24/3600/1000)
+            let howManyHours = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/3600/1000)%24
+            let howManyMinutes = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/1000)%60
+            if(howManyDays === 0)
             {
-                date.style.color = "orange"
-                date.textContent = "Zbývá " + howManyMinutes + " minut";
+                if(howManyHours===0)
+                {
+                    date.style.color = "orange"
+                    date.textContent = "Zbývá " + howManyMinutes + " minut";
+                }
+                else
+                {
+                    date.style.color = "red"
+                    date.textContent = "Zbývá " + howManyHours  + " hodin " + howManyMinutes + " minut";
+                }
+                
             }
             else
             {
-                date.style.color = "red"
-                date.textContent = "Zbývá " + howManyHours  + " hodin " + howManyMinutes + " minut";
+                
+                date.textContent = "Zbývá " + howManyDays + " dnů " + howManyHours  + " h ";
             }
-            
-        }
-        else
-        {
-            
-            date.textContent = "Zbývá " + howManyDays + " dnů " + howManyHours  + " h ";
         }
 
         browserTile.addEventListener("click",(e)=>{squardleBrowserTileClick(classToAdd,index)})

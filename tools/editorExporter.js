@@ -58,6 +58,7 @@ function applySquardleToExporter()
         document.getElementById("howManyDays").value = Math.floor(1.0*timeDelta/1000/60/60/24);
         document.getElementById("howManyHours").value = Math.floor(1.0*timeDelta/1000/60/60);
         document.getElementById("howManyMinutes").value = Math.floor(1.0*timeDelta/1000/60)%60;
+        document.querySelector("#neverClose").checked = S.neverClose
     }
 
     if(S.hints){
@@ -278,8 +279,11 @@ function exportSquardle()
     // limited time
     if(document.getElementById("limitedTime").checked)
     {
+
+
         expSq.limitedTime = true;
         expSq.startDate = document.getElementById("startDate").value;
+        expSq.neverClose = document.querySelector("#neverClose").checked
         expSq.endDate = new Date(
                         new Date(document.getElementById("startDate").value).getTime() + 
                         document.getElementById("howManyDays").value*1000*24*60*60 +
@@ -310,7 +314,7 @@ function exportSquardle()
         !check(expSq.author, "Nebyl zadán autor") ||
         !check(expSq.difficulty, "Nebyla zadána obtížnost") ||
         (
-            expSq.limitedTime && (!check(expSq.startDate, "Nebylo zadáno datum začátku") || !check(expSq.endDate, "Nebylo zadáno datum konce")) 
+            expSq.limitedTime && (!check(expSq.startDate, "Nebylo zadáno datum začátku") ) 
         )
         )
     {

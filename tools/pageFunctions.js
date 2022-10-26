@@ -35,6 +35,7 @@ class Squardle{
 
     difficulty; // 1 to 5 stars
 
+    neverClose;
     limitedTime;
     startDate;
     endDate;
