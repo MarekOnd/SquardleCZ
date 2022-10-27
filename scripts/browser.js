@@ -162,7 +162,7 @@ function createSquardleTile(sq, classToAdd, index)
         }
         
     }
-    else if(new Date(sq.endDate) < Date.now())// already ended
+    else if(new Date(sq.endDate) < Date.now() && !sq.neverClose)// already ended
     {
         // shows the last day when it was active
         browserTile.classList.add("ended");
