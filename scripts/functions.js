@@ -129,7 +129,7 @@ String.prototype.replaceAt = function(index, replacement) {
 
 function isSquardleActive(sq)
 {
-    if((sq.limitedTime === false) || (new Date(sq.startDate) <= Date.now() && new Date(sq.endDate) >= Date.now()))
+    if((sq.limitedTime === false) || (new Date(sq.startDate) <= Date.now() && (new Date(sq.endDate) >= Date.now() || sq.neverClose)))
     {
         return true;
     }
