@@ -2130,7 +2130,7 @@
 	],
 	"difficulty": "5",
 	"limitedTime": true,
-	"startDate": "2022-11-1T00:00",
+	"startDate": "2022-11-01T00:00",
 	"neverClose": true,
 	"endDate": "2022-10-26T22:00:00.000Z",
 	"hints": {
