@@ -30,7 +30,7 @@ async function getFile(url)
     return false;
 }
 async function getJson(url){
-    const obj = await getFile(url+"?v="+localStorage.getItem("version"));
+    const obj = await getFile(url);
     if(obj == false)
     {
         return false;

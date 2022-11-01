@@ -1,6 +1,6 @@
 function initUpdate()
 {
-    const version = 3
+    const version = 2
     if(localStorage.getItem("version") !== null)
     {
         if(JSON.parse(localStorage.getItem("version")) !== version)
