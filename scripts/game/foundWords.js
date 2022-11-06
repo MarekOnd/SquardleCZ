@@ -53,7 +53,7 @@ function updateFound()
             found:wordsFound[i]
         })
     }
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 50; i++) {
         let iLongWords = wordsStruct.filter((el)=>{return el.str.length === i})
         iLongWords.sort();
         if(iLongWords.length > 0)// has some words of this length
