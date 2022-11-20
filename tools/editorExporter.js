@@ -211,8 +211,12 @@ function moveWord(index, e = null)
     //ctrl+click -> find word in dictionary
     if(e && e.ctrlKey){
         console.log("FIND WORD")
-        const DICTIONARY_SEARCH_URL_BEGIN = "https://cs.wiktionary.org/w/index.php?search="
-        const DICTIONARY_SEARCH_URL_END = "&title=Speci%C3%A1ln%C3%AD%3AHled%C3%A1n%C3%AD&go=J%C3%ADt+na&ns0=1"
+        // const DICTIONARY_SEARCH_URL_BEGIN = "https://cs.wiktionary.org/w/index.php?search="
+        // const DICTIONARY_SEARCH_URL_END = "&title=Speci%C3%A1ln%C3%AD%3AHled%C3%A1n%C3%AD&go=J%C3%ADt+na&ns0=1"
+
+        const DICTIONARY_SEARCH_URL_BEGIN = "https://www.nechybujte.cz/slovnik-soucasne-cestiny/"
+        const DICTIONARY_SEARCH_URL_END = "?"
+        
         window.open(DICTIONARY_SEARCH_URL_BEGIN+ e.target.textContent +DICTIONARY_SEARCH_URL_END);
         return
     }

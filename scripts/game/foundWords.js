@@ -24,9 +24,12 @@ function toggleFoundWordsPopUp()
 function updateFound()
 {
     //Alternatives: http://www.google.com/search?q=   https://prirucka.ujc.cas.cz/?id=
-    const DICTIONARY_SEARCH_URL_BEGIN = "https://cs.wiktionary.org/w/index.php?search="
-    const DICTIONARY_SEARCH_URL_END = "&title=Speci%C3%A1ln%C3%AD%3AHled%C3%A1n%C3%AD&go=J%C3%ADt+na&ns0=1"
     
+    // const DICTIONARY_SEARCH_URL_BEGIN = "https://cs.wiktionary.org/w/index.php?search="
+    // const DICTIONARY_SEARCH_URL_END = "&title=Speci%C3%A1ln%C3%AD%3AHled%C3%A1n%C3%AD&go=J%C3%ADt+na&ns0=1"
+
+    const DICTIONARY_SEARCH_URL_BEGIN = "https://www.nechybujte.cz/slovnik-soucasne-cestiny/"
+    const DICTIONARY_SEARCH_URL_END = "?"
 
     let headerBox = document.getElementById("found-header");
     let textBox = document.getElementById("found-words");
