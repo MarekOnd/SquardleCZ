@@ -29,10 +29,20 @@ function showPlusScore(value)
 {
     // SHOWING PLUS POINTS AS PARTICLEs
     // OPTION 1 - MANY PARTICLES
-    // for (let i = 0; i < element.length*element.length; i++) {
+    // for (let i = 0; i < value; i++) {
     //     let left = output.getBoundingClientRect().left + output.getBoundingClientRect().width;
     //     let top = output.getBoundingClientRect().top + output.getBoundingClientRect().height;
-    //     let plusPointsParticle = new Particle("+1", "particle", new Range2D(new Range(left - 20, left + 100), new Range(top - 100,top + 100)), i*10, 1000, "up", new Range(1000,1000+i*100), false);
+    //     let plusPointsParticle = new Particle(
+    //             ["+1"], 
+    //             ["plusPoints"], 
+    //             new Range2D(new Range(left),new Range(top)),
+    //             i*10,
+    //             new Range(300,500), 
+    //             "up",
+    //             new Range(300+i*10), 
+    //             false
+    //         );
+    //     //let plusPointsParticle = new Particle("+1", "particle", new Range2D(new Range(left - 20, left + 100), new Range(top - 100,top + 100)), i*10, 1000, "up", new Range(1000,1000+i*100), false);
     //     createParticle(plusPointsParticle);
     // }
 
@@ -50,6 +60,5 @@ function showPlusScore(value)
         new Range(30), 
         false
     );
-
     createParticle(plusPointsParticle);
 }
