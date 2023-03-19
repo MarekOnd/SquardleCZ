@@ -190,7 +190,7 @@ function createSquardleTile(sq, classToAdd, index)
         }else{
             let howManyDays = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/24/3600/1000)
             let howManyHours = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/3600/1000)%24
-            let howManyMinutes = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/1000)%60
+            let howManyMinutes = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/60/1000)%60
             if(howManyDays === 0)
             {
                 if(howManyHours===0)
