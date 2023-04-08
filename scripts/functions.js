@@ -41,8 +41,7 @@ async function getJson(url){
 
 function hashSquardle(sq)
 {
-    //let str = toStr(sq.letters);
-    let str = JSON.stringify(sq.letters) + JSON.stringify(sq.wordsToFind)// maybe to calculative :)
+    let str = JSON.stringify(sq.letters) + JSON.stringify(sq.wordsToFind)// hash is created based on "letters in board" and "words to find"
     return hashCode(str);
 }
 
