@@ -9,7 +9,7 @@
 https://marekond.github.io/SquardleCZ/
 
 # Collaborators
-Pesopes
+[Pesopes](https://github.com/Pesopes)
 
 # Note
 - to apply changes to page run: 
