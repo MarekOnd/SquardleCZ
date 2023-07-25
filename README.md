@@ -13,5 +13,5 @@ Pesopes
 
 # Note
 - to apply changes to page: 
-	- install sw-precache trough npm
-	- sw-precache --config=sw-precache-config.json
+	- npm install
+	- npm run cache
