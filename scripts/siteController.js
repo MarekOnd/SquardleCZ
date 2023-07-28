@@ -4,7 +4,17 @@ async function pageStart()
 {
     //precaching stuff
     
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
 
+        for(let registration of registrations) {
+    
+                registration.unregister()
+    
+        }}).catch(function(err) {
+    
+            console.log('Service Worker registration failed: ', err);
+    
+        });
     // if ("serviceWorker" in navigator) {
     //     // register service worker
     //     navigator.serviceWorker.register("service-worker.js");
