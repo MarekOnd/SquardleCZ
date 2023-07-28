@@ -3,8 +3,8 @@
 async function pageStart()
 {
     //precaching stuff
-    
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    try {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
 
         for(let registration of registrations) {
     
@@ -15,6 +15,10 @@ async function pageStart()
             console.log('Service Worker registration failed: ', err);
     
         });
+    } catch (error) {
+        
+    }
+
     // if ("serviceWorker" in navigator) {
     //     // register service worker
     //     navigator.serviceWorker.register("service-worker.js");
