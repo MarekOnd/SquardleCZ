@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "sw-precache": "^4.1.0"
+    "workbox-cli": "^7.0.0"
   },
   "scripts": {
-    "cache": "sw-precache --config=sw-precache-config.json"
+    "cache": "workbox generateSW workbox-config.js"
   }
 }
