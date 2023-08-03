@@ -2,31 +2,13 @@
 
 async function pageStart()
 {
-    //precaching stuff
-    try {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-
-        for(let registration of registrations) {
-    
-                registration.unregister()
-    
-        }}).catch(function(err) {
-    
-            console.log('Service Worker registration failed: ', err);
-    
-        });
-    } catch (error) {
-        
-    }
-
+    // //pwa stuff
     // if ("serviceWorker" in navigator) {
     //     // register service worker
     //     navigator.serviceWorker.register("service-worker.js");
     //     console.log("service worker registered")
     // }
-    
-
-
+      
 
     // loads libraries and squardles
     initialize();
