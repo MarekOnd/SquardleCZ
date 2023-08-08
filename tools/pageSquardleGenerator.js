@@ -167,7 +167,8 @@ class Board{
                 wordPath.positions.pop();
                 if(this.library.length > 100000) // progress is needed only with large libraries
                 {
-                    logPost(searchProgress++ + '/' + this.size*this.size)
+                    //modifies previous line only if it isn't the first of this type
+                    logPost(searchProgress++ + '/' + this.size*this.size,searchProgress>2)
                 }
             }
         }
@@ -282,11 +283,14 @@ function newInst(obj)
 {
     return structuredClone(obj)
 }
-function logPost(text)
-{
+function logPost(text,modifyPreviousLine=false)
+{ 
     postMessage({
         title:"log",
-        mess:text
+        mess:{
+            text:text,
+            modifyPreviousLine:modifyPreviousLine
+        }
     })
 }
 
@@ -335,13 +339,13 @@ async function createSquardle(sqSettings)
         board.alphabet = element
         board.generateRandomBoard(true);
         wordsInBoard = board.findWordsInBoard();
-        while(!createWords(board.letters, wordsInBoard).includes(element) && numOfTries++ <= 100000 && numOfTries++ <= Math.pow(board.alphabet.length, board.countLocked()))
+        while(!createWords(board.letters, wordsInBoard).includes(element) && numOfTries++ <= 100000 && numOfTries++ <= Math.pow(board.alphabet.length, board.size*board.size-board.countLocked()))
         {
             board.nextBoardPermutation();
             wordsInBoard = board.findWordsInBoard();
             if(numOfTries%10000 == 0)//§§§
             {
-                logPost(numOfTries);
+                logPost("Pokus" + numOfTries);
             }
         }
         if(createWords(board.letters, wordsInBoard).includes(element))
@@ -455,9 +459,11 @@ onmessage = async (e)=>{
         close();
         return;
     }
+    const tick = performance.now();
     logPost("Generátor pracuje")
     let result = await createSquardle(e.data);
-    logPost("Práce dokončena")
+    const tock = performance.now();
+    logPost("Práce dokončena, celkový čas: "+ (tock-tick)+" ms")
     postMessage({
         title:"result",
         mess:JSON.stringify(result),

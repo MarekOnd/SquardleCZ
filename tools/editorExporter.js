@@ -123,10 +123,13 @@ function createBoard()
     }
     board.appendChild(table)
 
-    // TODO: better error message (like in the page not alert)
+    // TODO: make it into a general function also used by the webworker
     if(someLetterNotUsed){
-        alert("Nějáké písmena nejsou použity (zvýrazněny červeně)")
+        let message = "Nějáké písmena nejsou použity (zvýrazněny červeně)"
+        logToOutput(message)
     }
+
+
 }
 
 function deleteBoard()

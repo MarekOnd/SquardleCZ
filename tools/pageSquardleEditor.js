@@ -46,25 +46,37 @@ Generator.onmessage = (e) => {
     switch(e.data.title)
     {
         case "log":
-            let lg = document.getElementById("log");
-            lg.textContent += e.data.mess + '\n';
-            lg.scrollTop = lg.scrollHeight;
+
+            logToOutput(e.data.mess.text,true, e.data.mess.modifyPreviousLine);
         break;
         case "result":
             generatorWorking = false;
-            
-
+ 
             let sq = JSON.parse(e.data.mess);
             loadSquardleFromEditor(sq, e.data.settings);
-            
-            
+
         break;
     }
     
     
 }
-
-
+function removeLastLine(str){
+    let ind = str.lastIndexOf("\n")
+    if(ind>0) {
+        return str.substring(0, ind);
+    } else {
+        return str;
+    }
+}
+function logToOutput(text,newLine = true, modifyPreviousLine = false){
+    let log = document.getElementById("log");
+    let end = newLine ? "\n" : "";
+    if (modifyPreviousLine){
+        log.textContent = removeLastLine(log.textContent)
+    }
+    log.textContent += end + text;
+    log.scrollTop = log.scrollHeight;
+}
 
 function updateWordInputMenu(_settings)
 {
