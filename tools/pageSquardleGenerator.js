@@ -147,14 +147,7 @@ class Board{
     }
     fullyLocked()
     {
-        if(this.countLocked() === this.size*this.size)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return this.countLocked() === this.size*this.size
     }
 
     // RECURSIVE SEARCH THROUGH BOARD
