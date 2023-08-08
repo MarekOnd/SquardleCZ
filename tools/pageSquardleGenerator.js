@@ -187,7 +187,7 @@ class Board{
         let x = wordPath.positions[wordPath.positions.length - 1].x;
         let y = wordPath.positions[wordPath.positions.length - 1].y;
         let activeWord = createWord(this.letters,wordPath);
-        let cutLibrary = newInst(library).filter(w=>(w.startsWith(activeWord)));
+        let cutLibrary = library.filter(w=>(w.startsWith(activeWord)));
         if(wordPath.positions.length > this.range.max || cutLibrary.length === 0/*!this.canBeInLibrary(activeWord)*/ ) // too long or cant be a word----------------------
         {
             return;
@@ -212,7 +212,7 @@ class Board{
             // }
             if(cutLibrary.includes(activeWord) && !createWords(this.letters, output).includes(activeWord)/*this.hasWordIncluded(activeWord, output)*/)
             {
-                output.push(JSON.parse(JSON.stringify(wordPath)));
+                output.push(newInst(wordPath));
                 //console.log(JSON.stringify(output))
             }
         }
@@ -287,7 +287,7 @@ class Position{
 }
 function newInst(obj)
 {
-    return JSON.parse(JSON.stringify(obj))
+    return structuredClone(obj)
 }
 function logPost(text)
 {
@@ -316,7 +316,7 @@ async function createSquardle(sqSettings)
     board.loadBoard(sqSettings.inputBoard);
 
     let LIBRARY = await getJson("../libraries/" + sqSettings.library +".json");
-    LIBRARY.filter((el)=>{(el.length >= minWordSize && el.length<=maxWordSize) })
+    // LIBRARY = LIBRARY.filter((el)=>{(el.length >= minWordSize && el.length<=maxWordSize) })
 
     
     // output
@@ -368,10 +368,10 @@ async function createSquardle(sqSettings)
     // FINAL CHANGES
 
     board.library = newInst(LIBRARY);
-    if(sqSettings.notWords)
-    {
-        board.library.filter((el)=>{(sqSettings.notWords.includes(el))})
-    }
+    // if(sqSettings.notWords)
+    // {
+    //     board.library = board.library.filter((el)=>{(sqSettings.notWords.includes(el))})
+    // }
     wordsInBoard = board.findWordsInBoard();
     board.lockPaths(wordsInBoard)
 
@@ -445,7 +445,7 @@ function createWords(b, paths)
 function shuffle(array)
 {
     let newArr = [];
-    let oldArr = JSON.parse(JSON.stringify(array));
+    let oldArr = newInst(array);
     while (0 < oldArr.length) {
         const rnd = Math.floor(oldArr.length*Math.random());
         newArr.push(oldArr[rnd]);
