@@ -1,5 +1,5 @@
-old_things/*
-data/legacy/*
+old_things/
+data/legacy/
 libraries/czechWhatsAppWordsRaw.txt
 
 
