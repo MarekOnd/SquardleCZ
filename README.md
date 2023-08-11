@@ -12,6 +12,10 @@ https://marekond.github.io/SquardleCZ/
 [Pesopes](https://github.com/Pesopes)
 
 # Note
-- to apply changes to page run: 
-	- `npm install`
-	- `npm run cache`
+- to apply changes to page run the following commands:
+  
+```
+npm install
+
+npm run cache
+```

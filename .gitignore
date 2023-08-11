@@ -1,3 +1,8 @@
+old_things/*
+data/legacy/*
+libraries/czechWhatsAppWordsRaw.txt
+
+
 # Logs
 logs
 *.log

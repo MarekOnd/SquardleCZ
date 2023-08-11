@@ -57,8 +57,6 @@ function processRawText(rawtext)
     
 }
 
-let whatsNames = ["Ondrej Marek","Babicka Eliska", "Jan Marek", "Mama"];
-
 function processRawWhatsAppText(rawtext)
 {
     // erase message titles
@@ -67,12 +65,16 @@ function processRawWhatsAppText(rawtext)
         let startIndex = rawtext.indexOf("[");
         let endIndex = rawtext.indexOf("]");
         rawtext = rawtext.replace(rawtext.substring(startIndex, endIndex + 1), "");
-        
-        console.log(rawtext.length)
     }
-    for (let i = 0; i < whatsNames.length; i++) {
-        const whatsAppName = whatsNames[i];
-        rawtext = rawtext.replaceAll(whatsAppName + ":", "");
+    // Remove the first line (because there is not \n before it)
+    let endIndex = rawtext.indexOf(":");
+    rawtext = rawtext.replace(rawtext.substring(0, endIndex + 1), "");
+    // Remove the parts from \n to : because those are just user names
+    while(rawtext.includes(":"))
+    {
+        let startIndex = rawtext.indexOf("\n")
+        let endIndex = rawtext.indexOf(":");
+        rawtext = rawtext.replace(rawtext.substring(startIndex, endIndex + 1), ",");
     }
     console.log("removed message titles");
     rawtext = rawtext.toLowerCase();
