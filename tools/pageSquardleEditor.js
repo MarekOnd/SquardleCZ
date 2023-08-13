@@ -1,9 +1,4 @@
 
-
-
-
-
-
 let Generator = new Worker("./pageSquardleGenerator.js");
 let generatorWorking = false;
 async function createSquardleFromParameters()
@@ -125,7 +120,7 @@ function getWordsInput(id)
     return words;
 }
 
-function updateBoardInputMenu(_settings)
+function updateBoardInputMenu(_settings, loadUnusedLetters = true)
 {
     
     let boardInput = document.getElementById("boardInput");
@@ -146,7 +141,16 @@ function updateBoardInputMenu(_settings)
             inputBox.autocapitalize = "none";
             if(_settings.inputBoard !== null && i < _settings.inputBoard.length && y < _settings.inputBoard[i].length)
             {
-                inputBox.value = _settings.inputBoard[i][y];
+                // To continue the sacrilegious script organisation I am adding another absolutely unfixable
+                // method to load only the unused letter using the one and only global S, which is a squardle from
+                // the left exporting part of the page. I hereby predict that every attempt to fix this devilish
+                // code will fail miserably and the foolish trier will end up trying to keep his sanity and never
+                // come back again.
+                if(loadUnusedLetters || letterUsed(i,y,S))
+                {
+                    inputBox.value = _settings.inputBoard[i][y];
+                }
+                
             }
             row.appendChild(inputBox)
         }
@@ -263,7 +267,7 @@ function getInputWords(_settings)
     }
 }
 
-function loadSettings(_settings)
+function loadSettings(_settings,loadUnusedLetters = true)
 {
     document.getElementById("size").value = _settings.size;
     document.getElementById("minWordSize").value = _settings.minWordSize;
@@ -272,7 +276,7 @@ function loadSettings(_settings)
     setWordsInput("wordsToHide", _settings.inputWords)
     //updateWordInputMenu(_settings);
     setWordsInput("notWords", _settings.notWords)
-    updateBoardInputMenu(_settings);
+    updateBoardInputMenu(_settings, loadUnusedLetters);
     document.getElementById("libraryInput").value = _settings.library;
     document.getElementById("numOfTriesToFill").value = _settings.numOfTriesToFill;
 }
