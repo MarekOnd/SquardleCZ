@@ -46,12 +46,12 @@ class Word{
 }
 
 class Position{
-    x
-    y
+    x;
+    y;
     constructor(_x, _y)
     {
         this.x = _x;
-        this.y = _y
+        this.y = _y;
     }
 
 }

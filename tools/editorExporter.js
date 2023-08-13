@@ -125,11 +125,9 @@ function createBoard()
 
     // TODO: make it into a general function also used by the webworker
     if(someLetterNotUsed){
-        let message = "Nějáké písmena nejsou použity (zvýrazněny červeně)"
+        let message = "Nějáká písmena nejsou použity (zvýrazněny červeně)"
         logToOutput(message)
     }
-
-
 }
 
 function deleteBoard()

@@ -16,7 +16,7 @@
     
     
     <body>
-        
+
         <h1 id="header">
             Editor Squardlů
         </h1>
@@ -30,7 +30,7 @@
 
         </div>
         <div id="content">
-            <!---------------------------------------------EDITOR------------------------------------------------------>
+            <!---------------------------------------------EDITOR AND EXPORTER------------------------------------------------------>
             <div id="squardleExporter">
                 <!-- <div id="squardleLoader"> -->
                     <fieldset class="detailsSection">
@@ -163,6 +163,7 @@
 
 
                 <button id="loadBoardBackToEditor" onclick="loadSettings(squardleToSettings(S))">Načíst písmena zpět-></button>
+                <button id="loadBoardBackToEditorWithoutUnusedLetters" onclick="loadSettings(squardleToSettings(S),false)">Načíst použitá písmena zpět-></button>
             </div>
             
             <!---------------------------------------------GENERATOR------------------------------------------------------>
@@ -230,8 +231,8 @@
         
         
         
-        <script src="menu.js"></script>
-        <script src="randomBackground.js"></script>
+        <script src="pageMenu.js"></script>
+        <script src="pageRandomBackground.js"></script>
         <script src="pageFunctions.js"></script>
         <script src="editorExporter.js"></script>
         <script src="pageSquardleEditor.js" ></script>

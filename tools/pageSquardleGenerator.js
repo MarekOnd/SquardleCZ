@@ -116,7 +116,6 @@ class Board{
                 break;
             }
         }
-        return this;
     }
     lockPath(path)
     {
@@ -168,7 +167,7 @@ class Board{
                 if(this.library.length > 100000) // progress is needed only with large libraries
                 {
                     //modifies previous line only if it isn't the first of this type
-                    logPost(searchProgress++ + '/' + this.size*this.size,searchProgress>2)
+                    logPost(searchProgress++ + '/' + this.size*this.size, searchProgress > 2)
                 }
             }
         }
@@ -259,6 +258,7 @@ class Board{
         return false;
     }
 }
+
 class Squardle{
     name = ""
     author = ""
@@ -267,9 +267,11 @@ class Squardle{
 
     difficulty // 1 to 5 stars
 }
+
 class Word{
     positions = []
 }
+
 class Position{
     x
     y
