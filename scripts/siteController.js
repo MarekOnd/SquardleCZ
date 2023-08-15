@@ -84,13 +84,13 @@ async function loadSquardleGeneral(path, data={}){
     }
     return arr
 }
-async function loadSquardlesData()
+async function loadSquardlesData(fetchData={})
 {
-    squardlesCasual = await loadSquardleGeneral("./data/casual/casual_" );
+    squardlesCasual  = await loadSquardleGeneral("./data/casual/casual_",fetchData);
 
-    squardlesWeekly = await loadSquardleGeneral("./data/weekly/weekly_" );
+    squardlesWeekly  = await loadSquardleGeneral("./data/weekly/weekly_",fetchData);
 
-    squardlesSpecial =await loadSquardleGeneral("./data/special/special_" )
+    squardlesSpecial = await loadSquardleGeneral("./data/special/special_",fetchData);
 
     if(localStorage.getItem("squardlesShared") === undefined || localStorage.getItem("squardlesShared") === null)
     {

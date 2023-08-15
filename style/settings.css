@@ -220,6 +220,20 @@
 }
 
 
+#settings button{
+    position: relative;
+    padding: 5px;
+    margin-left: 5px;
+    width: fit-content;
+    font-size: var(--settings-selectSize);
+    line-height: var(--settings-selectSize);
+    vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+
+    background-image: radial-gradient(var(--color1), var(--color2));
+    border-radius: 10px;
+}
 
 #settings .colorPicker{
     position: relative;
