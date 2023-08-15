@@ -82,7 +82,6 @@ async function loadSquardleGeneral(path){
         }
         number++
     }
-    console.log(arr)
     return arr
 }
 async function loadSquardlesData()
