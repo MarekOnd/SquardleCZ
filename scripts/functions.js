@@ -19,12 +19,16 @@ function newInst(obj)
     return JSON.parse(JSON.stringify(obj))
 }
 
-async function getFile(url)
-{
-    try{
-        return await fetch(url);
+async function getFile(url) {
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("Network response was not OK");
+        }
+        return response
     }
-    catch(error){
+    catch (error) {
         console.log(error);
     }
     return false;
