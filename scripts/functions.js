@@ -19,9 +19,9 @@ function newInst(obj)
     return JSON.parse(JSON.stringify(obj))
 }
 
-async function getFile(url) {
+async function getFile(url, data= {}) {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url,data);
 
         if (!response.ok) {
             throw new Error("Network response was not OK");
@@ -33,8 +33,8 @@ async function getFile(url) {
     }
     return false;
 }
-async function getJson(url){
-    const obj = await getFile(url);
+async function getJson(url, data={}){
+    const obj = await getFile(url,data);
     if(obj == false)
     {
         return false;

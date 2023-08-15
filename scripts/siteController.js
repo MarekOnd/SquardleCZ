@@ -70,11 +70,11 @@ function getSquardle(params)
             break;
     }
 }
-async function loadSquardleGeneral(path){
+async function loadSquardleGeneral(path, data={}){
     let arr = []
     let number = 1    
     while(true){
-        let result = await getJson(path + number +".json")
+        let result = await getJson(path + number +".json",data)
         if(result===false){
             break
         }else{
