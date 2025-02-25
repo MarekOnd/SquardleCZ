@@ -5,7 +5,7 @@
 
 - English version might be added at some point (not likely)
 
-# Link
+# Link to website
 https://marekond.github.io/SquardleCZ/
 
 # Collaborators
