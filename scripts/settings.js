@@ -1,9 +1,8 @@
 
-class option{
+class option {
     preview;
     value;
-    constructor(preview_, value_)
-    {
+    constructor(preview_, value_) {
         this.preview = preview_;
         this.value = value_;
     }
@@ -12,76 +11,72 @@ class option{
 // properties to set
 let mouseParticlesModels = [
     new option("🍕", ["🍕"]),
-    new option("🧡", ["❤","🧡","💛","💚","💙"]),
-    new option("🎶", ["🎶","🎵"]),
-    new option("🔴", ["🔴","🟠","🟡","🟢","🔵","🟣","🟤","⚫","⚪"]),
-    new option("（￣︶￣）↗　", ["ψ(｀∇´)ψ","( $ _ $ )","(✿◡‿◡)","ƪ(˘⌣˘)ʃ","(⓿_⓿)","(。_。)","(⊙_⊙)","^_____^","¬_¬"]),
+    new option("🧡", ["❤", "🧡", "💛", "💚", "💙"]),
+    new option("🎶", ["🎶", "🎵"]),
+    new option("🔴", ["🔴", "🟠", "🟡", "🟢", "🔵", "🟣", "🟤", "⚫", "⚪"]),
+    new option("（￣︶￣）↗　", ["ψ(｀∇´)ψ", "( $ _ $ )", "(✿◡‿◡)", "ƪ(˘⌣˘)ʃ", "(⓿_⓿)", "(。_。)", "(⊙_⊙)", "^_____^", "¬_¬"]),
     new option(" vločka ", "*"),
-    new option(" mišmaš ", ["❌","⚜","🔺","🕗","🧩","🧸","🔑","⛏","🧮","📜"]),
-    new option(" smajlíci ", ["😶","🤗","🤔","🤩","🤣","😂","😁","🤑","😭","🤯","🥶","🤠","🤓","🧐","🤭"]),
-    new option(" realističtí smajlíci ", ["👴","🧓","👳‍♂️","👳‍♀️","🤴","👮‍♀️","🧔","👼","👲","👩‍⚖️","👨‍🏫","👩‍🔧","👩‍💻","👩‍🚒","👨‍🚀","🧛‍♀️","🦸‍♂️","🧚‍♂️","🙎‍♀️","🧜‍♂️","🧘🏿‍♂️","🏃🏿‍♀️","🧕🏼","👨🏼‍🍳"]),
+    new option(" mišmaš ", ["❌", "⚜", "🔺", "🕗", "🧩", "🧸", "🔑", "⛏", "🧮", "📜"]),
+    new option(" smajlíci ", ["😶", "🤗", "🤔", "🤩", "🤣", "😂", "😁", "🤑", "😭", "🤯", "🥶", "🤠", "🤓", "🧐", "🤭"]),
+    new option(" realističtí smajlíci ", ["👴", "🧓", "👳‍♂️", "👳‍♀️", "🤴", "👮‍♀️", "🧔", "👼", "👲", "👩‍⚖️", "👨‍🏫", "👩‍🔧", "👩‍💻", "👩‍🚒", "👨‍🚀", "🧛‍♀️", "🦸‍♂️", "🧚‍♂️", "🙎‍♀️", "🧜‍♂️", "🧘🏿‍♂️", "🏃🏿‍♀️", "🧕🏼", "👨🏼‍🍳"]),
 ];
 let lineColorsOptions = [
     new option("modrá", ["rgb(20, 218, 218, 0.5)"]),
     new option("bílá", ["rgb(255, 255, 255, 0.5)"]),
-    new option("duhová", ["rgb(255, 52, 0, 0.5)","rgb(255, 250, 0, 0.5)","rgb(0, 255, 11, 0.5)","rgb(0, 252, 255, 0.5)","rgb(0, 14, 255, 0.5)","rgb(255, 0, 253, 0.5)","rgb(255, 163, 0, 0.5)"]),
-    new option("česká", ["rgb(17, 69, 126, 0.5)","rgb(255, 255, 255, 0.5)","rgb(215, 20, 26, 0.5)"]),
+    new option("duhová", ["rgb(255, 52, 0, 0.5)", "rgb(255, 250, 0, 0.5)", "rgb(0, 255, 11, 0.5)", "rgb(0, 252, 255, 0.5)", "rgb(0, 14, 255, 0.5)", "rgb(255, 0, 253, 0.5)", "rgb(255, 163, 0, 0.5)"]),
+    new option("česká", ["rgb(17, 69, 126, 0.5)", "rgb(255, 255, 255, 0.5)", "rgb(215, 20, 26, 0.5)"]),
 ];
 
 
 
 let defaultSettings = {
-    
+
 
     /* browser filter */
-    showOld:false,
-    showActive:true,
-    showUpcoming:true,
-    showCasual:true,
-    showWeekly:true,
-    showSpecial:true,
-    showShared:true,
-    showCompleted:true,
+    showOld: false,
+    showActive: true,
+    showUpcoming: true,
+    showCasual: true,
+    showWeekly: true,
+    showSpecial: true,
+    showShared: true,
+    showCompleted: true,
+    ignoreDateLimit: false,
 
     /* board options */
-    scaleButtons:true,
-    showPreviews:true,
+    scaleButtons: true,
+    showPreviews: true,
 
     /* mouse particles */
-    showMouseParticles:false,
-    showMouseParticleAmount:500,
-    mouseParticlesModel:["🍕"],
+    showMouseParticles: false,
+    showMouseParticleAmount: 500,
+    mouseParticlesModel: ["🍕"],
 
     /* color theme */
     lineColors: ["rgb(20, 218, 218, 0.5)"],
-    themeColor:"blue",
+    themeColor: "blue",
 
-    invertAll:false
+    invertAll: false
 };
 
 let currentSettings;
 
-function getSettingsProperty(name)
-{
-    if(currentSettings[name] === null && currentSettings[name] === undefined)
-    {
+function getSettingsProperty(name) {
+    if (currentSettings[name] === null && currentSettings[name] === undefined) {
         return defaultSettings[name];
     }
-    else
-    {
+    else {
         return currentSettings[name];
     }
 }
-function setSettingsProperty(propertyName, value)
-{
+function setSettingsProperty(propertyName, value) {
     currentSettings[propertyName] = value;
     applySettings();
     saveSettings();
 }
 
 
-function initializeSettings()
-{
+function initializeSettings() {
     loadSettings();
     /* MOUSE PARTICLES */
     // show check
@@ -89,32 +84,29 @@ function initializeSettings()
     initSelectOptions('mouseParticlesModel', mouseParticlesModels);
 
     /* CHECK NAMES */
-    let filterNames = ["showMouseParticles","showCasual","showWeekly","showSpecial","showShared","showOld","showActive","showUpcoming","showCompleted","scaleButtons","showPreview","invertAll"]
+    let filterNames = ["showMouseParticles", "showCasual", "showWeekly", "showSpecial", "showShared", "showOld", "showActive", "showUpcoming", "showCompleted", "ignoreDateLimit", "scaleButtons", "showPreview", "invertAll"]
     for (let i = 0; i < filterNames.length; i++) {
         const name = filterNames[i];
-        document.querySelector("#"+name).checked = getSettingsProperty(name);
+        document.querySelector("#" + name).checked = getSettingsProperty(name);
     }
 
-    initSelectOptions("lineColors",lineColorsOptions);
-    
+    initSelectOptions("lineColors", lineColorsOptions);
+
     applySettings();
 }
 
 
 
 
-function applySettings()
-{
-    mouseParticleWait = (5000-getSettingsProperty("mouseParticleAmount"))/100;
+function applySettings() {
+    mouseParticleWait = (5000 - getSettingsProperty("mouseParticleAmount")) / 100;
     mouseParticlesModel = getSettingsProperty("mouseParticlesModel");
-    
-    if(getSettingsProperty("scaleButtons"))
-    {
+
+    if (getSettingsProperty("scaleButtons")) {
 
         document.querySelector(":root").style.setProperty('--selectScale', 0.95);
     }
-    else
-    {
+    else {
         document.querySelector(":root").style.setProperty('--selectScale', 1);
     }
 
@@ -122,57 +114,49 @@ function applySettings()
     lineColors = getSettingsProperty("lineColors");
 
     // INVERT
-    if(getSettingsProperty("invertAll"))
-    {
+    if (getSettingsProperty("invertAll")) {
         document.body.style.filter = "invert(1)";
         document.body.style.backgroundImage = "linear-gradient(to right,rgb(247, 247, 249), rgb(246, 241, 224),rgb(247, 247, 249)  )";
     }
-    else
-    {
+    else {
         document.body.style.filter = "invert(0)";
         document.body.style.backgroundImage = "linear-gradient(to right,rgb(8, 8, 6), rgb(9, 14, 31),rgb(8, 8, 6) )";
     }
 }
 
-function loadSettings()
-{
-    if(localStorage.getItem("squardleSettings") !== null)
-    {
+function loadSettings() {
+    if (localStorage.getItem("squardleSettings") !== null) {
         currentSettings = JSON.parse(localStorage.getItem("squardleSettings"));
     }
-    else
-    {
+    else {
         currentSettings = defaultSettings;
     }
 }
 
-function saveSettings()
-{
-    localStorage.setItem("squardleSettings",JSON.stringify(currentSettings));
+function saveSettings() {
+    localStorage.setItem("squardleSettings", JSON.stringify(currentSettings));
 }
 
 
 
 
 
-function initSelectOptions(selectId, options)
-{
+function initSelectOptions(selectId, options) {
     let select = document.querySelector('#' + selectId);
     for (let i = 0; i < options.length; i++) {
         let opt = document.createElement("div");
         opt.textContent = options[i].preview;
         opt.classList.add("option");
-        if((options[i].value.length && options[i].value[0] === getSettingsProperty(selectId)[0]) || options[i].value === getSettingsProperty(selectId))// TODO: make it more versatile
+        if ((options[i].value.length && options[i].value[0] === getSettingsProperty(selectId)[0]) || options[i].value === getSettingsProperty(selectId))// TODO: make it more versatile
         {
             opt.classList.add("selectedOption");
         }
-        opt.addEventListener('pointerup', ()=>{selectOption(selectId, i, options[i].value)});
+        opt.addEventListener('pointerup', () => { selectOption(selectId, i, options[i].value) });
         select.appendChild(opt);
     }
 }
 
-function selectOption(id, index, value)
-{
+function selectOption(id, index, value) {
     let select = document.querySelector('#' + id);
     let selectChildren = select.querySelectorAll(".option");
 

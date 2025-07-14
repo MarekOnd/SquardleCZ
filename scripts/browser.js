@@ -1,29 +1,23 @@
-function updateBrowserContent()
-{
+function updateBrowserContent() {
     // create all tiles that should show according to settings
     let browser = document.getElementById("browser-tiles");
     clearChildren(browser);
     let allTiles = []
-    if(getSettingsProperty("showCasual"))
-    {
+    if (getSettingsProperty("showCasual")) {
         allTiles = allTiles.concat(createArrayOfTiles(squardlesCasual, "casual"));
     }
-    if(getSettingsProperty("showWeekly"))
-    {
+    if (getSettingsProperty("showWeekly")) {
         allTiles = allTiles.concat(createArrayOfTiles(squardlesWeekly, "weekly"));
     }
-    if(getSettingsProperty("showSpecial"))
-    {
+    if (getSettingsProperty("showSpecial")) {
         allTiles = allTiles.concat(createArrayOfTiles(squardlesSpecial, "special"));
     }
-    if(getSettingsProperty("showShared"))
-    {
+    if (getSettingsProperty("showShared")) {
         allTiles = allTiles.concat(createArrayOfTiles(squardlesShared, "shared"));
     }
 
 
-    if(allTiles.length === 0)
-    {
+    if (allTiles.length === 0) {
         let allHiddenText = document.createElement("div");
         allHiddenText.textContent = "Všechny squardly jsou schované, aktivujte je v nastavení";
         browser.appendChild(allHiddenText);
@@ -33,8 +27,7 @@ function updateBrowserContent()
         browser.appendChild(tile);
     }
 
-    if(getSettingsProperty("showShared"))
-    {
+    if (getSettingsProperty("showShared")) {
         // at the end add import
         let label = document.createElement("label");
         label.htmlFor = "import-file";
@@ -47,42 +40,36 @@ function updateBrowserContent()
         content.appendChild(plus)
         let importButton = document.createElement("div");
         importButton.classList.add("browserTile");
-        importButton.id ="import-tile";
+        importButton.id = "import-tile";
         importButton.title = "importovat"
         label.appendChild(content)
         importButton.appendChild(label);
         browser.appendChild(importButton);
     }
-    
+
 
     tabBefore = "browser";
 
 }
 
-function createArrayOfTiles(sqArr, type)
-{
+function createArrayOfTiles(sqArr, type) {
     let tiles = []
     for (let i = 0; i < sqArr.length; i++) {
         const sq = sqArr[i];
-        if(showThisSquardle(sq))
-        {
-            let browserTile = createSquardleTile(sq,type,i);
+        if (showThisSquardle(sq)) {
+            let browserTile = createSquardleTile(sq, type, i);
             tiles.push(browserTile);
         }
     }
     return tiles;
 }
 
-function showThisSquardle(sq)
-{
-    if(getSettingsProperty("showCompleted"))
-    {
+function showThisSquardle(sq) {
+    if (getSettingsProperty("showCompleted")) {
         return showThisActiveState(getSquardleActiveState(sq));
     }
-    else
-    {
-        if(countTrue(getSquardleSave(sq).wordsFound) === sq.wordsToFind.length)
-        {
+    else {
+        if (countTrue(getSquardleSave(sq).wordsFound) === sq.wordsToFind.length) {
             return false;
         }
         return showThisActiveState(getSquardleActiveState(sq));
@@ -90,31 +77,25 @@ function showThisSquardle(sq)
 }
 function showThisActiveState(state)// return whether this state should be shown according to settings
 {
-    if(state === "old")
-    {
-        if(getSettingsProperty("showOld"))
-        {
+    if (state === "old") {
+        if (getSettingsProperty("showOld")) {
             return true;
         }
     }
-    else if(state === "active")
-    {
-        if(getSettingsProperty("showActive"))
-        {
+    else if (state === "active") {
+        if (getSettingsProperty("showActive")) {
             return true;
         }
     }
     else// upcoming
     {
-        if(getSettingsProperty("showUpcoming"))
-        {
+        if (getSettingsProperty("showUpcoming")) {
             return true;
         }
     }
     return false;
 }
-function createSquardleTile(sq, classToAdd, index)
-{
+function createSquardleTile(sq, classToAdd, index) {
     //TILE
     let browserTile = document.createElement("div");
     browserTile.classList.add("browserTile");
@@ -127,56 +108,51 @@ function createSquardleTile(sq, classToAdd, index)
     let previewBoard = true; // for not previewing future boards
     let date = document.createElement("div");
     date.id = "date";
-    
-    if(!sq.limitedTime)// always unlocked
+    if (!sq.limitedTime || getSettingsProperty("ignoreDateLimit"))// always unlocked
     {
         browserTile.classList.add("notTimed");
         date.textContent = ""
-        content.addEventListener("click",(e)=>{squardleBrowserTileClick(classToAdd,index)})
+        content.addEventListener("click", (e) => { squardleBrowserTileClick(classToAdd, index) })
     }
-    else if(new Date(sq.startDate) > Date.now())// not yet unlocked
+    else if (new Date(sq.startDate) > Date.now())// not yet unlocked
     {
         // does not preview board
-        previewBoard = false; 
+        previewBoard = false;
         // shows clock with remaining days
         browserTile.classList.add("notStarted");
 
-        let howManyDays = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/24/3600/1000);
-        let howManyHours = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/3600/1000)%24;
-        let howManyMinutes = Math.floor(1.0*(new Date(sq.startDate).getTime() - Date.now())/1000)%60; 
-        if(howManyDays === 0)
-        {
-            if(howManyHours===0)
-            {
+        let howManyDays = Math.floor(1.0 * (new Date(sq.startDate).getTime() - Date.now()) / 24 / 3600 / 1000);
+        let howManyHours = Math.floor(1.0 * (new Date(sq.startDate).getTime() - Date.now()) / 3600 / 1000) % 24;
+        let howManyMinutes = Math.floor(1.0 * (new Date(sq.startDate).getTime() - Date.now()) / 1000) % 60;
+        if (howManyDays === 0) {
+            if (howManyHours === 0) {
                 date.textContent = "Začíná za " + howManyMinutes + " min";
             }
-            else
-            {
-                date.textContent = "Začíná za " + howManyHours  + " h " + howManyMinutes + " min";
+            else {
+                date.textContent = "Začíná za " + howManyHours + " h " + howManyMinutes + " min";
             }
-            
+
         }
-        else
-        {
-            date.textContent = "Začíná "  + (new Date(sq.startDate)).getDate() + ". " + ((new Date(sq.startDate)).getMonth()+1) + ". "
+        else {
+            date.textContent = "Začíná " + (new Date(sq.startDate)).getDate() + ". " + ((new Date(sq.startDate)).getMonth() + 1) + ". "
         }
-        
+
     }
-    else if(new Date(sq.endDate) < Date.now() && !sq.neverClose)// already ended
+    else if (new Date(sq.endDate) < Date.now() && !sq.neverClose)// already ended
     {
         // shows the last day when it was active
         browserTile.classList.add("ended");
-        date.textContent = "Uzavřeno " + (new Date(sq.endDate)).getDate() + ". " + ((new Date(sq.endDate)).getMonth()+1) + ". ";
+        date.textContent = "Uzavřeno " + (new Date(sq.endDate)).getDate() + ". " + ((new Date(sq.endDate)).getMonth() + 1) + ". ";
 
         // look how you ended
         let seeResultButton = document.createElement("img");
         seeResultButton.src = "./images/eye.svg";
         seeResultButton.classList.add("seeResultButton");
-        seeResultButton.addEventListener("click",(e)=>{
+        seeResultButton.addEventListener("click", (e) => {
 
-            squardleBrowserTileClick(classToAdd,index, true);
+            squardleBrowserTileClick(classToAdd, index, true);
             updateFound();
-            })
+        })
         seeResultButton.title = "Podívat se na výsledek";
         browserTile.appendChild(seeResultButton)
     }
@@ -185,34 +161,30 @@ function createSquardleTile(sq, classToAdd, index)
         // shows how much time remains
         browserTile.classList.add("active");
         console.log(sq)
-        if(sq.neverClose){//if no time limit
+        if (sq.neverClose) {//if no time limit
             //do nothing lol
-        }else{
-            let howManyDays = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/24/3600/1000)
-            let howManyHours = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/3600/1000)%24
-            let howManyMinutes = Math.floor(1.0*(new Date(sq.endDate).getTime() - Date.now())/60/1000)%60
-            if(howManyDays === 0)
-            {
-                if(howManyHours===0)
-                {
+        } else {
+            let howManyDays = Math.floor(1.0 * (new Date(sq.endDate).getTime() - Date.now()) / 24 / 3600 / 1000)
+            let howManyHours = Math.floor(1.0 * (new Date(sq.endDate).getTime() - Date.now()) / 3600 / 1000) % 24
+            let howManyMinutes = Math.floor(1.0 * (new Date(sq.endDate).getTime() - Date.now()) / 60 / 1000) % 60
+            if (howManyDays === 0) {
+                if (howManyHours === 0) {
                     date.style.color = "orange"
                     date.textContent = "Zbývá " + howManyMinutes + " minut";
                 }
-                else
-                {
+                else {
                     date.style.color = "red"
-                    date.textContent = "Zbývá " + howManyHours  + " hodin " + howManyMinutes + " minut";
+                    date.textContent = "Zbývá " + howManyHours + " hodin " + howManyMinutes + " minut";
                 }
-                
+
             }
-            else
-            {
-                
-                date.textContent = "Zbývá " + howManyDays + " dnů " + howManyHours  + " h ";
+            else {
+
+                date.textContent = "Zbývá " + howManyDays + " dnů " + howManyHours + " h ";
             }
         }
 
-        browserTile.addEventListener("click",(e)=>{squardleBrowserTileClick(classToAdd,index)})
+        browserTile.addEventListener("click", (e) => { squardleBrowserTileClick(classToAdd, index) })
     }
     // FOR CHECKING DATES ON ADDED SQUARDLES
     // browserTile.classList.add("active");
@@ -231,29 +203,28 @@ function createSquardleTile(sq, classToAdd, index)
     //             date.style.color = "red"
     //             date.textContent = "Zbývá " + howManyHours  + " hodin " + howManyMinutes + " minut";
     //         }
-            
+
     //     }
     //     else
     //     {
-            
+
     //         date.textContent = "Zbývá " + howManyDays + " dnů " + howManyHours  + " h ";
     //     }
     browserTile.appendChild(date);
 
-    
-    
+
+
     //TYPE #number
     let type = document.createElement("div");
-    switch(classToAdd)
-    {
+    switch (classToAdd) {
         case "casual":
-            type.textContent = "Odpočinkový #" + (index+1);
+            type.textContent = "Odpočinkový #" + (index + 1);
             break;
         case "weekly":
-            type.textContent = "Týdenní #" + (index+1);
+            type.textContent = "Týdenní #" + (index + 1);
             break;
         case "shared":
-            type.textContent = "Sdílený #" + (index+1);
+            type.textContent = "Sdílený #" + (index + 1);
             break;
         case "special":
 
@@ -264,14 +235,13 @@ function createSquardleTile(sq, classToAdd, index)
     }
     type.id = "type";
     content.appendChild(type);
-    
+
     //NAME
     let name = document.createElement("div");
     name.id = "name";
     name.textContent = sq.name;
     content.appendChild(name);
-    switch(classToAdd)
-    {
+    switch (classToAdd) {
         case "casual":
 
             break;
@@ -326,38 +296,35 @@ function createSquardleTile(sq, classToAdd, index)
     //         difficulty.textContent = "";
     // }
 
-    if(getSettingsProperty("showPreview") && previewBoard)
-    {
+    if (getSettingsProperty("showPreview") && previewBoard) {
         //SIZE CREATED
         let preview = document.createElement("div");
         preview.id = "preview";
         let sqSize = sq.letters.length;
         let boardSize = 100;
-        sq.letters.map((row)=>{
+        sq.letters.map((row) => {
             let tileRow = document.createElement("div");
             tileRow.classList.add("previewTileRow");
-            row.map((letter)=>{
+            row.map((letter) => {
                 let tile = document.createElement("div");
                 tile.classList.add("previewTile");
-                if(letter==="0")
-                {
+                if (letter === "0") {
                     tile.style.visibility = "hidden";
                 }
                 tile.textContent = letter;
-                tile.style.width = boardSize/sqSize + "px";
-                tile.style.height = boardSize/sqSize + "px";
-                tile.style.fontSize = boardSize/sqSize + "px";
-                tile.style.lineHeight= boardSize/sqSize + "px";
-                tile.style.margin = boardSize/sqSize/10 + "px";
+                tile.style.width = boardSize / sqSize + "px";
+                tile.style.height = boardSize / sqSize + "px";
+                tile.style.fontSize = boardSize / sqSize + "px";
+                tile.style.lineHeight = boardSize / sqSize + "px";
+                tile.style.margin = boardSize / sqSize / 10 + "px";
                 tileRow.appendChild(tile)
             })
-            tileRow.style.height = (boardSize/sqSize+2*boardSize/sqSize/10) + "px";
+            tileRow.style.height = (boardSize / sqSize + 2 * boardSize / sqSize / 10) + "px";
             preview.appendChild(tileRow);
         })
         content.appendChild(preview);
     }
-    else
-    {
+    else {
         let preview = document.createElement("div");
         preview.id = "preview";
         preview.textContent = sq.letters.length + " x " + sq.letters.length;
@@ -370,14 +337,14 @@ function createSquardleTile(sq, classToAdd, index)
     // variables
     let maxScore = getMaxSquardleScore(sq)
     let score = getSquardleScore(sq);
-    let progress = 1.0*score/maxScore;
+    let progress = 1.0 * score / maxScore;
     // divs
 
     let scoreTitle = document.createElement("div")
     scoreTitle.id = "scoreTitle";
-    scoreTitle.textContent = "Postup: " + score +"/" + maxScore;
-    
-    
+    scoreTitle.textContent = "Postup: " + score + "/" + maxScore;
+
+
 
     // score bar
     let scoreDiv = document.createElement("div");
@@ -385,37 +352,34 @@ function createSquardleTile(sq, classToAdd, index)
 
     let scoreBarEmpty = document.createElement("div");
     scoreBarEmpty.id = "barEmpty";
-    
-    scoreBarEmpty.style.backgroundSize = (200.0/maxScore)*100 + "px"
-    scoreBarEmpty.style.backgroundPositionX = ((-200.0/maxScore)*50-5) + "px"
+
+    scoreBarEmpty.style.backgroundSize = (200.0 / maxScore) * 100 + "px"
+    scoreBarEmpty.style.backgroundPositionX = ((-200.0 / maxScore) * 50 - 5) + "px"
 
     let scoreBarFull = document.createElement("div");
     scoreBarFull.id = "barFull";
 
-    scoreBarFull.style.backgroundSize = (200.0/maxScore)*100 + "px"
-    scoreBarFull.style.backgroundPositionX = ((-200.0/maxScore)*50-5) + "px"
-    
-    if(tabBefore !== "browser")
-    {
-        scoreBarFull.style.width =  "0%";
-        setTimeout(()=>{scoreBarFull.style.width = progress*100 + "%";}, 200 + index*100)
+    scoreBarFull.style.backgroundSize = (200.0 / maxScore) * 100 + "px"
+    scoreBarFull.style.backgroundPositionX = ((-200.0 / maxScore) * 50 - 5) + "px"
+
+    if (tabBefore !== "browser") {
+        scoreBarFull.style.width = "0%";
+        setTimeout(() => { scoreBarFull.style.width = progress * 100 + "%"; }, 200 + index * 100)
     }
-    else
-    {
-        scoreBarFull.style.width = progress*100 + "%";
+    else {
+        scoreBarFull.style.width = progress * 100 + "%";
     }
-    
-    
 
 
 
-    if(progress > 0)
-    {
+
+
+    if (progress > 0) {
         scoreDiv.appendChild(scoreBarFull);
     }
     //scoreDiv.appendChild(scorePercent);
     scoreDiv.appendChild(scoreBarEmpty);
-    if(progress === 1) // mark completed
+    if (progress === 1) // mark completed
     {
         browserTile.classList.add("completed");
         let ticked = document.createElement("img");
@@ -426,16 +390,15 @@ function createSquardleTile(sq, classToAdd, index)
     // append score
     content.appendChild(scoreTitle)
     content.appendChild(scoreDiv);
-    
+
     // shared can be deleted
-    if(classToAdd === "shared")
-    {
+    if (classToAdd === "shared") {
         let deleteButton = document.createElement("img");
         deleteButton.id = "delete";
         deleteButton.src = "./images/delete.svg"
         deleteButton.title = "Vymazat"
-        deleteButton.addEventListener("click",(e)=>{
-            squardlesShared.splice(index,1);
+        deleteButton.addEventListener("click", (e) => {
+            squardlesShared.splice(index, 1);
             localStorage.setItem("squardlesShared", JSON.stringify(squardlesShared))
             updateBrowserContent();
         })
@@ -448,8 +411,7 @@ function createSquardleTile(sq, classToAdd, index)
     return browserTile;
 }
 
-function squardleBrowserTileClick(type, index, prev = false)
-{
+function squardleBrowserTileClick(type, index, prev = false) {
     preview = prev;// declared in squardle
     currentSquardle = new searchParameters(type, index);
     openTab("game");

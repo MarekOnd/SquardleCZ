@@ -1,601 +1,644 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="icon" type="image/x-icon" href="./images/mondrian.jpg">
-        <meta charset="UTF-8">
-        <meta author="Trollak">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="index.css" />
-        <title>Český squardle</title>
-        <!--FONTS-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap" rel="stylesheet"> 
-<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Kanit:wght@500&display=swap" rel="stylesheet"> 
+<head>
+    <link rel="icon" type="image/x-icon" href="./images/mondrian.jpg">
+    <meta charset="UTF-8">
+    <meta author="Trollak">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="index.css" />
+    <title>Český squardle</title>
+    <!--FONTS-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Kanit:wght@500&display=swap"
+        rel="stylesheet">
 
-    </head>
-    
-    
-    <body onload="pageStart()" id="body" onresize="updateLayout()">
-        
-        <header id="title-header">
-            <div class="header-content">
-                <div class="header-group">
-                    <button id="openMenu" class="icon" onclick="toggleMenu()">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 377 377" style="enable-background:new 0 0 377 377" xml:space="preserve">
-                            <g style="fill:rgb(255, 255, 255)">
-                                <circle cx="15" cy="88.5" r="15" />
-                                <path  d="M75 73.5h302v30H75z"/>
-                                <circle cx="15" cy="288.5" r="15" />
-                                <path d="M75 273.5h302v30H75z"/>
-                                <circle cx="15" cy="188.5" r="15"/>
-                                <path  d="M75 173.5h302v30H75z"/>
-                            </g>
-                        </svg>
-                    </button>
-                    <!-- Spacer -->
-                    <button class="icon spacer">
-                        <svg></svg>
-                    </button>
-                    <!-- <img id="openMenu" class="icon" onclick="toggleMenu()" src="./images/menu.svg"></img> -->
-                </div>
-                <!-- <div class="balancer icon"></div> -->
-                <div id="title">
-                        Český squardle
-                </div>
-                <div class="header-group">
-                    <button id="share-spacer" class="icon spacer" hidden>
-                        <svg></svg>
-                    </button>
-                    <button id="share" class="icon" title="Sdílej výsledek" hidden> 
-                        <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve">
-                            <path style="fill:#144f9b" d="m183.257 237.344 159.047-76.871c8.426-3.745 12.22-13.611 8.475-22.037s-13.611-12.22-22.037-8.475l-159.047 76.871c-8.426 3.745-12.22 13.611-8.475 22.037 3.744 8.426 13.61 12.221 22.037 8.475"/>
-                            <path style="fill:#003f84" d="m169.695 305.169 159.047 76.871c8.426 3.745 18.293-.05 22.037-8.475 3.745-8.426-.05-18.293-8.475-22.037l-159.047-76.871c-8.426-3.745-18.293.05-22.037 8.475-3.745 8.425.049 18.292 8.475 22.037"/>
-                            <path style="fill:#32bbff" d="M411.826 300.523c-55.331.01-100.164 44.841-100.174 100.174.01 55.331 44.843 100.162 100.174 100.172 55.33-.01 100.164-44.841 100.174-100.172-.01-55.333-44.843-100.164-100.174-100.174z"/>
-                            <path style="fill:#03a9f4" d="M512 400.697c-.01-55.333-44.843-100.164-100.174-100.174v200.346c55.331-.011 100.164-44.842 100.174-100.172z"/>
-                            <path style="fill:#32bbff" d="M411.826 11.132c-55.331.01-100.164 44.841-100.174 100.174.01 55.331 44.843 100.162 100.174 100.172 55.33-.01 100.164-44.841 100.174-100.172-.01-55.333-44.843-100.164-100.174-100.174z"/>
-                            <path style="fill:#03a9f4" d="M512 111.305c-.01-55.333-44.843-100.164-100.174-100.174v200.346c55.331-.01 100.164-44.841 100.174-100.172z"/>
-                            <path style="fill:#32bbff" d="M100.174 155.827C44.843 155.837.01 200.668 0 256.001c.01 55.331 44.843 100.162 100.174 100.172 55.33-.01 100.164-44.841 100.174-100.172-.01-55.333-44.844-100.164-100.174-100.174z"/>
-                            <path style="fill:#03a9f4" d="M200.348 256.001c-.01-55.333-44.843-100.164-100.174-100.174v200.346c55.33-.01 100.164-44.841 100.174-100.172z"/>
-                        </svg>
-                    </button>
-                    
-                    <button id="goto-settings" class="icon" onclick="openTab('settings')">
-                        <svg viewBox="0 0 24 24"xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16 2v1c-.312.1-.617.2-.875.4l-.75-.8-.719.7.75.8c-.168.2-.28.6-.344.9H13v1h1.062c.064.3.176.6.344.8l-.75.8.719.7.75-.7c.258.1.563.2.875.3V9h1V7.9c.312-.1.617-.2.875-.3l.75.7.719-.7-.75-.8c.168-.2.28-.5.344-.8H20V5h-1.062c-.064-.3-.176-.7-.344-.9l.75-.8-.719-.7-.75.8c-.258-.2-.563-.3-.875-.4V2h-1zm.5 2c.828 0 1.5.6 1.5 1.5 0 .8-.672 1.5-1.5 1.5S15 6.3 15 5.5c0-.9.672-1.5 1.5-1.5z" fill="#7f8c8d"/>
-                            <path d="M19 6.9V8c-.27 0-.534.1-.781.2l-.531-.9-.876.5.532.9c-.224.2-.419.4-.594.6l-.906-.6-.5.9.906.5c-.096.3-.181.6-.219.8H15v1h1.031c.038.3.123.6.219.8l-.906.5.5.9.906-.5c.175.2.37.4.594.6l-.532.9.876.5.531-.9c.247.1.511.2.781.2v1h1v-1c.27 0 .534-.1.781-.2l.531.9.876-.5-.532-.9c.224-.2.419-.4.594-.6l.906.5.5-.9-.906-.5c.096-.2.181-.5.219-.8H24v-1h-1.031a7.69 7.69 0 0 0-.219-.8l.906-.5-.5-.9-.906.6c-.175-.2-.37-.4-.594-.6l.532-.9-.876-.5-.531.9C20.534 8.1 20.27 8 20 8V6.9h-1zm.5 2c1.381 0 2.5 1.2 2.5 2.5 0 1.4-1.119 2.5-2.5 2.5S17 12.8 17 11.4c0-1.3 1.119-2.5 2.5-2.5z" fill="#95a5a6"/>
-                            <path d="M10 4.9 7.969 5v2.1c-.36 0-.712.1-1.063.2L5.844 5.5l-1.719 1 1.031 1.8c-.289.3-.547.5-.781.8l-1.813-1-1 1.7 1.813 1.1c-.134.3-.249.7-.313 1.1H.97v2h2.125c.062.4.15.7.281 1.1l-1.813 1 1 1.7 1.813-1c.238.3.5.5.781.8l-1.062 1.8 1.75 1 1.03-1.8c.36.1.747.2 1.126.3V21h2v-2.1c.36-.1.712-.2 1.062-.3l1.063 1.8 1.719-1-1.032-1.8c.29-.3.547-.5.782-.8l1.812 1 1.032-1.7-1.844-1c.134-.4.249-.8.312-1.1H17v-2.1h-2.125c-.063-.3-.15-.7-.281-1l1.812-1.1-1-1.7-1.812 1c-.238-.2-.501-.5-.782-.7l1.063-1.9-1.75-1-1.031 1.8c-.36-.1-.746-.2-1.125-.2L10 4.9zM9 10c1.657 0 3 1.3 3 3 0 1.6-1.343 3-3 3s-3-1.4-3-3c0-1.7 1.343-3 3-3z" fill="#bdc3c7"/>
-                        </svg>
-                    </button>
+    <link rel="manifest" href="manifest.json">
 
-                </div>
+</head>
+
+
+<body onload="pageStart()" id="body" onresize="updateLayout()">
+
+    <header id="title-header">
+        <div class="header-content">
+            <div class="header-group">
+                <button id="openMenu" class="icon" onclick="toggleMenu()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 377 377"
+                        style="enable-background:new 0 0 377 377" xml:space="preserve">
+                        <g style="fill:rgb(255, 255, 255)">
+                            <circle cx="15" cy="88.5" r="15" />
+                            <path d="M75 73.5h302v30H75z" />
+                            <circle cx="15" cy="288.5" r="15" />
+                            <path d="M75 273.5h302v30H75z" />
+                            <circle cx="15" cy="188.5" r="15" />
+                            <path d="M75 173.5h302v30H75z" />
+                        </g>
+                    </svg>
+                </button>
+                <!-- Spacer -->
+                <button class="icon spacer">
+                    <svg></svg>
+                </button>
+                <!-- <img id="openMenu" class="icon" onclick="toggleMenu()" src="./images/menu.svg"></img> -->
+            </div>
+            <!-- <div class="balancer icon"></div> -->
+            <div id="title">
+                Český squardle
+            </div>
+            <div class="header-group">
+                <button id="share-spacer" class="icon spacer" hidden>
+                    <svg></svg>
+                </button>
+                <button id="share" class="icon" title="Sdílej výsledek" hidden>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                        style="enable-background:new 0 0 512 512" xml:space="preserve">
+                        <path style="fill:#144f9b"
+                            d="m183.257 237.344 159.047-76.871c8.426-3.745 12.22-13.611 8.475-22.037s-13.611-12.22-22.037-8.475l-159.047 76.871c-8.426 3.745-12.22 13.611-8.475 22.037 3.744 8.426 13.61 12.221 22.037 8.475" />
+                        <path style="fill:#003f84"
+                            d="m169.695 305.169 159.047 76.871c8.426 3.745 18.293-.05 22.037-8.475 3.745-8.426-.05-18.293-8.475-22.037l-159.047-76.871c-8.426-3.745-18.293.05-22.037 8.475-3.745 8.425.049 18.292 8.475 22.037" />
+                        <path style="fill:#32bbff"
+                            d="M411.826 300.523c-55.331.01-100.164 44.841-100.174 100.174.01 55.331 44.843 100.162 100.174 100.172 55.33-.01 100.164-44.841 100.174-100.172-.01-55.333-44.843-100.164-100.174-100.174z" />
+                        <path style="fill:#03a9f4"
+                            d="M512 400.697c-.01-55.333-44.843-100.164-100.174-100.174v200.346c55.331-.011 100.164-44.842 100.174-100.172z" />
+                        <path style="fill:#32bbff"
+                            d="M411.826 11.132c-55.331.01-100.164 44.841-100.174 100.174.01 55.331 44.843 100.162 100.174 100.172 55.33-.01 100.164-44.841 100.174-100.172-.01-55.333-44.843-100.164-100.174-100.174z" />
+                        <path style="fill:#03a9f4"
+                            d="M512 111.305c-.01-55.333-44.843-100.164-100.174-100.174v200.346c55.331-.01 100.164-44.841 100.174-100.172z" />
+                        <path style="fill:#32bbff"
+                            d="M100.174 155.827C44.843 155.837.01 200.668 0 256.001c.01 55.331 44.843 100.162 100.174 100.172 55.33-.01 100.164-44.841 100.174-100.172-.01-55.333-44.844-100.164-100.174-100.174z" />
+                        <path style="fill:#03a9f4"
+                            d="M200.348 256.001c-.01-55.333-44.843-100.164-100.174-100.174v200.346c55.33-.01 100.164-44.841 100.174-100.172z" />
+                    </svg>
+                </button>
+
+                <button id="goto-settings" class="icon" onclick="openTab('settings')">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M16 2v1c-.312.1-.617.2-.875.4l-.75-.8-.719.7.75.8c-.168.2-.28.6-.344.9H13v1h1.062c.064.3.176.6.344.8l-.75.8.719.7.75-.7c.258.1.563.2.875.3V9h1V7.9c.312-.1.617-.2.875-.3l.75.7.719-.7-.75-.8c.168-.2.28-.5.344-.8H20V5h-1.062c-.064-.3-.176-.7-.344-.9l.75-.8-.719-.7-.75.8c-.258-.2-.563-.3-.875-.4V2h-1zm.5 2c.828 0 1.5.6 1.5 1.5 0 .8-.672 1.5-1.5 1.5S15 6.3 15 5.5c0-.9.672-1.5 1.5-1.5z"
+                            fill="#7f8c8d" />
+                        <path
+                            d="M19 6.9V8c-.27 0-.534.1-.781.2l-.531-.9-.876.5.532.9c-.224.2-.419.4-.594.6l-.906-.6-.5.9.906.5c-.096.3-.181.6-.219.8H15v1h1.031c.038.3.123.6.219.8l-.906.5.5.9.906-.5c.175.2.37.4.594.6l-.532.9.876.5.531-.9c.247.1.511.2.781.2v1h1v-1c.27 0 .534-.1.781-.2l.531.9.876-.5-.532-.9c.224-.2.419-.4.594-.6l.906.5.5-.9-.906-.5c.096-.2.181-.5.219-.8H24v-1h-1.031a7.69 7.69 0 0 0-.219-.8l.906-.5-.5-.9-.906.6c-.175-.2-.37-.4-.594-.6l.532-.9-.876-.5-.531.9C20.534 8.1 20.27 8 20 8V6.9h-1zm.5 2c1.381 0 2.5 1.2 2.5 2.5 0 1.4-1.119 2.5-2.5 2.5S17 12.8 17 11.4c0-1.3 1.119-2.5 2.5-2.5z"
+                            fill="#95a5a6" />
+                        <path
+                            d="M10 4.9 7.969 5v2.1c-.36 0-.712.1-1.063.2L5.844 5.5l-1.719 1 1.031 1.8c-.289.3-.547.5-.781.8l-1.813-1-1 1.7 1.813 1.1c-.134.3-.249.7-.313 1.1H.97v2h2.125c.062.4.15.7.281 1.1l-1.813 1 1 1.7 1.813-1c.238.3.5.5.781.8l-1.062 1.8 1.75 1 1.03-1.8c.36.1.747.2 1.126.3V21h2v-2.1c.36-.1.712-.2 1.062-.3l1.063 1.8 1.719-1-1.032-1.8c.29-.3.547-.5.782-.8l1.812 1 1.032-1.7-1.844-1c.134-.4.249-.8.312-1.1H17v-2.1h-2.125c-.063-.3-.15-.7-.281-1l1.812-1.1-1-1.7-1.812 1c-.238-.2-.501-.5-.782-.7l1.063-1.9-1.75-1-1.031 1.8c-.36-.1-.746-.2-1.125-.2L10 4.9zM9 10c1.657 0 3 1.3 3 3 0 1.6-1.343 3-3 3s-3-1.4-3-3c0-1.7 1.343-3 3-3z"
+                            fill="#bdc3c7" />
+                    </svg>
+                </button>
 
             </div>
-        </header>
-        
-        
-        
-        <div id="menu" class="menuClosed">
-            
-            <a  class="menu-button" id="goto-game" title="Týdenní nebo odpočinkový?" onclick="openTab('game')" hidden>
-                Hra
-            </a>
-            <a  class="menu-button" id="goto-browser" title="Týdenní nebo odpočinkový?" onclick="openTab('browser')">
-                Seznam
-            </a>
-            <a  class="menu-button" id="goto-guide" title="Co mám dělat?!" onclick="openTab('guide')">
-                Návod
-            </a>
-            
-            <a  class="menu-button" id="goto-stats" title="Jak si vedu?" onclick="openTab('stats')">
-                Statistiky
-            </a>
-            <a class="menu-button" id="goto-about" title="Kde to jsem?" onclick="openTab('about')">
-                O stránce
-            </a>
-            <a class="menu-button" id="goto-news" title="Co se změnilo?" onclick="openTab('news')">
-                Novinky
-            </a>
-            <a href="./tools/pageSquardleEditor.html" id = "goto-editor-link"  class="menu-button" title="Vytvoř si vlastní squardle">
-                Editor↗
-            </a>
-            <div id="version" onclick="openTab('news')">v1.0</div>
+
         </div>
+    </header>
+
+
+
+    <div id="menu" class="menuClosed">
+
+        <a class="menu-button" id="goto-game" title="Týdenní nebo odpočinkový?" onclick="openTab('game')" hidden>
+            Hra
+        </a>
+        <a class="menu-button" id="goto-browser" title="Týdenní nebo odpočinkový?" onclick="openTab('browser')">
+            Seznam
+        </a>
+        <a class="menu-button" id="goto-guide" title="Co mám dělat?!" onclick="openTab('guide')">
+            Návod
+        </a>
+
+        <a class="menu-button" id="goto-stats" title="Jak si vedu?" onclick="openTab('stats')">
+            Statistiky
+        </a>
+        <a class="menu-button" id="goto-about" title="Kde to jsem?" onclick="openTab('about')">
+            O stránce
+        </a>
+        <a class="menu-button" id="goto-news" title="Co se změnilo?" onclick="openTab('news')">
+            Novinky
+        </a>
+        <a href="./tools/pageSquardleEditor.html" id="goto-editor-link" class="menu-button"
+            title="Vytvoř si vlastní squardle">
+            Editor↗
+        </a>
+        <div id="version" onclick="openTab('news')">v1.0</div>
+    </div>
 
 
 
 
-        <div id="game" hidden>
-            <!-- <div id = "index-selector-box">    
+    <div id="game" hidden>
+        <!-- <div id = "index-selector-box">    
                 Výběr:
                 <select onchange="changeIndex()" id="index-selector">
                 </select>
             </div> -->
-            <div id="found">
-                <div id="found-header" >
-    
-                </div>
-                <div id="found-words">
-    
-                </div>
-                <div id="found-exit" onclick="toggleFoundWordsPopUp()">
-                    Zpět
-                </div>
-            </div>
-            
-            <div id="boardAndOutput">
-                <div id="output">
-
-                </div>
-                <div id="score">
-                    <div id="score-points">
-                        <div id="current-words"></div>
-                        <div id="current-points"></div>
-                        
-                    </div>
-                    <div id="score-bar-background">
-                        <div id="score-bar"></div>
-                        <img class="hint" id="hintTimesStarting" src="./images/race_flag.svg">
-                        <img class="hint" id="hintTimesIncluded" src="./images/hashtag.svg">
-                        <img class="hint" id="hintRandomLetters" src="./images/magnifying_glass.svg">
-                    </div>
-                </div>
-                <!-- Populated by squardle.js/createBoard function -->
-                <div id="board-box">
-                    <button id="rotate" onclick="rotateBoard(90)">
-                        <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-cw">
-                            <polyline points="23 4 23 10 17 10"></polyline>
-                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                        </svg>
-                    </button>
-                    <div id="board">
-        
-                    </div>
-                </div>
-            </div>
-            
-            
-            
-            
-            
-        </div>
-        <div id="line"></div>
-        
-        <div id="browser" hidden>
-            <div id="browser-tiles">
+        <div id="found">
+            <div id="found-header">
 
             </div>
-            <div id="browser-tools">
+            <div id="found-words">
 
             </div>
-            <input type = "file" accept=".json" id="import-file" onchange="importSquardle()"></div>
-
+            <div id="found-exit" onclick="toggleFoundWordsPopUp()">
+                Zpět
+            </div>
         </div>
 
-        <div id="news" hidden>
-            <div class="message">
-                <h1>Verze 1.01 (15. 9. 2022)</h1>
-                <ul>
-                    <li>8 nových squardlů (1 odpočinkový, 7 týdenních)</li>
-                    <li class="smallCahnge bugFix">zkrácena doba ukazovaní výsledky (např. není slovo, nalezeno slovo) po zadání</li>
-                    <li class="smallCahnge bugFix">obsah správně přetéká pod nadpisem</li>
-                </ul>
-            </div>
-            <div class="message">
-                <h1>Verze 1.0 - Dokončení (26. 8. 2022)</h1>
-                <ul>
-                    <li>1. rozšíření knihovny</li>
-                </ul>
-            </div>
-            <div class="message">
-                <h1>Verze 0.9 - Velké změny (23.8.2022)</h1>
-                <ul>
-                    <li class="newFeature">rozšířené nastavení</li>
-                    <li class="smallChange bugFix">po kliknutí na nastavení podruhé se vrátíte na předchozí místo</li>
-                    <li class="newFeature">rozvržení hrací plochy - na počítači jsou nalezená slova a hrací plocha vedle sebe</li>
-                    <li class="bugFix">stránka se méně seká a nastavení si lze vypnout některé funkce, které by ji mohly zpomalovat</li>
-                    <li class="pageLook">sjednocován vzhled stránky pro všechna okna</li>
-                    <li class="bugFix smallChange">slova dlouhá více než 15 písmen zmenší, aby šla přečíst</li>
-                    <li class="pageLook">nová výherní animace s vybranými smajlíky</li>
-                    <li>nové squardly</li>
+        <div id="boardAndOutput">
+            <div id="output">
 
-                </ul>
             </div>
-            <div class="message">
-                <h1>Verze 0.82</h1>
-                <ul>
-                    <li class="newFeature">nastavení umožňuje filtrovat squardly v seznamu</li>
-                    <li class="smallChange pageLook">upraven vzhled</li>
-                    <li class="bugFix smallChange">tlačítko otáčení hrací plochy je vidět</li>
-                    <li class="bugFix smallChange">písmena hrací plochy neproblikávají</li>
-                    <li class="newFeature">pro každý squardle se zaznamenává čas hraní a přesnost (k nahlédnutí zatím jen celkově ve statistikách)</li>
-                </ul>
-            </div>
-            <div class="message">
-                <h1>Verze 0.81 - Jsi ztracen?💤 Otoč!🍕 (19. 8. 2022)</h1>
-                <ul>
-                    <li class="newFeature">testovací verze nastavení</li>
-                    <li class="newFeature">smajlíci jsou zpátky!(stačí je zapnout v testovací verzi nastavení)</li>
-                    <li class="gameMechanics">otačení hrací plochy</li>
-                    <li class="bugFix">upravena kompatibilita s mobily</li>
-                    <li class="pageLook">změnena pozadí squardlů v seznamu</li>
-                </ul>
-            </div>
-            <div class="message">
-                <h1>Verze 0.8</h1>
-                <ul>
-                    <li class="newFeature">hrací plocha se přizpůsobí velikosti obrazovky</li>
-                    <li class="pageLook">nový techno vzhled stránky</li>
-                    <li class="bugFix smallChange">odstraněny poletující smajlící (ale vrátí se!)</li>
-                    <li class="editorChange smallChange">nová náhodná pozadí editoru</li>
-                    <li class="newFeature">první verze návodu</li>
-                    <li class="newFeature smallChange">první kroky k přidání nastavení</li>
+            <div id="score">
+                <div id="score-points">
+                    <div id="current-words"></div>
+                    <div id="current-points"></div>
 
-
-                </ul>
+                </div>
+                <div id="score-bar-background">
+                    <div id="score-bar"></div>
+                    <img class="hint" id="hintTimesStarting" src="./images/race_flag.svg">
+                    <img class="hint" id="hintTimesIncluded" src="./images/hashtag.svg">
+                    <img class="hint" id="hintRandomLetters" src="./images/magnifying_glass.svg">
+                </div>
             </div>
-            <div class="message">
-                <h1>Verze 0.71</h1>
-                <ul>
-                    <li class="editorChange">nový rozvržení stránky editoru</li>
-                    <li class="editorChange">jednodušší úpravy na mobilu</li>
-                    <li class="editorChange">při tvorbě lze upravit, kdy se odemykají hinty</li>
-                    <li class="smallChange pageLook">ukazování právě dostaných bodů</li>
-                    <li class="badNews">poletující smajlíci 🎪 (jen test, nejspíš bude odstraněno)</li>
-                </ul>
-            </div>
-            <div class="message">
-                <h1>Verze 0.7</h1>
-                <ul>
-                    <li class="newFeature">novinky</li>
-                    <li class="pageLook">zkouška obrázků v novinkách</li>
-                    <li class="gameMechanics">(snad) lepší výběr políček ve hře - snadnější diagonální výběr a výběr více najednou pokus se vynechá políčko</li>
-                    <li class="smallChange bugFix">čára spojuje políčka správně</li>
-                    <li class="smallChange bugFix">nelze pokračovat v ukončených squardlech</li>
-                    <li class="smallChange bugFix">opraveno formátování sdílení</li>
-                    <li class="newFeature">statistiky</li>
-                    <li class="smallChange pageLook">výsledky nahradily statistiky (výsledky jsou již ve Seznamu)</li>
-                    <li class="gameMechanics">nový hint</li>
-                    <li class="smallChange gameMechanics">hinty zobrazeny ve hře</li>
-                    <li class="smallChange gameMechanics">u ukončených squardlů lze v nalezených slovech vidět i nenalezená slova</li>
-                    <li class="smallChange bugFix">opraveno problikávání slov</li>
-                    
+            <!-- Populated by squardle.js/createBoard function -->
+            <div id="board-box">
+                <button id="rotate" onclick="rotateBoard(90)">
+                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-rotate-cw">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                    </svg>
+                </button>
+                <div id="board">
 
-
-                </ul>
+                </div>
             </div>
-            <div class="message">
-                <h1>Verze 0.6</h1>
-                <ul>
-                    <li class="newFeature">sdílení squardlů</li>
-                    <li class="editorChange">editor exportuje soubory</li>
-                    <li class="gameMechanics">je možné přidat squardly vlastní nebo od přátel</li>
-                    <li class="pageLook">animace</li>
-                    <li class="smallChange pageLook">změna vzhledu stránky</li>
-                    <li class="smallChange badNews">stále hrozné novinky, ale aspoň existují</li>
-
-                </ul>
-            </div>
-            <div class="message">
-                <h1>Verze 0.5</h1>
-                <ul>
-                    <li class="gameMechanics">změna celého systému hry</li>
-                    <li class="newFeature">týdenní a odpočinkový typ</li>
-                    <li class="bugFix">tlačítka fungují</li>
-                </ul>
-            </div>
-
-            <br><br><!--FOR SCROLLING DOWN-->
-            
-            
-            
-            
         </div>
 
-        <div id="stats" hidden>
-            <div class="statBox" id="stats-all" >
 
-                <h1 onclick="toggleStatBox(this.parentElement)">Celkové statistiky</h1>
-                <div class="played"></div>
-                <div class="completed"></div>
-                <div class="totalScore"></div>
-                <div class="totalWordsFound"></div>
-                <div class="totalBonusWords"></div>
-                <div class="totalTimePlayed"></div>
-                <div class="totalAccuracy"></div>
-            </div>
-            <div class="statBox" id="stats-weekly">
-                <h1 onclick="toggleStatBox(this.parentElement)">Týdenní</h1>
-                <div class="played"></div>
-                <div class="completed"></div>
-                <div class="totalScore"></div>
-                <div class="totalWordsFound"></div>
-                <div class="totalBonusWords"></div>
-                <div class="totalTimePlayed"></div>
-                <div class="totalAccuracy"></div>
-            </div>
-            <div class="statBox" id="stats-casual">
-                <h1 onclick="toggleStatBox(this.parentElement)">Odpočinkové</h1>
-                <div class="played"></div>
-                <div class="completed"></div>
-                <div class="totalScore"></div>
-                <div class="totalWordsFound"></div>
-                <div class="totalBonusWords"></div>
-                <div class="totalTimePlayed"></div>
-                <div class="totalAccuracy"></div>
-            </div>
-            
-            <div class="statBox" id="stats-special">
-                <h1 onclick="toggleStatBox(this.parentElement)">Speciální</h1>
-                <div class="played"></div>
-                <div class="completed"></div>
-                <div class="totalScore"></div>
-                <div class="totalWordsFound"></div>
-                <div class="totalBonusWords"></div>
-                <div class="totalTimePlayed"></div>
-                <div class="totalAccuracy"></div>
-            </div>
-            <div class="statBox" id="stats-shared">
-                <h1 onclick="toggleStatBox(this.parentElement)">Sdílené</h1>
-                <div class="played"></div>
-                <div class="completed"></div>
-                <div class="totalScore"></div>
-                <div class="totalWordsFound"></div>
-                <div class="totalBonusWords"></div>
-                <div class="totalTimePlayed"></div>
-                <div class="totalAccuracy"></div>
-            </div>
-            <br><br><!--FOR SCROLLING DOWN-->
+
+
+
+    </div>
+    <div id="line"></div>
+
+    <div id="browser" hidden>
+        <div id="browser-tiles">
+
+        </div>
+        <div id="browser-tools">
+
+        </div>
+        <input type="file" accept=".json" id="import-file" onchange="importSquardle()">
+    </div>
+
+    </div>
+
+    <div id="news" hidden>
+        <div class="message">
+            <h1>Verze 1.01 (15. 9. 2022)</h1>
+            <ul>
+                <li>8 nových squardlů (1 odpočinkový, 7 týdenních)</li>
+                <li class="smallCahnge bugFix">zkrácena doba ukazovaní výsledky (např. není slovo, nalezeno slovo) po
+                    zadání</li>
+                <li class="smallCahnge bugFix">obsah správně přetéká pod nadpisem</li>
+            </ul>
+        </div>
+        <div class="message">
+            <h1>Verze 1.0 - Dokončení (26. 8. 2022)</h1>
+            <ul>
+                <li>1. rozšíření knihovny</li>
+            </ul>
+        </div>
+        <div class="message">
+            <h1>Verze 0.9 - Velké změny (23.8.2022)</h1>
+            <ul>
+                <li class="newFeature">rozšířené nastavení</li>
+                <li class="smallChange bugFix">po kliknutí na nastavení podruhé se vrátíte na předchozí místo</li>
+                <li class="newFeature">rozvržení hrací plochy - na počítači jsou nalezená slova a hrací plocha vedle
+                    sebe</li>
+                <li class="bugFix">stránka se méně seká a nastavení si lze vypnout některé funkce, které by ji mohly
+                    zpomalovat</li>
+                <li class="pageLook">sjednocován vzhled stránky pro všechna okna</li>
+                <li class="bugFix smallChange">slova dlouhá více než 15 písmen zmenší, aby šla přečíst</li>
+                <li class="pageLook">nová výherní animace s vybranými smajlíky</li>
+                <li>nové squardly</li>
+
+            </ul>
+        </div>
+        <div class="message">
+            <h1>Verze 0.82</h1>
+            <ul>
+                <li class="newFeature">nastavení umožňuje filtrovat squardly v seznamu</li>
+                <li class="smallChange pageLook">upraven vzhled</li>
+                <li class="bugFix smallChange">tlačítko otáčení hrací plochy je vidět</li>
+                <li class="bugFix smallChange">písmena hrací plochy neproblikávají</li>
+                <li class="newFeature">pro každý squardle se zaznamenává čas hraní a přesnost (k nahlédnutí zatím jen
+                    celkově ve statistikách)</li>
+            </ul>
+        </div>
+        <div class="message">
+            <h1>Verze 0.81 - Jsi ztracen?💤 Otoč!🍕 (19. 8. 2022)</h1>
+            <ul>
+                <li class="newFeature">testovací verze nastavení</li>
+                <li class="newFeature">smajlíci jsou zpátky!(stačí je zapnout v testovací verzi nastavení)</li>
+                <li class="gameMechanics">otačení hrací plochy</li>
+                <li class="bugFix">upravena kompatibilita s mobily</li>
+                <li class="pageLook">změnena pozadí squardlů v seznamu</li>
+            </ul>
+        </div>
+        <div class="message">
+            <h1>Verze 0.8</h1>
+            <ul>
+                <li class="newFeature">hrací plocha se přizpůsobí velikosti obrazovky</li>
+                <li class="pageLook">nový techno vzhled stránky</li>
+                <li class="bugFix smallChange">odstraněny poletující smajlící (ale vrátí se!)</li>
+                <li class="editorChange smallChange">nová náhodná pozadí editoru</li>
+                <li class="newFeature">první verze návodu</li>
+                <li class="newFeature smallChange">první kroky k přidání nastavení</li>
+
+
+            </ul>
+        </div>
+        <div class="message">
+            <h1>Verze 0.71</h1>
+            <ul>
+                <li class="editorChange">nový rozvržení stránky editoru</li>
+                <li class="editorChange">jednodušší úpravy na mobilu</li>
+                <li class="editorChange">při tvorbě lze upravit, kdy se odemykají hinty</li>
+                <li class="smallChange pageLook">ukazování právě dostaných bodů</li>
+                <li class="badNews">poletující smajlíci 🎪 (jen test, nejspíš bude odstraněno)</li>
+            </ul>
+        </div>
+        <div class="message">
+            <h1>Verze 0.7</h1>
+            <ul>
+                <li class="newFeature">novinky</li>
+                <li class="pageLook">zkouška obrázků v novinkách</li>
+                <li class="gameMechanics">(snad) lepší výběr políček ve hře - snadnější diagonální výběr a výběr více
+                    najednou pokus se vynechá políčko</li>
+                <li class="smallChange bugFix">čára spojuje políčka správně</li>
+                <li class="smallChange bugFix">nelze pokračovat v ukončených squardlech</li>
+                <li class="smallChange bugFix">opraveno formátování sdílení</li>
+                <li class="newFeature">statistiky</li>
+                <li class="smallChange pageLook">výsledky nahradily statistiky (výsledky jsou již ve Seznamu)</li>
+                <li class="gameMechanics">nový hint</li>
+                <li class="smallChange gameMechanics">hinty zobrazeny ve hře</li>
+                <li class="smallChange gameMechanics">u ukončených squardlů lze v nalezených slovech vidět i nenalezená
+                    slova</li>
+                <li class="smallChange bugFix">opraveno problikávání slov</li>
+
+
+
+            </ul>
+        </div>
+        <div class="message">
+            <h1>Verze 0.6</h1>
+            <ul>
+                <li class="newFeature">sdílení squardlů</li>
+                <li class="editorChange">editor exportuje soubory</li>
+                <li class="gameMechanics">je možné přidat squardly vlastní nebo od přátel</li>
+                <li class="pageLook">animace</li>
+                <li class="smallChange pageLook">změna vzhledu stránky</li>
+                <li class="smallChange badNews">stále hrozné novinky, ale aspoň existují</li>
+
+            </ul>
+        </div>
+        <div class="message">
+            <h1>Verze 0.5</h1>
+            <ul>
+                <li class="gameMechanics">změna celého systému hry</li>
+                <li class="newFeature">týdenní a odpočinkový typ</li>
+                <li class="bugFix">tlačítka fungují</li>
+            </ul>
         </div>
 
-        <div id="about" hidden>
-            <h1>O Squardlu</h1>
-            <p>
-                Squardle (čteno skvardl) je česká adaptace hry Squaredle (čteno skvérdl) dostupné na <a href="https://squaredle.app/">squaredle.app</a>.
-            </p>
-            <p>
-                Zdrojový kód této stránky je k nahlédnutí na <a href="https://github.com/MarekOnd/SquardleCZ">github.com/MarekOnd/SquardleCZ</a>
-            </p>
+        <br><br><!--FOR SCROLLING DOWN-->
 
 
-            <!-- <br><br><br><br><br><br>
+
+
+    </div>
+
+    <div id="stats" hidden>
+        <div class="statBox" id="stats-all">
+
+            <h1 onclick="toggleStatBox(this.parentElement)">Celkové statistiky</h1>
+            <div class="played"></div>
+            <div class="completed"></div>
+            <div class="totalScore"></div>
+            <div class="totalWordsFound"></div>
+            <div class="totalBonusWords"></div>
+            <div class="totalTimePlayed"></div>
+            <div class="totalAccuracy"></div>
+        </div>
+        <div class="statBox" id="stats-weekly">
+            <h1 onclick="toggleStatBox(this.parentElement)">Týdenní</h1>
+            <div class="played"></div>
+            <div class="completed"></div>
+            <div class="totalScore"></div>
+            <div class="totalWordsFound"></div>
+            <div class="totalBonusWords"></div>
+            <div class="totalTimePlayed"></div>
+            <div class="totalAccuracy"></div>
+        </div>
+        <div class="statBox" id="stats-casual">
+            <h1 onclick="toggleStatBox(this.parentElement)">Odpočinkové</h1>
+            <div class="played"></div>
+            <div class="completed"></div>
+            <div class="totalScore"></div>
+            <div class="totalWordsFound"></div>
+            <div class="totalBonusWords"></div>
+            <div class="totalTimePlayed"></div>
+            <div class="totalAccuracy"></div>
+        </div>
+
+        <div class="statBox" id="stats-special">
+            <h1 onclick="toggleStatBox(this.parentElement)">Speciální</h1>
+            <div class="played"></div>
+            <div class="completed"></div>
+            <div class="totalScore"></div>
+            <div class="totalWordsFound"></div>
+            <div class="totalBonusWords"></div>
+            <div class="totalTimePlayed"></div>
+            <div class="totalAccuracy"></div>
+        </div>
+        <div class="statBox" id="stats-shared">
+            <h1 onclick="toggleStatBox(this.parentElement)">Sdílené</h1>
+            <div class="played"></div>
+            <div class="completed"></div>
+            <div class="totalScore"></div>
+            <div class="totalWordsFound"></div>
+            <div class="totalBonusWords"></div>
+            <div class="totalTimePlayed"></div>
+            <div class="totalAccuracy"></div>
+        </div>
+        <br><br><!--FOR SCROLLING DOWN-->
+    </div>
+
+    <div id="about" hidden>
+        <h1>O Squardlu</h1>
+        <p>
+            Squardle (čteno skvardl) je česká adaptace hry Squaredle (čteno skvérdl) dostupné na <a
+                href="https://squaredle.app/">squaredle.app</a>.
+        </p>
+        <p>
+            Zdrojový kód této stránky je k nahlédnutí na <a
+                href="https://github.com/MarekOnd/SquardleCZ">github.com/MarekOnd/SquardleCZ</a>
+        </p>
+
+
+        <!-- <br><br><br><br><br><br>
             <p style="margin:5px">*A ješte velmi důležitý iframe Droste efekt. K čemu by asi šel využít...</p>
             <iframe src="https://marekond.github.io/SquardleCZ/" style="height: 50vh; width: 90vw;"></iframe>
             <br><br> -->
+    </div>
+
+    <div id="guide" hidden>
+        <h1>Návod</h1>
+        <p>
+            Squardle je hra podobná osmisměrce.
+            Liší se tím, že hledaná slova nejsou předem známá a nemusí být pouze v jedné linii.
+        </p>
+
+        <h2>Cíl hry</h2>
+        <p>Najdi všechna slova. </p>
+
+        <h2>Zadávání slova</h2>
+        <p>
+            Slovo se zadává přejetím po daných písmenech na hrací ploše v daném pořadí.
+            Písmena sousedí vertikálně, horizontálně, ale i diagonálně.
+            Počet „zahnutí“ není nijak omezen a cesta se může i křížit sama se sebou.
+            Následující obrázky ukazují zadání jednoduchého a složitého slova:
+        </p>
+        <img src="./images/wordSelection.png">
+        <img src="./images/notniceexample.png">
+        <h2>Druhy slov</h2>
+        <p>Ve hře lze najít slova:</p>
+        <ul>
+            <li>potřebná k dokončení – používaná nebo zajímavá méně známá, mohou být ale ve všech tvarech (pádech,
+                osobách a časech...)</li>
+            <li>bonusová – neznámá slova, krásy českého jazyka, někdy prostě jen blbá slova</li>
+        </ul>
+
+        <h2>Získávání bodů</h2>
+        <p>
+            Za každé nalezené slovo se získávají body.
+            Počet získaných bodů závisí na jeho délce a zobrazuje se po nalezení slova vpravo od aktuálního počtu bodů.
+        </p>
+
+        <h2>Nalezená slova</h2>
+        <p>
+            Již nalezená slova lze zobrazit kliknutím nad hrací plochu
+            (resp. ukazatel průběhu nebo právě zadané slovo).
+            Kliknutím na jakékoliv nalezené slovo si můžete vyhledat jeho význam.
+        </p>
+
+        <h2>Nápovědy</h2>
+        <p>
+            Postupem hry se odemykají nápovědy, které pomáhají s nalezením složitějších slov.
+            Nápovědy jsou zobrazeny jako obrázky na ukazateli průběhu nad hrací plochou.
+            Vysvětlivky k nápovědám jsou zde:
+        </p>
+        <ul>
+            <li class="hint hintTimesStarting">kolik slov začíná písmenem - červené číslo políčkách</li>
+            <li class="hint hintTimesIncluded">v kolika slovech je písmeno - zelené číslo na políčkách</li>
+            <li class="hint hintRandomLetters">odkrytí počátečních písmen - lze vidět po odemčení v nalezených slovech
+            </li>
+        </ul>
+
+        <h2>Konec hry</h2>
+        <p>
+            Hra končí po nalezení všech potřebných slov. Po ukončení lze stále hledat slova bonusová.
+            Nemusí tam ale už žádné být a celkový počet bonusových slov se nikde nezobrazuje.
+        </p>
+
+        <h2>Druhy squardlů</h2>
+        <p>
+            Squardly jsou rozděleny na
+        </p>
+        <ul>
+            <li>Odpočinkové = neomezený čas, nikdy nebude vidět výsledek</li>
+            <li>Týdenní = časově omezené, každý týden nový</li>
+            <li>Speciální = časově omezené, tématické squardly</li>
+            <li>Sdílené = jakékoliv, <b>jako jediné se nepočítají do celkových statistik!</b></li>
+        </ul>
+        <p>
+            U časové omezených squardlů je možné po ukončení nahlédnout na výsledek. Nenalezená slova budou mít červenou
+            barvu.
+        </p>
+
+        <h2>Seznam</h2>
+        <p>
+            V seznamu se zobrazují všechny squardly. V nastavéní lze upravit jaké squardly se mají zobrazovat v
+            závislosti na druhu, čase a stavu dokončení.
+        </p>
+
+
+        <br><br><!--FOR SCROLLING DOWN-->
+    </div>
+
+    <div id="settings" hidden>
+
+        <div class="settingsSection">
+            <h1 onclick="toggleOpened(this.parentElement)">Filtr seznamu</h1>
+            <p>Nastav jaké squardly se ti mají ukazovat.</p>
+
+            <p>Podle typu:</p>
+            <label class="checkbox settingsInput sub">
+                <div class="text">Odpočinkové</div>
+                <input id="showCasual" type="checkbox" onchange="setSettingsProperty('showCasual', this.checked)">
+                <div class="checkmark"></div>
+            </label>
+            <label class="checkbox settingsInput sub">
+                <div class="text">Týdenní</div>
+                <input id="showWeekly" type="checkbox" onchange="setSettingsProperty('showWeekly', this.checked)">
+                <div class="checkmark"></div>
+            </label>
+            <label class="checkbox settingsInput sub">
+                <div class="text">Speciální</div>
+                <input id="showSpecial" type="checkbox" onchange="setSettingsProperty('showSpecial', this.checked)">
+                <div class="checkmark"></div>
+            </label>
+            <label class="checkbox settingsInput sub">
+                <div class="text">Sdílené</div>
+                <input id="showShared" type="checkbox" onchange="setSettingsProperty('showShared', this.checked)">
+                <div class="checkmark"></div>
+            </label>
+            <p>Podle času:</p>
+            <label class="checkbox settingsInput sub">
+                <div class="text">Ukončené</div>
+                <input id="showOld" type="checkbox" onchange="setSettingsProperty('showOld', this.checked)">
+                <div class="checkmark"></div>
+            </label>
+            <label class="checkbox settingsInput sub">
+                <div class="text">Aktivní</div>
+                <input id="showActive" type="checkbox" onchange="setSettingsProperty('showActive', this.checked)">
+                <div class="checkmark"></div>
+            </label>
+            <label class="checkbox settingsInput sub">
+                <div class="text">Budoucí</div>
+                <input id="showUpcoming" type="checkbox" onchange="setSettingsProperty('showUpcoming', this.checked)">
+                <div class="checkmark"></div>
+            </label>
+            <p>Podle stavu:</p>
+            <label class="checkbox settingsInput sub">
+                <div class="text">Dokončené:</div>
+                <input id="showCompleted" type="checkbox" onchange="setSettingsProperty('showCompleted', this.checked)">
+                <div class="checkmark"></div>
+            </label>
         </div>
+        <div class="settingsSection">
+            <h1 onclick="toggleOpened(this.parentElement)">Vzhled hrací plochy</h1>
 
-        <div id="guide" hidden>
-            <h1>Návod</h1>
-            <p>
-                Squardle je hra podobná osmisměrce. 
-                Liší se tím, že hledaná slova nejsou předem známá a nemusí být pouze v jedné linii.
-            </p>
-            
-            <h2>Cíl hry</h2>
-            <p>Najdi všechna slova. </p>
+            <label class="checkbox settingsInput">
+                <div class="text">Zmenšovat vybraná pole</div>
+                <input id="scaleButtons" type="checkbox" onchange="setSettingsProperty('scaleButtons', this.checked)">
+                <div class="checkmark"></div>
+            </label>
+            <label class="checkbox settingsInput">
+                <div class="text">Náhled plochy</div>
+                <input id="showPreview" type="checkbox" onchange="setSettingsProperty('showPreview', this.checked)">
+                <div class="checkmark"></div>
+            </label>
+            <label class="select settingsInput">
+                <div class="text">Vzhled čáry:</div>
+                <div id="lineColors" class="options">
 
-            <h2>Zadávání slova</h2>
-            <p>
-                Slovo se zadává přejetím po daných písmenech na hrací ploše v daném pořadí. 
-                Písmena sousedí vertikálně, horizontálně, ale i diagonálně. 
-                Počet „zahnutí“ není nijak omezen a cesta se může i křížit sama se sebou. 
-                Následující obrázky ukazují zadání jednoduchého a složitého slova:
-            </p>
-            <img src="./images/wordSelection.png" >
-            <img src="./images/notniceexample.png" >
-            <h2>Druhy slov</h2>
-            <p>Ve hře lze najít slova:</p>
-            <ul>
-                <li>potřebná k dokončení – používaná nebo zajímavá méně známá, mohou být ale ve všech tvarech (pádech, osobách a časech...)</li>
-                <li>bonusová – neznámá slova, krásy českého jazyka, někdy prostě jen blbá slova</li>
-            </ul>
-
-            <h2>Získávání bodů</h2>
-            <p>
-                Za každé nalezené slovo se získávají body. 
-                Počet získaných bodů závisí na jeho délce a zobrazuje se po nalezení slova vpravo od aktuálního počtu bodů.
-            </p>
-
-            <h2>Nalezená slova</h2>
-            <p>
-                Již nalezená slova lze zobrazit kliknutím nad hrací plochu
-                (resp. ukazatel průběhu nebo právě zadané slovo).
-                Kliknutím na jakékoliv nalezené slovo si můžete vyhledat jeho význam.
-            </p>
-
-            <h2>Nápovědy</h2>
-            <p>
-                Postupem hry se odemykají nápovědy, které pomáhají s nalezením složitějších slov. 
-                Nápovědy jsou zobrazeny jako obrázky na ukazateli průběhu nad hrací plochou. 
-                Vysvětlivky k nápovědám jsou zde:
-            </p>
-            <ul>
-                <li class="hint hintTimesStarting">kolik slov začíná písmenem - červené číslo políčkách</li>
-                <li class="hint hintTimesIncluded">v kolika slovech je písmeno - zelené číslo na políčkách</li>
-                <li class="hint hintRandomLetters">odkrytí počátečních písmen - lze vidět po odemčení v nalezených slovech</li>
-            </ul>
-
-            <h2>Konec hry</h2>
-            <p>
-                Hra končí po nalezení všech potřebných slov. Po ukončení lze stále hledat slova bonusová. 
-                Nemusí tam ale už žádné být a celkový počet bonusových slov se nikde nezobrazuje.
-            </p>
-
-            <h2>Druhy squardlů</h2>
-            <p>
-                Squardly jsou rozděleny na
-            </p>
-            <ul>
-                <li>Odpočinkové = neomezený čas, nikdy nebude vidět výsledek</li>
-                <li>Týdenní = časově omezené, každý týden nový</li>
-                <li>Speciální = časově omezené, tématické squardly</li>
-                <li>Sdílené = jakékoliv, <b>jako jediné se nepočítají do celkových statistik!</b></li>
-            </ul>
-            <p>
-                U časové omezených squardlů je možné po ukončení nahlédnout na výsledek. Nenalezená slova budou mít červenou barvu.
-            </p>
-
-            <h2>Seznam</h2>
-            <p>
-                V seznamu se zobrazují všechny squardly. V nastavéní lze upravit jaké squardly se mají zobrazovat v závislosti na druhu, čase a stavu dokončení.
-            </p>
-
-
-            <br><br><!--FOR SCROLLING DOWN-->
+                </div>
+            </label>
         </div>
+        <div class="settingsSection">
+            <h1 onclick="toggleOpened(this.parentElement)">Smajlíci</h1>
+            <label class="checkbox settingsInput">
+                <div class="text">Zapnout:</div>
+                <input id="showMouseParticles" type="checkbox"
+                    onchange="setSettingsProperty('showMouseParticles', this.checked)">
+                <div class="checkmark"></div>
 
-        <div id="settings" hidden>
-            
-            <div class="settingsSection">
-                <h1  onclick="toggleOpened(this.parentElement)">Filtr seznamu</h1>
-                <p>Nastav jaké squardly se ti mají ukazovat.</p>
+            </label>
+            <label class="slider settingsInput">
+                <div class="text">Množství:</div>
+                <input id="mouseParticleAmount" type="range" min="1" max="5000"
+                    onchange="setSettingsProperty('mouseParticleAmount', this.value)">
+                <div class="sliderStyle"></div>
+            </label>
+            <label class="select settingsInput">
+                <div class="text">Vzhled:</div>
+                <div id="mouseParticlesModel" class="options">
 
-                <p>Podle typu:</p>
-                <label class="checkbox settingsInput sub">
-                    <div class="text">Odpočinkové</div>
-                    <input id="showCasual" type="checkbox" onchange="setSettingsProperty('showCasual', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput sub">
-                    <div class="text">Týdenní</div>
-                    <input id="showWeekly" type="checkbox" onchange="setSettingsProperty('showWeekly', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput sub">
-                    <div class="text">Speciální</div>
-                    <input id="showSpecial" type="checkbox" onchange="setSettingsProperty('showSpecial', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput sub">
-                    <div class="text">Sdílené</div>
-                    <input id="showShared" type="checkbox" onchange="setSettingsProperty('showShared', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <p>Podle času:</p>
-                <label class="checkbox settingsInput sub">
-                    <div class="text">Ukončené</div>
-                    <input id="showOld" type="checkbox" onchange="setSettingsProperty('showOld', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput sub">
-                    <div class="text">Aktivní</div>
-                    <input id="showActive" type="checkbox" onchange="setSettingsProperty('showActive', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput sub">
-                    <div class="text">Budoucí</div>
-                    <input id="showUpcoming" type="checkbox" onchange="setSettingsProperty('showUpcoming', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <p>Podle stavu:</p>
-                <label class="checkbox settingsInput sub">
-                    <div class="text">Dokončené:</div>
-                    <input id="showCompleted" type="checkbox" onchange="setSettingsProperty('showCompleted', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-            </div>
-            <div class="settingsSection">
-                <h1  onclick="toggleOpened(this.parentElement)">Vzhled hrací plochy</h1>
+                </div>
+            </label>
+        </div>
+        <div class="settingsSection">
+            <h1 onclick="toggleOpened(this.parentElement)">Bláznivé</h1>
+            <label class="checkbox settingsInput">
+                <div class="text">Invertovat</div>
+                <input id="invertAll" type="checkbox" onchange="setSettingsProperty('invertAll', this.checked)">
+                <div class="checkmark"></div>
+            </label>
 
-                <label class="checkbox settingsInput">
-                    <div class="text">Zmenšovat vybraná pole</div>
-                    <input id="scaleButtons" type="checkbox" onchange="setSettingsProperty('scaleButtons', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="checkbox settingsInput">
-                    <div class="text">Náhled plochy</div>
-                    <input id="showPreview" type="checkbox" onchange="setSettingsProperty('showPreview', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                <label class="select settingsInput">
-                    <div class="text">Vzhled čáry:</div>
-                    <div id="lineColors" class="options">
-                        
-                    </div>
-                </label>
-            </div>
-            <div class="settingsSection">
-                <h1  onclick="toggleOpened(this.parentElement)">Smajlíci</h1>
-                <label class="checkbox settingsInput">
-                    <div class="text">Zapnout:</div>
-                    <input id="showMouseParticles" type="checkbox" onchange="setSettingsProperty('showMouseParticles', this.checked)">
-                    <div class="checkmark"></div>
-                    
-                </label>
-                <label  class="slider settingsInput">
-                    <div class="text">Množství:</div>
-                    <input id="mouseParticleAmount" type="range" min="1" max="5000" onchange="setSettingsProperty('mouseParticleAmount', this.value)">
-                    <div class="sliderStyle"></div>
-                </label>
-                <label class="select settingsInput">
-                    <div class="text">Vzhled:</div>
-                    <div id="mouseParticlesModel" class="options">
-                        
-                    </div>
-                </label>
-            </div>
-            <div class="settingsSection">
-                <h1  onclick="toggleOpened(this.parentElement)">Bláznivé</h1>
-                <label class="checkbox settingsInput">
-                    <div class="text">Invertovat</div>
-                    <input id="invertAll" type="checkbox" onchange="setSettingsProperty('invertAll', this.checked)">
-                    <div class="checkmark"></div>
-                </label>
-                
-            </div>
-            <div class="settingsSection">
-                <h1 onclick="toggleOpened(this.parentElement)">Ostatní</h1>
-                <label class="checkbox settingsInput">
-                        <button onclick="loadSquardlesData({cache:'no-cache'});">
-                            Načíst nové squardly
-                        </button>
-                </label>
-            
-            </div>
-            <!-- 
+        </div>
+        <div class="settingsSection">
+            <h1 onclick="toggleOpened(this.parentElement)">Ostatní</h1>
+            <label class="checkbox settingsInput">
+                <button onclick="loadSquardlesData({cache:'no-cache'});">
+                    Načíst nové squardly
+                </button>
+            </label>
+            <br>
+            <label class="checkbox settingsInput">
+                <div class="text">Ignorovat čásové omezení</div>
+                <input id="ignoreDateLimit" type="checkbox"
+                    onchange="setSettingsProperty('ignoreDateLimit', this.checked)">
+                <div class="checkmark"></div>
+            </label>
+        </div>
+        <!-- 
             <label id="color" class="colorPicker">
                 <div class="text">Test</div>
                 <input type="color" >
                 
             </label> -->
-            <br><br><!--FOR SCROLLING DOWN-->
-        </div>
+        <br><br><!--FOR SCROLLING DOWN-->
+    </div>
 
-        <div id="particles"></div>
-        <div id="darkenScreen"></div>
-        <div id="background"></div>
-        
-        <!--<img src="images/warden.jpg" style="width:100%; filter: brightness(0.1);">-->
-        <script src="./scripts/functions.js"></script>
-        <script src="./scripts/siteController.js"></script>
-        <script src="./scripts/service-worker-registration.js"></script>
+    <div id="particles"></div>
+    <div id="darkenScreen"></div>
+    <div id="background"></div>
 
-        <!--GAME-->
-        <script src="./scripts/game/squardle.js"></script>
-        <script src="./scripts/game/board.js"></script>
-        <script src="./scripts/game/foundWords.js"></script>
-        <script src="./scripts/game/hints.js"></script>
-        <script src="./scripts/game/line.js"></script>
-        <script src="./scripts/game/mouseEvents.js"></script>
-        <script src="./scripts/game/output.js"></script>
-        <script src="./scripts/game/progress.js"></script>
-        <script src="./scripts/game/score.js"></script>
-        <script src="./scripts/game/win.js"></script>
+    <!--<img src="images/warden.jpg" style="width:100%; filter: brightness(0.1);">-->
+    <script src="./scripts/functions.js"></script>
+    <script src="./scripts/siteController.js"></script>
+    <script src="./scripts/service-worker-registration.js"></script>
 
-        <script src="./scripts/buttons.js"></script>
-        <script src="./scripts/browser.js"></script>
-        <script src="./scripts/pageSwitches.js"></script>
-        <script src="./scripts/share.js"></script>
-        <script src="./scripts/stats.js"></script>
-        <script src="./scripts/particles.js"></script>
-        <script src="./scripts/menu.js"></script>
-        <script src="./scripts/settings.js"></script>
-        <script src="./scripts/global.js"></script>
-        <script src="./scripts/updateHandler.js"></script>
-        
-    </body>
+    <!--GAME-->
+    <script src="./scripts/game/squardle.js"></script>
+    <script src="./scripts/game/board.js"></script>
+    <script src="./scripts/game/foundWords.js"></script>
+    <script src="./scripts/game/hints.js"></script>
+    <script src="./scripts/game/line.js"></script>
+    <script src="./scripts/game/mouseEvents.js"></script>
+    <script src="./scripts/game/output.js"></script>
+    <script src="./scripts/game/progress.js"></script>
+    <script src="./scripts/game/score.js"></script>
+    <script src="./scripts/game/win.js"></script>
+
+    <script src="./scripts/buttons.js"></script>
+    <script src="./scripts/browser.js"></script>
+    <script src="./scripts/pageSwitches.js"></script>
+    <script src="./scripts/share.js"></script>
+    <script src="./scripts/stats.js"></script>
+    <script src="./scripts/particles.js"></script>
+    <script src="./scripts/menu.js"></script>
+    <script src="./scripts/settings.js"></script>
+    <script src="./scripts/global.js"></script>
+    <script src="./scripts/updateHandler.js"></script>
+
+</body>
+
 </html>
